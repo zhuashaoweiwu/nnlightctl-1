@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.LightingVolEleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.LightingVolEleRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="record_datetime" property="recordDatetime" jdbcType="TIMESTAMP" />
+    <result column="voltage" property="voltage" jdbcType="DECIMAL" />
+    <result column="electricty" property="electricty" jdbcType="DECIMAL" />
+    <result column="dampness" property="dampness" jdbcType="DECIMAL" />
+    <result column="temperature" property="temperature" jdbcType="DECIMAL" />
+    <result column="beam" property="beam" jdbcType="DECIMAL" />
+    <result column="persist1" property="persist1" jdbcType="DECIMAL" />
+    <result column="persist2" property="persist2" jdbcType="DECIMAL" />
+    <result column="persist3" property="persist3" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, uid, record_datetime, voltage, electricty, dampness, 
+    temperature, beam, persist1, persist2, persist3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingVolEleRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_lighting_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_lighting_vol_ele_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_lighting_vol_ele_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.LightingVolEleRecordExample" >
+    delete from nnlightctl_lighting_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
+    insert into nnlightctl_lighting_vol_ele_record (id, gmt_created, gmt_updated, 
+      uid, record_datetime, voltage, 
+      electricty, dampness, temperature, 
+      beam, persist1, persist2, 
+      persist3)
+    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=VARCHAR}, #{recordDatetime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, 
+      #{electricty,jdbcType=DECIMAL}, #{dampness,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, 
+      #{beam,jdbcType=DECIMAL}, #{persist1,jdbcType=DECIMAL}, #{persist2,jdbcType=DECIMAL}, 
+      #{persist3,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
+    insert into nnlightctl_lighting_vol_ele_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="recordDatetime != null" >
+        record_datetime,
+      </if>
+      <if test="voltage != null" >
+        voltage,
+      </if>
+      <if test="electricty != null" >
+        electricty,
+      </if>
+      <if test="dampness != null" >
+        dampness,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="beam != null" >
+        beam,
+      </if>
+      <if test="persist1 != null" >
+        persist1,
+      </if>
+      <if test="persist2 != null" >
+        persist2,
+      </if>
+      <if test="persist3 != null" >
+        persist3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDatetime != null" >
+        #{recordDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        #{voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="electricty != null" >
+        #{electricty,jdbcType=DECIMAL},
+      </if>
+      <if test="dampness != null" >
+        #{dampness,jdbcType=DECIMAL},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DECIMAL},
+      </if>
+      <if test="beam != null" >
+        #{beam,jdbcType=DECIMAL},
+      </if>
+      <if test="persist1 != null" >
+        #{persist1,jdbcType=DECIMAL},
+      </if>
+      <if test="persist2 != null" >
+        #{persist2,jdbcType=DECIMAL},
+      </if>
+      <if test="persist3 != null" >
+        #{persist3,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.LightingVolEleRecordExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_lighting_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_lighting_vol_ele_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordDatetime != null" >
+        record_datetime = #{record.recordDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.voltage != null" >
+        voltage = #{record.voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="record.electricty != null" >
+        electricty = #{record.electricty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dampness != null" >
+        dampness = #{record.dampness,jdbcType=DECIMAL},
+      </if>
+      <if test="record.temperature != null" >
+        temperature = #{record.temperature,jdbcType=DECIMAL},
+      </if>
+      <if test="record.beam != null" >
+        beam = #{record.beam,jdbcType=DECIMAL},
+      </if>
+      <if test="record.persist1 != null" >
+        persist1 = #{record.persist1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.persist2 != null" >
+        persist2 = #{record.persist2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.persist3 != null" >
+        persist3 = #{record.persist3,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_lighting_vol_ele_record
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      record_datetime = #{record.recordDatetime,jdbcType=TIMESTAMP},
+      voltage = #{record.voltage,jdbcType=DECIMAL},
+      electricty = #{record.electricty,jdbcType=DECIMAL},
+      dampness = #{record.dampness,jdbcType=DECIMAL},
+      temperature = #{record.temperature,jdbcType=DECIMAL},
+      beam = #{record.beam,jdbcType=DECIMAL},
+      persist1 = #{record.persist1,jdbcType=DECIMAL},
+      persist2 = #{record.persist2,jdbcType=DECIMAL},
+      persist3 = #{record.persist3,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
+    update nnlightctl_lighting_vol_ele_record
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDatetime != null" >
+        record_datetime = #{recordDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        voltage = #{voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="electricty != null" >
+        electricty = #{electricty,jdbcType=DECIMAL},
+      </if>
+      <if test="dampness != null" >
+        dampness = #{dampness,jdbcType=DECIMAL},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=DECIMAL},
+      </if>
+      <if test="beam != null" >
+        beam = #{beam,jdbcType=DECIMAL},
+      </if>
+      <if test="persist1 != null" >
+        persist1 = #{persist1,jdbcType=DECIMAL},
+      </if>
+      <if test="persist2 != null" >
+        persist2 = #{persist2,jdbcType=DECIMAL},
+      </if>
+      <if test="persist3 != null" >
+        persist3 = #{persist3,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
+    update nnlightctl_lighting_vol_ele_record
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=VARCHAR},
+      record_datetime = #{recordDatetime,jdbcType=TIMESTAMP},
+      voltage = #{voltage,jdbcType=DECIMAL},
+      electricty = #{electricty,jdbcType=DECIMAL},
+      dampness = #{dampness,jdbcType=DECIMAL},
+      temperature = #{temperature,jdbcType=DECIMAL},
+      beam = #{beam,jdbcType=DECIMAL},
+      persist1 = #{persist1,jdbcType=DECIMAL},
+      persist2 = #{persist2,jdbcType=DECIMAL},
+      persist3 = #{persist3,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.DeviceCommLogMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.DeviceCommLog" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="communication_date" property="communicationDate" jdbcType="TIMESTAMP" />
+    <result column="communication_type" property="communicationType" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.nnlightctl.po.DeviceCommLog" extends="BaseResultMap" >
+    <result column="communication_datagram" property="communicationDatagram" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, uid, communication_date, communication_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    communication_datagram
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.nnlightctl.po.DeviceCommLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from nnlightctl_device_communication_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.DeviceCommLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_device_communication_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.DeviceCommLogExample" >
+    delete from nnlightctl_device_communication_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.DeviceCommLog" >
+    insert into nnlightctl_device_communication_log (id, gmt_created, gmt_updated, 
+      uid, communication_date, communication_type, 
+      communication_datagram)
+    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=VARCHAR}, #{communicationDate,jdbcType=TIMESTAMP}, #{communicationType,jdbcType=TINYINT}, 
+      #{communicationDatagram,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.DeviceCommLog" >
+    insert into nnlightctl_device_communication_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="communicationDate != null" >
+        communication_date,
+      </if>
+      <if test="communicationType != null" >
+        communication_type,
+      </if>
+      <if test="communicationDatagram != null" >
+        communication_datagram,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationDate != null" >
+        #{communicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="communicationType != null" >
+        #{communicationType,jdbcType=TINYINT},
+      </if>
+      <if test="communicationDatagram != null" >
+        #{communicationDatagram,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.DeviceCommLogExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_device_communication_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_device_communication_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communicationDate != null" >
+        communication_date = #{record.communicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.communicationType != null" >
+        communication_type = #{record.communicationType,jdbcType=TINYINT},
+      </if>
+      <if test="record.communicationDatagram != null" >
+        communication_datagram = #{record.communicationDatagram,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update nnlightctl_device_communication_log
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      communication_date = #{record.communicationDate,jdbcType=TIMESTAMP},
+      communication_type = #{record.communicationType,jdbcType=TINYINT},
+      communication_datagram = #{record.communicationDatagram,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_device_communication_log
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      communication_date = #{record.communicationDate,jdbcType=TIMESTAMP},
+      communication_type = #{record.communicationType,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
