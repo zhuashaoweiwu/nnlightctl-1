@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.InstitutionMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.Institution" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="institution_name" property="institutionName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="mem" property="mem" jdbcType="VARCHAR" />
+    <result column="nnlightctl_institution_id_parent" property="nnlightctlInstitutionIdParent" jdbcType="BIGINT" />
+    <result column="institution_level" property="institutionLevel" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, institution_name, create_time, addr, mem, nnlightctl_institution_id_parent, 
+    institution_level
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.InstitutionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_institution
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_institution
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_institution
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.InstitutionExample" >
+    delete from nnlightctl_institution
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.Institution" >
+    insert into nnlightctl_institution (id, gmt_created, gmt_updated, 
+      institution_name, create_time, addr, 
+      mem, nnlightctl_institution_id_parent, institution_level
+      )
+    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
+      #{institutionName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{addr,jdbcType=VARCHAR}, 
+      #{mem,jdbcType=VARCHAR}, #{nnlightctlInstitutionIdParent,jdbcType=BIGINT}, #{institutionLevel,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.Institution" >
+    insert into nnlightctl_institution
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="institutionName != null" >
+        institution_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="mem != null" >
+        mem,
+      </if>
+      <if test="nnlightctlInstitutionIdParent != null" >
+        nnlightctl_institution_id_parent,
+      </if>
+      <if test="institutionLevel != null" >
+        institution_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="institutionName != null" >
+        #{institutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null" >
+        #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlInstitutionIdParent != null" >
+        #{nnlightctlInstitutionIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="institutionLevel != null" >
+        #{institutionLevel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.InstitutionExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_institution
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_institution
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.institutionName != null" >
+        institution_name = #{record.institutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mem != null" >
+        mem = #{record.mem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nnlightctlInstitutionIdParent != null" >
+        nnlightctl_institution_id_parent = #{record.nnlightctlInstitutionIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="record.institutionLevel != null" >
+        institution_level = #{record.institutionLevel,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_institution
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      institution_name = #{record.institutionName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      mem = #{record.mem,jdbcType=VARCHAR},
+      nnlightctl_institution_id_parent = #{record.nnlightctlInstitutionIdParent,jdbcType=BIGINT},
+      institution_level = #{record.institutionLevel,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Institution" >
+    update nnlightctl_institution
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="institutionName != null" >
+        institution_name = #{institutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null" >
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlInstitutionIdParent != null" >
+        nnlightctl_institution_id_parent = #{nnlightctlInstitutionIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="institutionLevel != null" >
+        institution_level = #{institutionLevel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Institution" >
+    update nnlightctl_institution
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      institution_name = #{institutionName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      addr = #{addr,jdbcType=VARCHAR},
+      mem = #{mem,jdbcType=VARCHAR},
+      nnlightctl_institution_id_parent = #{nnlightctlInstitutionIdParent,jdbcType=BIGINT},
+      institution_level = #{institutionLevel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
