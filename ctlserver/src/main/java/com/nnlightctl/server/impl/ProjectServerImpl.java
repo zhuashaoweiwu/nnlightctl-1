@@ -3,12 +3,14 @@ package com.nnlightctl.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.dao.ProjectMapper;
+import com.nnlightctl.jdbcdao.ProjectDao;
 import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectExample;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.ProjectConditionRequest;
 import com.nnlightctl.request.ProjectRequest;
 import com.nnlightctl.server.ProjectServer;
+import com.nnlightctl.vo.ProjectView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,12 @@ public class ProjectServerImpl implements ProjectServer {
     @Autowired
     private ProjectMapper projectMapper;
 
-    @Override
-    public List<Project> listProject(BaseRequest request) {
-        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-        ProjectExample example = new ProjectExample();
-        example.setOrderByClause("id DESC");
+    @Autowired
+    private ProjectDao projectDao;
 
-        return projectMapper.selectByExample(example);
+    @Override
+    public List<ProjectView> listProject(BaseRequest request) {
+        return projectDao.listProject(request);
     }
 
     @Override

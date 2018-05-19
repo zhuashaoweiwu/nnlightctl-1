@@ -81,6 +81,11 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.nnlight</groupId>
+            <artifactId>ctldomain</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

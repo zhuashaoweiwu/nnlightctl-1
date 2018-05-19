@@ -15,6 +15,7 @@ import com.nnlightctl.server.ProjectCityServer;
 import com.nnlightctl.server.ProjectCountryServer;
 import com.nnlightctl.server.ProjectProvinceServer;
 import com.nnlightctl.server.ProjectServer;
+import com.nnlightctl.vo.ProjectView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,7 +156,7 @@ public class ProjectController extends BaseController {
     public String listProject(BaseRequest request) {
         logger.info("[POST] /api/project/listproject");
 
-        List<Project> projectList = projectServer.listProject(request);
+        List<ProjectView> projectList = projectServer.listProject(request);
         JsonResult jsonResult = JsonResult.SUCCESS;
         jsonResult.setData(projectList);
 
