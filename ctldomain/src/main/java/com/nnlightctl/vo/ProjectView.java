@@ -82,6 +82,24 @@ public class ProjectView extends BaseView {
         this.state = state;
     }
 
+    public long getLights() {
+        return lights;
+    }
+
+    public void setLights(long lights) {
+        this.lights = lights;
+    }
+
+    public long getEleboxs() {
+        return eleboxs;
+    }
+
+    public void setEleboxs(long eleboxs) {
+        this.eleboxs = eleboxs;
+    }
+
+    private long lights;
+    private long eleboxs;
     private String codeNumber;
     private String projectName;
     private int type;

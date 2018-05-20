@@ -2,8 +2,12 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
+import com.nnlightctl.dao.EleboxMapper;
+import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.dao.ProjectMapper;
 import com.nnlightctl.jdbcdao.ProjectDao;
+import com.nnlightctl.po.EleboxExample;
+import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectExample;
 import com.nnlightctl.request.BaseRequest;
@@ -26,9 +30,36 @@ public class ProjectServerImpl implements ProjectServer {
     @Autowired
     private ProjectDao projectDao;
 
+    @Autowired
+    private LightingMapper lightingMapper;
+
+    @Autowired
+    private EleboxMapper eleboxMapper;
+
     @Override
     public List<ProjectView> listProject(BaseRequest request) {
-        return projectDao.listProject(request);
+        List<ProjectView> projectViewList = projectDao.listProject(request);
+
+        //项目总数
+        int total = projectMapper.countByExample(new ProjectExample());
+
+        for (ProjectView projectView : projectViewList) {
+            Long projectId = projectView.getId();
+
+            //设置总页数
+            projectView.setTotal(total);
+
+            //项目对应的灯具数量
+            LightingExample lightingExample = new LightingExample();
+            lightingExample.createCriteria().andNnlightctlProjectIdEqualTo(projectId);
+            projectView.setLights(lightingMapper.countByExample(lightingExample));
+
+            //项目对应的控制柜的数量
+            EleboxExample eleboxExample = new EleboxExample();
+            eleboxExample.createCriteria().andNnlightctlProjectIdEqualTo(projectId);
+            projectView.setEleboxs(eleboxMapper.countByExample(eleboxExample));
+        }
+        return projectViewList;
     }
 
     @Override
