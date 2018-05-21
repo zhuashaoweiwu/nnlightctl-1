@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -435,52 +436,52 @@ public class SystemParamExample {
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueEqualTo(Long value) {
+        public Criteria andConfigValueEqualTo(BigDecimal value) {
             addCriterion("config_value =", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueNotEqualTo(Long value) {
+        public Criteria andConfigValueNotEqualTo(BigDecimal value) {
             addCriterion("config_value <>", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueGreaterThan(Long value) {
+        public Criteria andConfigValueGreaterThan(BigDecimal value) {
             addCriterion("config_value >", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueGreaterThanOrEqualTo(Long value) {
+        public Criteria andConfigValueGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("config_value >=", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueLessThan(Long value) {
+        public Criteria andConfigValueLessThan(BigDecimal value) {
             addCriterion("config_value <", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueLessThanOrEqualTo(Long value) {
+        public Criteria andConfigValueLessThanOrEqualTo(BigDecimal value) {
             addCriterion("config_value <=", value, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueIn(List<Long> values) {
+        public Criteria andConfigValueIn(List<BigDecimal> values) {
             addCriterion("config_value in", values, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueNotIn(List<Long> values) {
+        public Criteria andConfigValueNotIn(List<BigDecimal> values) {
             addCriterion("config_value not in", values, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueBetween(Long value1, Long value2) {
+        public Criteria andConfigValueBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("config_value between", value1, value2, "configValue");
             return (Criteria) this;
         }
 
-        public Criteria andConfigValueNotBetween(Long value1, Long value2) {
+        public Criteria andConfigValueNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("config_value not between", value1, value2, "configValue");
             return (Criteria) this;
         }

@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -425,52 +426,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andVoltageEqualTo(Long value) {
+        public Criteria andVoltageEqualTo(BigDecimal value) {
             addCriterion("voltage =", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotEqualTo(Long value) {
+        public Criteria andVoltageNotEqualTo(BigDecimal value) {
             addCriterion("voltage <>", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageGreaterThan(Long value) {
+        public Criteria andVoltageGreaterThan(BigDecimal value) {
             addCriterion("voltage >", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageGreaterThanOrEqualTo(Long value) {
+        public Criteria andVoltageGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("voltage >=", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageLessThan(Long value) {
+        public Criteria andVoltageLessThan(BigDecimal value) {
             addCriterion("voltage <", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageLessThanOrEqualTo(Long value) {
+        public Criteria andVoltageLessThanOrEqualTo(BigDecimal value) {
             addCriterion("voltage <=", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageIn(List<Long> values) {
+        public Criteria andVoltageIn(List<BigDecimal> values) {
             addCriterion("voltage in", values, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotIn(List<Long> values) {
+        public Criteria andVoltageNotIn(List<BigDecimal> values) {
             addCriterion("voltage not in", values, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageBetween(Long value1, Long value2) {
+        public Criteria andVoltageBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("voltage between", value1, value2, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotBetween(Long value1, Long value2) {
+        public Criteria andVoltageNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("voltage not between", value1, value2, "voltage");
             return (Criteria) this;
         }
@@ -485,52 +486,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyEqualTo(Long value) {
+        public Criteria andElectrictyEqualTo(BigDecimal value) {
             addCriterion("electricty =", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyNotEqualTo(Long value) {
+        public Criteria andElectrictyNotEqualTo(BigDecimal value) {
             addCriterion("electricty <>", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyGreaterThan(Long value) {
+        public Criteria andElectrictyGreaterThan(BigDecimal value) {
             addCriterion("electricty >", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyGreaterThanOrEqualTo(Long value) {
+        public Criteria andElectrictyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("electricty >=", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyLessThan(Long value) {
+        public Criteria andElectrictyLessThan(BigDecimal value) {
             addCriterion("electricty <", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyLessThanOrEqualTo(Long value) {
+        public Criteria andElectrictyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("electricty <=", value, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyIn(List<Long> values) {
+        public Criteria andElectrictyIn(List<BigDecimal> values) {
             addCriterion("electricty in", values, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyNotIn(List<Long> values) {
+        public Criteria andElectrictyNotIn(List<BigDecimal> values) {
             addCriterion("electricty not in", values, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyBetween(Long value1, Long value2) {
+        public Criteria andElectrictyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("electricty between", value1, value2, "electricty");
             return (Criteria) this;
         }
 
-        public Criteria andElectrictyNotBetween(Long value1, Long value2) {
+        public Criteria andElectrictyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("electricty not between", value1, value2, "electricty");
             return (Criteria) this;
         }
@@ -545,52 +546,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andDampnessEqualTo(Long value) {
+        public Criteria andDampnessEqualTo(BigDecimal value) {
             addCriterion("dampness =", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessNotEqualTo(Long value) {
+        public Criteria andDampnessNotEqualTo(BigDecimal value) {
             addCriterion("dampness <>", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessGreaterThan(Long value) {
+        public Criteria andDampnessGreaterThan(BigDecimal value) {
             addCriterion("dampness >", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessGreaterThanOrEqualTo(Long value) {
+        public Criteria andDampnessGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("dampness >=", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessLessThan(Long value) {
+        public Criteria andDampnessLessThan(BigDecimal value) {
             addCriterion("dampness <", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessLessThanOrEqualTo(Long value) {
+        public Criteria andDampnessLessThanOrEqualTo(BigDecimal value) {
             addCriterion("dampness <=", value, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessIn(List<Long> values) {
+        public Criteria andDampnessIn(List<BigDecimal> values) {
             addCriterion("dampness in", values, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessNotIn(List<Long> values) {
+        public Criteria andDampnessNotIn(List<BigDecimal> values) {
             addCriterion("dampness not in", values, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessBetween(Long value1, Long value2) {
+        public Criteria andDampnessBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("dampness between", value1, value2, "dampness");
             return (Criteria) this;
         }
 
-        public Criteria andDampnessNotBetween(Long value1, Long value2) {
+        public Criteria andDampnessNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("dampness not between", value1, value2, "dampness");
             return (Criteria) this;
         }
@@ -605,52 +606,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureEqualTo(Long value) {
+        public Criteria andTemperatureEqualTo(BigDecimal value) {
             addCriterion("temperature =", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureNotEqualTo(Long value) {
+        public Criteria andTemperatureNotEqualTo(BigDecimal value) {
             addCriterion("temperature <>", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureGreaterThan(Long value) {
+        public Criteria andTemperatureGreaterThan(BigDecimal value) {
             addCriterion("temperature >", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureGreaterThanOrEqualTo(Long value) {
+        public Criteria andTemperatureGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("temperature >=", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureLessThan(Long value) {
+        public Criteria andTemperatureLessThan(BigDecimal value) {
             addCriterion("temperature <", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureLessThanOrEqualTo(Long value) {
+        public Criteria andTemperatureLessThanOrEqualTo(BigDecimal value) {
             addCriterion("temperature <=", value, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureIn(List<Long> values) {
+        public Criteria andTemperatureIn(List<BigDecimal> values) {
             addCriterion("temperature in", values, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureNotIn(List<Long> values) {
+        public Criteria andTemperatureNotIn(List<BigDecimal> values) {
             addCriterion("temperature not in", values, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureBetween(Long value1, Long value2) {
+        public Criteria andTemperatureBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("temperature between", value1, value2, "temperature");
             return (Criteria) this;
         }
 
-        public Criteria andTemperatureNotBetween(Long value1, Long value2) {
+        public Criteria andTemperatureNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("temperature not between", value1, value2, "temperature");
             return (Criteria) this;
         }
@@ -665,52 +666,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andBeamEqualTo(Long value) {
+        public Criteria andBeamEqualTo(BigDecimal value) {
             addCriterion("beam =", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamNotEqualTo(Long value) {
+        public Criteria andBeamNotEqualTo(BigDecimal value) {
             addCriterion("beam <>", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamGreaterThan(Long value) {
+        public Criteria andBeamGreaterThan(BigDecimal value) {
             addCriterion("beam >", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamGreaterThanOrEqualTo(Long value) {
+        public Criteria andBeamGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("beam >=", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamLessThan(Long value) {
+        public Criteria andBeamLessThan(BigDecimal value) {
             addCriterion("beam <", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamLessThanOrEqualTo(Long value) {
+        public Criteria andBeamLessThanOrEqualTo(BigDecimal value) {
             addCriterion("beam <=", value, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamIn(List<Long> values) {
+        public Criteria andBeamIn(List<BigDecimal> values) {
             addCriterion("beam in", values, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamNotIn(List<Long> values) {
+        public Criteria andBeamNotIn(List<BigDecimal> values) {
             addCriterion("beam not in", values, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamBetween(Long value1, Long value2) {
+        public Criteria andBeamBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("beam between", value1, value2, "beam");
             return (Criteria) this;
         }
 
-        public Criteria andBeamNotBetween(Long value1, Long value2) {
+        public Criteria andBeamNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("beam not between", value1, value2, "beam");
             return (Criteria) this;
         }
@@ -725,52 +726,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersist1EqualTo(Long value) {
+        public Criteria andPersist1EqualTo(BigDecimal value) {
             addCriterion("persist1 =", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotEqualTo(Long value) {
+        public Criteria andPersist1NotEqualTo(BigDecimal value) {
             addCriterion("persist1 <>", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1GreaterThan(Long value) {
+        public Criteria andPersist1GreaterThan(BigDecimal value) {
             addCriterion("persist1 >", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1GreaterThanOrEqualTo(Long value) {
+        public Criteria andPersist1GreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("persist1 >=", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1LessThan(Long value) {
+        public Criteria andPersist1LessThan(BigDecimal value) {
             addCriterion("persist1 <", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1LessThanOrEqualTo(Long value) {
+        public Criteria andPersist1LessThanOrEqualTo(BigDecimal value) {
             addCriterion("persist1 <=", value, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1In(List<Long> values) {
+        public Criteria andPersist1In(List<BigDecimal> values) {
             addCriterion("persist1 in", values, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotIn(List<Long> values) {
+        public Criteria andPersist1NotIn(List<BigDecimal> values) {
             addCriterion("persist1 not in", values, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1Between(Long value1, Long value2) {
+        public Criteria andPersist1Between(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist1 between", value1, value2, "persist1");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotBetween(Long value1, Long value2) {
+        public Criteria andPersist1NotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist1 not between", value1, value2, "persist1");
             return (Criteria) this;
         }
@@ -785,52 +786,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersist2EqualTo(Long value) {
+        public Criteria andPersist2EqualTo(BigDecimal value) {
             addCriterion("persist2 =", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotEqualTo(Long value) {
+        public Criteria andPersist2NotEqualTo(BigDecimal value) {
             addCriterion("persist2 <>", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2GreaterThan(Long value) {
+        public Criteria andPersist2GreaterThan(BigDecimal value) {
             addCriterion("persist2 >", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2GreaterThanOrEqualTo(Long value) {
+        public Criteria andPersist2GreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("persist2 >=", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2LessThan(Long value) {
+        public Criteria andPersist2LessThan(BigDecimal value) {
             addCriterion("persist2 <", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2LessThanOrEqualTo(Long value) {
+        public Criteria andPersist2LessThanOrEqualTo(BigDecimal value) {
             addCriterion("persist2 <=", value, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2In(List<Long> values) {
+        public Criteria andPersist2In(List<BigDecimal> values) {
             addCriterion("persist2 in", values, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotIn(List<Long> values) {
+        public Criteria andPersist2NotIn(List<BigDecimal> values) {
             addCriterion("persist2 not in", values, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2Between(Long value1, Long value2) {
+        public Criteria andPersist2Between(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist2 between", value1, value2, "persist2");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotBetween(Long value1, Long value2) {
+        public Criteria andPersist2NotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist2 not between", value1, value2, "persist2");
             return (Criteria) this;
         }
@@ -845,52 +846,52 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersist3EqualTo(Long value) {
+        public Criteria andPersist3EqualTo(BigDecimal value) {
             addCriterion("persist3 =", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotEqualTo(Long value) {
+        public Criteria andPersist3NotEqualTo(BigDecimal value) {
             addCriterion("persist3 <>", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3GreaterThan(Long value) {
+        public Criteria andPersist3GreaterThan(BigDecimal value) {
             addCriterion("persist3 >", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3GreaterThanOrEqualTo(Long value) {
+        public Criteria andPersist3GreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("persist3 >=", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3LessThan(Long value) {
+        public Criteria andPersist3LessThan(BigDecimal value) {
             addCriterion("persist3 <", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3LessThanOrEqualTo(Long value) {
+        public Criteria andPersist3LessThanOrEqualTo(BigDecimal value) {
             addCriterion("persist3 <=", value, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3In(List<Long> values) {
+        public Criteria andPersist3In(List<BigDecimal> values) {
             addCriterion("persist3 in", values, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotIn(List<Long> values) {
+        public Criteria andPersist3NotIn(List<BigDecimal> values) {
             addCriterion("persist3 not in", values, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3Between(Long value1, Long value2) {
+        public Criteria andPersist3Between(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist3 between", value1, value2, "persist3");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotBetween(Long value1, Long value2) {
+        public Criteria andPersist3NotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("persist3 not between", value1, value2, "persist3");
             return (Criteria) this;
         }

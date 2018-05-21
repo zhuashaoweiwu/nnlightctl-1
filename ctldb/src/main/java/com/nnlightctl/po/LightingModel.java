@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class LightingModel implements Serializable {
@@ -12,11 +13,11 @@ public class LightingModel implements Serializable {
 
     private String modelName;
 
-    private Long ratedVoltage;
+    private BigDecimal ratedVoltage;
 
-    private Long ratedElectric;
+    private BigDecimal ratedElectric;
 
-    private Long ratedPower;
+    private BigDecimal ratedPower;
 
     private Byte ledCount;
 
@@ -56,27 +57,27 @@ public class LightingModel implements Serializable {
         this.modelName = modelName == null ? null : modelName.trim();
     }
 
-    public Long getRatedVoltage() {
+    public BigDecimal getRatedVoltage() {
         return ratedVoltage;
     }
 
-    public void setRatedVoltage(Long ratedVoltage) {
+    public void setRatedVoltage(BigDecimal ratedVoltage) {
         this.ratedVoltage = ratedVoltage;
     }
 
-    public Long getRatedElectric() {
+    public BigDecimal getRatedElectric() {
         return ratedElectric;
     }
 
-    public void setRatedElectric(Long ratedElectric) {
+    public void setRatedElectric(BigDecimal ratedElectric) {
         this.ratedElectric = ratedElectric;
     }
 
-    public Long getRatedPower() {
+    public BigDecimal getRatedPower() {
         return ratedPower;
     }
 
-    public void setRatedPower(Long ratedPower) {
+    public void setRatedPower(BigDecimal ratedPower) {
         this.ratedPower = ratedPower;
     }
 

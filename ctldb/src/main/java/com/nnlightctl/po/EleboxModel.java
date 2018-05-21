@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class EleboxModel implements Serializable {
@@ -12,11 +13,13 @@ public class EleboxModel implements Serializable {
 
     private String uid;
 
-    private Long powerRating;
+    private String modelName;
 
-    private Long electricRating;
+    private BigDecimal powerRating;
 
-    private Long voltageRating;
+    private BigDecimal electricRating;
+
+    private BigDecimal voltageRating;
 
     private String airSwitchType;
 
@@ -28,7 +31,7 @@ public class EleboxModel implements Serializable {
 
     private String ac;
 
-    private Long loopElectricity;
+    private BigDecimal loopElectricity;
 
     private static final long serialVersionUID = 1L;
 
@@ -64,27 +67,35 @@ public class EleboxModel implements Serializable {
         this.uid = uid == null ? null : uid.trim();
     }
 
-    public Long getPowerRating() {
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName == null ? null : modelName.trim();
+    }
+
+    public BigDecimal getPowerRating() {
         return powerRating;
     }
 
-    public void setPowerRating(Long powerRating) {
+    public void setPowerRating(BigDecimal powerRating) {
         this.powerRating = powerRating;
     }
 
-    public Long getElectricRating() {
+    public BigDecimal getElectricRating() {
         return electricRating;
     }
 
-    public void setElectricRating(Long electricRating) {
+    public void setElectricRating(BigDecimal electricRating) {
         this.electricRating = electricRating;
     }
 
-    public Long getVoltageRating() {
+    public BigDecimal getVoltageRating() {
         return voltageRating;
     }
 
-    public void setVoltageRating(Long voltageRating) {
+    public void setVoltageRating(BigDecimal voltageRating) {
         this.voltageRating = voltageRating;
     }
 
@@ -128,11 +139,11 @@ public class EleboxModel implements Serializable {
         this.ac = ac == null ? null : ac.trim();
     }
 
-    public Long getLoopElectricity() {
+    public BigDecimal getLoopElectricity() {
         return loopElectricity;
     }
 
-    public void setLoopElectricity(Long loopElectricity) {
+    public void setLoopElectricity(BigDecimal loopElectricity) {
         this.loopElectricity = loopElectricity;
     }
 
@@ -152,6 +163,7 @@ public class EleboxModel implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getModelName() == null ? other.getModelName() == null : this.getModelName().equals(other.getModelName()))
             && (this.getPowerRating() == null ? other.getPowerRating() == null : this.getPowerRating().equals(other.getPowerRating()))
             && (this.getElectricRating() == null ? other.getElectricRating() == null : this.getElectricRating().equals(other.getElectricRating()))
             && (this.getVoltageRating() == null ? other.getVoltageRating() == null : this.getVoltageRating().equals(other.getVoltageRating()))
@@ -171,6 +183,7 @@ public class EleboxModel implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getModelName() == null) ? 0 : getModelName().hashCode());
         result = prime * result + ((getPowerRating() == null) ? 0 : getPowerRating().hashCode());
         result = prime * result + ((getElectricRating() == null) ? 0 : getElectricRating().hashCode());
         result = prime * result + ((getVoltageRating() == null) ? 0 : getVoltageRating().hashCode());
@@ -193,6 +206,7 @@ public class EleboxModel implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", modelName=").append(modelName);
         sb.append(", powerRating=").append(powerRating);
         sb.append(", electricRating=").append(electricRating);
         sb.append(", voltageRating=").append(voltageRating);

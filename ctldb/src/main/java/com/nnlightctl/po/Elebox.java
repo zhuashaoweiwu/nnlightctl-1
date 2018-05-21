@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Elebox implements Serializable {
@@ -22,11 +23,11 @@ public class Elebox implements Serializable {
 
     private Date useDate;
 
-    private Long ratedVoltage;
+    private BigDecimal ratedVoltage;
 
-    private Long ratedElectricty;
+    private BigDecimal ratedElectricty;
 
-    private Long powerRating;
+    private BigDecimal powerRating;
 
     private Long maxUseTime;
 
@@ -114,27 +115,27 @@ public class Elebox implements Serializable {
         this.useDate = useDate;
     }
 
-    public Long getRatedVoltage() {
+    public BigDecimal getRatedVoltage() {
         return ratedVoltage;
     }
 
-    public void setRatedVoltage(Long ratedVoltage) {
+    public void setRatedVoltage(BigDecimal ratedVoltage) {
         this.ratedVoltage = ratedVoltage;
     }
 
-    public Long getRatedElectricty() {
+    public BigDecimal getRatedElectricty() {
         return ratedElectricty;
     }
 
-    public void setRatedElectricty(Long ratedElectricty) {
+    public void setRatedElectricty(BigDecimal ratedElectricty) {
         this.ratedElectricty = ratedElectricty;
     }
 
-    public Long getPowerRating() {
+    public BigDecimal getPowerRating() {
         return powerRating;
     }
 
-    public void setPowerRating(Long powerRating) {
+    public void setPowerRating(BigDecimal powerRating) {
         this.powerRating = powerRating;
     }
 

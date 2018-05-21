@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class EleboxModelLoop implements Serializable {
@@ -10,9 +11,9 @@ public class EleboxModelLoop implements Serializable {
 
     private Date gmtUpdated;
 
-    private Long voltage;
+    private BigDecimal voltage;
 
-    private Long electricity;
+    private BigDecimal electricity;
 
     private Byte lightCount;
 
@@ -48,19 +49,19 @@ public class EleboxModelLoop implements Serializable {
         this.gmtUpdated = gmtUpdated;
     }
 
-    public Long getVoltage() {
+    public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(Long voltage) {
+    public void setVoltage(BigDecimal voltage) {
         this.voltage = voltage;
     }
 
-    public Long getElectricity() {
+    public BigDecimal getElectricity() {
         return electricity;
     }
 
-    public void setElectricity(Long electricity) {
+    public void setElectricity(BigDecimal electricity) {
         this.electricity = electricity;
     }
 

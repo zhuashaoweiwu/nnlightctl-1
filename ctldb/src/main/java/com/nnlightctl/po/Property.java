@@ -14,9 +14,9 @@ public class Property implements Serializable {
 
     private Date propertyRecordDatetime;
 
-    private Long longitude;
+    private String longitude;
 
-    private Long latitude;
+    private String latitude;
 
     private Byte ctype;
 
@@ -98,20 +98,20 @@ public class Property implements Serializable {
         this.propertyRecordDatetime = propertyRecordDatetime;
     }
 
-    public Long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
-        this.longitude = longitude;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
     }
 
-    public Long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
-        this.latitude = latitude;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
     }
 
     public Byte getCtype() {

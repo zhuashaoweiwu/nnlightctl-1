@@ -7,8 +7,8 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="property_record_datetime" property="propertyRecordDatetime" jdbcType="TIMESTAMP" />
-    <result column="longitude" property="longitude" jdbcType="DECIMAL" />
-    <result column="latitude" property="latitude" jdbcType="DECIMAL" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
     <result column="ctype" property="ctype" jdbcType="TINYINT" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="comman_property" property="commanProperty" jdbcType="VARCHAR" />
@@ -137,8 +137,8 @@
       mem, nnlightctl_user_id, nnlightctl_repertory_id, 
       nnlightctl_supplier_id)
     values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{propertyRecordDatetime,jdbcType=TIMESTAMP}, #{longitude,jdbcType=DECIMAL}, 
-      #{latitude,jdbcType=DECIMAL}, #{ctype,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, 
+      #{uid,jdbcType=VARCHAR}, #{propertyRecordDatetime,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{ctype,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, 
       #{commanProperty,jdbcType=VARCHAR}, #{propertyManagerId,jdbcType=BIGINT}, #{nnlightctlPropertyId,jdbcType=BIGINT}, 
       #{state,jdbcType=TINYINT}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}, 
       #{propertyClassifyCatalogDesc,jdbcType=VARCHAR}, #{propertyClassifyCatalogName,jdbcType=VARCHAR}, 
@@ -246,10 +246,10 @@
         #{propertyRecordDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="longitude != null" >
-        #{longitude,jdbcType=DECIMAL},
+        #{longitude,jdbcType=VARCHAR},
       </if>
       <if test="latitude != null" >
-        #{latitude,jdbcType=DECIMAL},
+        #{latitude,jdbcType=VARCHAR},
       </if>
       <if test="ctype != null" >
         #{ctype,jdbcType=TINYINT},
@@ -335,10 +335,10 @@
         property_record_datetime = #{record.propertyRecordDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.longitude != null" >
-        longitude = #{record.longitude,jdbcType=DECIMAL},
+        longitude = #{record.longitude,jdbcType=VARCHAR},
       </if>
       <if test="record.latitude != null" >
-        latitude = #{record.latitude,jdbcType=DECIMAL},
+        latitude = #{record.latitude,jdbcType=VARCHAR},
       </if>
       <if test="record.ctype != null" >
         ctype = #{record.ctype,jdbcType=TINYINT},
@@ -409,8 +409,8 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
       property_record_datetime = #{record.propertyRecordDatetime,jdbcType=TIMESTAMP},
-      longitude = #{record.longitude,jdbcType=DECIMAL},
-      latitude = #{record.latitude,jdbcType=DECIMAL},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
       ctype = #{record.ctype,jdbcType=TINYINT},
       price = #{record.price,jdbcType=DECIMAL},
       comman_property = #{record.commanProperty,jdbcType=VARCHAR},
@@ -450,10 +450,10 @@
         property_record_datetime = #{propertyRecordDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="longitude != null" >
-        longitude = #{longitude,jdbcType=DECIMAL},
+        longitude = #{longitude,jdbcType=VARCHAR},
       </if>
       <if test="latitude != null" >
-        latitude = #{latitude,jdbcType=DECIMAL},
+        latitude = #{latitude,jdbcType=VARCHAR},
       </if>
       <if test="ctype != null" >
         ctype = #{ctype,jdbcType=TINYINT},
@@ -521,8 +521,8 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
       property_record_datetime = #{propertyRecordDatetime,jdbcType=TIMESTAMP},
-      longitude = #{longitude,jdbcType=DECIMAL},
-      latitude = #{latitude,jdbcType=DECIMAL},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
       ctype = #{ctype,jdbcType=TINYINT},
       price = #{price,jdbcType=DECIMAL},
       comman_property = #{commanProperty,jdbcType=VARCHAR},

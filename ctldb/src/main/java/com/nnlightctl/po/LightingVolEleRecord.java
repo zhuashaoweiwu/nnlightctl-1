@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class LightingVolEleRecord implements Serializable {
@@ -14,21 +15,21 @@ public class LightingVolEleRecord implements Serializable {
 
     private Date recordDatetime;
 
-    private Long voltage;
+    private BigDecimal voltage;
 
-    private Long electricty;
+    private BigDecimal electricty;
 
-    private Long dampness;
+    private BigDecimal dampness;
 
-    private Long temperature;
+    private BigDecimal temperature;
 
-    private Long beam;
+    private BigDecimal beam;
 
-    private Long persist1;
+    private BigDecimal persist1;
 
-    private Long persist2;
+    private BigDecimal persist2;
 
-    private Long persist3;
+    private BigDecimal persist3;
 
     private static final long serialVersionUID = 1L;
 
@@ -72,67 +73,67 @@ public class LightingVolEleRecord implements Serializable {
         this.recordDatetime = recordDatetime;
     }
 
-    public Long getVoltage() {
+    public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(Long voltage) {
+    public void setVoltage(BigDecimal voltage) {
         this.voltage = voltage;
     }
 
-    public Long getElectricty() {
+    public BigDecimal getElectricty() {
         return electricty;
     }
 
-    public void setElectricty(Long electricty) {
+    public void setElectricty(BigDecimal electricty) {
         this.electricty = electricty;
     }
 
-    public Long getDampness() {
+    public BigDecimal getDampness() {
         return dampness;
     }
 
-    public void setDampness(Long dampness) {
+    public void setDampness(BigDecimal dampness) {
         this.dampness = dampness;
     }
 
-    public Long getTemperature() {
+    public BigDecimal getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Long temperature) {
+    public void setTemperature(BigDecimal temperature) {
         this.temperature = temperature;
     }
 
-    public Long getBeam() {
+    public BigDecimal getBeam() {
         return beam;
     }
 
-    public void setBeam(Long beam) {
+    public void setBeam(BigDecimal beam) {
         this.beam = beam;
     }
 
-    public Long getPersist1() {
+    public BigDecimal getPersist1() {
         return persist1;
     }
 
-    public void setPersist1(Long persist1) {
+    public void setPersist1(BigDecimal persist1) {
         this.persist1 = persist1;
     }
 
-    public Long getPersist2() {
+    public BigDecimal getPersist2() {
         return persist2;
     }
 
-    public void setPersist2(Long persist2) {
+    public void setPersist2(BigDecimal persist2) {
         this.persist2 = persist2;
     }
 
-    public Long getPersist3() {
+    public BigDecimal getPersist3() {
         return persist3;
     }
 
-    public void setPersist3(Long persist3) {
+    public void setPersist3(BigDecimal persist3) {
         this.persist3 = persist3;
     }
 

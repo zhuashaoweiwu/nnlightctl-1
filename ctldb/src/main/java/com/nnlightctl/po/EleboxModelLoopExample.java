@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -295,52 +296,52 @@ public class EleboxModelLoopExample {
             return (Criteria) this;
         }
 
-        public Criteria andVoltageEqualTo(Long value) {
+        public Criteria andVoltageEqualTo(BigDecimal value) {
             addCriterion("voltage =", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotEqualTo(Long value) {
+        public Criteria andVoltageNotEqualTo(BigDecimal value) {
             addCriterion("voltage <>", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageGreaterThan(Long value) {
+        public Criteria andVoltageGreaterThan(BigDecimal value) {
             addCriterion("voltage >", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageGreaterThanOrEqualTo(Long value) {
+        public Criteria andVoltageGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("voltage >=", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageLessThan(Long value) {
+        public Criteria andVoltageLessThan(BigDecimal value) {
             addCriterion("voltage <", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageLessThanOrEqualTo(Long value) {
+        public Criteria andVoltageLessThanOrEqualTo(BigDecimal value) {
             addCriterion("voltage <=", value, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageIn(List<Long> values) {
+        public Criteria andVoltageIn(List<BigDecimal> values) {
             addCriterion("voltage in", values, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotIn(List<Long> values) {
+        public Criteria andVoltageNotIn(List<BigDecimal> values) {
             addCriterion("voltage not in", values, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageBetween(Long value1, Long value2) {
+        public Criteria andVoltageBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("voltage between", value1, value2, "voltage");
             return (Criteria) this;
         }
 
-        public Criteria andVoltageNotBetween(Long value1, Long value2) {
+        public Criteria andVoltageNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("voltage not between", value1, value2, "voltage");
             return (Criteria) this;
         }
@@ -355,52 +356,52 @@ public class EleboxModelLoopExample {
             return (Criteria) this;
         }
 
-        public Criteria andElectricityEqualTo(Long value) {
+        public Criteria andElectricityEqualTo(BigDecimal value) {
             addCriterion("electricity =", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityNotEqualTo(Long value) {
+        public Criteria andElectricityNotEqualTo(BigDecimal value) {
             addCriterion("electricity <>", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityGreaterThan(Long value) {
+        public Criteria andElectricityGreaterThan(BigDecimal value) {
             addCriterion("electricity >", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityGreaterThanOrEqualTo(Long value) {
+        public Criteria andElectricityGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("electricity >=", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityLessThan(Long value) {
+        public Criteria andElectricityLessThan(BigDecimal value) {
             addCriterion("electricity <", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityLessThanOrEqualTo(Long value) {
+        public Criteria andElectricityLessThanOrEqualTo(BigDecimal value) {
             addCriterion("electricity <=", value, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityIn(List<Long> values) {
+        public Criteria andElectricityIn(List<BigDecimal> values) {
             addCriterion("electricity in", values, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityNotIn(List<Long> values) {
+        public Criteria andElectricityNotIn(List<BigDecimal> values) {
             addCriterion("electricity not in", values, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityBetween(Long value1, Long value2) {
+        public Criteria andElectricityBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("electricity between", value1, value2, "electricity");
             return (Criteria) this;
         }
 
-        public Criteria andElectricityNotBetween(Long value1, Long value2) {
+        public Criteria andElectricityNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("electricity not between", value1, value2, "electricity");
             return (Criteria) this;
         }

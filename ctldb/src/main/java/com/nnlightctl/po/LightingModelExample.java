@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -365,52 +366,52 @@ public class LightingModelExample {
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageEqualTo(Long value) {
+        public Criteria andRatedVoltageEqualTo(BigDecimal value) {
             addCriterion("rated_voltage =", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageNotEqualTo(Long value) {
+        public Criteria andRatedVoltageNotEqualTo(BigDecimal value) {
             addCriterion("rated_voltage <>", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageGreaterThan(Long value) {
+        public Criteria andRatedVoltageGreaterThan(BigDecimal value) {
             addCriterion("rated_voltage >", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageGreaterThanOrEqualTo(Long value) {
+        public Criteria andRatedVoltageGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_voltage >=", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageLessThan(Long value) {
+        public Criteria andRatedVoltageLessThan(BigDecimal value) {
             addCriterion("rated_voltage <", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageLessThanOrEqualTo(Long value) {
+        public Criteria andRatedVoltageLessThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_voltage <=", value, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageIn(List<Long> values) {
+        public Criteria andRatedVoltageIn(List<BigDecimal> values) {
             addCriterion("rated_voltage in", values, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageNotIn(List<Long> values) {
+        public Criteria andRatedVoltageNotIn(List<BigDecimal> values) {
             addCriterion("rated_voltage not in", values, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageBetween(Long value1, Long value2) {
+        public Criteria andRatedVoltageBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_voltage between", value1, value2, "ratedVoltage");
             return (Criteria) this;
         }
 
-        public Criteria andRatedVoltageNotBetween(Long value1, Long value2) {
+        public Criteria andRatedVoltageNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_voltage not between", value1, value2, "ratedVoltage");
             return (Criteria) this;
         }
@@ -425,52 +426,52 @@ public class LightingModelExample {
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricEqualTo(Long value) {
+        public Criteria andRatedElectricEqualTo(BigDecimal value) {
             addCriterion("rated_electric =", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricNotEqualTo(Long value) {
+        public Criteria andRatedElectricNotEqualTo(BigDecimal value) {
             addCriterion("rated_electric <>", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricGreaterThan(Long value) {
+        public Criteria andRatedElectricGreaterThan(BigDecimal value) {
             addCriterion("rated_electric >", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricGreaterThanOrEqualTo(Long value) {
+        public Criteria andRatedElectricGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_electric >=", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricLessThan(Long value) {
+        public Criteria andRatedElectricLessThan(BigDecimal value) {
             addCriterion("rated_electric <", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricLessThanOrEqualTo(Long value) {
+        public Criteria andRatedElectricLessThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_electric <=", value, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricIn(List<Long> values) {
+        public Criteria andRatedElectricIn(List<BigDecimal> values) {
             addCriterion("rated_electric in", values, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricNotIn(List<Long> values) {
+        public Criteria andRatedElectricNotIn(List<BigDecimal> values) {
             addCriterion("rated_electric not in", values, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricBetween(Long value1, Long value2) {
+        public Criteria andRatedElectricBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_electric between", value1, value2, "ratedElectric");
             return (Criteria) this;
         }
 
-        public Criteria andRatedElectricNotBetween(Long value1, Long value2) {
+        public Criteria andRatedElectricNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_electric not between", value1, value2, "ratedElectric");
             return (Criteria) this;
         }
@@ -485,52 +486,52 @@ public class LightingModelExample {
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerEqualTo(Long value) {
+        public Criteria andRatedPowerEqualTo(BigDecimal value) {
             addCriterion("rated_power =", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerNotEqualTo(Long value) {
+        public Criteria andRatedPowerNotEqualTo(BigDecimal value) {
             addCriterion("rated_power <>", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerGreaterThan(Long value) {
+        public Criteria andRatedPowerGreaterThan(BigDecimal value) {
             addCriterion("rated_power >", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerGreaterThanOrEqualTo(Long value) {
+        public Criteria andRatedPowerGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_power >=", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerLessThan(Long value) {
+        public Criteria andRatedPowerLessThan(BigDecimal value) {
             addCriterion("rated_power <", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerLessThanOrEqualTo(Long value) {
+        public Criteria andRatedPowerLessThanOrEqualTo(BigDecimal value) {
             addCriterion("rated_power <=", value, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerIn(List<Long> values) {
+        public Criteria andRatedPowerIn(List<BigDecimal> values) {
             addCriterion("rated_power in", values, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerNotIn(List<Long> values) {
+        public Criteria andRatedPowerNotIn(List<BigDecimal> values) {
             addCriterion("rated_power not in", values, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerBetween(Long value1, Long value2) {
+        public Criteria andRatedPowerBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_power between", value1, value2, "ratedPower");
             return (Criteria) this;
         }
 
-        public Criteria andRatedPowerNotBetween(Long value1, Long value2) {
+        public Criteria andRatedPowerNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("rated_power not between", value1, value2, "ratedPower");
             return (Criteria) this;
         }

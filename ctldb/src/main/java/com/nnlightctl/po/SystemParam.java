@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class SystemParam implements Serializable {
@@ -14,7 +15,7 @@ public class SystemParam implements Serializable {
 
     private String configName;
 
-    private Long configValue;
+    private BigDecimal configValue;
 
     private String unit;
 
@@ -62,11 +63,11 @@ public class SystemParam implements Serializable {
         this.configName = configName == null ? null : configName.trim();
     }
 
-    public Long getConfigValue() {
+    public BigDecimal getConfigValue() {
         return configValue;
     }
 
-    public void setConfigValue(Long configValue) {
+    public void setConfigValue(BigDecimal configValue) {
         this.configValue = configValue;
     }
 

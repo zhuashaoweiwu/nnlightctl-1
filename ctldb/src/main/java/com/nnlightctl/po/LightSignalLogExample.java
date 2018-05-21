@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -425,52 +426,52 @@ public class LightSignalLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityEqualTo(Long value) {
+        public Criteria andSignalIntensityEqualTo(BigDecimal value) {
             addCriterion("signal_intensity =", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityNotEqualTo(Long value) {
+        public Criteria andSignalIntensityNotEqualTo(BigDecimal value) {
             addCriterion("signal_intensity <>", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityGreaterThan(Long value) {
+        public Criteria andSignalIntensityGreaterThan(BigDecimal value) {
             addCriterion("signal_intensity >", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityGreaterThanOrEqualTo(Long value) {
+        public Criteria andSignalIntensityGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("signal_intensity >=", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityLessThan(Long value) {
+        public Criteria andSignalIntensityLessThan(BigDecimal value) {
             addCriterion("signal_intensity <", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityLessThanOrEqualTo(Long value) {
+        public Criteria andSignalIntensityLessThanOrEqualTo(BigDecimal value) {
             addCriterion("signal_intensity <=", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityIn(List<Long> values) {
+        public Criteria andSignalIntensityIn(List<BigDecimal> values) {
             addCriterion("signal_intensity in", values, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityNotIn(List<Long> values) {
+        public Criteria andSignalIntensityNotIn(List<BigDecimal> values) {
             addCriterion("signal_intensity not in", values, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityBetween(Long value1, Long value2) {
+        public Criteria andSignalIntensityBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("signal_intensity between", value1, value2, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andSignalIntensityNotBetween(Long value1, Long value2) {
+        public Criteria andSignalIntensityNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("signal_intensity not between", value1, value2, "signalIntensity");
             return (Criteria) this;
         }

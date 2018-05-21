@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class LightSignalLog implements Serializable {
@@ -14,7 +15,7 @@ public class LightSignalLog implements Serializable {
 
     private Date signalLogDate;
 
-    private Long signalIntensity;
+    private BigDecimal signalIntensity;
 
     private String unit;
 
@@ -62,11 +63,11 @@ public class LightSignalLog implements Serializable {
         this.signalLogDate = signalLogDate;
     }
 
-    public Long getSignalIntensity() {
+    public BigDecimal getSignalIntensity() {
         return signalIntensity;
     }
 
-    public void setSignalIntensity(Long signalIntensity) {
+    public void setSignalIntensity(BigDecimal signalIntensity) {
         this.signalIntensity = signalIntensity;
     }
 

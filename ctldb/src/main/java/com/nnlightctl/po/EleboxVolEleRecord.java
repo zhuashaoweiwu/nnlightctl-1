@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class EleboxVolEleRecord implements Serializable {
@@ -14,11 +15,11 @@ public class EleboxVolEleRecord implements Serializable {
 
     private Date realtimeDate;
 
-    private Long voltage;
+    private BigDecimal voltage;
 
-    private Long electricity;
+    private BigDecimal electricity;
 
-    private Long eleboxPower;
+    private BigDecimal eleboxPower;
 
     private static final long serialVersionUID = 1L;
 
@@ -62,27 +63,27 @@ public class EleboxVolEleRecord implements Serializable {
         this.realtimeDate = realtimeDate;
     }
 
-    public Long getVoltage() {
+    public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(Long voltage) {
+    public void setVoltage(BigDecimal voltage) {
         this.voltage = voltage;
     }
 
-    public Long getElectricity() {
+    public BigDecimal getElectricity() {
         return electricity;
     }
 
-    public void setElectricity(Long electricity) {
+    public void setElectricity(BigDecimal electricity) {
         this.electricity = electricity;
     }
 
-    public Long getEleboxPower() {
+    public BigDecimal getEleboxPower() {
         return eleboxPower;
     }
 
-    public void setEleboxPower(Long eleboxPower) {
+    public void setEleboxPower(BigDecimal eleboxPower) {
         this.eleboxPower = eleboxPower;
     }
 
