@@ -2,6 +2,7 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
+import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.dao.ProjectMapper;
@@ -37,17 +38,17 @@ public class ProjectServerImpl implements ProjectServer {
     private EleboxMapper eleboxMapper;
 
     @Override
-    public List<ProjectView> listProject(BaseRequest request) {
+    public Tuple.TwoTuple<List<ProjectView>, Integer> listProject(BaseRequest request) {
+        Tuple.TwoTuple<List<ProjectView>, Integer> result = new Tuple.TwoTuple<>();
+
         List<ProjectView> projectViewList = projectDao.listProject(request);
 
         //项目总数
         int total = projectMapper.countByExample(new ProjectExample());
+        result.setSecond(total);
 
         for (ProjectView projectView : projectViewList) {
             Long projectId = projectView.getId();
-
-            //设置总页数
-            projectView.setTotal(total);
 
             //项目对应的灯具数量
             LightingExample lightingExample = new LightingExample();
@@ -59,7 +60,9 @@ public class ProjectServerImpl implements ProjectServer {
             eleboxExample.createCriteria().andNnlightctlProjectIdEqualTo(projectId);
             projectView.setEleboxs(eleboxMapper.countByExample(eleboxExample));
         }
-        return projectViewList;
+        result.setFirst(projectViewList);
+
+        return result;
     }
 
     @Override

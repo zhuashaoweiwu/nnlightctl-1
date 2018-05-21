@@ -5,6 +5,7 @@
 package com.nnlightctl.springmvc.controller;
 
 
+import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectCity;
 import com.nnlightctl.po.ProjectCountry;
@@ -156,9 +157,11 @@ public class ProjectController extends BaseController {
     public String listProject(BaseRequest request) {
         logger.info("[POST] /api/project/listproject");
 
-        List<ProjectView> projectList = projectServer.listProject(request);
+        Tuple.TwoTuple<List<ProjectView>, Integer> result = projectServer.listProject(request);
+        List<ProjectView> projectList = result.getFirst();
         JsonResult jsonResult = JsonResult.SUCCESS;
         jsonResult.setData(projectList);
+        jsonResult.setTotal(result.getSecond());
 
         return toJson(jsonResult);
     }

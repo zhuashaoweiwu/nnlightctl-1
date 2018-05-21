@@ -7,6 +7,7 @@ public class JsonResult {
     public static JsonResult FAILURE = new JsonResult("1001", "失败");
 
     public JsonResult(String code, String msg) {
+        this();
         this.code = code;
         this.msg = msg;
     }
@@ -21,7 +22,7 @@ public class JsonResult {
         return FAILURE;
     }
 
-    public JsonResult() {}
+    public JsonResult() {this.total = -1;}
 
     public String getCode() {
         return code;
@@ -47,6 +48,15 @@ public class JsonResult {
         this.data = data;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    private int total;
     private String code;
     private String msg;
     private List<?> data;

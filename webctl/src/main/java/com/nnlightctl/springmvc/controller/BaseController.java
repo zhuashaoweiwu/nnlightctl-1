@@ -24,6 +24,7 @@ public class BaseController {
         header.put("code", jsonResult.getCode());
         header.put("msg", jsonResult.getMsg());
         jsonObject.put("header", header);
+
         //返回体
         JSONObject body = new JSONObject();
         JSONArray jsonArray = new JSONArray();
@@ -34,6 +35,10 @@ public class BaseController {
             }
         }
         body.put("data", jsonArray);
+
+        //total数据总数
+        body.put("total", jsonResult.getTotal());
+
         jsonObject.put("body", body);
 
         return jsonObject.toJSONString();

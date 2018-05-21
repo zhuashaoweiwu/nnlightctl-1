@@ -27,15 +27,6 @@ public class BaseView {
         this.gmtUpdated = gmtUpdated;
     }
 
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    private long total;
 
     private Long id;
 
