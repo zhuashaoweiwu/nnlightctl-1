@@ -116,27 +116,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Elebox" >
-    insert into nnlightctl_elebox (id, gmt_created, gmt_updated, 
-      uid, code_number, manufacture, 
-      longitude, latitude, use_date, 
-      rated_voltage, rated_electricty, power_rating, 
-      max_use_time, spd, main_switch, 
-      nnlightctl_elebox_gis_id, nnlightctl_region_id, 
-      nnlightctl_project_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, 
-      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{useDate,jdbcType=TIMESTAMP}, 
-      #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectricty,jdbcType=DECIMAL}, #{powerRating,jdbcType=DECIMAL}, 
-      #{maxUseTime,jdbcType=BIGINT}, #{spd,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, 
-      #{nnlightctlEleboxGisId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
-      #{nnlightctlProjectId,jdbcType=BIGINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_elebox (gmt_created, gmt_updated, uid, 
+      code_number, manufacture, longitude, 
+      latitude, use_date, rated_voltage, 
+      rated_electricty, power_rating, max_use_time, 
+      spd, main_switch, nnlightctl_elebox_gis_id, 
+      nnlightctl_region_id, nnlightctl_project_id)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{codeNumber,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{useDate,jdbcType=TIMESTAMP}, #{ratedVoltage,jdbcType=DECIMAL}, 
+      #{ratedElectricty,jdbcType=DECIMAL}, #{powerRating,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
+      #{spd,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT}, 
+      #{nnlightctlRegionId,jdbcType=BIGINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Elebox" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_elebox
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -190,9 +191,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

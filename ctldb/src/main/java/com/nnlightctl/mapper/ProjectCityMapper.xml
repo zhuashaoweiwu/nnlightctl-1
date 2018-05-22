@@ -106,21 +106,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.ProjectCity" >
-    insert into nnlightctl_project_city (id, gmt_created, gmt_updated, 
-      code_number, city_name, longitude, 
-      latitude, time_zone, mem
-      )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{codeNumber,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
-      #{latitude,jdbcType=VARCHAR}, #{timeZone,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR}
-      )
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_project_city (gmt_created, gmt_updated, code_number, 
+      city_name, longitude, latitude, 
+      time_zone, mem)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{timeZone,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.ProjectCity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_project_city
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -147,9 +148,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

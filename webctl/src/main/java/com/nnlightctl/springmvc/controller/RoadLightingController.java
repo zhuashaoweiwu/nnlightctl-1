@@ -1,8 +1,10 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlightctl.request.EleboxModelRequest;
 import com.nnlightctl.request.ModelLoopConditionRequest;
 import com.nnlightctl.request.ModelLoopRequest;
 import com.nnlightctl.result.JsonResult;
+import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.ModelLoopServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,9 @@ public class RoadLightingController extends BaseController {
 
     @Autowired
     private ModelLoopServer modelLoopServer;
+
+    @Autowired
+    private EleboxModelServer modelServer;
 
     @RequestMapping("addorupdatemodelloop")
     public String addOrUpdateModelLoop(ModelLoopRequest request) {
@@ -39,6 +44,22 @@ public class RoadLightingController extends BaseController {
         logger.info("[POST] /api/roadlighting/deletemodelloop");
 
         int ret = modelLoopServer.deleteModelLoop(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("addeleboxmodel")
+    public String addEleboxModel(EleboxModelRequest request) {
+        logger.info("[POST] /api/roadlighting/addeleboxmodel");
+
+        int ret = modelServer.addEleboxModel(request);
+
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();

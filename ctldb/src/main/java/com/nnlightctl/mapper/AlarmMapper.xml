@@ -110,23 +110,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Alarm" >
-    insert into nnlightctl_alarm (id, gmt_created, gmt_updated, 
-      code_number, alarm_source, alarm_level, 
-      state, ctype, alarm_time, 
-      remove_alarm_time, msg, alarm_count, 
-      nnlightctl_alarm_config_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{codeNumber,jdbcType=VARCHAR}, #{alarmSource,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=TINYINT}, 
-      #{state,jdbcType=TINYINT}, #{ctype,jdbcType=TINYINT}, #{alarmTime,jdbcType=TIMESTAMP}, 
-      #{removeAlarmTime,jdbcType=TIMESTAMP}, #{msg,jdbcType=VARCHAR}, #{alarmCount,jdbcType=BIGINT}, 
-      #{nnlightctlAlarmConfigId,jdbcType=BIGINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_alarm (gmt_created, gmt_updated, code_number, 
+      alarm_source, alarm_level, state, 
+      ctype, alarm_time, remove_alarm_time, 
+      msg, alarm_count, nnlightctl_alarm_config_id
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
+      #{alarmSource,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
+      #{ctype,jdbcType=TINYINT}, #{alarmTime,jdbcType=TIMESTAMP}, #{removeAlarmTime,jdbcType=TIMESTAMP}, 
+      #{msg,jdbcType=VARCHAR}, #{alarmCount,jdbcType=BIGINT}, #{nnlightctlAlarmConfigId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Alarm" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_alarm
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -165,9 +168,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

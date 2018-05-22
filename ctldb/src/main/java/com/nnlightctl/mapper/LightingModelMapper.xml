@@ -106,21 +106,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.LightingModel" >
-    insert into nnlightctl_lighting_model (id, gmt_created, gmt_updated, 
-      model_name, rated_voltage, rated_electric, 
-      rated_power, led_count, mem
-      )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{modelName,jdbcType=VARCHAR}, #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectric,jdbcType=DECIMAL}, 
-      #{ratedPower,jdbcType=DECIMAL}, #{ledCount,jdbcType=TINYINT}, #{mem,jdbcType=VARCHAR}
-      )
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_lighting_model (gmt_created, gmt_updated, model_name, 
+      rated_voltage, rated_electric, rated_power, 
+      led_count, mem)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{modelName,jdbcType=VARCHAR}, 
+      #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectric,jdbcType=DECIMAL}, #{ratedPower,jdbcType=DECIMAL}, 
+      #{ledCount,jdbcType=TINYINT}, #{mem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingModel" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_lighting_model
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -147,9 +148,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

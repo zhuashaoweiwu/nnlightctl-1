@@ -101,17 +101,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.SceneShotcut" >
-    insert into nnlightctl_scene_shotcut (id, gmt_created, gmt_updated, 
-      shotcut_name, nnlightctl_scene_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{shotcutName,jdbcType=VARCHAR}, #{nnlightctlSceneId,jdbcType=BIGINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_scene_shotcut (gmt_created, gmt_updated, shotcut_name, 
+      nnlightctl_scene_id)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{shotcutName,jdbcType=VARCHAR}, 
+      #{nnlightctlSceneId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.SceneShotcut" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_scene_shotcut
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -126,9 +129,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

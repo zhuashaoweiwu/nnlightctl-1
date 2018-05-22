@@ -126,20 +126,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Property" >
-    insert into nnlightctl_property (id, gmt_created, gmt_updated, 
-      uid, property_record_datetime, longitude, 
-      latitude, ctype, price, 
-      comman_property, property_manager_id, nnlightctl_property_id, 
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_property (gmt_created, gmt_updated, uid, 
+      property_record_datetime, longitude, latitude, 
+      ctype, price, comman_property, 
+      property_manager_id, nnlightctl_property_id, 
       state, nnlightctl_property_classify_catalog_id, 
       property_classify_catalog_desc, property_classify_catalog_name, 
       nnlightctl_user_applier_id, property_count, apply_state, 
       in_out_state, reason, reasonid, 
       mem, nnlightctl_user_id, nnlightctl_repertory_id, 
       nnlightctl_supplier_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{propertyRecordDatetime,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, 
-      #{latitude,jdbcType=VARCHAR}, #{ctype,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, 
-      #{commanProperty,jdbcType=VARCHAR}, #{propertyManagerId,jdbcType=BIGINT}, #{nnlightctlPropertyId,jdbcType=BIGINT}, 
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{propertyRecordDatetime,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{ctype,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{commanProperty,jdbcType=VARCHAR}, 
+      #{propertyManagerId,jdbcType=BIGINT}, #{nnlightctlPropertyId,jdbcType=BIGINT}, 
       #{state,jdbcType=TINYINT}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}, 
       #{propertyClassifyCatalogDesc,jdbcType=VARCHAR}, #{propertyClassifyCatalogName,jdbcType=VARCHAR}, 
       #{nnlightctlUserApplierId,jdbcType=BIGINT}, #{propertyCount,jdbcType=BIGINT}, #{applyState,jdbcType=TINYINT}, 
@@ -148,11 +151,11 @@
       #{nnlightctlSupplierId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Property" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_property
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -230,9 +233,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

@@ -115,27 +115,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Lighting" >
-    insert into nnlightctl_lighting (id, gmt_created, gmt_updated, 
-      uid, manufacture, use_date, 
-      lamppost, lamphead, nnlightctl_lighting_model_id, 
-      nnlightctl_lighting_gis_id, property_serial_number, 
-      decay, max_use_time, mem, 
-      nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_lighting (gmt_created, gmt_updated, uid, 
+      manufacture, use_date, lamppost, 
+      lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
+      property_serial_number, decay, max_use_time, 
+      mem, nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
       nnlightctl_project_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, 
-      #{lamppost,jdbcType=VARCHAR}, #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, 
-      #{nnlightctlLightingGisId,jdbcType=BIGINT}, #{propertySerialNumber,jdbcType=VARCHAR}, 
-      #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{mem,jdbcType=VARCHAR}, 
-      #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, 
+      #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
+      #{propertySerialNumber,jdbcType=VARCHAR}, #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
+      #{mem,jdbcType=VARCHAR}, #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
       #{nnlightctlProjectId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Lighting" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_lighting
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -186,9 +187,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

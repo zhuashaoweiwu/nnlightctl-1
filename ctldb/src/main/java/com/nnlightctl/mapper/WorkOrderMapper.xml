@@ -113,25 +113,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.WorkOrder" >
-    insert into nnlightctl_work_order (id, gmt_created, gmt_updated, 
-      serial_number, classify, nnlightctl_workflower_id, 
-      state, priority, nnlightctl_region_id, 
-      address, nnlightctl_workflower_move_record_id, 
-      nnlightctl_masker_id, content, attach_file_path, 
-      work_source)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{serialNumber,jdbcType=VARCHAR}, #{classify,jdbcType=TINYINT}, #{nnlightctlWorkflowerId,jdbcType=BIGINT}, 
-      #{state,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
-      #{address,jdbcType=VARCHAR}, #{nnlightctlWorkflowerMoveRecordId,jdbcType=BIGINT}, 
-      #{nnlightctlMaskerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{attachFilePath,jdbcType=VARCHAR}, 
-      #{workSource,jdbcType=TINYINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_work_order (gmt_created, gmt_updated, serial_number, 
+      classify, nnlightctl_workflower_id, state, 
+      priority, nnlightctl_region_id, address, 
+      nnlightctl_workflower_move_record_id, nnlightctl_masker_id, 
+      content, attach_file_path, work_source
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialNumber,jdbcType=VARCHAR}, 
+      #{classify,jdbcType=TINYINT}, #{nnlightctlWorkflowerId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT}, 
+      #{priority,jdbcType=TINYINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
+      #{nnlightctlWorkflowerMoveRecordId,jdbcType=BIGINT}, #{nnlightctlMaskerId,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{attachFilePath,jdbcType=VARCHAR}, #{workSource,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.WorkOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_work_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -176,9 +179,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

@@ -104,19 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.UserOperationLog" >
-    insert into nnlightctl_user_operation_log (id, gmt_created, gmt_updated, 
-      nnlightctl_user_id, operation_type, operation_time, 
-      operation_desc)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{nnlightctlUserId,jdbcType=BIGINT}, #{operationType,jdbcType=TINYINT}, #{operationTime,jdbcType=TIMESTAMP}, 
-      #{operationDesc,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_user_operation_log (gmt_created, gmt_updated, nnlightctl_user_id, 
+      operation_type, operation_time, operation_desc
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{nnlightctlUserId,jdbcType=BIGINT}, 
+      #{operationType,jdbcType=TINYINT}, #{operationTime,jdbcType=TIMESTAMP}, #{operationDesc,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.UserOperationLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_user_operation_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -137,9 +140,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

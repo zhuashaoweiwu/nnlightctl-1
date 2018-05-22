@@ -107,21 +107,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.SwitchTask" >
-    insert into nnlightctl_switch_task (id, gmt_created, gmt_updated, 
-      switch_name, start_time, end_time, 
-      is_lighton, is_usebeam, period, 
-      light_percent)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{switchName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{isLighton,jdbcType=TINYINT}, #{isUsebeam,jdbcType=TINYINT}, #{period,jdbcType=TINYINT}, 
-      #{lightPercent,jdbcType=TINYINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_switch_task (gmt_created, gmt_updated, switch_name, 
+      start_time, end_time, is_lighton, 
+      is_usebeam, period, light_percent
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{switchName,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{isLighton,jdbcType=TINYINT}, 
+      #{isUsebeam,jdbcType=TINYINT}, #{period,jdbcType=TINYINT}, #{lightPercent,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.SwitchTask" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_switch_task
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -151,9 +154,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

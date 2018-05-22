@@ -104,19 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
-    insert into nnlightctl_elebox_vol_ele_record (id, gmt_created, gmt_updated, 
-      uid, realtime_date, voltage, 
-      electricity, elebox_power)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{realtimeDate,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, 
-      #{electricity,jdbcType=DECIMAL}, #{eleboxPower,jdbcType=DECIMAL})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_elebox_vol_ele_record (gmt_created, gmt_updated, uid, 
+      realtime_date, voltage, electricity, 
+      elebox_power)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{realtimeDate,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricity,jdbcType=DECIMAL}, 
+      #{eleboxPower,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_elebox_vol_ele_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -140,9 +143,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

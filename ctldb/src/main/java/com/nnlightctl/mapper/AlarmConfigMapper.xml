@@ -105,19 +105,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.AlarmConfig" >
-    insert into nnlightctl_alarm_config (id, gmt_created, gmt_updated, 
-      alarm_config_level, is_notice_map, is_notice_sms, 
-      is_notice_email, is_notice_weixin)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{alarmConfigLevel,jdbcType=TINYINT}, #{isNoticeMap,jdbcType=TINYINT}, #{isNoticeSms,jdbcType=TINYINT}, 
-      #{isNoticeEmail,jdbcType=TINYINT}, #{isNoticeWeixin,jdbcType=TINYINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_alarm_config (gmt_created, gmt_updated, alarm_config_level, 
+      is_notice_map, is_notice_sms, is_notice_email, 
+      is_notice_weixin)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{alarmConfigLevel,jdbcType=TINYINT}, 
+      #{isNoticeMap,jdbcType=TINYINT}, #{isNoticeSms,jdbcType=TINYINT}, #{isNoticeEmail,jdbcType=TINYINT}, 
+      #{isNoticeWeixin,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.AlarmConfig" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_alarm_config
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -141,9 +144,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

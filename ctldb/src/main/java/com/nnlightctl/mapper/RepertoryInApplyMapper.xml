@@ -111,25 +111,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.RepertoryInApply" >
-    insert into nnlightctl_repertory_in_apply (id, gmt_created, gmt_updated, 
-      serialnumber, in_repertory_date, nnlightctl_property_classify_catalog_id, 
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_repertory_in_apply (gmt_created, gmt_updated, serialnumber, 
+      in_repertory_date, nnlightctl_property_classify_catalog_id, 
       nnlightctl_supplier, property_name, property_uid, 
       property_count, nnlightctl_repertory_in_reason_id, 
       nnlightctl_repertory_id, nnlightctl_user_apply_id
       )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{serialnumber,jdbcType=VARCHAR}, #{inRepertoryDate,jdbcType=TIMESTAMP}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}, 
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialnumber,jdbcType=VARCHAR}, 
+      #{inRepertoryDate,jdbcType=TIMESTAMP}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}, 
       #{nnlightctlSupplier,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR}, #{propertyUid,jdbcType=VARCHAR}, 
       #{propertyCount,jdbcType=BIGINT}, #{nnlightctlRepertoryInReasonId,jdbcType=BIGINT}, 
       #{nnlightctlRepertoryId,jdbcType=BIGINT}, #{nnlightctlUserApplyId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.RepertoryInApply" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_repertory_in_apply
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -168,9 +171,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

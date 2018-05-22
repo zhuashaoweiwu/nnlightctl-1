@@ -107,21 +107,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Department" >
-    insert into nnlightctl_department (id, gmt_created, gmt_updated, 
-      department_name, create_time, addr, 
-      nnlightctl_institution_id_belong, mem, nnlightctl_department_id_parent, 
-      department_level)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{departmentName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{addr,jdbcType=VARCHAR}, 
-      #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT}, #{mem,jdbcType=VARCHAR}, #{nnlightctlDepartmentIdParent,jdbcType=BIGINT}, 
-      #{departmentLevel,jdbcType=TINYINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_department (gmt_created, gmt_updated, department_name, 
+      create_time, addr, nnlightctl_institution_id_belong, 
+      mem, nnlightctl_department_id_parent, department_level
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{departmentName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{addr,jdbcType=VARCHAR}, #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT}, 
+      #{mem,jdbcType=VARCHAR}, #{nnlightctlDepartmentIdParent,jdbcType=BIGINT}, #{departmentLevel,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Department" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_department
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -151,9 +154,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

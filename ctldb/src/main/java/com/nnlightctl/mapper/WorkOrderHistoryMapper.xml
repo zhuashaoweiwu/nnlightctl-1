@@ -102,19 +102,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.WorkOrderHistory" >
-    insert into nnlightctl_work_order_history (id, gmt_created, gmt_updated, 
-      nnlightctl_work_order_id, record_date, mem
-      )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{nnlightctlWorkOrderId,jdbcType=BIGINT}, #{recordDate,jdbcType=TIMESTAMP}, #{mem,jdbcType=VARCHAR}
-      )
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_work_order_history (gmt_created, gmt_updated, nnlightctl_work_order_id, 
+      record_date, mem)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{nnlightctlWorkOrderId,jdbcType=BIGINT}, 
+      #{recordDate,jdbcType=TIMESTAMP}, #{mem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.WorkOrderHistory" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_work_order_history
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -132,9 +133,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

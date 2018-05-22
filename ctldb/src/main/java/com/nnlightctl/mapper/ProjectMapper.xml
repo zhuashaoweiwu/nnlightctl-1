@@ -112,25 +112,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.Project" >
-    insert into nnlightctl_project (id, gmt_created, gmt_updated, 
-      code_number, project_name, ctype, 
-      nnlightctl_project_country_id, nnlightctl_project_province_id, 
-      nnlightctl_project_city_id, nnlightctl_institution_id, 
-      longitude, latitude, mem, 
-      state)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{codeNumber,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{ctype,jdbcType=TINYINT}, 
-      #{nnlightctlProjectCountryId,jdbcType=BIGINT}, #{nnlightctlProjectProvinceId,jdbcType=BIGINT}, 
-      #{nnlightctlProjectCityId,jdbcType=BIGINT}, #{nnlightctlInstitutionId,jdbcType=BIGINT}, 
-      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR}, 
-      #{state,jdbcType=TINYINT})
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_project (gmt_created, gmt_updated, code_number, 
+      project_name, ctype, nnlightctl_project_country_id, 
+      nnlightctl_project_province_id, nnlightctl_project_city_id, 
+      nnlightctl_institution_id, longitude, latitude, 
+      mem, state)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{ctype,jdbcType=TINYINT}, #{nnlightctlProjectCountryId,jdbcType=BIGINT}, 
+      #{nnlightctlProjectProvinceId,jdbcType=BIGINT}, #{nnlightctlProjectCityId,jdbcType=BIGINT}, 
+      #{nnlightctlInstitutionId,jdbcType=BIGINT}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{mem,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Project" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_project
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -172,9 +173,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

@@ -115,19 +115,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.DeviceCommLog" >
-    insert into nnlightctl_device_communication_log (id, gmt_created, gmt_updated, 
-      uid, communication_date, communication_type, 
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_device_communication_log (gmt_created, gmt_updated, uid, 
+      communication_date, communication_type, 
       communication_datagram)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=VARCHAR}, #{communicationDate,jdbcType=TIMESTAMP}, #{communicationType,jdbcType=TINYINT}, 
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{communicationDate,jdbcType=TIMESTAMP}, #{communicationType,jdbcType=TINYINT}, 
       #{communicationDatagram,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.DeviceCommLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_device_communication_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -148,9 +151,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>

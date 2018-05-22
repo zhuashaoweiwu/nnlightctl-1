@@ -102,19 +102,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.PropertyClassifyCatalog" >
-    insert into nnlightctl_property_classify_catalog (id, gmt_created, gmt_updated, 
-      my_catalog_name, catalog_level, nnlightctl_property_classify_catalog_id
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_property_classify_catalog (gmt_created, gmt_updated, my_catalog_name, 
+      catalog_level, nnlightctl_property_classify_catalog_id
       )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
-      #{myCatalogName,jdbcType=VARCHAR}, #{catalogLevel,jdbcType=TINYINT}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{myCatalogName,jdbcType=VARCHAR}, 
+      #{catalogLevel,jdbcType=TINYINT}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.PropertyClassifyCatalog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into nnlightctl_property_classify_catalog
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="gmtCreated != null" >
         gmt_created,
       </if>
@@ -132,9 +135,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="gmtCreated != null" >
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
