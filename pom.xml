@@ -15,6 +15,7 @@
         <module>ctldomain</module>
         <module>ctldb</module>
         <module>ctlcommon</module>
+        <module>netcommand</module>
     </modules>
 
     <properties>

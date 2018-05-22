@@ -95,7 +95,7 @@ public class EleboxModelServerImpl implements EleboxModelServer {
         List<Long> eleboxModelIdList = request.getEleboxModelIdList();
         int ret = -1;
         for (Long id : eleboxModelIdList) {
-            eleboxModelMapper.deleteByPrimaryKey(id);
+            ret = eleboxModelMapper.deleteByPrimaryKey(id);
         }
         return ret;
     }

@@ -10,6 +10,7 @@
         <module name="ctldb" />
         <module name="ctldomain" />
         <module name="ctlserver" />
+        <module name="netcommand" />
         <module name="netserver" />
         <module name="webctl" />
       </profile>
@@ -19,6 +20,7 @@
       <module name="ctldb" target="1.8" />
       <module name="ctldomain" target="1.8" />
       <module name="ctlserver" target="1.8" />
+      <module name="netcommand" target="1.8" />
       <module name="netserver" target="1.8" />
       <module name="nnlightctl" target="1.8" />
       <module name="webctl" target="1.8" />
