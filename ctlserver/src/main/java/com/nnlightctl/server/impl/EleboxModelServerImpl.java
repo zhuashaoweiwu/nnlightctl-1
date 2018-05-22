@@ -12,6 +12,8 @@ import com.nnlightctl.server.EleboxModelServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +32,23 @@ public class EleboxModelServerImpl implements EleboxModelServer {
         for (int i = 0; i < duplicate; ++i) {
             EleboxModel eleboxModel = new EleboxModel();
             ReflectCopyUtil.beanSameFieldCopy(request, eleboxModel);
+            eleboxModel.setGmtCreated(new Date());
+            eleboxModel.setGmtUpdated(new Date());
+            if (request.getPowerRating() != null) {
+                eleboxModel.setPowerRating(new BigDecimal(Double.toString(request.getPowerRating())));
+            }
+
+            if (request.getElectricRating() != null) {
+                eleboxModel.setElectricRating(new BigDecimal(Double.toString(request.getElectricRating())));
+            }
+
+            if (request.getVoltageRating() != null) {
+                eleboxModel.setVoltageRating(new BigDecimal(Double.toString(request.getVoltageRating())));
+            }
+
+            if (request.getLoopElectricity() != null) {
+                eleboxModel.setLoopElectricity(new BigDecimal(Double.toString(request.getLoopElectricity())));
+            }
             ret = eleboxModelMapper.insertSelective(eleboxModel);
             if (ret > 0) {
                 List<ModelLoopRequest> modleLoopList = request.getModelLoopList();
@@ -47,11 +66,37 @@ public class EleboxModelServerImpl implements EleboxModelServer {
 
     @Override
     public int updateEleboxModel(EleboxModelRequest request) {
-        return 0;
+        EleboxModel eleboxModel = new EleboxModel();
+        ReflectCopyUtil.beanSameFieldCopy(request, eleboxModel);
+        eleboxModel.setGmtUpdated(new Date());
+        if (request.getPowerRating() != null) {
+            eleboxModel.setPowerRating(new BigDecimal(Double.toString(request.getPowerRating())));
+        }
+
+        if (request.getElectricRating() != null) {
+            eleboxModel.setElectricRating(new BigDecimal(Double.toString(request.getElectricRating())));
+        }
+
+        if (request.getVoltageRating() != null) {
+            eleboxModel.setVoltageRating(new BigDecimal(Double.toString(request.getVoltageRating())));
+        }
+
+        if (request.getLoopElectricity() != null) {
+            eleboxModel.setLoopElectricity(new BigDecimal(Double.toString(request.getLoopElectricity())));
+        }
+
+        int ret = eleboxModelMapper.updateByPrimaryKeySelective(eleboxModel);
+
+        return ret;
     }
 
     @Override
     public int deleteEleboxModel(EleboxModelConditionRequest request) {
-        return 0;
+        List<Long> eleboxModelIdList = request.getEleboxModelIdList();
+        int ret = -1;
+        for (Long id : eleboxModelIdList) {
+            eleboxModelMapper.deleteByPrimaryKey(id);
+        }
+        return ret;
     }
 }
