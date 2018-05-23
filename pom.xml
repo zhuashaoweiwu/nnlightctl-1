@@ -37,6 +37,7 @@
         <jcl-over-slf4j.version>1.7.25</jcl-over-slf4j.version>
         <pagehelper.version>5.1.2</pagehelper.version>
         <servlet.version>3.1.0</servlet.version>
+        <netty.version>4.1.22.Final</netty.version>
     </properties>
 
     <repositories>
@@ -223,7 +224,12 @@
                 <scope>provided</scope>
             </dependency>
 
-
+            <!-- netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
 
             <!-- 工程依赖 -->
             <dependency>
@@ -247,6 +253,12 @@
             <dependency>
                 <groupId>com.nnlight</groupId>
                 <artifactId>ctlcommon</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nnlight</groupId>
+                <artifactId>netcommand</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

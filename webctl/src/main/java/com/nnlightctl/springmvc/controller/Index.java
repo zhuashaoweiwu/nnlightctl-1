@@ -17,4 +17,9 @@ public class Index extends BaseController {
     public String index() {
         return indexServer.indexServer();
     }
+
+    @RequestMapping("/")
+    public String indexPage() {
+        return "redirect:/html/index.html";
+    }
 }

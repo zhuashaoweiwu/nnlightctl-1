@@ -38,6 +38,7 @@
         <url-pattern>*.js</url-pattern>
         <url-pattern>*.css</url-pattern>
         <url-pattern>*.png</url-pattern>
+        <url-pattern>*.gif</url-pattern>
     </servlet-mapping>
 
     <!-- springMVC拦截分发 -->

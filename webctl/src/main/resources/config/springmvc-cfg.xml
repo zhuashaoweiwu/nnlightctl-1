@@ -11,12 +11,16 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <mvc:resources mapping="/html/**" location="/WEB-INF/pages/">
+        <mvc:cache-control max-age="3600" cache-public="true"/>
+    </mvc:resources>
+
     <context:component-scan base-package="com.nnlightctl.springmvc.controller" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/jsp/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".html"/>
     </bean>
 
     <!-- 处理请求返回json字符串的中文乱码问题 -->
