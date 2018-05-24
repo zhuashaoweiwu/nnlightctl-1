@@ -38,6 +38,7 @@ public class Context {
     }
 
     public void sendMsg(String msg) {
+        msg += "\r\n";
         channelHandlerContext.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
     }
 

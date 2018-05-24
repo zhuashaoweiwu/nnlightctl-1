@@ -28,6 +28,7 @@ public class NettyClientCommand implements Command {
                 Properties properties = PropertiesUtil.load("config/client.properties");
                 new EchoClient(properties.getProperty("host", "127.0.0.1"), Integer.parseInt(properties.getProperty("port", "56556")), context).start();
             } catch (Exception e) {
+                context.run();
                 throw new RuntimeException(e.getMessage());
             }
         });

@@ -21,6 +21,8 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public void channelActive(ChannelHandlerContext ctx) {
         context.setChannelHandlerContext(ctx);
         context.run();
+        //切换客户端类型为命令客户端
+        ctx.writeAndFlush(Unpooled.wrappedBuffer("zxx\r\n".getBytes()));
     }
 
     @Override

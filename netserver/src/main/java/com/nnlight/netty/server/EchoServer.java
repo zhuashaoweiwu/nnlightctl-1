@@ -10,6 +10,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.io.BufferedReader;
@@ -23,14 +24,43 @@ public class EchoServer {
     private final int port;
 
     private Map<String, ChannelWrap> clientChannelMap;
+    private Map<String, ChannelWrap> commandMap;
 
     public EchoServer(int port) {
         this.port = port;
         clientChannelMap = new ConcurrentHashMap<>(10);
+        this.commandMap = new ConcurrentHashMap<>(5);
     }
 
     public Map<String, ChannelWrap> getClientChannelMap() {
         return this.clientChannelMap;
+    }
+
+    public Map<String, ChannelWrap> getCommandMap() {
+        return this.commandMap;
+    }
+
+    public String commandLookAll() {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            result.append(entry.getValue().getName() + ":" + entry.getValue().getChannel().toString() + ":" +
+                    entry.getValue().getContext().toString() + "\n");
+        }
+        result.append("total client count : " + clientChannelMap.size());
+        return result.toString();
+    }
+
+    public void commandSend(String name, String msg) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getValue().getName().equals(name)) {
+                ChannelHandlerContext context = entry.getValue().getContext();
+                msg += "\r\n";
+                ByteBuf byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
+                context.write(byteBuf);
+                context.writeAndFlush(Unpooled.EMPTY_BUFFER);
+                break;
+            }
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -51,11 +81,7 @@ public class EchoServer {
         while ((read = bufferedReader.readLine()) != null) {
             switch (read) {
                 case "lookall":
-                    for (Map.Entry<String, ChannelWrap> entry : server.clientChannelMap.entrySet()) {
-                        System.err.println(entry.getValue().getName() + ":" + entry.getValue().getChannel().toString() + ":" +
-                            entry.getValue().getContext().toString());
-                    }
-                    System.err.println("total client count : " + server.clientChannelMap.size());
+                    System.err.println(server.commandLookAll());
                     continue;
             }
 
@@ -64,15 +90,7 @@ public class EchoServer {
                 String name = params[1];
                 String msg = params[2];
 
-                for (Map.Entry<String, ChannelWrap> entry : server.clientChannelMap.entrySet()) {
-                    if (entry.getValue().getName().equals(name)) {
-                        ChannelHandlerContext context = entry.getValue().getContext();
-                        msg += "\n\r";
-                        ByteBuf byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
-                        context.write(byteBuf);
-                        context.writeAndFlush(Unpooled.EMPTY_BUFFER);
-                    }
-                }
+                server.commandSend(name, msg);
             }
         }
     }
@@ -95,6 +113,7 @@ public class EchoServer {
                             .childHandler(new ChannelInitializer<SocketChannel>() {
                                 @Override
                                 protected void initChannel(SocketChannel socketChannel) throws Exception {
+                                    socketChannel.pipeline().addLast(new LineBasedFrameDecoder(512));
                                     socketChannel.pipeline().addLast(serverHandler);
                                     socketChannel.pipeline().addLast(new IdleStateHandler(4,
                                             5, 7, TimeUnit.SECONDS));

@@ -35,7 +35,29 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf in = (ByteBuf)msg;
         logger.info(LocalDate.now() + " " + LocalTime.now() + " Server received:" + in.toString(CharsetUtil.UTF_8));
-        ctx.write(in);
+        StringBuilder result = new StringBuilder();
+        String command = in.toString(CharsetUtil.UTF_8);
+        if ("zxx".equals(command)) {
+            String uuid = ctx.channel().id().asLongText();
+            ChannelWrap channelWrap = applicationContext.getClientChannelMap().remove(uuid);
+            applicationContext.getCommandMap().put(uuid, channelWrap);
+            result.append("成功转换客户端为命令客户端");
+        } else if ("lookall".equals(command)) {
+            result.append(applicationContext.commandLookAll());
+        } else if (command != null && command.startsWith("send")) {
+            String[] params = command.split(" ");
+            String uuid = params[1];
+            String sendMessage = params[2];
+            if (uuid == null || sendMessage == null) {
+                throw new RuntimeException("send 命令参数不完整！");
+            }
+            applicationContext.commandSend(uuid, sendMessage);
+            result.append("send success！");
+        } else {
+            result.append(command);
+        }
+
+        ctx.write(Unpooled.wrappedBuffer((result.toString() + "\r\n").getBytes()));
     }
 
     @Override
