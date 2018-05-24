@@ -107,6 +107,14 @@ public class EleboxModelRequest {
         this.modelLoopList = modelLoopList;
     }
 
+    public Long getNnlightctlEleboxId() {
+        return nnlightctlEleboxId;
+    }
+
+    public void setNnlightctlEleboxId(Long nnlightctlEleboxId) {
+        this.nnlightctlEleboxId = nnlightctlEleboxId;
+    }
+
     private Long id;
     private String uid;
     private String modelName;
@@ -119,5 +127,6 @@ public class EleboxModelRequest {
     private String ac;
     private Double loopElectricity;
     private List<ModelLoopRequest> modelLoopList;
+    private Long nnlightctlEleboxId;
     private int count;
 }
