@@ -1,5 +1,9 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlight.common.Tuple;
+import com.nnlightctl.po.Elebox;
+import com.nnlightctl.po.EleboxModel;
+import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EleboxModelServer;
@@ -10,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/roadlighting")
@@ -113,6 +119,105 @@ public class RoadLightingController extends BaseController {
         } else {
             jsonResult = JsonResult.getFAILURE();
         }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("updateelebox")
+    public String updateEleBox(EleboxRequest request) {
+        logger.info("[POST] /api/roadlighting/updateelebox");
+
+        int ret = eleboxServer.updateElebox(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("updateeleboxmodel")
+    public String updateEleboxDevice(EleboxConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/updateeleboxmodel");
+
+        int ret = eleboxServer.updateEleboxDevice(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("splitmodelloop")
+    public String modelLoopSplite(EleboxConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/splitmodelloop");
+
+        int ret = eleboxServer.updateModelLoopSplite(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deleteelebox")
+    public String deleteElebox(EleboxConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/deleteelebox");
+
+        int ret = eleboxServer.deleteElebox(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listelebox")
+    public String listElebox(BaseRequest request) {
+        logger.info("[POST] /api/roadlighting/listelebox");
+
+        Tuple.TwoTuple<List<Elebox>, Integer> tuple = eleboxServer.listElebox(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listmodel")
+    public String listEleboxModel(EleboxConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listmodel");
+
+        Tuple.TwoTuple<List<EleboxModel>, Integer> tuple = eleboxServer.listEleboxModel(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listmodelloop")
+    public String listModelLoop(Long modelId) {
+        logger.info("[POST] /api/roadlighting/listmodelloop");
+
+        Tuple.TwoTuple<List<EleboxModelLoop>, Integer> tuple = eleboxServer.listModelLoop(modelId);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
 
         return toJson(jsonResult);
     }

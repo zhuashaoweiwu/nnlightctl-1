@@ -5,6 +5,7 @@ import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.EleboxModelMapper;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
+import com.nnlightctl.po.EleboxModelLoopExample;
 import com.nnlightctl.request.EleboxModelConditionRequest;
 import com.nnlightctl.request.EleboxModelRequest;
 import com.nnlightctl.request.ModelLoopRequest;
@@ -95,6 +96,11 @@ public class EleboxModelServerImpl implements EleboxModelServer {
         List<Long> eleboxModelIdList = request.getEleboxModelIdList();
         int ret = -1;
         for (Long id : eleboxModelIdList) {
+            //称删除对应的回路
+            EleboxModelLoopExample loopExample = new EleboxModelLoopExample();
+            loopExample.createCriteria().andNnlightctlEleboxModelIdEqualTo(id);
+            eleboxModelLoopMapper.deleteByExample(loopExample);
+
             ret = eleboxModelMapper.deleteByPrimaryKey(id);
         }
         return ret;
