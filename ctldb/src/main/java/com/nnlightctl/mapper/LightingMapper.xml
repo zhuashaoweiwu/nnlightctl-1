@@ -19,6 +19,7 @@
     <result column="nnlightctl_elebox_model_loop_id" property="nnlightctlEleboxModelLoopId" jdbcType="BIGINT" />
     <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT" />
     <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT" />
+    <result column="nnlightctl_elebox_id" property="nnlightctlEleboxId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -81,7 +82,7 @@
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, manufacture, use_date, lamppost, lamphead, nnlightctl_lighting_model_id, 
     nnlightctl_lighting_gis_id, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
-    nnlightctl_region_id, nnlightctl_project_id
+    nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingExample" >
     select
@@ -123,13 +124,13 @@
       lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
       property_serial_number, decay, max_use_time, 
       mem, nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
-      nnlightctl_project_id)
+      nnlightctl_project_id, nnlightctl_elebox_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, 
       #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
       #{propertySerialNumber,jdbcType=VARCHAR}, #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
       #{mem,jdbcType=VARCHAR}, #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
-      #{nnlightctlProjectId,jdbcType=BIGINT})
+      #{nnlightctlProjectId,jdbcType=BIGINT}, #{nnlightctlEleboxId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Lighting" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -185,6 +186,9 @@
       <if test="nnlightctlProjectId != null" >
         nnlightctl_project_id,
       </if>
+      <if test="nnlightctlEleboxId != null" >
+        nnlightctl_elebox_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -234,6 +238,9 @@
       </if>
       <if test="nnlightctlProjectId != null" >
         #{nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlEleboxId != null" >
+        #{nnlightctlEleboxId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -297,6 +304,9 @@
       <if test="record.nnlightctlProjectId != null" >
         nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
       </if>
+      <if test="record.nnlightctlEleboxId != null" >
+        nnlightctl_elebox_id = #{record.nnlightctlEleboxId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -320,7 +330,8 @@
       mem = #{record.mem,jdbcType=VARCHAR},
       nnlightctl_elebox_model_loop_id = #{record.nnlightctlEleboxModelLoopId,jdbcType=BIGINT},
       nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
-      nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT}
+      nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
+      nnlightctl_elebox_id = #{record.nnlightctlEleboxId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -376,6 +387,9 @@
       <if test="nnlightctlProjectId != null" >
         nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
       </if>
+      <if test="nnlightctlEleboxId != null" >
+        nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -396,7 +410,8 @@
       mem = #{mem,jdbcType=VARCHAR},
       nnlightctl_elebox_model_loop_id = #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT},
       nnlightctl_region_id = #{nnlightctlRegionId,jdbcType=BIGINT},
-      nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT}
+      nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
+      nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

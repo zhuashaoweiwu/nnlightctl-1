@@ -1,14 +1,10 @@
 package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
-import com.nnlightctl.po.Elebox;
-import com.nnlightctl.po.EleboxModel;
-import com.nnlightctl.po.EleboxModelLoop;
+import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
-import com.nnlightctl.server.EleboxModelServer;
-import com.nnlightctl.server.EleboxServer;
-import com.nnlightctl.server.ModelLoopServer;
+import com.nnlightctl.server.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +26,12 @@ public class RoadLightingController extends BaseController {
 
     @Autowired
     private EleboxServer eleboxServer;
+
+    @Autowired
+    private LightServer lightServer;
+
+    @Autowired
+    private LightModelServer lightModelServer;
 
     @RequestMapping("addorupdatemodelloop")
     public String addOrUpdateModelLoop(ModelLoopRequest request) {
@@ -214,6 +216,112 @@ public class RoadLightingController extends BaseController {
         logger.info("[POST] /api/roadlighting/listmodelloop");
 
         Tuple.TwoTuple<List<EleboxModelLoop>, Integer> tuple = eleboxServer.listModelLoop(modelId);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("addOrUpdateLighting")
+    public String addOrUpdateLighting(LightRequest request) {
+        logger.info("[POST] /api/roadlighting/addOrUpdateLighting");
+
+        int ret = lightServer.addOrUpdateLight(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deleteLighting")
+    public String deleteLighting(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/deleteLighting");
+
+        int ret = this.lightServer.deleteLight(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listLighting")
+    public String listLighting(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listLighting");
+
+        Tuple.TwoTuple<List<Lighting>, Integer> tuple = this.lightServer.listLighting(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("updateLightBeElebox")
+    public String updateLightBeElebox(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/updateLightBeElebox");
+
+        int ret = this.lightServer.updateLightBeElebox(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("addOrUpdateLightModel")
+    public String addOrUpdateLightModel(LightModelRequest request) {
+        logger.info("[POST] /api/roadlighting/addOrUpdateLightModel");
+
+        int ret = this.lightModelServer.addOrUpdateLightModel(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deleteLightModel")
+    public String deleteLightModel(LightModelConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/deleteLightModel");
+
+        int ret = this.lightModelServer.deleteLightModel(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listLightModel")
+    public String listLightModel(LightModelConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listLightModel");
+
+        Tuple.TwoTuple<List<LightingModel>, Integer> tuple = this.lightModelServer.listLightModel(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

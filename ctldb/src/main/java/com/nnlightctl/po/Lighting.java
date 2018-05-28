@@ -38,6 +38,8 @@ public class Lighting implements Serializable {
 
     private Long nnlightctlProjectId;
 
+    private Long nnlightctlEleboxId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -176,6 +178,14 @@ public class Lighting implements Serializable {
         this.nnlightctlProjectId = nnlightctlProjectId;
     }
 
+    public Long getNnlightctlEleboxId() {
+        return nnlightctlEleboxId;
+    }
+
+    public void setNnlightctlEleboxId(Long nnlightctlEleboxId) {
+        this.nnlightctlEleboxId = nnlightctlEleboxId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -204,7 +214,8 @@ public class Lighting implements Serializable {
             && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()))
             && (this.getNnlightctlEleboxModelLoopId() == null ? other.getNnlightctlEleboxModelLoopId() == null : this.getNnlightctlEleboxModelLoopId().equals(other.getNnlightctlEleboxModelLoopId()))
             && (this.getNnlightctlRegionId() == null ? other.getNnlightctlRegionId() == null : this.getNnlightctlRegionId().equals(other.getNnlightctlRegionId()))
-            && (this.getNnlightctlProjectId() == null ? other.getNnlightctlProjectId() == null : this.getNnlightctlProjectId().equals(other.getNnlightctlProjectId()));
+            && (this.getNnlightctlProjectId() == null ? other.getNnlightctlProjectId() == null : this.getNnlightctlProjectId().equals(other.getNnlightctlProjectId()))
+            && (this.getNnlightctlEleboxId() == null ? other.getNnlightctlEleboxId() == null : this.getNnlightctlEleboxId().equals(other.getNnlightctlEleboxId()));
     }
 
     @Override
@@ -228,6 +239,7 @@ public class Lighting implements Serializable {
         result = prime * result + ((getNnlightctlEleboxModelLoopId() == null) ? 0 : getNnlightctlEleboxModelLoopId().hashCode());
         result = prime * result + ((getNnlightctlRegionId() == null) ? 0 : getNnlightctlRegionId().hashCode());
         result = prime * result + ((getNnlightctlProjectId() == null) ? 0 : getNnlightctlProjectId().hashCode());
+        result = prime * result + ((getNnlightctlEleboxId() == null) ? 0 : getNnlightctlEleboxId().hashCode());
         return result;
     }
 
@@ -254,6 +266,7 @@ public class Lighting implements Serializable {
         sb.append(", nnlightctlEleboxModelLoopId=").append(nnlightctlEleboxModelLoopId);
         sb.append(", nnlightctlRegionId=").append(nnlightctlRegionId);
         sb.append(", nnlightctlProjectId=").append(nnlightctlProjectId);
+        sb.append(", nnlightctlEleboxId=").append(nnlightctlEleboxId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -1174,6 +1174,66 @@ public class LightingExample {
             addCriterion("nnlightctl_project_id not between", value1, value2, "nnlightctlProjectId");
             return (Criteria) this;
         }
+
+        public Criteria andNnlightctlEleboxIdIsNull() {
+            addCriterion("nnlightctl_elebox_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdIsNotNull() {
+            addCriterion("nnlightctl_elebox_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdEqualTo(Long value) {
+            addCriterion("nnlightctl_elebox_id =", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdNotEqualTo(Long value) {
+            addCriterion("nnlightctl_elebox_id <>", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdGreaterThan(Long value) {
+            addCriterion("nnlightctl_elebox_id >", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_elebox_id >=", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdLessThan(Long value) {
+            addCriterion("nnlightctl_elebox_id <", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_elebox_id <=", value, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdIn(List<Long> values) {
+            addCriterion("nnlightctl_elebox_id in", values, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdNotIn(List<Long> values) {
+            addCriterion("nnlightctl_elebox_id not in", values, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_elebox_id between", value1, value2, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlEleboxIdNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_elebox_id not between", value1, value2, "nnlightctlEleboxId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
