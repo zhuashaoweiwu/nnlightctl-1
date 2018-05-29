@@ -51,6 +51,14 @@ public class EleboxConditionRequest extends BaseRequest {
         this.id = id;
     }
 
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
     private Long id;
 
     private List<Long> eleboxIdList;
@@ -60,4 +68,6 @@ public class EleboxConditionRequest extends BaseRequest {
 
     private List<Long> deleteModelIdList;
     private List<Long> addModelIdList;
+
+    private Long projectId;
 }

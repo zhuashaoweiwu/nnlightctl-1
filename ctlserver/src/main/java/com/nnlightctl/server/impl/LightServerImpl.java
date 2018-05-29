@@ -49,14 +49,20 @@ public class LightServerImpl implements LightServer {
     public Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request) {
         Tuple.TwoTuple<List<Lighting>, Integer> tuple = new Tuple.TwoTuple<>();
         LightingExample lightingExample = new LightingExample();
+        LightingExample.Criteria criteria = lightingExample.createCriteria();
 
         if (request.getNotBe() != null && request.getNotBe() == 1) {
             //搜索不属于任何控制柜的灯具
-            lightingExample.createCriteria().andNnlightctlEleboxIdIsNull();
+            criteria.andNnlightctlEleboxIdIsNull();
         } else {
             //搜索某控制柜下全部灯具
-            lightingExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
+            criteria.andNnlightctlEleboxIdEqualTo(request.getEleboxId());
         }
+
+        if (request.getProjectId() != null) {
+            criteria.andNnlightctlProjectIdEqualTo(request.getProjectId());
+        }
+
         int total = this.lightingMapper.countByExample(lightingExample);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         lightingExample.setOrderByClause("id DESC");

@@ -43,10 +43,20 @@ public class LightConditionRequest extends BaseRequest {
         this.beEleboxId = beEleboxId;
     }
 
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
     private List<Long> lightIdList;
     private Long beEleboxId;
 
     private Long eleboxId;
     private Integer notBe;
     private List<Long> deleteLightIdList;
+
+    private Long projectId;
 }
