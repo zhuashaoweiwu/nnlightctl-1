@@ -5,6 +5,7 @@ import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.*;
+import com.nnlightctl.vo.GISView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class RoadLightingController extends BaseController {
 
     @Autowired
     private LightModelServer lightModelServer;
+
+    @Autowired
+    private GISServer gisServer;
+
+    @Autowired
+    private AreaServer areaServer;
 
     @RequestMapping("addorupdatemodelloop")
     public String addOrUpdateModelLoop(ModelLoopRequest request) {
@@ -322,6 +329,96 @@ public class RoadLightingController extends BaseController {
         logger.info("[POST] /api/roadlighting/listLightModel");
 
         Tuple.TwoTuple<List<LightingModel>, Integer> tuple = this.lightModelServer.listLightModel(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("addOrUpdateGIS")
+    public String addOrUpdateGIS(GISRequest request) {
+        logger.info("[POST] /api/roadlighting/addOrUpdateGIS");
+
+        int ret = this.gisServer.addOrUpdateGIS(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deleteGIS")
+    public String deleteGIS(GISConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/deleteGIS");
+
+        int ret = this.gisServer.deleteGIS(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listGIS")
+    public String listGIS(GISConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listGIS");
+
+        Tuple.TwoTuple<List<GISView>, Integer> tuple = this.gisServer.listGIS(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("addOrUpdateArea")
+    public String addOrUpdateArea(AreaRequest request) {
+        logger.info("[POST] /api/roadlighting/addOrUpdateArea");
+
+        int ret = this.areaServer.addOrUpdateArea(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deleteArea")
+    public String deleteArea(AreaConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/deleteArea");
+
+        int ret = this.areaServer.deleteArea(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listArea")
+    public String listArea(AreaConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listArea");
+
+        Tuple.TwoTuple<List<Region>, Integer> tuple = this.areaServer.listArea(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
