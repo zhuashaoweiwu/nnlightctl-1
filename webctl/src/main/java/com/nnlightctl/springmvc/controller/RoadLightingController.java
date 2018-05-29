@@ -140,9 +140,9 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
-    @RequestMapping("updateeleboxmodel")
+    @RequestMapping("updateEleboxDevice")
     public String updateEleboxDevice(EleboxConditionRequest request) {
-        logger.info("[POST] /api/roadlighting/updateeleboxmodel");
+        logger.info("[POST] /api/roadlighting/updateEleboxDevice");
 
         int ret = eleboxServer.updateEleboxDevice(request);
         JsonResult jsonResult = null;

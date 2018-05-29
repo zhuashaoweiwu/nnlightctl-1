@@ -57,6 +57,15 @@ public class EleboxModelServerImpl implements EleboxModelServer {
                     modelLoopRequest.setNnlightctlEleboxModelId(eleboxModel.getId());
                     EleboxModelLoop eleboxModelLoop = new EleboxModelLoop();
                     ReflectCopyUtil.beanSameFieldCopy(modelLoopRequest, eleboxModelLoop);
+                    eleboxModelLoop.setGmtCreated(new Date());
+                    eleboxModelLoop.setGmtUpdated(new Date());
+                    if (modelLoopRequest.getElectricity() != null) {
+                        eleboxModelLoop.setElectricity(new BigDecimal(Double.toString(modelLoopRequest.getElectricity())));
+                    }
+
+                    if (modelLoopRequest.getVoltage() != null) {
+                        eleboxModelLoop.setVoltage(new BigDecimal(Double.toString(modelLoopRequest.getVoltage())));
+                    }
                     eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
                 }
             }
