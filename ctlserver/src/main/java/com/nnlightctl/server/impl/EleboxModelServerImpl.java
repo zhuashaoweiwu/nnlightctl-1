@@ -105,7 +105,7 @@ public class EleboxModelServerImpl implements EleboxModelServer {
         List<Long> eleboxModelIdList = request.getEleboxModelIdList();
         int ret = -1;
         for (Long id : eleboxModelIdList) {
-            //称删除对应的回路
+            //先删除对应的回路
             EleboxModelLoopExample loopExample = new EleboxModelLoopExample();
             loopExample.createCriteria().andNnlightctlEleboxModelIdEqualTo(id);
             eleboxModelLoopMapper.deleteByExample(loopExample);

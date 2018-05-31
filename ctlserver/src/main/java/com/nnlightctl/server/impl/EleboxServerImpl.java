@@ -118,8 +118,11 @@ public class EleboxServerImpl implements EleboxServer {
             eleboxModelConditionRequest.setEleboxModelIdList(eleboxModelIdList);
 
             eleboxModelServer.deleteEleboxModel(eleboxModelConditionRequest);
+
+            //再删除控制柜本身
+            this.eleboxMapper.deleteByPrimaryKey(deleteEleboxId);
         }
-        return 0;
+        return 1;
     }
 
     @Override
