@@ -1,5 +1,7 @@
 package com.nnlightctl.net;
 
+import com.nnlightctl.util.BytesHexStrTranslate;
+
 import java.io.Serializable;
 
 public class CommandData implements Serializable {
@@ -87,7 +89,19 @@ public class CommandData implements Serializable {
     public String toHexString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.start0));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.addr));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.start1));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.control, this.dataLength));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.data));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.check, this.end0));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.end1));
 
         return stringBuilder.toString();
     }

@@ -14,7 +14,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-1"><label>命令：</label></div>
+        <div class="col-sm-1"><label class="form-control">命令：</label></div>
         <div class="col-sm-8"><textarea class="form-control" id="comandText" rows="3"></textarea></div>
         <div class="col-sm-3"><button type="button" class="btn btn-primary" id="sendCommand">发送命令</button></div>
     </div>
@@ -23,7 +23,7 @@
 
     <div class="row">
         <div class="col-sm-1">
-            <label>命令返回：</label>
+            <label class="form-control">命令返回：</label>
         </div>
 
         <div class="col-sm-8">
@@ -38,7 +38,7 @@
     <!-- 灯具调节 -->
     <div class="row">
         <div class="col-sm-1">
-            <label>灯具灯光调节：</label>
+            <label class="form-control">灯具灯光调节：</label>
         </div>
 
         <div class="col-sm-1">
@@ -51,6 +51,17 @@
 
         <div class="col-sm-3">
             <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
+        </div>
+    </div>
+
+    <!-- 客户端实时消息接收 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">实时消息接收：</label>
+        </div>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" id="netMessageTextArea" rows="8"></textarea>
         </div>
     </div>
 </div>
@@ -79,6 +90,30 @@
         $("#lightPercent").val(this.value);
         $("#sendCommandLightAdjust").click();
     });
+
+    //定时获取服务器端消息
+    var timeGetMessage = setInterval(function () {
+        $.post("../api/command/webClientReceiveMsg", {}, function (result) {
+            if (!result) {
+                return;
+            }
+            var text = $("#netMessageTextArea").val();
+            text += "\r\n";
+            text += (new Date().toLocaleString() + "  " + result);
+            $("#netMessageTextArea").val(text);
+        }, "text");
+    }, 5000);
+
+    //周期发送调光指令
+    var value = 0;
+    var timeTestLightAdjust = setInterval(function () {
+        $("#lightPercentSlide").val(value);
+        $("#lightPercentSlide").change();
+        value += 5;
+        if (value >= 100) {
+            value = 0;
+        }
+    }, 5000);
 </script>
 </body>
 </html>

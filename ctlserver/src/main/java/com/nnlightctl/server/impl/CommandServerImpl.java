@@ -21,7 +21,7 @@ public class CommandServerImpl implements CommandServer {
                 globalMsg = new String(msg.getData());
             } else {
                 //物联网命令
-
+                globalMsg = msg.toHexString();
             }
             if (countDownLatch != null) {
                 countDownLatch.countDown();
@@ -50,5 +50,16 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void sendLightAdjustCommand(int percent) {
         command.sendLightAdjustCommand(percent);
+    }
+
+    @Override
+    public String webRequireMsg() {
+        String retString = "";
+        if (this.globalMsg != null) {
+            retString = new String(this.globalMsg);
+            this.globalMsg = null;
+        }
+
+        return retString;
     }
 }

@@ -24,7 +24,19 @@ public class CommandDataDecoder extends ByteToMessageDecoder {
         commandData.setDataLength(dataLength);
         //数据域
         byte[] dataArea = new byte[iLength];
-        System.arraycopy(data, 10, dataArea, 0, dataLength);
+        try {
+            System.arraycopy(data, 10, dataArea, 0, iLength);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //源data
+            System.err.print("data : [");
+            for (byte b : data) {
+                System.err.print(b);
+                System.err.print(", ");
+            }
+            System.err.print("]");
+            //目的地址长度
+            System.err.println("Length : " + iLength);
+        }
         commandData.setData(dataArea);
         //检校码
         commandData.setCheck(data[10 + dataLength]);

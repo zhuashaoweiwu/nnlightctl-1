@@ -11,5 +11,7 @@
 
     <artifactId>ctldomain</artifactId>
 
+    <dependencies>
 
+    </dependencies>
 </project>

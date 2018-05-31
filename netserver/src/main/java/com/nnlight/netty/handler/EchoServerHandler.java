@@ -95,6 +95,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
                 //灯具灯光调节命令
             case (byte)0xc2:
+                logger.info(LocalDate.now() + " " + LocalTime.now() + " 发送灯具调光指令,调光参数[" + msg.getData()[0] + "]");
                 applicationContext.allSendCommandLightAdjust(msg.getData()[0]);
                 break;
         }
@@ -102,6 +103,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void netClientProcess(ChannelHandlerContext ctx, CommandData msg) {
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 接收灯具调光指令返回");
         applicationContext.allClientSendCommand(msg);
     }
 }

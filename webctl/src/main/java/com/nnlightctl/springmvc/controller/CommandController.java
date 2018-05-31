@@ -32,4 +32,11 @@ public class CommandController extends BaseController {
 
         return toJson(JsonResult.getSUCCESS());
     }
+
+    @RequestMapping("webClientReceiveMsg")
+    public String webClientReceiveMsg() {
+        logger.info("[POST] /api/command/webClientReceiveMsg");
+
+        return commandServer.webRequireMsg();
+    }
 }
