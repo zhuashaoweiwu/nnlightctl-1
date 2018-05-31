@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -272,6 +273,21 @@ public class RoadLightingController extends BaseController {
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
         jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("getLighting")
+    public String getLighting(Long id) {
+        logger.info("[POST] /api/roadlighting/getLighting");
+
+        Lighting lighting = this.lightServer.getLighting(id);
+
+        List<Lighting> data = new ArrayList<>(1);
+        data.add(lighting);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(data);
 
         return toJson(jsonResult);
     }

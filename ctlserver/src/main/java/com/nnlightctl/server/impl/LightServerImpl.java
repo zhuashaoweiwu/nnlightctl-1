@@ -84,4 +84,9 @@ public class LightServerImpl implements LightServer {
         }
         return 1;
     }
+
+    @Override
+    public Lighting getLighting(Long id) {
+        return lightingMapper.selectByPrimaryKey(id);
+    }
 }

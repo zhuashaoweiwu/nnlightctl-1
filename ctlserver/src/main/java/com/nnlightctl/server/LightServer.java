@@ -12,4 +12,5 @@ public interface LightServer {
     int deleteLight(LightConditionRequest request);
     Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);
+    Lighting getLighting(Long id);
 }
