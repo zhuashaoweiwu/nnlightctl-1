@@ -1,5 +1,7 @@
 package com.nnlightctl.command.client;
 
+import com.nnlight.netcodec.CommandDataDecoder;
+import com.nnlight.netcodec.CommandDataEncoder;
 import com.nnlightctl.command.client.handler.EchoClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,6 +10,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
@@ -39,6 +42,9 @@ public class EchoClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(512));
+                            socketChannel.pipeline().addLast(new CommandDataDecoder());
+                            socketChannel.pipeline().addLast(new CommandDataEncoder());
                             socketChannel.pipeline().addLast(new EchoClientHandler(context));
                         }
                     });

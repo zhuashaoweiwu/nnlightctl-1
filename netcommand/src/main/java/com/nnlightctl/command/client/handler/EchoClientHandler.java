@@ -1,6 +1,7 @@
 package com.nnlightctl.command.client.handler;
 
 import com.nnlightctl.command.client.Context;
+import com.nnlightctl.net.CommandData;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
@@ -9,7 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
 @ChannelHandler.Sharable
-public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class EchoClientHandler extends SimpleChannelInboundHandler<CommandData> {
 
     public EchoClientHandler() {}
 
@@ -21,12 +22,13 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public void channelActive(ChannelHandlerContext ctx) {
         context.setChannelHandlerContext(ctx);
         context.run();
+
         //切换客户端类型为命令客户端
-        ctx.writeAndFlush(Unpooled.wrappedBuffer("zxx\r\n".getBytes()));
+        ctx.writeAndFlush(new CommandData("zxx"));
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) {
+    public void channelRead0(ChannelHandlerContext ctx, CommandData in) {
         context.receiveMsg(in);
     }
 

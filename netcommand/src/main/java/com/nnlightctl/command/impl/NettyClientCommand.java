@@ -5,6 +5,7 @@ import com.nnlightctl.command.Command;
 import com.nnlightctl.command.client.Context;
 import com.nnlightctl.command.client.EchoClient;
 import com.nnlightctl.command.event.MessageEvent;
+import com.nnlightctl.net.CommandData;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 
@@ -47,7 +48,12 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
-    public void receiveMsg(ByteBuf in) {
+    public void sendLightAdjustCommand(int percent) {
+        context.sendLightAdjust(percent);
+    }
+
+    @Override
+    public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);
         }

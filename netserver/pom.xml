@@ -51,6 +51,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.nnlight</groupId>
+            <artifactId>ctldomain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nnlight</groupId>
+            <artifactId>ctlcommon</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,6 +1,7 @@
 package com.nnlightctl.command.client;
 
 import com.nnlightctl.command.Command;
+import com.nnlightctl.net.CommandData;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -31,15 +32,18 @@ public class Context {
         }
     }
 
-    public void receiveMsg(ByteBuf in) {
+    public void receiveMsg(CommandData in) {
         if (command != null) {
             command.receiveMsg(in);
         }
     }
 
     public void sendMsg(String msg) {
-        msg += "\r\n";
-        channelHandlerContext.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
+        channelHandlerContext.writeAndFlush(new CommandData(msg));
+    }
+
+    public void sendLightAdjust(int percent) {
+        channelHandlerContext.writeAndFlush(new CommandData(percent, (byte)0xc2));
     }
 
     public ChannelHandlerContext getChannelHandlerContext() {

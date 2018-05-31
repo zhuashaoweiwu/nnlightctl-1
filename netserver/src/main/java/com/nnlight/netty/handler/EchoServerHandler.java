@@ -2,19 +2,17 @@ package com.nnlight.netty.handler;
 
 import com.nnlight.netty.server.EchoServer;
 import com.nnlight.netty.server.po.ChannelWrap;
-import io.netty.buffer.ByteBuf;
+import com.nnlightctl.net.CommandData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.UUID;
 
 @ChannelHandler.Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
@@ -33,31 +31,15 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf in = (ByteBuf)msg;
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " Server received:" + in.toString(CharsetUtil.UTF_8));
-        StringBuilder result = new StringBuilder();
-        String command = in.toString(CharsetUtil.UTF_8);
-        if ("zxx".equals(command)) {
-            String uuid = ctx.channel().id().asLongText();
-            ChannelWrap channelWrap = applicationContext.getClientChannelMap().remove(uuid);
-            applicationContext.getCommandMap().put(uuid, channelWrap);
-            result.append("成功转换客户端为命令客户端");
-        } else if ("lookall".equals(command)) {
-            result.append(applicationContext.commandLookAll());
-        } else if (command != null && command.startsWith("send")) {
-            String[] params = command.split(" ");
-            String uuid = params[1];
-            String sendMessage = params[2];
-            if (uuid == null || sendMessage == null) {
-                throw new RuntimeException("send 命令参数不完整！");
-            }
-            applicationContext.commandSend(uuid, sendMessage);
-            result.append("send success！");
-        } else {
-            result.append(command);
-        }
+        CommandData commandData = (CommandData)msg;
 
-        ctx.write(Unpooled.wrappedBuffer((result.toString() + "\r\n").getBytes()));
+        if ((commandData.getControl() & 0xf0) == 0xc0) {
+            //控制客户端处理
+            commandClientProcess(ctx, commandData);
+        } else {
+            //物联网客户端处理
+            netClientProcess(ctx, commandData);
+        }
     }
 
     @Override
@@ -80,9 +62,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
             applicationContext.getClientChannelMap().put(name, wrap);
 
             logger.info(LocalDate.now() + " " + LocalTime.now() + " TCP Serve receive Client UUID : " + name);
-            String welcome = "welcome, " + name + " \n\r";
-            ByteBuf response = Unpooled.wrappedBuffer(welcome.getBytes());
-            ctx.writeAndFlush(response);
+//            applicationContext.allSendCommandLightAdjust(0);
         }
     }
 
@@ -93,5 +73,35 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         logger.error(LocalDate.now() + " " + LocalTime.now() + " " + wrap.getChannel().remoteAddress().toString() + " 客户端关闭！");
         applicationContext.getClientChannelMap().remove(ctx.channel().id().asLongText());
         ctx.close();
+    }
+
+    private void commandClientProcess(ChannelHandlerContext ctx, CommandData msg) {
+        switch (msg.getControl()) {
+            //字符型命令
+            case (byte)0xc1:
+                String command = new String(msg.getData());
+                StringBuilder result = new StringBuilder();
+                if ("zxx".equals(command)) {
+                    String uuid = ctx.channel().id().asLongText();
+                    ChannelWrap channelWrap = applicationContext.getClientChannelMap().remove(uuid);
+                    applicationContext.getCommandMap().put(uuid, channelWrap);
+                    result.append("成功转换客户端为命令客户端");
+                } else if ("lookall".equals(command)) {
+                    result.append(applicationContext.commandLookAll());
+                }
+
+                ctx.writeAndFlush(new CommandData(result.toString()));
+                break;
+
+                //灯具灯光调节命令
+            case (byte)0xc2:
+                applicationContext.allSendCommandLightAdjust(msg.getData()[0]);
+                break;
+        }
+
+    }
+
+    private void netClientProcess(ChannelHandlerContext ctx, CommandData msg) {
+        applicationContext.allClientSendCommand(msg);
     }
 }

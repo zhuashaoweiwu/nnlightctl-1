@@ -9,5 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.22.Final" level="project" />
+    <orderEntry type="module" module-name="ctldomain" />
   </component>
 </module>

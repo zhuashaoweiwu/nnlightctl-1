@@ -1,9 +1,10 @@
 package com.nnlightctl.command;
 
-import io.netty.buffer.ByteBuf;
+import com.nnlightctl.net.CommandData;
 
 public interface Command {
     void sendMsg(String msg);
-    void receiveMsg(ByteBuf in);
+    void sendLightAdjustCommand(int percent);
+    void receiveMsg(CommandData in);
     void close();
 }

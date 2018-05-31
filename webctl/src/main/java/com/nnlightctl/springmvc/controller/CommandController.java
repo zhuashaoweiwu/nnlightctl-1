@@ -1,6 +1,7 @@
 package com.nnlightctl.springmvc.controller;
 
 import com.nnlightctl.request.CommandRequest;
+import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.CommandServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,5 +22,14 @@ public class CommandController extends BaseController {
         logger.info("[POST] /api/command/sendcommand");
 
         return commandServer.sendCommand(request.getMsg());
+    }
+
+    @RequestMapping("sendLightAdjustCommand")
+    public String sendLightAdjustCommand(CommandRequest request) {
+        logger.info("[POST] /api/command/sendLightAdjustCommand");
+
+        commandServer.sendLightAdjustCommand(request.getLightPercent());
+
+        return toJson(JsonResult.getSUCCESS());
     }
 }

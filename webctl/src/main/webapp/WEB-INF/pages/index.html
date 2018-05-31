@@ -26,8 +26,31 @@
             <label>命令返回：</label>
         </div>
 
-        <div class="col-sm-11">
+        <div class="col-sm-8">
             <textarea class="form-control" id="resultText" rows="3"></textarea>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 灯具调节 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label>灯具灯光调节：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input type="text" class="form-control" id="lightPercent">
+        </div>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide" />
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
         </div>
     </div>
 </div>
@@ -45,6 +68,16 @@
         $.post("../api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
             $("#resultText").val(result);
         }, "text");
+    });
+
+    $("#sendCommandLightAdjust").click(function() {
+        $.post("../api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
+        });
+    });
+
+    $("#lightPercentSlide").change(function () {
+        $("#lightPercent").val(this.value);
+        $("#sendCommandLightAdjust").click();
     });
 </script>
 </body>

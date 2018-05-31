@@ -2,6 +2,7 @@ package com.nnlightctl.command;
 
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.command.impl.NettyClientCommand;
+import com.nnlightctl.net.CommandData;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 
@@ -24,8 +25,8 @@ public class CommandFactory {
     public static void main(String[] args) {
         Command command = CommandFactory.getNettyClientCommand(new MessageEvent() {
             @Override
-            public void receiveMsg(ByteBuf msg) {
-                System.out.println(LocalDate.now() + " " + LocalTime.now() + " receive message : " + msg.toString(CharsetUtil.UTF_8));
+            public void receiveMsg(CommandData msg) {
+                System.out.println(LocalDate.now() + " " + LocalTime.now() + " receive message : " + new String(msg.getData()));
             }
         });
 

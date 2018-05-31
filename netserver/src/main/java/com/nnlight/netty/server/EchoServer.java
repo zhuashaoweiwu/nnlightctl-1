@@ -1,8 +1,11 @@
 package com.nnlight.netty.server;
 
+import com.nnlight.netcodec.CommandDataDecoder;
+import com.nnlight.netcodec.CommandDataEncoder;
 import com.nnlight.netty.handler.EchoServerHandler;
 import com.nnlight.netty.handler.HeartbeatServerHandler;
 import com.nnlight.netty.server.po.ChannelWrap;
+import com.nnlightctl.net.CommandData;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -50,7 +53,7 @@ public class EchoServer {
         return result.toString();
     }
 
-    public void commandSend(String name, String msg) {
+    public void allSendCommandLightAdjust(String name, String msg) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getValue().getName().equals(name)) {
                 ChannelHandlerContext context = entry.getValue().getContext();
@@ -60,6 +63,21 @@ public class EchoServer {
                 context.writeAndFlush(Unpooled.EMPTY_BUFFER);
                 break;
             }
+        }
+    }
+
+    public void allSendCommandLightAdjust(int percent) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = new CommandData((byte)percent);
+            context.writeAndFlush(commandData);
+        }
+    }
+
+    public void allClientSendCommand(CommandData commandData) {
+        for (Map.Entry<String, ChannelWrap> entry : commandMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            context.writeAndFlush(commandData);
         }
     }
 
@@ -90,7 +108,7 @@ public class EchoServer {
                 String name = params[1];
                 String msg = params[2];
 
-                server.commandSend(name, msg);
+                server.allSendCommandLightAdjust(name, msg);
             }
         }
     }
@@ -114,6 +132,8 @@ public class EchoServer {
                                 @Override
                                 protected void initChannel(SocketChannel socketChannel) throws Exception {
                                     socketChannel.pipeline().addLast(new LineBasedFrameDecoder(512));
+                                    socketChannel.pipeline().addLast(new CommandDataDecoder());
+                                    socketChannel.pipeline().addLast(new CommandDataEncoder());
                                     socketChannel.pipeline().addLast(serverHandler);
                                     socketChannel.pipeline().addLast(new IdleStateHandler(4,
                                             5, 7, TimeUnit.SECONDS));

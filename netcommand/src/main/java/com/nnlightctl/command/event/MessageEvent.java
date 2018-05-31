@@ -1,7 +1,7 @@
 package com.nnlightctl.command.event;
 
-import io.netty.buffer.ByteBuf;
+import com.nnlightctl.net.CommandData;
 
 public interface MessageEvent {
-    void receiveMsg(ByteBuf msg);
+    void receiveMsg(CommandData msg);
 }

@@ -147,7 +147,7 @@ public class EleboxServerImpl implements EleboxServer {
     public Tuple.TwoTuple<List<EleboxModel>, Integer> listEleboxModel(EleboxConditionRequest request) {
         Tuple.TwoTuple<List<EleboxModel>, Integer> twoTuple = new Tuple.TwoTuple<>();
         EleboxModelExample eleboxModelExample = new EleboxModelExample();
-        eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getId());
+        eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
         int total = eleboxModelMapper.countByExample(eleboxModelExample);
         twoTuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
