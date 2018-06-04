@@ -54,7 +54,7 @@ public class LightServerImpl implements LightServer {
         if (request.getNotBe() != null && request.getNotBe() == 1) {
             //搜索不属于任何控制柜的灯具
             criteria.andNnlightctlEleboxIdIsNull();
-        } else {
+        } else if (request.getEleboxId() != null) {
             //搜索某控制柜下全部灯具
             criteria.andNnlightctlEleboxIdEqualTo(request.getEleboxId());
         }
