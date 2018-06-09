@@ -41,6 +41,10 @@ public class CommandDataDecoder extends ByteToMessageDecoder {
         //检校码
         commandData.setCheck(data[10 + dataLength]);
 
+        if (!commandData.check()) {
+            throw new RuntimeException("命令校验失败！");
+        }
+
         list.add(commandData);
     }
 }

@@ -77,6 +77,26 @@ public class CommandData implements Serializable {
         this.end1 = end1;
     }
 
+    private byte createCheck() {
+        long sum = 0L;
+
+        sum += this.start0;
+
+        for (int i = 0; i < addr.length; ++i) {
+            sum += addr[i];
+        }
+
+        sum += this.start1;
+        sum += this.control;
+        sum += this.dataLength;
+
+        for (int i = 0; i < this.dataLength; ++i) {
+            sum += this.data[i];
+        }
+
+        return (byte)sum;
+    }
+
     public CommandData() {}
 
     public CommandData(int percent) {
@@ -84,8 +104,13 @@ public class CommandData implements Serializable {
         this.dataLength = 1;
         this.data = new byte[1];
         this.data[0] = (byte)percent;
+        this.check = createCheck();
     }
 
+    /**
+     * 生成命令的16进制字符串形式
+     * @return
+     */
     public String toHexString() {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -106,6 +131,16 @@ public class CommandData implements Serializable {
         return stringBuilder.toString();
     }
 
+    /**
+     * 校验
+     * @return
+     */
+    public boolean check() {
+        byte check = createCheck();
+
+        return this.check == check;
+    }
+
     /***************************************************命令客户端指令********************************************/
 
     //字符型命令
@@ -115,6 +150,7 @@ public class CommandData implements Serializable {
         this.dataLength = (byte)strBytes.length;
         this.data = new byte[strBytes.length];
         System.arraycopy(strBytes, 0, this.data, 0, strBytes.length);
+        this.check = createCheck();
     }
 
     //灯光调节命令
@@ -123,6 +159,7 @@ public class CommandData implements Serializable {
         this.dataLength = 1;
         this.data = new byte[1];
         this.data[0] = (byte)percent;
+        this.check = createCheck();
     }
 
     /***************************************************命令客户端指令********************************************/
@@ -135,6 +172,6 @@ public class CommandData implements Serializable {
     private byte[] data;
     private byte check;
     private byte end0 = 0x16;
-    private byte[] end1 = new byte[] {0x0d, 0x0a};
+    private byte[] end1 = new byte[] {(byte)0xFE, (byte)0xFD, (byte)0xFC, (byte)0xFB, (byte)0xFA, (byte)0xF9};
     private static final long serialVersionUID = 1L;
 }

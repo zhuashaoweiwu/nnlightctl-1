@@ -1,5 +1,6 @@
 package com.nnlightctl.command.client;
 
+import com.nnlight.netcodec.CodeBaseFrameDecoder;
 import com.nnlight.netcodec.CommandDataDecoder;
 import com.nnlight.netcodec.CommandDataEncoder;
 import com.nnlightctl.command.client.handler.EchoClientHandler;
@@ -33,6 +34,7 @@ public class EchoClient {
     }
 
     public void start() throws Exception {
+        final CodeBaseFrameDecoder baseFrameDecoder = new CodeBaseFrameDecoder(512);
         EventLoopGroup group = new NioEventLoopGroup(1);
         try {
             Bootstrap b = new Bootstrap();
@@ -42,7 +44,7 @@ public class EchoClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(512));
+                            socketChannel.pipeline().addLast(baseFrameDecoder);
                             socketChannel.pipeline().addLast(new CommandDataDecoder());
                             socketChannel.pipeline().addLast(new CommandDataEncoder());
                             socketChannel.pipeline().addLast(new EchoClientHandler(context));
