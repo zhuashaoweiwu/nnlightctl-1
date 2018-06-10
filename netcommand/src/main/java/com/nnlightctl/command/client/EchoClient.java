@@ -34,7 +34,6 @@ public class EchoClient {
     }
 
     public void start() throws Exception {
-        final CodeBaseFrameDecoder baseFrameDecoder = new CodeBaseFrameDecoder(512);
         EventLoopGroup group = new NioEventLoopGroup(1);
         try {
             Bootstrap b = new Bootstrap();
@@ -44,7 +43,7 @@ public class EchoClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(baseFrameDecoder);
+                            socketChannel.pipeline().addLast(CodeBaseFrameDecoder.getCodeBaseFrameDecoder(CodeBaseFrameDecoder.DELIMITER));
                             socketChannel.pipeline().addLast(new CommandDataDecoder());
                             socketChannel.pipeline().addLast(new CommandDataEncoder());
                             socketChannel.pipeline().addLast(new EchoClientHandler(context));

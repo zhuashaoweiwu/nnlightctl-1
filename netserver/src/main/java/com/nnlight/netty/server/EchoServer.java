@@ -120,7 +120,6 @@ public class EchoServer {
             public void run() {
                 final EchoServerHandler serverHandler = new EchoServerHandler(EchoServer.this);
                 final HeartbeatServerHandler heartbeatServerHandler = new HeartbeatServerHandler();
-                final CodeBaseFrameDecoder baseFrameDecoder = new CodeBaseFrameDecoder(1024);
                 EventLoopGroup group = new NioEventLoopGroup(50);
                 EventLoopGroup workGroup = new NioEventLoopGroup(1000);
                 try {
@@ -133,7 +132,7 @@ public class EchoServer {
                             .childHandler(new ChannelInitializer<SocketChannel>() {
                                 @Override
                                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                                    socketChannel.pipeline().addLast(baseFrameDecoder);
+                                    socketChannel.pipeline().addLast(CodeBaseFrameDecoder.getCodeBaseFrameDecoder(CodeBaseFrameDecoder.DELIMITER));
                                     socketChannel.pipeline().addLast(new CommandDataDecoder());
                                     socketChannel.pipeline().addLast(new CommandDataEncoder());
                                     socketChannel.pipeline().addLast(serverHandler);
