@@ -40,6 +40,7 @@ public class NettyClientCommand implements Command {
         } catch (InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
+
     }
 
     @Override

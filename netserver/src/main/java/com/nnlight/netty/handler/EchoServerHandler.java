@@ -85,7 +85,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                     String uuid = ctx.channel().id().asLongText();
                     ChannelWrap channelWrap = applicationContext.getClientChannelMap().remove(uuid);
                     applicationContext.getCommandMap().put(uuid, channelWrap);
-                    result.append("成功转换客户端为命令客户端");
+                    result.append("Translate Command Client Successful!");
                 } else if ("lookall".equals(command)) {
                     result.append(applicationContext.commandLookAll());
                 }

@@ -9,7 +9,7 @@ public class CommandDataEncoder extends MessageToByteEncoder<CommandData> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, CommandData commandData, ByteBuf byteBuf) throws Exception {
 
-        byte[] data = new byte[14 + commandData.getDataLength()];
+        byte[] data = new byte[18 + commandData.getDataLength()];
         int k = 0;
         //帧起始符
         data[k++] = commandData.getStart0();
