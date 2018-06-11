@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface EleboxServer {
     int insertElebox(EleboxAddModelRequest request);
+    Elebox getEleboxById(Long id);
     int updateElebox(EleboxRequest request);
     int updateEleboxDevice(EleboxConditionRequest request);
     int updateModelLoopSplite(EleboxConditionRequest request);

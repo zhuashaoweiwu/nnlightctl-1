@@ -57,6 +57,11 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
+    public Elebox getEleboxById(Long id) {
+        return eleboxMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public int updateElebox(EleboxRequest request) {
         Elebox elebox = new Elebox();
         ReflectCopyUtil.beanSameFieldCopy(request, elebox);

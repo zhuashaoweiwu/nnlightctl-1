@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LightingMapper;
+import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
@@ -19,6 +20,9 @@ import java.util.List;
 public class LightServerImpl implements LightServer {
     @Autowired
     private LightingMapper lightingMapper;
+
+    @Autowired
+    private LightDao lightDao;
 
     @Override
     public int addOrUpdateLight(LightRequest request) {
@@ -102,5 +106,28 @@ public class LightServerImpl implements LightServer {
     @Override
     public Lighting getLighting(Long id) {
         return lightingMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Lighting> getLightByLoopId(Long id) {
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andNnlightctlEleboxModelLoopIdEqualTo(id);
+        lightingExample.setOrderByClause("id DESC");
+
+        return lightingMapper.selectByExample(lightingExample);
+    }
+
+    @Override
+    public int updateLightBeEleboxBeLoop(LightConditionRequest request) {
+        lightDao.clearLightBeEleboxBeLoop(request.getEleboxId(), request.getModelLoopId());
+        List<Long> lightIdList = request.getLightIdList();
+        for (Long lightId : lightIdList) {
+            Lighting lighting = new Lighting();
+            lighting.setId(lightId);
+            lighting.setNnlightctlEleboxId(request.getEleboxId());
+            lighting.setNnlightctlEleboxModelLoopId(request.getModelLoopId());
+            lightingMapper.updateByPrimaryKeySelective(lighting);
+        }
+        return 1;
     }
 }

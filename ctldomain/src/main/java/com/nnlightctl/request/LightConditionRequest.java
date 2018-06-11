@@ -51,6 +51,16 @@ public class LightConditionRequest extends BaseRequest {
         this.projectId = projectId;
     }
 
+    public Long getModelLoopId() {
+        return modelLoopId;
+    }
+
+    public void setModelLoopId(Long modelLoopId) {
+        this.modelLoopId = modelLoopId;
+    }
+
+    private Long modelLoopId;
+
     private List<Long> lightIdList;
     private Long beEleboxId;
 
