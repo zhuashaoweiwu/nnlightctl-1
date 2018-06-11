@@ -36,6 +36,20 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
+    public int batchAddLight(LightRequest.BatchLightRequest request) {
+        List<LightRequest> lightRequestList = request.getAddLightings();
+        for (LightRequest lightRequest : lightRequestList) {
+            Lighting lighting = new Lighting();
+            ReflectCopyUtil.beanSameFieldCopy(lightRequest, lighting);
+            lighting.setGmtCreated(new Date());
+            lighting.setGmtUpdated(new Date());
+            lightingMapper.insertSelective(lighting);
+        }
+
+        return 1;
+    }
+
+    @Override
     public int deleteLight(LightConditionRequest request) {
         List<Long> deleteLightIdList = request.getDeleteLightIdList();
         int ret = -1;

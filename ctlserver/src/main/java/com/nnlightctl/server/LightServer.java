@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface LightServer {
     int addOrUpdateLight(LightRequest request);
+    int batchAddLight(LightRequest.BatchLightRequest request);
     int deleteLight(LightConditionRequest request);
     Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);

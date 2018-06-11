@@ -1,6 +1,7 @@
 package com.nnlightctl.request;
 
 import java.util.Date;
+import java.util.List;
 
 public class LightRequest {
     public Long getId() {
@@ -111,4 +112,16 @@ public class LightRequest {
     private Long decay;
     private Long maxUseTime;
     private String mem;
+
+    public static class BatchLightRequest {
+        public List<LightRequest> getAddLightings() {
+            return addLightings;
+        }
+
+        public void setAddLightings(List<LightRequest> addLightings) {
+            this.addLightings = addLightings;
+        }
+
+        private List<LightRequest> addLightings;
+    }
 }

@@ -248,6 +248,22 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("batchAddLighting")
+    public String batchAddLight(LightRequest.BatchLightRequest request) {
+        logger.info("[POST] /api/roadlighting/batchAddLighting");
+
+        int ret = lightServer.batchAddLight(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("deleteLighting")
     public String deleteLighting(LightConditionRequest request) {
         logger.info("[POST] /api/roadlighting/deleteLighting");
