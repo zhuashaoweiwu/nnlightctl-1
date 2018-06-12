@@ -12,7 +12,9 @@ import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.server.LightServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +31,9 @@ public class LightServerImpl implements LightServer {
         Lighting lighting = new Lighting();
         ReflectCopyUtil.beanSameFieldCopy(request, lighting);
         lighting.setGmtUpdated(new Date());
+        if (!StringUtils.isEmpty(request.getDecay())) {
+            lighting.setDecay(new BigDecimal(request.getDecay()));
+        }
         int ret = -1;
         if (request.getId() != null) {  //修改
             ret = lightingMapper.updateByPrimaryKeySelective(lighting);

@@ -64,6 +64,7 @@ public class GISServerImpl implements GISServer {
 
                 eleboxGIS.setLongitude(request.getLongitude());
                 eleboxGIS.setLatitude(request.getLatitude());
+                eleboxGIS.setMem(request.getMem());
 
                 this.eleboxGISMapper.insertSelective(eleboxGIS);
             } else {
@@ -74,6 +75,7 @@ public class GISServerImpl implements GISServer {
 
                 eleboxGIS.setLongitude(request.getLongitude());
                 eleboxGIS.setLatitude(request.getLatitude());
+                eleboxGIS.setMem(request.getMem());
 
                 this.eleboxGISMapper.updateByPrimaryKeySelective(eleboxGIS);
             }
@@ -141,6 +143,7 @@ public class GISServerImpl implements GISServer {
 
                 gisView.setLongitude(eleboxGIS.getLongitude());
                 gisView.setLantitude(eleboxGIS.getLatitude());
+                gisView.setMem(eleboxGIS.getMem());
 
                 gisViews.add(gisView);
             }

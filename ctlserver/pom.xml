@@ -39,5 +39,10 @@
             <groupId>com.nnlight</groupId>
             <artifactId>netcommand</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
     </dependencies>
 </project>

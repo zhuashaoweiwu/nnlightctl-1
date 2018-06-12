@@ -76,11 +76,11 @@ public class LightRequest {
         this.propertySerialNumber = propertySerialNumber;
     }
 
-    public Long getDecay() {
+    public String getDecay() {
         return decay;
     }
 
-    public void setDecay(Long decay) {
+    public void setDecay(String decay) {
         this.decay = decay;
     }
 
@@ -109,7 +109,7 @@ public class LightRequest {
     private Long nnlightctlLightingModelId;
     private Long nnlightctlLightingGisId;
     private String propertySerialNumber;
-    private Long decay;
+    private String decay;
     private Long maxUseTime;
     private String mem;
 
