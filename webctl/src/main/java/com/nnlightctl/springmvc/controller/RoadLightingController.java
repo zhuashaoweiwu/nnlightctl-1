@@ -148,6 +148,49 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getElebox")
+    public String getElebox(Long id) {
+        logger.info("[POST] /api/roadlighting/getElebox");
+
+        Elebox elebox = eleboxServer.getEleboxById(id);
+
+        List<Elebox> data = new ArrayList<>(1);
+        data.add(elebox);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(data);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("getLoopLight")
+    public String getLoopLight(Long id) {
+        logger.info("[POST] /api/roadlighting/getLoopLight");
+
+        List<Lighting> lightingList = lightServer.getLightByLoopId(id);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingList);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("updateLightBeEleboxBeLoop")
+    public String updateLightBeEleboxBeLoop(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/updateLightBeEleboxBeLoop");
+
+        int ret = lightServer.updateLightBeEleboxBeLoop(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("updateEleboxDevice")
     public String updateEleboxDevice(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/updateEleboxDevice");
