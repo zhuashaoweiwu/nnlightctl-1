@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -815,52 +816,52 @@ public class LightingExample {
             return (Criteria) this;
         }
 
-        public Criteria andDecayEqualTo(Long value) {
+        public Criteria andDecayEqualTo(BigDecimal value) {
             addCriterion("decay =", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayNotEqualTo(Long value) {
+        public Criteria andDecayNotEqualTo(BigDecimal value) {
             addCriterion("decay <>", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayGreaterThan(Long value) {
+        public Criteria andDecayGreaterThan(BigDecimal value) {
             addCriterion("decay >", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayGreaterThanOrEqualTo(Long value) {
+        public Criteria andDecayGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("decay >=", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayLessThan(Long value) {
+        public Criteria andDecayLessThan(BigDecimal value) {
             addCriterion("decay <", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayLessThanOrEqualTo(Long value) {
+        public Criteria andDecayLessThanOrEqualTo(BigDecimal value) {
             addCriterion("decay <=", value, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayIn(List<Long> values) {
+        public Criteria andDecayIn(List<BigDecimal> values) {
             addCriterion("decay in", values, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayNotIn(List<Long> values) {
+        public Criteria andDecayNotIn(List<BigDecimal> values) {
             addCriterion("decay not in", values, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayBetween(Long value1, Long value2) {
+        public Criteria andDecayBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("decay between", value1, value2, "decay");
             return (Criteria) this;
         }
 
-        public Criteria andDecayNotBetween(Long value1, Long value2) {
+        public Criteria andDecayNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("decay not between", value1, value2, "decay");
             return (Criteria) this;
         }

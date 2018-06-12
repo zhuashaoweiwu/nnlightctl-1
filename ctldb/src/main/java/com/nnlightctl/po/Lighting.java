@@ -1,6 +1,7 @@
 package com.nnlightctl.po;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Lighting implements Serializable {
@@ -26,7 +27,7 @@ public class Lighting implements Serializable {
 
     private String propertySerialNumber;
 
-    private Long decay;
+    private BigDecimal decay;
 
     private Long maxUseTime;
 
@@ -130,11 +131,11 @@ public class Lighting implements Serializable {
         this.propertySerialNumber = propertySerialNumber == null ? null : propertySerialNumber.trim();
     }
 
-    public Long getDecay() {
+    public BigDecimal getDecay() {
         return decay;
     }
 
-    public void setDecay(Long decay) {
+    public void setDecay(BigDecimal decay) {
         this.decay = decay;
     }
 

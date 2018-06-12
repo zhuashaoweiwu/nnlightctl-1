@@ -16,6 +16,8 @@ public class EleboxGIS implements Serializable {
 
     private String latitude;
 
+    private String mem;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -66,6 +68,14 @@ public class EleboxGIS implements Serializable {
         this.latitude = latitude == null ? null : latitude.trim();
     }
 
+    public String getMem() {
+        return mem;
+    }
+
+    public void setMem(String mem) {
+        this.mem = mem == null ? null : mem.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -83,7 +93,8 @@ public class EleboxGIS implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
             && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
-            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()));
+            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
+            && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
     }
 
     @Override
@@ -96,6 +107,7 @@ public class EleboxGIS implements Serializable {
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
         result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
+        result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
         return result;
     }
 
@@ -111,6 +123,7 @@ public class EleboxGIS implements Serializable {
         sb.append(", uid=").append(uid);
         sb.append(", longitude=").append(longitude);
         sb.append(", latitude=").append(latitude);
+        sb.append(", mem=").append(mem);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -494,6 +494,76 @@ public class EleboxGISExample {
             addCriterion("latitude not between", value1, value2, "latitude");
             return (Criteria) this;
         }
+
+        public Criteria andMemIsNull() {
+            addCriterion("mem is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemIsNotNull() {
+            addCriterion("mem is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemEqualTo(String value) {
+            addCriterion("mem =", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotEqualTo(String value) {
+            addCriterion("mem <>", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemGreaterThan(String value) {
+            addCriterion("mem >", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemGreaterThanOrEqualTo(String value) {
+            addCriterion("mem >=", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLessThan(String value) {
+            addCriterion("mem <", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLessThanOrEqualTo(String value) {
+            addCriterion("mem <=", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLike(String value) {
+            addCriterion("mem like", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotLike(String value) {
+            addCriterion("mem not like", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemIn(List<String> values) {
+            addCriterion("mem in", values, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotIn(List<String> values) {
+            addCriterion("mem not in", values, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemBetween(String value1, String value2) {
+            addCriterion("mem between", value1, value2, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotBetween(String value1, String value2) {
+            addCriterion("mem not between", value1, value2, "mem");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
