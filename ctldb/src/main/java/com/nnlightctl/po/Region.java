@@ -14,6 +14,10 @@ public class Region implements Serializable {
 
     private String regionDesc;
 
+    private Byte regionLevel;
+
+    private Long nnlightctlParentRegion;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -56,6 +60,22 @@ public class Region implements Serializable {
         this.regionDesc = regionDesc == null ? null : regionDesc.trim();
     }
 
+    public Byte getRegionLevel() {
+        return regionLevel;
+    }
+
+    public void setRegionLevel(Byte regionLevel) {
+        this.regionLevel = regionLevel;
+    }
+
+    public Long getNnlightctlParentRegion() {
+        return nnlightctlParentRegion;
+    }
+
+    public void setNnlightctlParentRegion(Long nnlightctlParentRegion) {
+        this.nnlightctlParentRegion = nnlightctlParentRegion;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -72,7 +92,9 @@ public class Region implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getAreaName() == null ? other.getAreaName() == null : this.getAreaName().equals(other.getAreaName()))
-            && (this.getRegionDesc() == null ? other.getRegionDesc() == null : this.getRegionDesc().equals(other.getRegionDesc()));
+            && (this.getRegionDesc() == null ? other.getRegionDesc() == null : this.getRegionDesc().equals(other.getRegionDesc()))
+            && (this.getRegionLevel() == null ? other.getRegionLevel() == null : this.getRegionLevel().equals(other.getRegionLevel()))
+            && (this.getNnlightctlParentRegion() == null ? other.getNnlightctlParentRegion() == null : this.getNnlightctlParentRegion().equals(other.getNnlightctlParentRegion()));
     }
 
     @Override
@@ -84,6 +106,8 @@ public class Region implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getAreaName() == null) ? 0 : getAreaName().hashCode());
         result = prime * result + ((getRegionDesc() == null) ? 0 : getRegionDesc().hashCode());
+        result = prime * result + ((getRegionLevel() == null) ? 0 : getRegionLevel().hashCode());
+        result = prime * result + ((getNnlightctlParentRegion() == null) ? 0 : getNnlightctlParentRegion().hashCode());
         return result;
     }
 
@@ -98,6 +122,8 @@ public class Region implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", areaName=").append(areaName);
         sb.append(", regionDesc=").append(regionDesc);
+        sb.append(", regionLevel=").append(regionLevel);
+        sb.append(", nnlightctlParentRegion=").append(nnlightctlParentRegion);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

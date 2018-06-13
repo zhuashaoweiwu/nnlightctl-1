@@ -7,6 +7,8 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="area_name" property="areaName" jdbcType="VARCHAR" />
     <result column="region_desc" property="regionDesc" jdbcType="VARCHAR" />
+    <result column="region_level" property="regionLevel" jdbcType="TINYINT" />
+    <result column="nnlightctl_parent_region" property="nnlightctlParentRegion" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, area_name, region_desc
+    id, gmt_created, gmt_updated, area_name, region_desc, region_level, nnlightctl_parent_region
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RegionExample" >
     select
@@ -105,9 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_region (gmt_created, gmt_updated, area_name, 
-      region_desc)
+      region_desc, region_level, nnlightctl_parent_region
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{areaName,jdbcType=VARCHAR}, 
-      #{regionDesc,jdbcType=VARCHAR})
+      #{regionDesc,jdbcType=VARCHAR}, #{regionLevel,jdbcType=TINYINT}, #{nnlightctlParentRegion,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Region" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -127,6 +131,12 @@
       <if test="regionDesc != null" >
         region_desc,
       </if>
+      <if test="regionLevel != null" >
+        region_level,
+      </if>
+      <if test="nnlightctlParentRegion != null" >
+        nnlightctl_parent_region,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -140,6 +150,12 @@
       </if>
       <if test="regionDesc != null" >
         #{regionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="regionLevel != null" >
+        #{regionLevel,jdbcType=TINYINT},
+      </if>
+      <if test="nnlightctlParentRegion != null" >
+        #{nnlightctlParentRegion,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -167,6 +183,12 @@
       <if test="record.regionDesc != null" >
         region_desc = #{record.regionDesc,jdbcType=VARCHAR},
       </if>
+      <if test="record.regionLevel != null" >
+        region_level = #{record.regionLevel,jdbcType=TINYINT},
+      </if>
+      <if test="record.nnlightctlParentRegion != null" >
+        nnlightctl_parent_region = #{record.nnlightctlParentRegion,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +200,9 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       area_name = #{record.areaName,jdbcType=VARCHAR},
-      region_desc = #{record.regionDesc,jdbcType=VARCHAR}
+      region_desc = #{record.regionDesc,jdbcType=VARCHAR},
+      region_level = #{record.regionLevel,jdbcType=TINYINT},
+      nnlightctl_parent_region = #{record.nnlightctlParentRegion,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +222,12 @@
       <if test="regionDesc != null" >
         region_desc = #{regionDesc,jdbcType=VARCHAR},
       </if>
+      <if test="regionLevel != null" >
+        region_level = #{regionLevel,jdbcType=TINYINT},
+      </if>
+      <if test="nnlightctlParentRegion != null" >
+        nnlightctl_parent_region = #{nnlightctlParentRegion,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -206,7 +236,9 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       area_name = #{areaName,jdbcType=VARCHAR},
-      region_desc = #{regionDesc,jdbcType=VARCHAR}
+      region_desc = #{regionDesc,jdbcType=VARCHAR},
+      region_level = #{regionLevel,jdbcType=TINYINT},
+      nnlightctl_parent_region = #{nnlightctlParentRegion,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

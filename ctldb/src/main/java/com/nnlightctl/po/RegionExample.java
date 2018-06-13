@@ -424,6 +424,126 @@ public class RegionExample {
             addCriterion("region_desc not between", value1, value2, "regionDesc");
             return (Criteria) this;
         }
+
+        public Criteria andRegionLevelIsNull() {
+            addCriterion("region_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelIsNotNull() {
+            addCriterion("region_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelEqualTo(Byte value) {
+            addCriterion("region_level =", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelNotEqualTo(Byte value) {
+            addCriterion("region_level <>", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelGreaterThan(Byte value) {
+            addCriterion("region_level >", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelGreaterThanOrEqualTo(Byte value) {
+            addCriterion("region_level >=", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelLessThan(Byte value) {
+            addCriterion("region_level <", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelLessThanOrEqualTo(Byte value) {
+            addCriterion("region_level <=", value, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelIn(List<Byte> values) {
+            addCriterion("region_level in", values, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelNotIn(List<Byte> values) {
+            addCriterion("region_level not in", values, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelBetween(Byte value1, Byte value2) {
+            addCriterion("region_level between", value1, value2, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLevelNotBetween(Byte value1, Byte value2) {
+            addCriterion("region_level not between", value1, value2, "regionLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionIsNull() {
+            addCriterion("nnlightctl_parent_region is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionIsNotNull() {
+            addCriterion("nnlightctl_parent_region is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionEqualTo(Long value) {
+            addCriterion("nnlightctl_parent_region =", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionNotEqualTo(Long value) {
+            addCriterion("nnlightctl_parent_region <>", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionGreaterThan(Long value) {
+            addCriterion("nnlightctl_parent_region >", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_parent_region >=", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionLessThan(Long value) {
+            addCriterion("nnlightctl_parent_region <", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_parent_region <=", value, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionIn(List<Long> values) {
+            addCriterion("nnlightctl_parent_region in", values, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionNotIn(List<Long> values) {
+            addCriterion("nnlightctl_parent_region not in", values, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_parent_region between", value1, value2, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlParentRegionNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_parent_region not between", value1, value2, "nnlightctlParentRegion");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
