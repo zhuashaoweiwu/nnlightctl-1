@@ -25,7 +25,25 @@ public class AreaRequest {
         this.id = id;
     }
 
+    public Byte getRegionLevel() {
+        return regionLevel;
+    }
+
+    public void setRegionLevel(Byte regionLevel) {
+        this.regionLevel = regionLevel;
+    }
+
+    public Long getNnlightctlParentRegion() {
+        return nnlightctlParentRegion;
+    }
+
+    public void setNnlightctlParentRegion(Long nnlightctlParentRegion) {
+        this.nnlightctlParentRegion = nnlightctlParentRegion;
+    }
+
     private Long id;
     private String areaName;
     private String regionDesc;
+    private Byte regionLevel;
+    private Long nnlightctlParentRegion;
 }

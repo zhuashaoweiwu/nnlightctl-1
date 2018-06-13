@@ -63,4 +63,22 @@ public class AreaServerImpl implements AreaServer {
 
         return tuple;
     }
+
+    @Override
+    public List<Region> listLevel1Area() {
+        RegionExample regionExample = new RegionExample();
+        regionExample.createCriteria().andRegionLevelEqualTo((byte)0);
+        regionExample.setOrderByClause("id DESC");
+
+        return regionMapper.selectByExample(regionExample);
+    }
+
+    @Override
+    public List<Region> listSubArea(Long parentAreaId) {
+        RegionExample regionExample = new RegionExample();
+        regionExample.createCriteria().andNnlightctlParentRegionEqualTo(parentAreaId);
+        regionExample.setOrderByClause("id DESC");
+
+        return regionMapper.selectByExample(regionExample);
+    }
 }

@@ -12,4 +12,8 @@ public interface AreaServer {
     int deleteArea(AreaConditionRequest request);
 
     Tuple.TwoTuple<List<Region>, Integer> listArea(AreaConditionRequest request);
+
+    List<Region> listLevel1Area();
+
+    List<Region> listSubArea(Long parentAreaId);
 }

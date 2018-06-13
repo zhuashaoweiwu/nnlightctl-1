@@ -11,5 +11,14 @@ public class AreaConditionRequest extends BaseRequest {
         this.areaIdList = areaIdList;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
     private List<Long> areaIdList;
 }

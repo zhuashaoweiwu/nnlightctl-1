@@ -502,4 +502,28 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("listLevel1Area")
+    public String listLevel1Area() {
+        logger.info("[POST] /api/roadlighting/listLevel1Area");
+
+        List<Region> regionList = areaServer.listLevel1Area();
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(regionList);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listSubArea")
+    public String listSubArea(AreaConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/listSubArea");
+
+        List<Region> regionList = areaServer.listSubArea(request.getId());
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(regionList);
+
+        return toJson(jsonResult);
+    }
 }
