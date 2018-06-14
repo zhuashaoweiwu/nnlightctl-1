@@ -2,8 +2,9 @@
 <Configuration status="OFF" monitorInterval="1800">
 
     <properties>
-        <property name="LOG_HOME">/WEB-INF/logs</property>
+        <property name="LOG_HOME">${sys:catalina.base}/logs</property>
         <property name="FILE_NAME">nnlightctl</property>
+        <property name="SLOW_SQL">slowSql</property>
     </properties>
 
     <Appenders>
@@ -22,15 +23,36 @@
             </Policies>
             <DefaultRolloverStrategy max="20" />
         </RollingFile>
+
+        <RollingFile name="slowSql-log" fileName="${LOG_HOME}/${SLOW_SQL}.log"
+                     filePattern="${LOG_HOME}/$${date:yyyy-MM}/${SLOW_SQL}-%d{yyyy-MM-dd}-%i.log.gz"
+                     immediateFlush="true">
+            <PatternLayout
+                    pattern="%date{yyyy-MM-dd HH:mm:ss} %level [%thread][%file:%line] - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
     </Appenders>
 
     <Loggers>
         <Root level="info">
-            <!-- 这里是输入到文件，很重要-->
             <AppenderRef ref="running-log" />
-            <!-- 这里是输入到控制台-->
             <AppenderRef ref="Console" />
         </Root>
+
+        <!-- druid配置 -->
+        <logger name="druid.sql.Statement" level="debug" additivity="false">
+            <AppenderRef ref="slowSql-log" />
+            <AppenderRef ref="Console" />
+        </logger>
+        <logger name="druid.sql.ResultSet" level="debug" additivity="false">
+            <AppenderRef ref="slowSql-log" />
+            <AppenderRef ref="Console" />
+        </logger>
+
     </Loggers>
 
 </Configuration>
