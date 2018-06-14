@@ -7,7 +7,9 @@ import com.alibaba.druid.stat.JdbcSqlStatValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.management.JMException;
 import java.util.List;
+import java.util.Map;
 
 public class DruidStatLogger extends DruidDataSourceStatLoggerAdapter implements DruidDataSourceStatLogger {
 
@@ -19,7 +21,18 @@ public class DruidStatLogger extends DruidDataSourceStatLoggerAdapter implements
         List<JdbcSqlStatValue> jdbcSqlStatValueList = statValue.getSqlList();
         for (JdbcSqlStatValue jdbcSqlStatValue : jdbcSqlStatValueList) {
             logger.info(jdbcSqlStatValue.getSql());
-            logger.info(jdbcSqlStatValue.getLastSlowParameters());
+            try {
+                Map<String, Object> data = jdbcSqlStatValue.getData();
+                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                    logger.info("Param : [" + entry.getKey() + ", " + entry.getValue() + "]");
+                }
+            } catch (JMException e) {
+                logger.error(e.getMessage());
+            }
+            String lastSlowParameters = jdbcSqlStatValue.getLastSlowParameters();
+            if (lastSlowParameters != null && !lastSlowParameters.isEmpty()) {
+                logger.info(lastSlowParameters);
+            }
         }
     }
 }
