@@ -30,6 +30,8 @@ public class User implements Serializable {
 
     private String codeNumber;
 
+    private Byte userType;
+
     private Long nnlightctlDepartmentId;
 
     private static final long serialVersionUID = 1L;
@@ -138,6 +140,14 @@ public class User implements Serializable {
         this.codeNumber = codeNumber == null ? null : codeNumber.trim();
     }
 
+    public Byte getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Byte userType) {
+        this.userType = userType;
+    }
+
     public Long getNnlightctlDepartmentId() {
         return nnlightctlDepartmentId;
     }
@@ -171,6 +181,7 @@ public class User implements Serializable {
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getPlace() == null ? other.getPlace() == null : this.getPlace().equals(other.getPlace()))
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
+            && (this.getUserType() == null ? other.getUserType() == null : this.getUserType().equals(other.getUserType()))
             && (this.getNnlightctlDepartmentId() == null ? other.getNnlightctlDepartmentId() == null : this.getNnlightctlDepartmentId().equals(other.getNnlightctlDepartmentId()));
     }
 
@@ -191,6 +202,7 @@ public class User implements Serializable {
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getPlace() == null) ? 0 : getPlace().hashCode());
         result = prime * result + ((getCodeNumber() == null) ? 0 : getCodeNumber().hashCode());
+        result = prime * result + ((getUserType() == null) ? 0 : getUserType().hashCode());
         result = prime * result + ((getNnlightctlDepartmentId() == null) ? 0 : getNnlightctlDepartmentId().hashCode());
         return result;
     }
@@ -214,6 +226,7 @@ public class User implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", place=").append(place);
         sb.append(", codeNumber=").append(codeNumber);
+        sb.append(", userType=").append(userType);
         sb.append(", nnlightctlDepartmentId=").append(nnlightctlDepartmentId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
