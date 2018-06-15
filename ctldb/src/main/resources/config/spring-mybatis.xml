@@ -65,7 +65,7 @@
         <!--<property name="filters" value="mergeStat" />-->
         <!-- 监控统计拦截的filters,日志记录 -->
         <property name="filters">
-            <value>mergeStat,wall,slf4j</value>
+            <value>stat,wall,slf4j</value>
         </property>
     </bean>
 
@@ -75,7 +75,7 @@
     <!-- 慢SQL记录  start-->
     <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
         <property name="mergeSql" value="true" />
-        <property name="slowSqlMillis" value="10" />
+        <property name="slowSqlMillis" value="8000" />
         <property name="logSlowSql" value="true" />
     </bean>
 
