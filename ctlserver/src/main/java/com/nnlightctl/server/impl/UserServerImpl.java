@@ -14,6 +14,7 @@ import com.nnlightctl.request.UserRequest;
 import com.nnlightctl.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,12 @@ public class UserServerImpl implements UserServer {
         User user = new User();
         ReflectCopyUtil.beanSameFieldCopy(request, user);
         user.setGmtUpdated(new Date());
+
+        if (!StringUtils.isEmpty(request.getLoginPwd())) {
+            Digester sha256 = new Digester(DigestAlgorithm.SHA256);
+
+            user.setLoginPwd(sha256.digestHex(request.getLoginPwd()));
+        }
 
         int ret = -1;
         if (request.getId() == null) {
