@@ -1,5 +1,7 @@
 package com.nnlightctl.server.impl;
 
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
@@ -78,7 +80,10 @@ public class UserServerImpl implements UserServer {
     public int updateUserPwd(UserConditionRequest request) {
         User user = new User();
         user.setId(request.getId());
-        user.setLoginPwd(request.getNewPwd());
+
+        Digester sha256 = new Digester(DigestAlgorithm.SHA256);
+
+        user.setLoginPwd(sha256.digestHex(request.getNewPwd()));
 
         return userMapper.updateByPrimaryKeySelective(user);
     }

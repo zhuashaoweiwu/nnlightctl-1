@@ -39,6 +39,7 @@
         <servlet.version>3.1.0</servlet.version>
         <netty.version>4.1.22.Final</netty.version>
         <guava.version>25.0-jre</guava.version>
+        <hutoolall.version>4.0.9</hutoolall.version>
     </properties>
 
     <repositories>
@@ -238,6 +239,14 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+            <!-- hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutoolall.version}</version>
+            </dependency>
+
 
 
             <!-- 工程依赖 -->
