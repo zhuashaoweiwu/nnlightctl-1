@@ -40,6 +40,7 @@
         <netty.version>4.1.22.Final</netty.version>
         <guava.version>25.0-jre</guava.version>
         <hutoolall.version>4.0.9</hutoolall.version>
+        <commons-fileupload.version>1.3.1</commons-fileupload.version>
     </properties>
 
     <repositories>
@@ -112,6 +113,13 @@
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectjweaver.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload.version}</version>
+            </dependency>
+
 
             <!-- db -->
             <dependency>
