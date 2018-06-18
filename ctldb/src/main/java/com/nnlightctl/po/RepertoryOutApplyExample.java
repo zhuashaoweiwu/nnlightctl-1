@@ -474,6 +474,66 @@ public class RepertoryOutApplyExample {
             addCriterion("nnlightctl_user_id not between", value1, value2, "nnlightctlUserId");
             return (Criteria) this;
         }
+
+        public Criteria andApplyStateIsNull() {
+            addCriterion("apply_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateIsNotNull() {
+            addCriterion("apply_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateEqualTo(Byte value) {
+            addCriterion("apply_state =", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateNotEqualTo(Byte value) {
+            addCriterion("apply_state <>", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateGreaterThan(Byte value) {
+            addCriterion("apply_state >", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateGreaterThanOrEqualTo(Byte value) {
+            addCriterion("apply_state >=", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateLessThan(Byte value) {
+            addCriterion("apply_state <", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateLessThanOrEqualTo(Byte value) {
+            addCriterion("apply_state <=", value, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateIn(List<Byte> values) {
+            addCriterion("apply_state in", values, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateNotIn(List<Byte> values) {
+            addCriterion("apply_state not in", values, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateBetween(Byte value1, Byte value2) {
+            addCriterion("apply_state between", value1, value2, "applyState");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyStateNotBetween(Byte value1, Byte value2) {
+            addCriterion("apply_state not between", value1, value2, "applyState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

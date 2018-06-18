@@ -24,6 +24,8 @@ public class RepairRecord implements Serializable {
 
     private Long nnlightctlUserId;
 
+    private Byte isCommit;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -106,6 +108,14 @@ public class RepairRecord implements Serializable {
         this.nnlightctlUserId = nnlightctlUserId;
     }
 
+    public Byte getIsCommit() {
+        return isCommit;
+    }
+
+    public void setIsCommit(Byte isCommit) {
+        this.isCommit = isCommit;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -127,7 +137,8 @@ public class RepairRecord implements Serializable {
             && (this.getPropertyCount() == null ? other.getPropertyCount() == null : this.getPropertyCount().equals(other.getPropertyCount()))
             && (this.getFaultDate() == null ? other.getFaultDate() == null : this.getFaultDate().equals(other.getFaultDate()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
-            && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()));
+            && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()))
+            && (this.getIsCommit() == null ? other.getIsCommit() == null : this.getIsCommit().equals(other.getIsCommit()));
     }
 
     @Override
@@ -144,6 +155,7 @@ public class RepairRecord implements Serializable {
         result = prime * result + ((getFaultDate() == null) ? 0 : getFaultDate().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
+        result = prime * result + ((getIsCommit() == null) ? 0 : getIsCommit().hashCode());
         return result;
     }
 
@@ -163,6 +175,7 @@ public class RepairRecord implements Serializable {
         sb.append(", faultDate=").append(faultDate);
         sb.append(", createDate=").append(createDate);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
+        sb.append(", isCommit=").append(isCommit);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

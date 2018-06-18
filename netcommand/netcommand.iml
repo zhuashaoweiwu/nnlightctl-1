@@ -14,5 +14,6 @@
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.22.Final" level="project" />
     <orderEntry type="module" module-name="ctlcommon" />
     <orderEntry type="module" module-name="ctldomain" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-all:4.0.9" level="project" />
   </component>
 </module>

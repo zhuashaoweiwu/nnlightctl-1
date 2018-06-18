@@ -30,6 +30,8 @@ public class RepertoryInApply implements Serializable {
 
     private Long nnlightctlUserApplyId;
 
+    private Byte applyState;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -136,6 +138,14 @@ public class RepertoryInApply implements Serializable {
         this.nnlightctlUserApplyId = nnlightctlUserApplyId;
     }
 
+    public Byte getApplyState() {
+        return applyState;
+    }
+
+    public void setApplyState(Byte applyState) {
+        this.applyState = applyState;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -160,7 +170,8 @@ public class RepertoryInApply implements Serializable {
             && (this.getPropertyCount() == null ? other.getPropertyCount() == null : this.getPropertyCount().equals(other.getPropertyCount()))
             && (this.getNnlightctlRepertoryInReasonId() == null ? other.getNnlightctlRepertoryInReasonId() == null : this.getNnlightctlRepertoryInReasonId().equals(other.getNnlightctlRepertoryInReasonId()))
             && (this.getNnlightctlRepertoryId() == null ? other.getNnlightctlRepertoryId() == null : this.getNnlightctlRepertoryId().equals(other.getNnlightctlRepertoryId()))
-            && (this.getNnlightctlUserApplyId() == null ? other.getNnlightctlUserApplyId() == null : this.getNnlightctlUserApplyId().equals(other.getNnlightctlUserApplyId()));
+            && (this.getNnlightctlUserApplyId() == null ? other.getNnlightctlUserApplyId() == null : this.getNnlightctlUserApplyId().equals(other.getNnlightctlUserApplyId()))
+            && (this.getApplyState() == null ? other.getApplyState() == null : this.getApplyState().equals(other.getApplyState()));
     }
 
     @Override
@@ -180,6 +191,7 @@ public class RepertoryInApply implements Serializable {
         result = prime * result + ((getNnlightctlRepertoryInReasonId() == null) ? 0 : getNnlightctlRepertoryInReasonId().hashCode());
         result = prime * result + ((getNnlightctlRepertoryId() == null) ? 0 : getNnlightctlRepertoryId().hashCode());
         result = prime * result + ((getNnlightctlUserApplyId() == null) ? 0 : getNnlightctlUserApplyId().hashCode());
+        result = prime * result + ((getApplyState() == null) ? 0 : getApplyState().hashCode());
         return result;
     }
 
@@ -202,6 +214,7 @@ public class RepertoryInApply implements Serializable {
         sb.append(", nnlightctlRepertoryInReasonId=").append(nnlightctlRepertoryInReasonId);
         sb.append(", nnlightctlRepertoryId=").append(nnlightctlRepertoryId);
         sb.append(", nnlightctlUserApplyId=").append(nnlightctlUserApplyId);
+        sb.append(", applyState=").append(applyState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

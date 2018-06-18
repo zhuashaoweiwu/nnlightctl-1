@@ -20,5 +20,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
     <orderEntry type="module" module-name="ctldomain" />
     <orderEntry type="module" module-name="ctlcommon" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-all:4.0.9" level="project" />
   </component>
 </module>

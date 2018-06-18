@@ -41,6 +41,7 @@
         <guava.version>25.0-jre</guava.version>
         <hutoolall.version>4.0.9</hutoolall.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <poi.version>3.17</poi.version>
     </properties>
 
     <repositories>
@@ -255,7 +256,17 @@
                 <version>${hutoolall.version}</version>
             </dependency>
 
-
+            <!-- poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
 
             <!-- 工程依赖 -->
             <dependency>

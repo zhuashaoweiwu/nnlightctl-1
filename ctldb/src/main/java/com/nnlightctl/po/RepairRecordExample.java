@@ -714,6 +714,66 @@ public class RepairRecordExample {
             addCriterion("nnlightctl_user_id not between", value1, value2, "nnlightctlUserId");
             return (Criteria) this;
         }
+
+        public Criteria andIsCommitIsNull() {
+            addCriterion("is_commit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitIsNotNull() {
+            addCriterion("is_commit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitEqualTo(Byte value) {
+            addCriterion("is_commit =", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitNotEqualTo(Byte value) {
+            addCriterion("is_commit <>", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitGreaterThan(Byte value) {
+            addCriterion("is_commit >", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitGreaterThanOrEqualTo(Byte value) {
+            addCriterion("is_commit >=", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitLessThan(Byte value) {
+            addCriterion("is_commit <", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitLessThanOrEqualTo(Byte value) {
+            addCriterion("is_commit <=", value, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitIn(List<Byte> values) {
+            addCriterion("is_commit in", values, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitNotIn(List<Byte> values) {
+            addCriterion("is_commit not in", values, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitBetween(Byte value1, Byte value2) {
+            addCriterion("is_commit between", value1, value2, "isCommit");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCommitNotBetween(Byte value1, Byte value2) {
+            addCriterion("is_commit not between", value1, value2, "isCommit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

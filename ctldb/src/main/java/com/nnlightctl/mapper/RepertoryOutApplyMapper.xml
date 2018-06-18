@@ -8,6 +8,7 @@
     <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
     <result column="nnlightctl_property_id" property="nnlightctlPropertyId" jdbcType="BIGINT" />
     <result column="nnlightctl_user_id" property="nnlightctlUserId" jdbcType="BIGINT" />
+    <result column="apply_state" property="applyState" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, serialnumber, nnlightctl_property_id, nnlightctl_user_id
+    id, gmt_created, gmt_updated, serialnumber, nnlightctl_property_id, nnlightctl_user_id, 
+    apply_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RepertoryOutApplyExample" >
     select
@@ -106,9 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_repertory_out_apply (gmt_created, gmt_updated, serialnumber, 
-      nnlightctl_property_id, nnlightctl_user_id)
+      nnlightctl_property_id, nnlightctl_user_id, apply_state
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialnumber,jdbcType=VARCHAR}, 
-      #{nnlightctlPropertyId,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT})
+      #{nnlightctlPropertyId,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT}, #{applyState,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.RepertoryOutApply" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -131,6 +135,9 @@
       <if test="nnlightctlUserId != null" >
         nnlightctl_user_id,
       </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -147,6 +154,9 @@
       </if>
       <if test="nnlightctlUserId != null" >
         #{nnlightctlUserId,jdbcType=BIGINT},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -177,6 +187,9 @@
       <if test="record.nnlightctlUserId != null" >
         nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT},
       </if>
+      <if test="record.applyState != null" >
+        apply_state = #{record.applyState,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -189,7 +202,8 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
       nnlightctl_property_id = #{record.nnlightctlPropertyId,jdbcType=BIGINT},
-      nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT}
+      nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT},
+      apply_state = #{record.applyState,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -212,6 +226,9 @@
       <if test="nnlightctlUserId != null" >
         nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT},
       </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -221,7 +238,8 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       serialnumber = #{serialnumber,jdbcType=VARCHAR},
       nnlightctl_property_id = #{nnlightctlPropertyId,jdbcType=BIGINT},
-      nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT}
+      nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT},
+      apply_state = #{applyState,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

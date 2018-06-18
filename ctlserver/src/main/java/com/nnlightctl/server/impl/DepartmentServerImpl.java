@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.DepartmentMapper;
@@ -48,6 +49,8 @@ public class DepartmentServerImpl implements DepartmentServer {
 
         int total = departmentMapper.countByExample(departmentExample);
         tuple.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         List<Department> departmentList = departmentMapper.selectByExample(departmentExample);
         tuple.setFirst(departmentList);

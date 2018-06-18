@@ -3,6 +3,7 @@ package com.nnlightctl.server.impl;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.DigesterUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.UserMapper;
@@ -32,9 +33,7 @@ public class UserServerImpl implements UserServer {
         user.setGmtUpdated(new Date());
 
         if (!StringUtils.isEmpty(request.getLoginPwd())) {
-            Digester sha256 = new Digester(DigestAlgorithm.SHA256);
-
-            user.setLoginPwd(sha256.digestHex(request.getLoginPwd()));
+            user.setLoginPwd(DigesterUtil.digestSHA256(request.getLoginPwd()));
         }
 
         int ret = -1;
@@ -88,9 +87,7 @@ public class UserServerImpl implements UserServer {
         User user = new User();
         user.setId(request.getId());
 
-        Digester sha256 = new Digester(DigestAlgorithm.SHA256);
-
-        user.setLoginPwd(sha256.digestHex(request.getNewPwd()));
+        user.setLoginPwd(DigesterUtil.digestSHA256(request.getNewPwd()));
 
         return userMapper.updateByPrimaryKeySelective(user);
     }

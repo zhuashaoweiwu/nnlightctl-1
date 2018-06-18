@@ -16,6 +16,8 @@ public class RepertoryOutApply implements Serializable {
 
     private Long nnlightctlUserId;
 
+    private Byte applyState;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -66,6 +68,14 @@ public class RepertoryOutApply implements Serializable {
         this.nnlightctlUserId = nnlightctlUserId;
     }
 
+    public Byte getApplyState() {
+        return applyState;
+    }
+
+    public void setApplyState(Byte applyState) {
+        this.applyState = applyState;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -83,7 +93,8 @@ public class RepertoryOutApply implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getSerialnumber() == null ? other.getSerialnumber() == null : this.getSerialnumber().equals(other.getSerialnumber()))
             && (this.getNnlightctlPropertyId() == null ? other.getNnlightctlPropertyId() == null : this.getNnlightctlPropertyId().equals(other.getNnlightctlPropertyId()))
-            && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()));
+            && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()))
+            && (this.getApplyState() == null ? other.getApplyState() == null : this.getApplyState().equals(other.getApplyState()));
     }
 
     @Override
@@ -96,6 +107,7 @@ public class RepertoryOutApply implements Serializable {
         result = prime * result + ((getSerialnumber() == null) ? 0 : getSerialnumber().hashCode());
         result = prime * result + ((getNnlightctlPropertyId() == null) ? 0 : getNnlightctlPropertyId().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
+        result = prime * result + ((getApplyState() == null) ? 0 : getApplyState().hashCode());
         return result;
     }
 
@@ -111,6 +123,7 @@ public class RepertoryOutApply implements Serializable {
         sb.append(", serialnumber=").append(serialnumber);
         sb.append(", nnlightctlPropertyId=").append(nnlightctlPropertyId);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
+        sb.append(", applyState=").append(applyState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
