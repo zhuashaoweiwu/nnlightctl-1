@@ -27,6 +27,16 @@ public class UserConditionRequest extends BaseRequest {
         this.newPwd = newPwd;
     }
 
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    private Integer userType;
+
     private List<Long> userIds;
 
     private Long id;

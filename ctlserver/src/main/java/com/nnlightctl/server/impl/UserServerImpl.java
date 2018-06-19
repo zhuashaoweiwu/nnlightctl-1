@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,14 @@ public class UserServerImpl implements UserServer {
         UserExample userExample = new UserExample();
         userExample.setOrderByClause("id DESC");
 
+        UserConditionRequest userConditionRequest =
+                request instanceof UserConditionRequest ? (UserConditionRequest)request : null;
+
+        if (userConditionRequest != null && userConditionRequest.getUserType() != null) {
+            userExample.createCriteria().andUserTypeEqualTo(userConditionRequest.getUserType().byteValue());
+        }
+
+
         int total = userMapper.countByExample(userExample);
         tuple.setSecond(total);
 
@@ -94,6 +103,29 @@ public class UserServerImpl implements UserServer {
 
     @Override
     public Tuple.TwoTuple<List<User>, Integer> listOnlineUser() {
-        return null;
+        Tuple.TwoTuple<List<User>, Integer> tuple = new Tuple.TwoTuple<>();
+        List<User> userList = new ArrayList<>(2);
+
+        User user = new User();
+        user.setLoginName("loginUser1");
+        user.setCodeNumber("001");
+        user.setPlace("测试人员");
+        user.setSex((byte)0);
+        user.setUserType((byte)1);
+
+        User user2 = new User();
+        user2.setLoginName("loginUser2");
+        user2.setCodeNumber("002");
+        user2.setPlace("测试人员2");
+        user2.setSex((byte)1);
+        user2.setUserType((byte)2);
+
+        userList.add(user);
+        userList.add(user2);
+
+        tuple.setFirst(userList);
+        tuple.setSecond(2);
+
+        return tuple;
     }
 }
