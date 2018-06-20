@@ -41,7 +41,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("listUser")
-    public String listUser(BaseRequest request) {
+    public String listUser(UserConditionRequest request) {
         logger.info("[POST] /api/user/listUser");
 
         Tuple.TwoTuple<List<User>, Integer> tuple = userServer.listUser(request);
