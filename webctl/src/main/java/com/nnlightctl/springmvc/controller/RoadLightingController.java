@@ -6,6 +6,7 @@ import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.*;
+import com.nnlightctl.util.DownloadUtil;
 import com.nnlightctl.vo.GISView;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -563,33 +565,46 @@ public class RoadLightingController extends BaseController {
 
         HSSFWorkbook workbook = eleboxServer.exportElebox(request.getEleboxIdList());
 
-        // 判断数据
-        if (workbook == null) {
-            throw new RuntimeException("生成Excel失败");
-        }
         // 设置excel的文件名称
         String excelName = "控制柜";
-        // 重置响应对象
-        response.reset();
-        // 当前日期，用于导出文件名称
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        String dateStr = excelName + "-" + sdf.format(new Date());
-        // 指定下载的文件名--设置响应头
-        response.setHeader("Content-Disposition", "attachment;filename=" + DownloadFileNameUtil.gbk2iso8859_1(dateStr) + ".xls");
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        // 写出数据输出流到页面
+        String downloadFileName = excelName + "-" + sdf.format(new Date());
+
+        DownloadUtil.downloadExcel(response, downloadFileName, workbook);
+    }
+
+    @RequestMapping("importLighting")
+    public String importLighting(MultipartFile batchImportLightingFile) {
+        logger.info("[POST] /api/roadlighting/importLighting");
+
+        int ret = -1;
         try {
-            OutputStream output = response.getOutputStream();
-            BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
-            workbook.write(bufferedOutPut);
-            bufferedOutPut.flush();
-            bufferedOutPut.close();
-            output.close();
+            ret = lightServer.importLighting(batchImportLightingFile.getInputStream(), batchImportLightingFile.getOriginalFilename());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("exportLighting")
+    public void exportLighting(LightConditionRequest request, HttpServletResponse response) {
+        logger.info("[POST] /api/roadlighting/exportLighting");
+
+        HSSFWorkbook workbook = lightServer.exportLighting(request.getLightIdList());
+
+        // 设置excel的文件名称
+        String excelName = "灯具";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String downloadFileName = excelName + "-" + sdf.format(new Date());
+
+        DownloadUtil.downloadExcel(response, downloadFileName, workbook);
     }
 }

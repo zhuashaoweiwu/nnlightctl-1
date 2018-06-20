@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.IndexServer;
+import com.nnlightctl.util.DownloadUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -64,34 +65,13 @@ public class Index extends BaseController {
     public void exportExcel(HttpServletResponse response) {
         // 获取workbook对象
         HSSFWorkbook workbook = exportSheetByTemplate();
-        // 判断数据
-        if (workbook == null) {
-            throw new RuntimeException("生成Excel失败");
-        }
+
         // 设置excel的文件名称
         String excelName = "测试excel";
-        // 重置响应对象
-        response.reset();
-        // 当前日期，用于导出文件名称
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String dateStr = "[" + excelName + "-" + sdf.format(new Date()) + "]";
-        // 指定下载的文件名--设置响应头
-        response.setHeader("Content-Disposition", "attachment;filename=" + dateStr + ".xls");
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        // 写出数据输出流到页面
-        try {
-            OutputStream output = response.getOutputStream();
-            BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
-            workbook.write(bufferedOutPut);
-            bufferedOutPut.flush();
-            bufferedOutPut.close();
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        DownloadUtil.downloadExcel(response, dateStr, workbook);
     }
 
     @RequestMapping("/importExcel")

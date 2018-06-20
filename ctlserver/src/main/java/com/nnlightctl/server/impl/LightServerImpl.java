@@ -10,10 +10,19 @@ import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.server.LightServer;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -134,5 +143,100 @@ public class LightServerImpl implements LightServer {
             lightingMapper.updateByPrimaryKeySelective(lighting);
         }
         return 1;
+    }
+
+    @Override
+    public int importLighting(InputStream is, String fileName) throws IOException {
+        if (is == null) {
+            throw new RuntimeException("导入灯具文档打开失败！");
+        }
+
+        Workbook hssfWorkbook = null;
+        if (fileName.endsWith("xlsx")){
+            hssfWorkbook = new XSSFWorkbook(is);//Excel 2007
+        }else if (fileName.endsWith("xls")){
+            hssfWorkbook = new HSSFWorkbook(is);//Excel 2003
+
+        }
+
+        // 循环工作表Sheet
+        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+            Sheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+            if (hssfSheet == null) {
+                continue;
+            }
+            // 循环行Row
+            for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+                Row hssfRow = hssfSheet.getRow(rowNum);
+                if (hssfRow != null) {
+                    Lighting lighting = new Lighting();
+
+                    lighting.setUid(hssfRow.getCell(0).getStringCellValue());
+                    lighting.setManufacture(hssfRow.getCell(1).getDateCellValue());
+                    lighting.setUseDate(hssfRow.getCell(2).getDateCellValue());
+                    lighting.setLamppost(hssfRow.getCell(3).getStringCellValue());
+                    lighting.setLamphead(hssfRow.getCell(4).getStringCellValue());
+                    lighting.setPropertySerialNumber(hssfRow.getCell(5).getStringCellValue());
+                    lighting.setDecay(new BigDecimal(hssfRow.getCell(6).getStringCellValue()));
+                    lighting.setMaxUseTime(Long.parseLong(hssfRow.getCell(7).getStringCellValue()));
+                    lighting.setMem(hssfRow.getCell(8).getStringCellValue());
+
+                    lightingMapper.insertSelective(lighting);
+                }
+            }
+        }
+
+        is.close();
+
+        return 1;
+    }
+
+    @Override
+    public HSSFWorkbook exportLighting(List<Long> lightIdList) {
+        //创建HSSFWorkbook对象(excel的文档对象)
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //建立新的sheet对象（excel的表单）
+        HSSFSheet sheet = wb.createSheet("灯具");
+
+        //创建表头
+        //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
+        HSSFRow row1 = sheet.createRow(0);
+        //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
+        row1.createCell(0).setCellValue("UID");
+        row1.createCell(1).setCellValue("生产日期");
+        row1.createCell(2).setCellValue("使用日期");
+        row1.createCell(3).setCellValue("灯杆");
+        row1.createCell(4).setCellValue("灯头");
+        row1.createCell(5).setCellValue("资产编号");
+        row1.createCell(6).setCellValue("光衰");
+        row1.createCell(7).setCellValue("最大使用时长");
+        row1.createCell(8).setCellValue("备注");
+
+        //生成数据
+        int rowIndex = 1;
+        for (Long id : lightIdList) {
+            Lighting lighting = lightingMapper.selectByPrimaryKey(id);
+            HSSFRow row = sheet.createRow(rowIndex++);
+            //创建单元格并设置单元格内容
+            row.createCell(0).setCellValue(lighting.getUid());
+            if (lighting.getManufacture() != null) {
+                row.createCell(1).setCellValue(lighting.getManufacture());
+            } else {
+                row.createCell(1).setCellValue("");
+            }
+            if (lighting.getUseDate() != null) {
+                row.createCell(2).setCellValue(lighting.getUseDate());
+            } else {
+                row.createCell(2).setCellValue("");
+            }
+            row.createCell(3).setCellValue(lighting.getLamppost());
+            row.createCell(4).setCellValue(lighting.getLamphead());
+            row.createCell(5).setCellValue(lighting.getPropertySerialNumber());
+            row.createCell(6).setCellValue(lighting.getDecay().toString());
+            row.createCell(7).setCellValue(lighting.getMaxUseTime());
+            row.createCell(8).setCellValue(lighting.getMem());
+        }
+
+        return wb;
     }
 }
