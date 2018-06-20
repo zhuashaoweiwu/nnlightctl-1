@@ -227,9 +227,16 @@ public class EleboxServerImpl implements EleboxServer {
                     elebox.setRatedVoltage(new BigDecimal(hssfRow.getCell(6).getStringCellValue()));
                     elebox.setRatedElectricty(new BigDecimal(hssfRow.getCell(7).getStringCellValue()));
                     elebox.setPowerRating(new BigDecimal(hssfRow.getCell(8).getStringCellValue()));
-                    elebox.setMaxUseTime(Long.parseLong(hssfRow.getCell(9).getStringCellValue()));
+                    try {
+                        elebox.setMaxUseTime(Long.parseLong(hssfRow.getCell(9).getStringCellValue()));
+                    } catch (NumberFormatException e) {
+                        elebox.setMaxUseTime(null);
+                    }
                     elebox.setSpd(hssfRow.getCell(10).getStringCellValue());
                     elebox.setMainSwitch(hssfRow.getCell(11).getStringCellValue());
+
+                    elebox.setGmtCreated(new Date());
+                    elebox.setGmtUpdated(new Date());
 
                     eleboxMapper.insertSelective(elebox);
                 }

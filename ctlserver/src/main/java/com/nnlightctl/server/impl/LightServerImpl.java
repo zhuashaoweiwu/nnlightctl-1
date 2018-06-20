@@ -181,6 +181,9 @@ public class LightServerImpl implements LightServer {
                     lighting.setMaxUseTime(Long.parseLong(hssfRow.getCell(7).getStringCellValue()));
                     lighting.setMem(hssfRow.getCell(8).getStringCellValue());
 
+                    lighting.setGmtCreated(new Date());
+                    lighting.setGmtUpdated(new Date());
+
                     lightingMapper.insertSelective(lighting);
                 }
             }
@@ -233,7 +236,7 @@ public class LightServerImpl implements LightServer {
             row.createCell(4).setCellValue(lighting.getLamphead());
             row.createCell(5).setCellValue(lighting.getPropertySerialNumber());
             row.createCell(6).setCellValue(lighting.getDecay().toString());
-            row.createCell(7).setCellValue(lighting.getMaxUseTime());
+            row.createCell(7).setCellValue(String.valueOf(lighting.getMaxUseTime()));
             row.createCell(8).setCellValue(lighting.getMem());
         }
 
