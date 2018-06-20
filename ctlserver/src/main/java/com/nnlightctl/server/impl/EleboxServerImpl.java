@@ -11,9 +11,22 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -177,5 +190,109 @@ public class EleboxServerImpl implements EleboxServer {
         List<EleboxModelLoop> eleboxModelLoops = eleboxModelLoopMapper.selectByExample(eleboxModelLoopExample);
         twoTuple.setFirst(eleboxModelLoops);
         return twoTuple;
+    }
+
+    @Override
+    public int importElebox(InputStream is, String fileName) throws IOException {
+        if (is == null) {
+            throw new RuntimeException("导入控制柜文档打开失败！");
+        }
+
+        Workbook hssfWorkbook = null;
+        if (fileName.endsWith("xlsx")){
+            hssfWorkbook = new XSSFWorkbook(is);//Excel 2007
+        }else if (fileName.endsWith("xls")){
+            hssfWorkbook = new HSSFWorkbook(is);//Excel 2003
+
+        }
+
+        // 循环工作表Sheet
+        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+            Sheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+            if (hssfSheet == null) {
+                continue;
+            }
+            // 循环行Row
+            for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+                Row hssfRow = hssfSheet.getRow(rowNum);
+                if (hssfRow != null) {
+                    Elebox elebox = new Elebox();
+
+                    elebox.setUid(hssfRow.getCell(0).getStringCellValue());
+                    elebox.setCodeNumber(hssfRow.getCell(1).getStringCellValue());
+                    elebox.setManufacture(hssfRow.getCell(2).getDateCellValue());
+                    elebox.setLongitude(hssfRow.getCell(3).getStringCellValue());
+                    elebox.setLatitude(hssfRow.getCell(4).getStringCellValue());
+                    elebox.setUseDate(hssfRow.getCell(5).getDateCellValue());
+                    elebox.setRatedVoltage(new BigDecimal(hssfRow.getCell(6).getStringCellValue()));
+                    elebox.setRatedElectricty(new BigDecimal(hssfRow.getCell(7).getStringCellValue()));
+                    elebox.setPowerRating(new BigDecimal(hssfRow.getCell(8).getStringCellValue()));
+                    elebox.setMaxUseTime(Long.parseLong(hssfRow.getCell(9).getStringCellValue()));
+                    elebox.setSpd(hssfRow.getCell(10).getStringCellValue());
+                    elebox.setMainSwitch(hssfRow.getCell(11).getStringCellValue());
+
+                    eleboxMapper.insertSelective(elebox);
+                }
+            }
+        }
+
+        is.close();
+
+        return 1;
+    }
+
+    @Override
+    public HSSFWorkbook exportElebox(List<Long> eleboxIds) {
+        //创建HSSFWorkbook对象(excel的文档对象)
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //建立新的sheet对象（excel的表单）
+        HSSFSheet sheet = wb.createSheet("控制柜");
+
+        //创建表头
+        //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
+        HSSFRow row1 = sheet.createRow(0);
+        //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
+        row1.createCell(0).setCellValue("UID");
+        row1.createCell(1).setCellValue("唯一编码");
+        row1.createCell(2).setCellValue("生产日期");
+        row1.createCell(3).setCellValue("经度");
+        row1.createCell(4).setCellValue("纬度");
+        row1.createCell(5).setCellValue("使用日期");
+        row1.createCell(6).setCellValue("额定电压");
+        row1.createCell(7).setCellValue("额定电流");
+        row1.createCell(8).setCellValue("额定功率");
+        row1.createCell(9).setCellValue("最大使用时间（年）");
+        row1.createCell(10).setCellValue("SPD");
+        row1.createCell(11).setCellValue("主进线开关");
+
+        //生成数据
+        int rowIndex = 1;
+        for (Long id : eleboxIds) {
+            Elebox elebox = eleboxMapper.selectByPrimaryKey(id);
+            HSSFRow row = sheet.createRow(rowIndex++);
+            //创建单元格并设置单元格内容
+            row.createCell(0).setCellValue(elebox.getUid());
+            row.createCell(1).setCellValue(elebox.getCodeNumber());
+            if (elebox.getManufacture() != null) {
+                row.createCell(2).setCellValue(elebox.getManufacture());
+            } else {
+                row.createCell(2).setCellValue("");
+            }
+            row.createCell(3).setCellValue(elebox.getLongitude());
+            row.createCell(4).setCellValue(elebox.getLatitude());
+            if (elebox.getUseDate() != null) {
+                row.createCell(5).setCellValue(elebox.getUseDate());
+            } else {
+                row.createCell(5).setCellValue("");
+            }
+            row.createCell(6).setCellValue(elebox.getRatedVoltage().toString());
+            row.createCell(7).setCellValue(elebox.getRatedElectricty().toString());
+            row.createCell(8).setCellValue(elebox.getPowerRating().toString());
+            row.createCell(9).setCellValue(String.valueOf(elebox.getMaxUseTime()));
+            row.createCell(10).setCellValue(elebox.getSpd());
+            row.createCell(11).setCellValue(elebox.getMainSwitch());
+        }
+
+        return wb;
     }
 }

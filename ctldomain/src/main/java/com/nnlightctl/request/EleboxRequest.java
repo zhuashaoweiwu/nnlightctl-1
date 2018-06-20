@@ -84,11 +84,11 @@ public class EleboxRequest {
         this.powerRating = powerRating;
     }
 
-    public BigDecimal getMaxUseTime() {
+    public Long getMaxUseTime() {
         return maxUseTime;
     }
 
-    public void setMaxUseTime(BigDecimal maxUseTime) {
+    public void setMaxUseTime(Long maxUseTime) {
         this.maxUseTime = maxUseTime;
     }
 
@@ -142,7 +142,7 @@ public class EleboxRequest {
     private BigDecimal ratedVoltage;
     private BigDecimal ratedElectricty;
     private BigDecimal powerRating;
-    private BigDecimal maxUseTime;
+    private Long maxUseTime;
     private String spd;
     private String mainSwitch;
     private Long nnlightctlEleboxGisId;
