@@ -4,6 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
+import com.nnlightctl.vo.LightingView;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.IOException;
@@ -21,4 +22,5 @@ public interface LightServer {
     int updateLightBeEleboxBeLoop(LightConditionRequest request);
     int importLighting(InputStream is, String fileName) throws IOException;
     HSSFWorkbook exportLighting(List<Long> lightIdList);
+    Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request);
 }

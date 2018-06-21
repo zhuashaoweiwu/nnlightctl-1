@@ -10,6 +10,7 @@ import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.server.LightServer;
+import com.nnlightctl.vo.LightingView;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -241,5 +242,10 @@ public class LightServerImpl implements LightServer {
         }
 
         return wb;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request) {
+        return lightDao.listLightingView(request);
     }
 }

@@ -8,6 +8,7 @@ import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.LightServer;
+import com.nnlightctl.vo.LightingView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class GisController extends BaseController {
     public String listLighting(LightConditionRequest request) {
         logger.info("[POST] /api/gis/listLighting");
 
-        Tuple.TwoTuple<List<Lighting>, Integer> tuple = this.lightServer.listLighting(request);
+        Tuple.TwoTuple<List<LightingView>, Integer> tuple = this.lightServer.listLightingView(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
