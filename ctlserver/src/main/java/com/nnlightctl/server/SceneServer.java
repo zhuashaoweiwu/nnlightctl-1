@@ -19,4 +19,6 @@ public interface SceneServer {
     int addOrUpdateSceneShotcut(SceneShotcutRequest request);
 
     int deleteSceneShotcut(SceneShotcutConditionRequest request);
+
+    int getInvokeSceneShotcut(String shotcutName);
 }

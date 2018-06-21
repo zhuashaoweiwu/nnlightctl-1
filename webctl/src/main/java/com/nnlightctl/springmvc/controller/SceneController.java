@@ -113,4 +113,20 @@ public class SceneController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("invokeSceneShotcut")
+    public String invokeSceneShotCut(String shotcutName) {
+        logger.info("[POST] /api/scene/invokeSceneShotcut");
+
+        int ret = sceneServer.getInvokeSceneShotcut(shotcutName);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }

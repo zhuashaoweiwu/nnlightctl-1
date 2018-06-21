@@ -160,4 +160,21 @@ public class SceneServerImpl implements SceneServer {
 
         return 1;
     }
+
+    @Override
+    public int getInvokeSceneShotcut(String shotcutName) {
+        SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
+        sceneShotcutExample.createCriteria().andShotcutNameEqualTo(shotcutName);
+
+        List<SceneShotcut> sceneShotcuts = this.sceneShotcutMapper.selectByExample(sceneShotcutExample);
+
+        for (SceneShotcut sceneShotcut : sceneShotcuts) {
+            Long sceneId = sceneShotcut.getNnlightctlSceneId();
+            Scene scene = this.sceneMapper.selectByPrimaryKey(sceneId);
+
+
+        }
+
+        return 1;
+    }
 }
