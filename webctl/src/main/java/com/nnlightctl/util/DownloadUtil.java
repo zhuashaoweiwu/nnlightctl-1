@@ -21,6 +21,9 @@ public class DownloadUtil {
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST");
         // 写出数据输出流到页面
         try {
             OutputStream output = response.getOutputStream();
