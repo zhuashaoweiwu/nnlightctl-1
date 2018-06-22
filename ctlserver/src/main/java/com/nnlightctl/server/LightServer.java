@@ -23,4 +23,5 @@ public interface LightServer {
     int importLighting(InputStream is, String fileName) throws IOException;
     HSSFWorkbook exportLighting(List<Long> lightIdList);
     Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request);
+    List<LightingView> listSelectLighting(LightConditionRequest request);
 }
