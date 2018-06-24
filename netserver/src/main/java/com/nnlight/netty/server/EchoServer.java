@@ -41,6 +41,9 @@ public class EchoServer {
     }
 
     public static EchoServer getGlobalApplicationContext() {
+        if (globalApplicationContext == null) {
+            throw new RuntimeException("网络服务器全局上下文为空");
+        }
         return globalApplicationContext;
     }
 

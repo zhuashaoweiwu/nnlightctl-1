@@ -1,5 +1,6 @@
 package com.nnlight.netty.handler;
 
+import com.nnlight.netty.process.factory.ProcessFactory;
 import com.nnlight.netty.server.EchoServer;
 import com.nnlight.netty.server.po.ChannelWrap;
 import com.nnlightctl.net.CommandData;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import com.nnlight.netty.process.Process;
 
 @ChannelHandler.Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
@@ -33,13 +36,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         CommandData commandData = (CommandData)msg;
 
-        if ((commandData.getControl() & 0xf0) == 0xc0) {
-            //控制客户端处理
-            commandClientProcess(ctx, commandData);
-        } else {
-            //物联网客户端处理
-            netClientProcess(ctx, commandData);
-        }
+        Process process = ProcessFactory.getProcess(commandData.getControl());
+
+        process.process(ctx, commandData);
     }
 
     @Override
@@ -75,35 +74,4 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         ctx.close();
     }
 
-    private void commandClientProcess(ChannelHandlerContext ctx, CommandData msg) {
-        switch (msg.getControl()) {
-            //字符型命令
-            case (byte)0xc1:
-                String command = new String(msg.getData());
-                StringBuilder result = new StringBuilder();
-                if ("zxx".equals(command)) {
-                    String uuid = ctx.channel().id().asLongText();
-                    ChannelWrap channelWrap = applicationContext.getClientChannelMap().remove(uuid);
-                    applicationContext.getCommandMap().put(uuid, channelWrap);
-                    result.append("Translate Command Client Successful!");
-                } else if ("lookall".equals(command)) {
-                    result.append(applicationContext.commandLookAll());
-                }
-
-                ctx.writeAndFlush(new CommandData(result.toString()));
-                break;
-
-                //灯具灯光调节命令
-            case (byte)0xc2:
-                logger.info(LocalDate.now() + " " + LocalTime.now() + " 发送灯具调光指令,调光参数[" + msg.getData()[0] + "]");
-                applicationContext.allSendCommandLightAdjust(msg.getData()[0]);
-                break;
-        }
-
-    }
-
-    private void netClientProcess(ChannelHandlerContext ctx, CommandData msg) {
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 接收灯具调光指令返回");
-        applicationContext.allClientSendCommand(msg);
-    }
 }
