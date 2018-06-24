@@ -30,10 +30,18 @@ public class EchoServer {
     private Map<String, ChannelWrap> clientChannelMap;
     private Map<String, ChannelWrap> commandMap;
 
+    private static EchoServer globalApplicationContext;
+
     public EchoServer(int port) {
         this.port = port;
         clientChannelMap = new ConcurrentHashMap<>(10);
         this.commandMap = new ConcurrentHashMap<>(5);
+
+        globalApplicationContext = this;
+    }
+
+    public static EchoServer getGlobalApplicationContext() {
+        return globalApplicationContext;
     }
 
     public Map<String, ChannelWrap> getClientChannelMap() {
