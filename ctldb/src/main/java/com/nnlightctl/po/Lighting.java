@@ -41,6 +41,10 @@ public class Lighting implements Serializable {
 
     private Long nnlightctlEleboxId;
 
+    private Byte loopPriority;
+
+    private Byte faultTag;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -187,6 +191,22 @@ public class Lighting implements Serializable {
         this.nnlightctlEleboxId = nnlightctlEleboxId;
     }
 
+    public Byte getLoopPriority() {
+        return loopPriority;
+    }
+
+    public void setLoopPriority(Byte loopPriority) {
+        this.loopPriority = loopPriority;
+    }
+
+    public Byte getFaultTag() {
+        return faultTag;
+    }
+
+    public void setFaultTag(Byte faultTag) {
+        this.faultTag = faultTag;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -216,7 +236,9 @@ public class Lighting implements Serializable {
             && (this.getNnlightctlEleboxModelLoopId() == null ? other.getNnlightctlEleboxModelLoopId() == null : this.getNnlightctlEleboxModelLoopId().equals(other.getNnlightctlEleboxModelLoopId()))
             && (this.getNnlightctlRegionId() == null ? other.getNnlightctlRegionId() == null : this.getNnlightctlRegionId().equals(other.getNnlightctlRegionId()))
             && (this.getNnlightctlProjectId() == null ? other.getNnlightctlProjectId() == null : this.getNnlightctlProjectId().equals(other.getNnlightctlProjectId()))
-            && (this.getNnlightctlEleboxId() == null ? other.getNnlightctlEleboxId() == null : this.getNnlightctlEleboxId().equals(other.getNnlightctlEleboxId()));
+            && (this.getNnlightctlEleboxId() == null ? other.getNnlightctlEleboxId() == null : this.getNnlightctlEleboxId().equals(other.getNnlightctlEleboxId()))
+            && (this.getLoopPriority() == null ? other.getLoopPriority() == null : this.getLoopPriority().equals(other.getLoopPriority()))
+            && (this.getFaultTag() == null ? other.getFaultTag() == null : this.getFaultTag().equals(other.getFaultTag()));
     }
 
     @Override
@@ -241,6 +263,8 @@ public class Lighting implements Serializable {
         result = prime * result + ((getNnlightctlRegionId() == null) ? 0 : getNnlightctlRegionId().hashCode());
         result = prime * result + ((getNnlightctlProjectId() == null) ? 0 : getNnlightctlProjectId().hashCode());
         result = prime * result + ((getNnlightctlEleboxId() == null) ? 0 : getNnlightctlEleboxId().hashCode());
+        result = prime * result + ((getLoopPriority() == null) ? 0 : getLoopPriority().hashCode());
+        result = prime * result + ((getFaultTag() == null) ? 0 : getFaultTag().hashCode());
         return result;
     }
 
@@ -268,6 +292,8 @@ public class Lighting implements Serializable {
         sb.append(", nnlightctlRegionId=").append(nnlightctlRegionId);
         sb.append(", nnlightctlProjectId=").append(nnlightctlProjectId);
         sb.append(", nnlightctlEleboxId=").append(nnlightctlEleboxId);
+        sb.append(", loopPriority=").append(loopPriority);
+        sb.append(", faultTag=").append(faultTag);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
