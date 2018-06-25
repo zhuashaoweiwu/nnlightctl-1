@@ -46,6 +46,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(new CommandData(percent, (byte)0xc2));
     }
 
+    public void resetTerminal() {
+        channelHandlerContext.writeAndFlush(CommandData.getC4CommandData());
+    }
+
     public ChannelHandlerContext getChannelHandlerContext() {
         return channelHandlerContext;
     }

@@ -2,6 +2,7 @@ package com.nnlightctl.server.impl;
 
 import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
+import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.server.CommandServer;
@@ -16,13 +17,7 @@ public class CommandServerImpl implements CommandServer {
     private final Command command = CommandFactory.getNettyClientCommand(new MessageEvent() {
         @Override
         public void receiveMsg(CommandData msg) {
-            if ((msg.getControl() & 0xf0) == 0xc0) {
-                //客户端命令
-                globalMsg = new String(msg.getData());
-            } else {
-                //物联网命令
-                globalMsg = msg.toHexString();
-            }
+            globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
             if (countDownLatch != null) {
                 countDownLatch.countDown();
             }
@@ -61,5 +56,10 @@ public class CommandServerImpl implements CommandServer {
         }
 
         return retString;
+    }
+
+    @Override
+    public void resetCommand() {
+        command.resetCommand();
     }
 }
