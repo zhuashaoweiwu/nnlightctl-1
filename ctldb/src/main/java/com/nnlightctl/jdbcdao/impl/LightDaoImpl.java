@@ -7,12 +7,15 @@ import com.nnlightctl.vo.LightingView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class LightDaoImpl implements LightDao {
@@ -20,14 +23,20 @@ public class LightDaoImpl implements LightDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Override
-    public int clearLightBeEleboxBeLoop(Long eleboxId, Long modelLoopId) {
+    public int clearLightBeEleboxBeLoop(List<Long> lightIds) {
         StringBuilder sql = new StringBuilder();
 
-        sql.append("update nnlightctl_lighting set nnlightctl_elebox_model_loop_id = NULL, nnlightctl_elebox_id = NULL where " +
-                "nnlightctl_elebox_model_loop_id = ? and nnlightctl_elebox_id = ?");
+        Map<String, Object> params = new HashMap<>(1);
+        params.put("lightIds", lightIds);
 
-        return jdbcTemplate.update(sql.toString(), new Object[] {modelLoopId, eleboxId});
+        sql.append("update nnlightctl_lighting set nnlightctl_elebox_model_loop_id = NULL, nnlightctl_elebox_id = NULL where " +
+                "id in (:lightIds)");
+
+        return namedParameterJdbcTemplate.update(sql.toString(), params);
     }
 
     @Override
@@ -37,7 +46,7 @@ public class LightDaoImpl implements LightDao {
 
         List<Object> params = new ArrayList<>(1);
 
-        sql.append("select l.id, l.gmt_created, l.gmt_updated, l.uid, l.manufacture, l.use_date, l.lamppost, l.lamphead, l.property_serial_number, l.decay, l.max_use_time, l.mem, g.longitude, g.latitude ");
+        sql.append("select l.id, l.gmt_created, l.gmt_updated, l.uid, l.manufacture, l.use_date, l.lamppost, l.lamphead, l.property_serial_number, l.decay, l.max_use_time, l.mem, l.loop_priority, l.fault_tag, g.longitude, g.latitude ");
         countSql.append("select count(*) ");
 
         sql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
@@ -82,6 +91,8 @@ public class LightDaoImpl implements LightDao {
                 lightingView.setMem(resultSet.getString("mem"));
                 lightingView.setLongitude(resultSet.getString("longitude"));
                 lightingView.setLatitude(resultSet.getString("latitude"));
+                lightingView.setLoopPriority(resultSet.getByte("loop_priority"));
+                lightingView.setFaultTag(resultSet.getByte("fault_tag"));
 
                 return lightingView;
             }

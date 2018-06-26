@@ -59,6 +59,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void configTerminalSendMsgPeriod(int period) {
+
+    }
+
+    @Override
     public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);

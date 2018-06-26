@@ -61,6 +61,19 @@
         </div>
     </div>
 
+    <!-- 设置定时发送参数 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">定时发送(秒)：</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="sendPeriod">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendPeriodBtn" />
+        </div>
+    </div>
+
     <!-- 客户端实时消息接收 -->
     <div class="row">
         <div class="col-sm-1">
@@ -126,6 +139,14 @@
     $("#resetBtn").click(function () {
         $.post("../api/command/resetCommand", {}, function () {
 
+        });
+    });
+
+    //设置定时发送参数
+    $("#sendPeriodBtn").click(function () {
+        var period = $("#sendPeriod").val().trim();
+        $.post("../api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
+            
         });
     });
 </script>

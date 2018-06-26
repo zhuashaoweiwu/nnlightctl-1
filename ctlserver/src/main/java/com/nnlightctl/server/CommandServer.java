@@ -5,4 +5,5 @@ public interface CommandServer {
     void sendLightAdjustCommand(int percent);
     String webRequireMsg();
     void resetCommand();
+    void configTerminalSendMsgPeriod(int period);
 }

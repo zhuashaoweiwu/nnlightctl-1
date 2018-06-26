@@ -17,6 +17,16 @@ public class CommandRequest {
         this.lightPercent = lightPercent;
     }
 
+    public Integer getTerminalSendMsgPeriod() {
+        return terminalSendMsgPeriod;
+    }
+
+    public void setTerminalSendMsgPeriod(Integer terminalSendMsgPeriod) {
+        this.terminalSendMsgPeriod = terminalSendMsgPeriod;
+    }
+
+    private Integer terminalSendMsgPeriod;
+
     private int lightPercent;
 
     private String msg;

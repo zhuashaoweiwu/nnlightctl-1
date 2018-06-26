@@ -203,6 +203,22 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("updateLightBeEleboxBeLoop2")
+    public String updateLightBeEleboxBeLoop2(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/updateLightBeEleboxBeLoop2");
+
+        int ret = lightServer.updateLightBeEleboxBeLoop2(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("updateEleboxDevice")
     public String updateEleboxDevice(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/updateEleboxDevice");
@@ -606,5 +622,21 @@ public class RoadLightingController extends BaseController {
         String downloadFileName = excelName + "-" + sdf.format(new Date());
 
         DownloadUtil.downloadExcel(response, downloadFileName, workbook);
+    }
+
+    @RequestMapping("unbindLightBeElebox")
+    public String unbindLightBeElebox(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/unbindLightBeElebox");
+
+        int ret = lightServer.unbindLightBeElebox(request.getLightIdList());
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
     }
 }

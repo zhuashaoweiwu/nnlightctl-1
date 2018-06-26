@@ -136,12 +136,26 @@ public class LightServerImpl implements LightServer {
 
     @Override
     public int updateLightBeEleboxBeLoop(LightConditionRequest request) {
-        lightDao.clearLightBeEleboxBeLoop(request.getEleboxId(), request.getModelLoopId());
+        lightDao.clearLightBeEleboxBeLoop(request.getLightIdList());
         List<Long> lightIdList = request.getLightIdList();
         for (Long lightId : lightIdList) {
             Lighting lighting = new Lighting();
             lighting.setId(lightId);
             lighting.setNnlightctlEleboxId(request.getEleboxId());
+            lighting.setNnlightctlEleboxModelLoopId(request.getModelLoopId());
+            lightingMapper.updateByPrimaryKeySelective(lighting);
+        }
+        return 1;
+    }
+
+    @Override
+    public int updateLightBeEleboxBeLoop2(LightConditionRequest request) {
+        lightDao.clearLightBeEleboxBeLoop(request.getOriginalLightIds());
+        List<Long> lightIdList = request.getLightIdList();
+        for (Long lightId : lightIdList) {
+            Lighting lighting = new Lighting();
+            lighting.setId(lightId);
+            lighting.setNnlightctlEleboxId(request.getBeEleboxId());
             lighting.setNnlightctlEleboxModelLoopId(request.getModelLoopId());
             lightingMapper.updateByPrimaryKeySelective(lighting);
         }
@@ -268,5 +282,10 @@ public class LightServerImpl implements LightServer {
         }
 
         return resultLightingViewList;
+    }
+
+    @Override
+    public int unbindLightBeElebox(List<Long> lightIds) {
+        return lightDao.clearLightBeEleboxBeLoop(lightIds);
     }
 }

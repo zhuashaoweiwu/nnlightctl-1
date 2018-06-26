@@ -122,6 +122,22 @@ public class LightingView extends BaseView {
         this.latitude = latitude;
     }
 
+    public Byte getLoopPriority() {
+        return loopPriority;
+    }
+
+    public void setLoopPriority(Byte loopPriority) {
+        this.loopPriority = loopPriority;
+    }
+
+    public Byte getFaultTag() {
+        return faultTag;
+    }
+
+    public void setFaultTag(Byte faultTag) {
+        this.faultTag = faultTag;
+    }
+
     private Long id;
 
     private Date gmtCreated;
@@ -149,5 +165,9 @@ public class LightingView extends BaseView {
     private String longitude;
 
     private String latitude;
+
+    private Byte loopPriority;
+
+    private Byte faultTag;
 
 }

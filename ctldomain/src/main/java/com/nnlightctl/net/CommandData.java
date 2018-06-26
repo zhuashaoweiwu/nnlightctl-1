@@ -1,5 +1,6 @@
 package com.nnlightctl.net;
 
+import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
 
 import java.io.Serializable;
@@ -115,6 +116,17 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getConfigTerminalSendMsgPeriod(int period) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xe5);
+        commandData.setDataLength((byte)2);
+        commandData.setData(ByteConvert.shortToBytes((short)period));
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -151,7 +163,10 @@ public class CommandData implements Serializable {
 
     /***************************************************命令客户端指令********************************************/
 
-    //字符型命令
+    /**
+     * 命令层C1字符型命令
+     * @param command
+     */
     public CommandData(String command) {
         this.control = (byte)0xc1;
         byte[] strBytes = command.getBytes();
@@ -161,7 +176,11 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
-    //灯光调节命令
+    /**
+     * 命令层C2灯光调节命令
+     * @param percent
+     * @param control
+     */
     public CommandData(int percent, byte control) {
         this.control = control;
         this.dataLength = 1;
@@ -170,10 +189,28 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
+    /**
+     * 命令层C4重启复位命令
+     * @return
+     */
     public static CommandData getC4CommandData() {
         CommandData commandData = new CommandData();
         commandData.setControl((byte)0xc4);
         commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+
+    /**
+     * 命令层C5设置终端定时发送参数命令
+     * @return
+     */
+    public static CommandData getC5CommandData(int period) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xc5);
+        commandData.setDataLength((byte) 2);
+        commandData.setData(ByteConvert.shortToBytes((short)period));
+        commandData.setCheck(commandData.createCheck());
+
         return commandData;
     }
 

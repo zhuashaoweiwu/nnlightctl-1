@@ -7,7 +7,7 @@ import com.nnlightctl.vo.LightingView;
 import java.util.List;
 
 public interface LightDao {
-    int clearLightBeEleboxBeLoop(Long eleboxId, Long modelLoopId);
+    int clearLightBeEleboxBeLoop(List<Long> lightIds);
 
     Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request);
 }

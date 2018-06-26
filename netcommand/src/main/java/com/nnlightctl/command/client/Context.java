@@ -50,6 +50,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC4CommandData());
     }
 
+    public void configTerminalSendMsgPeriod(int period) {
+        channelHandlerContext.writeAndFlush(CommandData.getC5CommandData(period));
+    }
+
     public ChannelHandlerContext getChannelHandlerContext() {
         return channelHandlerContext;
     }

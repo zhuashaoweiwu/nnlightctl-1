@@ -20,8 +20,10 @@ public interface LightServer {
     Lighting getLighting(Long id);
     List<Lighting> getLightByLoopId(Long id);
     int updateLightBeEleboxBeLoop(LightConditionRequest request);
+    int updateLightBeEleboxBeLoop2(LightConditionRequest request);
     int importLighting(InputStream is, String fileName) throws IOException;
     HSSFWorkbook exportLighting(List<Long> lightIdList);
     Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request);
     List<LightingView> listSelectLighting(LightConditionRequest request);
+    int unbindLightBeElebox(List<Long> lightIds);
 }

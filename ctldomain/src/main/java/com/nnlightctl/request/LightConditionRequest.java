@@ -91,6 +91,14 @@ public class LightConditionRequest extends BaseRequest {
         this.endLatitude = endLatitude;
     }
 
+    public List<Long> getOriginalLightIds() {
+        return originalLightIds;
+    }
+
+    public void setOriginalLightIds(List<Long> originalLightIds) {
+        this.originalLightIds = originalLightIds;
+    }
+
     private String startLongitude;
     private String startLatitude;
     private String endLongitude;
@@ -98,6 +106,7 @@ public class LightConditionRequest extends BaseRequest {
 
     private Long modelLoopId;
 
+    private List<Long> originalLightIds;
     private List<Long> lightIdList;
     private Long beEleboxId;
 

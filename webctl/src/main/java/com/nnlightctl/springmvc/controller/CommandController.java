@@ -48,4 +48,11 @@ public class CommandController extends BaseController {
 
         return toJson(JsonResult.getSUCCESS());
     }
+
+    @RequestMapping("configTerminalSendMsgPeriod")
+    public String configTerminalSendMsgPeriod(CommandRequest request) {
+        logger.info("[POST] /api/command/configTerminalSendMsgPeriod");
+
+        return toJson(JsonResult.getSUCCESS());
+    }
 }

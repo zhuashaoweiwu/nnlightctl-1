@@ -102,6 +102,18 @@ public class EchoServer {
     }
 
     /**
+     * 发送全部终端设置定时发送消息时间周期
+     * @param period
+     */
+    public void allSendCommandConfigTerminalSendMsgPeriod(int period) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getConfigTerminalSendMsgPeriod(period));
+        }
+    }
+
+    /**
      * 发送全部命令客户端消息
      * @param commandData
      */
@@ -111,6 +123,8 @@ public class EchoServer {
             context.writeAndFlush(commandData);
         }
     }
+
+
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {

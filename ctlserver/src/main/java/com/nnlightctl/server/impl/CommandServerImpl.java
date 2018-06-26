@@ -62,4 +62,9 @@ public class CommandServerImpl implements CommandServer {
     public void resetCommand() {
         command.resetCommand();
     }
+
+    @Override
+    public void configTerminalSendMsgPeriod(int period) {
+
+    }
 }
