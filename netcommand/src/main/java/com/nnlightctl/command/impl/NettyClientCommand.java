@@ -54,6 +54,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void resetCommand() {
+        context.resetTerminal();
+    }
+
+    @Override
     public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);

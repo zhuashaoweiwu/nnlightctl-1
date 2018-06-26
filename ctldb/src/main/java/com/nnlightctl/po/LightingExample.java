@@ -1235,6 +1235,126 @@ public class LightingExample {
             addCriterion("nnlightctl_elebox_id not between", value1, value2, "nnlightctlEleboxId");
             return (Criteria) this;
         }
+
+        public Criteria andLoopPriorityIsNull() {
+            addCriterion("loop_priority is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityIsNotNull() {
+            addCriterion("loop_priority is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityEqualTo(Byte value) {
+            addCriterion("loop_priority =", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityNotEqualTo(Byte value) {
+            addCriterion("loop_priority <>", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityGreaterThan(Byte value) {
+            addCriterion("loop_priority >", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityGreaterThanOrEqualTo(Byte value) {
+            addCriterion("loop_priority >=", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityLessThan(Byte value) {
+            addCriterion("loop_priority <", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityLessThanOrEqualTo(Byte value) {
+            addCriterion("loop_priority <=", value, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityIn(List<Byte> values) {
+            addCriterion("loop_priority in", values, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityNotIn(List<Byte> values) {
+            addCriterion("loop_priority not in", values, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityBetween(Byte value1, Byte value2) {
+            addCriterion("loop_priority between", value1, value2, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoopPriorityNotBetween(Byte value1, Byte value2) {
+            addCriterion("loop_priority not between", value1, value2, "loopPriority");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagIsNull() {
+            addCriterion("fault_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagIsNotNull() {
+            addCriterion("fault_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagEqualTo(Byte value) {
+            addCriterion("fault_tag =", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagNotEqualTo(Byte value) {
+            addCriterion("fault_tag <>", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagGreaterThan(Byte value) {
+            addCriterion("fault_tag >", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagGreaterThanOrEqualTo(Byte value) {
+            addCriterion("fault_tag >=", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagLessThan(Byte value) {
+            addCriterion("fault_tag <", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagLessThanOrEqualTo(Byte value) {
+            addCriterion("fault_tag <=", value, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagIn(List<Byte> values) {
+            addCriterion("fault_tag in", values, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagNotIn(List<Byte> values) {
+            addCriterion("fault_tag not in", values, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagBetween(Byte value1, Byte value2) {
+            addCriterion("fault_tag between", value1, value2, "faultTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaultTagNotBetween(Byte value1, Byte value2) {
+            addCriterion("fault_tag not between", value1, value2, "faultTag");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

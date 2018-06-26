@@ -59,6 +59,43 @@ public class LightConditionRequest extends BaseRequest {
         this.modelLoopId = modelLoopId;
     }
 
+    public String getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(String startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public String getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(String startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public String getEndLongitude() {
+        return endLongitude;
+    }
+
+    public void setEndLongitude(String endLongitude) {
+        this.endLongitude = endLongitude;
+    }
+
+    public String getEndLatitude() {
+        return endLatitude;
+    }
+
+    public void setEndLatitude(String endLatitude) {
+        this.endLatitude = endLatitude;
+    }
+
+    private String startLongitude;
+    private String startLatitude;
+    private String endLongitude;
+    private String endLatitude;
+
     private Long modelLoopId;
 
     private List<Long> lightIdList;

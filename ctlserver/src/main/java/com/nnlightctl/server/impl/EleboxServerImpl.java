@@ -106,9 +106,13 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Override
     public int updateModelLoopSplite(EleboxConditionRequest request) {
+        //获取被拆分的回路
+        EleboxModelLoop spliteModelLoop = eleboxModelLoopMapper.selectByPrimaryKey(request.getBeSplitId());
+
         //添加新的回路到数据库
         List<ModelLoopRequest> addModelLoopList = request.getSplitModelLoopList();
         for (ModelLoopRequest addModelLoop : addModelLoopList) {
+            addModelLoop.setNnlightctlEleboxModelId(spliteModelLoop.getNnlightctlEleboxModelId());
             modelLoopServer.addOrUpdateModelLoop(addModelLoop);
         }
 

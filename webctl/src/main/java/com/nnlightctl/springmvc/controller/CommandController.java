@@ -39,4 +39,13 @@ public class CommandController extends BaseController {
 
         return commandServer.webRequireMsg();
     }
+
+    @RequestMapping("resetCommand")
+    public String resetCommand() {
+        logger.info("[POST] /api/command/resetCommand");
+
+        commandServer.resetCommand();
+
+        return toJson(JsonResult.getSUCCESS());
+    }
 }

@@ -20,6 +20,8 @@
     <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT" />
     <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT" />
     <result column="nnlightctl_elebox_id" property="nnlightctlEleboxId" jdbcType="BIGINT" />
+    <result column="loop_priority" property="loopPriority" jdbcType="TINYINT" />
+    <result column="fault_tag" property="faultTag" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,7 +84,8 @@
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, manufacture, use_date, lamppost, lamphead, nnlightctl_lighting_model_id, 
     nnlightctl_lighting_gis_id, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
-    nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id
+    nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, 
+    fault_tag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingExample" >
     select
@@ -124,13 +127,15 @@
       lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
       property_serial_number, decay, max_use_time, 
       mem, nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
-      nnlightctl_project_id, nnlightctl_elebox_id)
+      nnlightctl_project_id, nnlightctl_elebox_id, 
+      loop_priority, fault_tag)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, 
       #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
       #{propertySerialNumber,jdbcType=VARCHAR}, #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
       #{mem,jdbcType=VARCHAR}, #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
-      #{nnlightctlProjectId,jdbcType=BIGINT}, #{nnlightctlEleboxId,jdbcType=BIGINT})
+      #{nnlightctlProjectId,jdbcType=BIGINT}, #{nnlightctlEleboxId,jdbcType=BIGINT}, 
+      #{loopPriority,jdbcType=TINYINT}, #{faultTag,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Lighting" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -189,6 +194,12 @@
       <if test="nnlightctlEleboxId != null" >
         nnlightctl_elebox_id,
       </if>
+      <if test="loopPriority != null" >
+        loop_priority,
+      </if>
+      <if test="faultTag != null" >
+        fault_tag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -241,6 +252,12 @@
       </if>
       <if test="nnlightctlEleboxId != null" >
         #{nnlightctlEleboxId,jdbcType=BIGINT},
+      </if>
+      <if test="loopPriority != null" >
+        #{loopPriority,jdbcType=TINYINT},
+      </if>
+      <if test="faultTag != null" >
+        #{faultTag,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -307,6 +324,12 @@
       <if test="record.nnlightctlEleboxId != null" >
         nnlightctl_elebox_id = #{record.nnlightctlEleboxId,jdbcType=BIGINT},
       </if>
+      <if test="record.loopPriority != null" >
+        loop_priority = #{record.loopPriority,jdbcType=TINYINT},
+      </if>
+      <if test="record.faultTag != null" >
+        fault_tag = #{record.faultTag,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -331,7 +354,9 @@
       nnlightctl_elebox_model_loop_id = #{record.nnlightctlEleboxModelLoopId,jdbcType=BIGINT},
       nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
       nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
-      nnlightctl_elebox_id = #{record.nnlightctlEleboxId,jdbcType=BIGINT}
+      nnlightctl_elebox_id = #{record.nnlightctlEleboxId,jdbcType=BIGINT},
+      loop_priority = #{record.loopPriority,jdbcType=TINYINT},
+      fault_tag = #{record.faultTag,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -390,6 +415,12 @@
       <if test="nnlightctlEleboxId != null" >
         nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT},
       </if>
+      <if test="loopPriority != null" >
+        loop_priority = #{loopPriority,jdbcType=TINYINT},
+      </if>
+      <if test="faultTag != null" >
+        fault_tag = #{faultTag,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -411,7 +442,9 @@
       nnlightctl_elebox_model_loop_id = #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT},
       nnlightctl_region_id = #{nnlightctlRegionId,jdbcType=BIGINT},
       nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
-      nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT}
+      nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT},
+      loop_priority = #{loopPriority,jdbcType=TINYINT},
+      fault_tag = #{faultTag,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

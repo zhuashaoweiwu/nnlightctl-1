@@ -1,6 +1,7 @@
 package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.GisPointUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LightingMapper;
@@ -25,6 +26,7 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -247,5 +249,24 @@ public class LightServerImpl implements LightServer {
     @Override
     public Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request) {
         return lightDao.listLightingView(request);
+    }
+
+    @Override
+    public List<LightingView> listSelectLighting(LightConditionRequest request) {
+        Tuple.TwoTuple<List<LightingView>, Integer> tuple = listLightingView(new LightConditionRequest());
+        List<LightingView> lightingViewList = tuple.getFirst();
+        List<LightingView> resultLightingViewList = new ArrayList<>(8);
+
+        //构造坐标比较矩形
+        GisPointUtil.Rectangular rectangular = new GisPointUtil.Rectangular(request.getStartLongitude(), request.getStartLatitude(),
+                request.getEndLongitude(), request.getEndLatitude());
+        for (LightingView lightingView : lightingViewList) {
+            GisPointUtil.Point point = new GisPointUtil.Point(lightingView.getLongitude(), lightingView.getLatitude());
+            if (GisPointUtil.checkGisPoint(point, rectangular)) {
+                resultLightingViewList.add(lightingView);
+            }
+        }
+
+        return resultLightingViewList;
     }
 }

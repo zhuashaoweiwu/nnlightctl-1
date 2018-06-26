@@ -107,6 +107,14 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
+    public static CommandData getTerminalResetCommand() {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xe4);
+        commandData.setCheck(commandData.getCheck());
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -160,6 +168,13 @@ public class CommandData implements Serializable {
         this.data = new byte[1];
         this.data[0] = (byte)percent;
         this.check = createCheck();
+    }
+
+    public static CommandData getC4CommandData() {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xc4);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
     }
 
     /***************************************************命令客户端指令********************************************/

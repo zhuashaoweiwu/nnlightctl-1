@@ -53,4 +53,16 @@ public class GisController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("listSelectLighting")
+    public String listSelectLighting(LightConditionRequest request) {
+        logger.info("[POST] /api/gis/listSelectLighting");
+
+        List<LightingView> lightingViewList = lightServer.listSelectLighting(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingViewList);
+
+        return toJson(jsonResult);
+    }
 }

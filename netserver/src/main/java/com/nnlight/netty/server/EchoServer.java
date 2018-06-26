@@ -30,10 +30,21 @@ public class EchoServer {
     private Map<String, ChannelWrap> clientChannelMap;
     private Map<String, ChannelWrap> commandMap;
 
+    private static EchoServer globalApplicationContext;
+
     public EchoServer(int port) {
         this.port = port;
         clientChannelMap = new ConcurrentHashMap<>(10);
         this.commandMap = new ConcurrentHashMap<>(5);
+
+        globalApplicationContext = this;
+    }
+
+    public static EchoServer getGlobalApplicationContext() {
+        if (globalApplicationContext == null) {
+            throw new RuntimeException("网络服务器全局上下文为空");
+        }
+        return globalApplicationContext;
     }
 
     public Map<String, ChannelWrap> getClientChannelMap() {
@@ -67,6 +78,10 @@ public class EchoServer {
         }
     }
 
+    /**
+     * 发送全部终端调光指令
+     * @param percent
+     */
     public void allSendCommandLightAdjust(int percent) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
@@ -75,6 +90,21 @@ public class EchoServer {
         }
     }
 
+    /**
+     * 发送全部终端重启/复位指令
+     */
+    public void allSendCommandReset() {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getTerminalResetCommand());
+        }
+    }
+
+    /**
+     * 发送全部命令客户端消息
+     * @param commandData
+     */
     public void allClientSendCommand(CommandData commandData) {
         for (Map.Entry<String, ChannelWrap> entry : commandMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
