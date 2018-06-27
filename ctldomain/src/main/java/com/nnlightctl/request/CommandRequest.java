@@ -25,6 +25,16 @@ public class CommandRequest {
         this.terminalSendMsgPeriod = terminalSendMsgPeriod;
     }
 
+    public Boolean getTerminalEleboxOn() {
+        return terminalEleboxOn;
+    }
+
+    public void setTerminalEleboxOn(Boolean terminalEleboxOn) {
+        this.terminalEleboxOn = terminalEleboxOn;
+    }
+
+    private Boolean terminalEleboxOn;
+
     private Integer terminalSendMsgPeriod;
 
     private int lightPercent;

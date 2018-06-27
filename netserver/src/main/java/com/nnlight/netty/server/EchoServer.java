@@ -113,6 +113,14 @@ public class EchoServer {
         }
     }
 
+    public void allSendCommandTerminalEleboxOn(Boolean eleboxOn) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getCommandTerminalEleboxOn(eleboxOn));
+        }
+    }
+
     /**
      * 发送全部命令客户端消息
      * @param commandData

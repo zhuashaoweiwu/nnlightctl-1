@@ -65,6 +65,11 @@ public class CommandServerImpl implements CommandServer {
 
     @Override
     public void configTerminalSendMsgPeriod(int period) {
+        command.configTerminalSendMsgPeriod(period);
+    }
 
+    @Override
+    public void commandTerminalEleboxOn(Boolean terminalEleboxOn) {
+        command.commandTerminalEleboxOn(terminalEleboxOn);
     }
 }

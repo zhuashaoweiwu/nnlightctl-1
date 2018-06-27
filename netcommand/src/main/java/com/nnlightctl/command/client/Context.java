@@ -54,6 +54,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC5CommandData(period));
     }
 
+    public void commandTerminalEleboxOn(Boolean eleboxOn) {
+        channelHandlerContext.writeAndFlush(CommandData.getC6CommandData(eleboxOn));
+    }
+
     public ChannelHandlerContext getChannelHandlerContext() {
         return channelHandlerContext;
     }

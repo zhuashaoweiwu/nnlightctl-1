@@ -127,6 +127,19 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getCommandTerminalEleboxOn(Boolean eleboxOn) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xe6);
+        commandData.setDataLength((byte)1);
+        byte[] data = new byte[1];
+        data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -209,6 +222,24 @@ public class CommandData implements Serializable {
         commandData.setControl((byte)0xc5);
         commandData.setDataLength((byte) 2);
         commandData.setData(ByteConvert.shortToBytes((short)period));
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
+     * 命令层C6命令控制柜通断电
+     * @param eleboxOn
+     * @return
+     */
+    public static CommandData getC6CommandData(Boolean eleboxOn) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc6);
+        commandData.setDataLength((byte)1);
+        byte[] data = new byte[1];
+        data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
+        commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;

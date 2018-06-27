@@ -7,6 +7,7 @@ public interface Command {
     void sendLightAdjustCommand(int percent);
     void resetCommand();
     void configTerminalSendMsgPeriod(int period);
+    void commandTerminalEleboxOn(Boolean eleboxOn);
     void receiveMsg(CommandData in);
     void close();
 }

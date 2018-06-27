@@ -60,7 +60,12 @@ public class NettyClientCommand implements Command {
 
     @Override
     public void configTerminalSendMsgPeriod(int period) {
+        context.configTerminalSendMsgPeriod(period);
+    }
 
+    @Override
+    public void commandTerminalEleboxOn(Boolean eleboxOn) {
+        context.commandTerminalEleboxOn(eleboxOn);
     }
 
     @Override

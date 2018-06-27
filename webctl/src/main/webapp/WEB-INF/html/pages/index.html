@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/html/css/bootstrap/bootstrap-switch.min.css">
     <title>设备调试</title>
 </head>
 <body>
@@ -54,12 +54,20 @@
         </div>
     </div>
 
+    <br/>
+    <hr/>
+    <br/>
+
     <!-- 重启/复位 -->
     <div class="row">
         <div class="col-sm-3">
             <button type="button" class="btn btn-primary" id="resetBtn">重启/复位</button>
         </div>
     </div>
+
+    <br/>
+    <hr/>
+    <br/>
 
     <!-- 设置定时发送参数 -->
     <div class="row">
@@ -70,9 +78,30 @@
             <input type="text" class="form-control" id="sendPeriod">
         </div>
         <div class="col-sm-3">
-            <button type="button" class="btn btn-primary" id="sendPeriodBtn" />
+            <button type="button" class="btn btn-primary" id="sendPeriodBtn">发送</button>
         </div>
     </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 控制柜断电通电 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">控制柜通断电：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="switch switch-large">
+                <input id="eleboxOnBtn" type="checkbox" checked />
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
 
     <!-- 客户端实时消息接收 -->
     <div class="row">
@@ -84,6 +113,10 @@
             <textarea class="form-control" id="netMessageTextArea" rows="8"></textarea>
         </div>
     </div>
+
+    <br/>
+    <hr/>
+    <br/>
 </div>
 
 <!-- Optional JavaScript -->
@@ -94,15 +127,16 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/html/js/bootstrap/bootstrap-switch.min.js"></script>
 <script type="text/javascript">
     $("#sendCommand").click(function () {
-        $.post("../api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
+        $.post("/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
             $("#resultText").val(result);
         }, "text");
     });
 
     $("#sendCommandLightAdjust").click(function() {
-        $.post("../api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
+        $.post("/api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
         });
     });
 
@@ -113,7 +147,7 @@
 
     //定时获取服务器端消息
     var timeGetMessage = setInterval(function () {
-        $.post("../api/command/webClientReceiveMsg", {}, function (result) {
+        $.post("/api/command/webClientReceiveMsg", {}, function (result) {
             if (!result) {
                 return;
             }
@@ -137,7 +171,7 @@
 
     //重启复位
     $("#resetBtn").click(function () {
-        $.post("../api/command/resetCommand", {}, function () {
+        $.post("/api/command/resetCommand", {}, function () {
 
         });
     });
@@ -145,8 +179,17 @@
     //设置定时发送参数
     $("#sendPeriodBtn").click(function () {
         var period = $("#sendPeriod").val().trim();
-        $.post("../api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
+        $.post("/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
             
+        });
+    });
+
+    //控制柜通断电
+    $("#eleboxOnBtn").bootstrapSwitch();
+    $('#eleboxOnBtn').on('switchChange.bootstrapSwitch', function (event, state) {
+        console.log(state);
+        $.post("/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
+
         });
     });
 </script>

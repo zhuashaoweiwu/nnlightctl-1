@@ -53,6 +53,15 @@ public class CommandController extends BaseController {
     public String configTerminalSendMsgPeriod(CommandRequest request) {
         logger.info("[POST] /api/command/configTerminalSendMsgPeriod");
 
+        commandServer.configTerminalSendMsgPeriod(request.getTerminalSendMsgPeriod());
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("commandTerminalEleboxOn")
+    public String commandTerminalEleboxOn(CommandRequest request) {
+        logger.info("[POST] /api/command/commandTerminalEleboxOn");
+
         return toJson(JsonResult.getSUCCESS());
     }
 }

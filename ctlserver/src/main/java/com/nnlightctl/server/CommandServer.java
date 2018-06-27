@@ -6,4 +6,5 @@ public interface CommandServer {
     String webRequireMsg();
     void resetCommand();
     void configTerminalSendMsgPeriod(int period);
+    void commandTerminalEleboxOn(Boolean terminalEleboxOn);
 }

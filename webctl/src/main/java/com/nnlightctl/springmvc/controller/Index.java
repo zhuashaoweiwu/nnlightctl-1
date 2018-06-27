@@ -40,7 +40,7 @@ public class Index extends BaseController {
 
     @RequestMapping("/")
     public String indexPage() {
-        return "redirect:/html/index.html";
+        return "redirect:/html/pages/index.html";
     }
 
     @RequestMapping("/uploadFile")
