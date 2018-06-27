@@ -103,6 +103,25 @@
     <hr/>
     <br/>
 
+    <!-- 读取终端信息 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">读取终端信息：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="readTerminalInfo">读取终端信息</button>
+        </div>
+
+        <div class="col-sm-5">
+            <textarea class="form-control" id="terminalInfoTextArea" rows="3"></textarea>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
     <!-- 客户端实时消息接收 -->
     <div class="row">
         <div class="col-sm-1">
@@ -190,6 +209,13 @@
         console.log(state);
         $.post("/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
 
+        });
+    });
+
+    //读取终端信息
+    $("#readTerminalInfo").click(function () {
+        $.post("/api/command/commandReadTerminalInfo", {}, function (data) {
+            $("#terminalInfoTextArea").val(JSON.stringify(data));
         });
     });
 </script>

@@ -58,6 +58,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC6CommandData(eleboxOn));
     }
 
+    public void commandReadTerminalInfo() {
+        channelHandlerContext.writeAndFlush(CommandData.getC8CommandData());
+    }
+
     public ChannelHandlerContext getChannelHandlerContext() {
         return channelHandlerContext;
     }

@@ -62,6 +62,15 @@ public class CommandController extends BaseController {
     public String commandTerminalEleboxOn(CommandRequest request) {
         logger.info("[POST] /api/command/commandTerminalEleboxOn");
 
+        commandServer.commandTerminalEleboxOn(request.getTerminalEleboxOn());
+
         return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("commandReadTerminalInfo")
+    public String commandReadTerminalInfo() {
+        logger.info("[POST] /api/command/commandReadTerminalInfo");
+
+        return commandServer.commandReadTerminalInfo();
     }
 }

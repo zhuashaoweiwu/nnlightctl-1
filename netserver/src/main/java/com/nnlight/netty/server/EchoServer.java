@@ -113,11 +113,26 @@ public class EchoServer {
         }
     }
 
+    /**
+     * 发送全部终端控制配电柜通电/断电
+     * @param eleboxOn
+     */
     public void allSendCommandTerminalEleboxOn(Boolean eleboxOn) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
 
             context.writeAndFlush(CommandData.getCommandTerminalEleboxOn(eleboxOn));
+        }
+    }
+
+    /**
+     * 发送全部终端读取终端信息
+     */
+    public void allSendCommandReadTerminalInfo() {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getCommandReadTerminalInfo());
         }
     }
 

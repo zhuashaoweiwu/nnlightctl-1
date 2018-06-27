@@ -7,4 +7,5 @@ public interface CommandServer {
     void resetCommand();
     void configTerminalSendMsgPeriod(int period);
     void commandTerminalEleboxOn(Boolean terminalEleboxOn);
+    String commandReadTerminalInfo();
 }

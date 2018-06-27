@@ -24,7 +24,7 @@ public class CommandServerImpl implements CommandServer {
         }
     });
 
-    private String  globalMsg;
+    private String globalMsg;
     private CountDownLatch countDownLatch;
 
     @Override
@@ -71,5 +71,20 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void commandTerminalEleboxOn(Boolean terminalEleboxOn) {
         command.commandTerminalEleboxOn(terminalEleboxOn);
+    }
+
+    @Override
+    public String commandReadTerminalInfo() {
+        countDownLatch = new CountDownLatch(1);
+        command.commandReadTerminalInfo();
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        countDownLatch = null;
+        String ret = new String(globalMsg);
+        globalMsg = null;
+        return ret;
     }
 }

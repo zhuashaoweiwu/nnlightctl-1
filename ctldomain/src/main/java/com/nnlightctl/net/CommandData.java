@@ -140,6 +140,15 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getCommandReadTerminalInfo() {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xe8);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -240,6 +249,19 @@ public class CommandData implements Serializable {
         byte[] data = new byte[1];
         data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
         commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
+     * 命令层C8命令获取终端信息
+     * @return
+     */
+    public static CommandData getC8CommandData() {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc8);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;

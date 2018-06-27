@@ -69,6 +69,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void commandReadTerminalInfo() {
+        context.commandReadTerminalInfo();
+    }
+
+    @Override
     public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);
