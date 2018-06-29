@@ -53,8 +53,8 @@ public class LightDaoImpl implements LightDao {
         countSql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
 
         if (request.getProjectId() != null) {
-            sql.append("on l.nnlightctl_lighting_gis_id = g.id and l.nnlightctl_project_id = ?");
-            countSql.append("on l.nnlightctl_lighting_gis_id = g.id and l.nnlightctl_project_id = ?");
+            sql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ?");
+            countSql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ?");
 
             params.add(request.getProjectId());
         } else {
@@ -119,8 +119,8 @@ public class LightDaoImpl implements LightDao {
         countSql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
 
         if (request.getProjectId() != null) {
-            sql.append("on l.nnlightctl_lighting_gis_id = g.id and l.nnlightctl_project_id = ? ");
-            countSql.append("on l.nnlightctl_lighting_gis_id = g.id and l.nnlightctl_project_id = ? ");
+            sql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
+            countSql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
 
             params.add(request.getProjectId());
         } else {
@@ -128,8 +128,8 @@ public class LightDaoImpl implements LightDao {
             countSql.append("on l.nnlightctl_lighting_gis_id = g.id ");
         }
         if (request.getModelLoopId() != null) {
-            sql.append("and l.nnlightctl_lighting_model_id = ? ");
-            countSql.append("and l.nnlightctl_lighting_model_id = ? ");
+            sql.append("and l.nnlightctl_elebox_model_loop_id = ? ");
+            countSql.append("and l.nnlightctl_elebox_model_loop_id = ? ");
 
             params.add(request.getModelLoopId());
         }
