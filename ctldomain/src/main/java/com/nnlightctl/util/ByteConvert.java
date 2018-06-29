@@ -172,6 +172,10 @@ public class ByteConvert {
         return array[offset] & 0xff;
     }
 
+    public static int byteToUbyte(byte b) {
+        return 0x000000ff & b;
+    }
+
     public static void main(String[] args) {
         byte[] bytes = new byte[] {(byte)0xc8, 0x44};
         int unShort = bytesToUshort(bytes, 0);

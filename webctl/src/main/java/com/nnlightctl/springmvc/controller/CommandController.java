@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("api/command")
 public class CommandController extends BaseController {
@@ -18,10 +21,10 @@ public class CommandController extends BaseController {
     private CommandServer commandServer;
 
     @RequestMapping("sendcommand")
-    public String sendCommand(CommandRequest request) {
+    public void sendCommand(CommandRequest request) {
         logger.info("[POST] /api/command/sendcommand");
 
-        return commandServer.sendCommand(request.getMsg());
+        commandServer.sendCommand(request.getMsg());
     }
 
     @RequestMapping("sendLightAdjustCommand")
@@ -37,7 +40,15 @@ public class CommandController extends BaseController {
     public String webClientReceiveMsg() {
         logger.info("[POST] /api/command/webClientReceiveMsg");
 
-        return commandServer.webRequireMsg();
+        String msg = commandServer.webRequireMsg();
+
+        List<String> data = new ArrayList<>(1);
+        data.add(msg);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(data);
+
+        return toJson(jsonResult);
     }
 
     @RequestMapping("resetCommand")
@@ -68,9 +79,9 @@ public class CommandController extends BaseController {
     }
 
     @RequestMapping("commandReadTerminalInfo")
-    public String commandReadTerminalInfo() {
+    public void commandReadTerminalInfo() {
         logger.info("[POST] /api/command/commandReadTerminalInfo");
 
-        return commandServer.commandReadTerminalInfo();
+        commandServer.commandReadTerminalInfo();
     }
 }

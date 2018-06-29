@@ -53,7 +53,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         if (applicationContext != null) {
             ChannelWrap wrap = new ChannelWrap();
             Channel channel = ctx.channel();
-            String name = channel.id().asLongText();
+            String name = channel.id().asShortText();
             wrap.setUuid(name);
             wrap.setName(name);
             wrap.setChannel(channel);

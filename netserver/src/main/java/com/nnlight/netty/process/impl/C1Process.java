@@ -19,7 +19,7 @@ public class C1Process implements Process {
         if ("zxx".equals(command)) {
             logger.info("更换上层命令客户端指令");
 
-            String uuid = netServerContext.channel().id().asLongText();
+            String uuid = netServerContext.channel().id().asShortText();
             ChannelWrap channelWrap = EchoServer.getGlobalApplicationContext().getClientChannelMap().remove(uuid);
             EchoServer.getGlobalApplicationContext().getCommandMap().put(uuid, channelWrap);
             result.append("Translate Command Client Successful!");
@@ -29,6 +29,6 @@ public class C1Process implements Process {
             result.append(EchoServer.getGlobalApplicationContext().commandLookAll());
         }
 
-        netServerContext.writeAndFlush(new CommandData(result.toString()));
+        EchoServer.getGlobalApplicationContext().allClientSendCommand(new CommandData(result.toString()));
     }
 }
