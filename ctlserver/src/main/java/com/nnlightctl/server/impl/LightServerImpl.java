@@ -288,4 +288,9 @@ public class LightServerImpl implements LightServer {
     public int unbindLightBeElebox(List<Long> lightIds) {
         return lightDao.clearLightBeEleboxBeLoop(lightIds);
     }
+
+    @Override
+    public Tuple.TwoTuple<List<LightingView>, Integer> listLoopLighting(LightConditionRequest request) {
+        return lightDao.listLoopLightingView(request);
+    }
 }

@@ -10,4 +10,6 @@ public interface LightDao {
     int clearLightBeEleboxBeLoop(List<Long> lightIds);
 
     Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request);
+
+    Tuple.TwoTuple<List<LightingView>, Integer> listLoopLightingView(LightConditionRequest request);
 }

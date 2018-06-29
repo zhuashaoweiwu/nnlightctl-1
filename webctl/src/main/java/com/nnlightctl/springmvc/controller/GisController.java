@@ -65,4 +65,17 @@ public class GisController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("listLoopLighting")
+    public String listLoopLighting(LightConditionRequest request) {
+        logger.info("[POST] /api/gis/listLoopLighting");
+
+        Tuple.TwoTuple<List<LightingView>, Integer> tuple = this.lightServer.listLoopLighting(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
 }
