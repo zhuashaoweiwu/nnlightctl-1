@@ -111,7 +111,7 @@ public class CommandData implements Serializable {
     public static CommandData getTerminalResetCommand() {
         CommandData commandData = new CommandData();
         commandData.setControl((byte)0xe4);
-        commandData.setCheck(commandData.getCheck());
+        commandData.setCheck(commandData.createCheck());
 
         return commandData;
     }
