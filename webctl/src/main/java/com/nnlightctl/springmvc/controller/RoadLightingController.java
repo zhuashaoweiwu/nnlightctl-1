@@ -639,4 +639,16 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+    /*
+      前端接口-道路照明系统模块
+    * 三十、通过控制柜id获取该控制柜下全部回路信息
+    * */
+    @RequestMapping("listEleboxLoop")
+    public String listEleboxLoop(Long id){
+        logger.info("[POST] /api/roadlighting/listEleboxLoop");
+        List<EleboxModelLoop> eleboxModelLoopList = modelLoopServer.listEleboxLoop(id);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(eleboxModelLoopList);
+        return toJson(jsonResult);
+    }
 }
