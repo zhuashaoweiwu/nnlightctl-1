@@ -8,9 +8,12 @@ import com.nnlightctl.po.Institution;
 import com.nnlightctl.po.InstitutionExample;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.InstitutionRequest;
+import com.nnlightctl.request.MapProjectsToInstitutionRequest;
 import com.nnlightctl.server.InstitutionServer;
+import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.nnlightctl.jdbcdao.*;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,8 @@ public class InstitutionServerImpl implements InstitutionServer {
 
     @Autowired
     private InstitutionMapper institutionMapper;
+    @Autowired
+    private ProjectDao projectDao;
 
     @Override
     public int addOrUpdateInstitution(InstitutionRequest request) {
@@ -68,5 +73,11 @@ public class InstitutionServerImpl implements InstitutionServer {
             institutionMapper.deleteByPrimaryKey(id);
         }
         return 1;
+    }
+
+    @Override
+    public List<ProjectsToInstitutionView> mapProjectsToInstitution(MapProjectsToInstitutionRequest mapProjectsToInstitutionRequest){
+        List<ProjectsToInstitutionView> projectsToInstitutionViewList = projectDao.mapProjectsToInstitution(mapProjectsToInstitutionRequest);
+        return projectsToInstitutionViewList;
     }
 }

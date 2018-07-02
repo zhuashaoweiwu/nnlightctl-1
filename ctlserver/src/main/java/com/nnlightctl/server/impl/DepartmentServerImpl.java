@@ -36,7 +36,6 @@ public class DepartmentServerImpl implements DepartmentServer {
             //更新
             ret = departmentMapper.updateByPrimaryKeySelective(department);
         }
-
         return ret;
     }
 

@@ -79,6 +79,7 @@ public class SystemParamController  extends BaseController{
     /*
     *通过过搜索条件分页获取全部系统参数集合
     * */
+    @RequestMapping("listSystemParam")
     public String listSystemParam(BaseRequest request){
         logger.info("[POST] /api/systemParam/listSystemParam");
 

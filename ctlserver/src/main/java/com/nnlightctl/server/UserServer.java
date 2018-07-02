@@ -15,7 +15,7 @@ public interface UserServer {
 
     User getUser(Long id);
 
-    int deleteUser(UserConditionRequest request);
+    int deleteUser(List<Long> userIds);
 
     int updateUserPwd(UserConditionRequest request);
 

@@ -72,8 +72,8 @@ public class UserController extends BaseController {
     public String deleteUser(UserConditionRequest request) {
         logger.info("[POST] /api/user/deleteUser");
 
-        int ret = userServer.deleteUser(request);
-
+        int ret = userServer.deleteUser(request.getUserIds());
+        List<Long> userIds = request.getUserIds();
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();

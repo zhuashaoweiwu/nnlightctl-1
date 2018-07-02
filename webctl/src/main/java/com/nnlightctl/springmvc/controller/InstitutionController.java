@@ -7,11 +7,13 @@ import com.nnlightctl.request.InstitutionConditionRequest;
 import com.nnlightctl.request.InstitutionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.InstitutionServer;
+import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.nnlightctl.request.MapProjectsToInstitutionRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,20 @@ public class InstitutionController extends BaseController {
         } else {
             jsonResult = JsonResult.getFAILURE();
         }
+
+        return toJson(jsonResult);
+    }
+
+    /*
+    *五、映射机构包含项目
+    * */
+    @RequestMapping("institutionMapProjects")
+    public String mapProjectsToInstitution(MapProjectsToInstitutionRequest mapProjectsToInstitutionRequest){
+        logger.info("[POST] /api/institution/institutionMapProjects");
+
+        List<ProjectsToInstitutionView> projectsToInstitutionViewList = institutionServer.mapProjectsToInstitution(mapProjectsToInstitutionRequest);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(projectsToInstitutionViewList);
 
         return toJson(jsonResult);
     }

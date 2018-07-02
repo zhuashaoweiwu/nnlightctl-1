@@ -83,8 +83,8 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public int deleteUser(UserConditionRequest request) {
-        List<Long> userIds = request.getUserIds();
+    public int deleteUser(List<Long> userIds) {
+
         for (Long id : userIds) {
             userMapper.deleteByPrimaryKey(id);
         }
