@@ -115,17 +115,17 @@ public class LightDaoImpl implements LightDao {
         sql.append("select l.id, l.gmt_created, l.gmt_updated, l.uid, l.manufacture, l.use_date, l.lamppost, l.lamphead, l.property_serial_number, l.decay, l.max_use_time, l.mem, l.loop_priority, l.fault_tag, g.longitude, g.latitude ");
         countSql.append("select count(*) ");
 
-        sql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
-        countSql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
+        sql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g on l.nnlightctl_lighting_gis_id = g.id where 1=1 ");
+        countSql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g on l.nnlightctl_lighting_gis_id = g.id where 1=1 ");
 
         if (request.getProjectId() != null) {
-            sql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
-            countSql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
+            sql.append(" and l.nnlightctl_project_id = ? ");
+            countSql.append(" and l.nnlightctl_project_id = ? ");
 
             params.add(request.getProjectId());
         } else {
-            sql.append("on l.nnlightctl_lighting_gis_id = g.id ");
-            countSql.append("on l.nnlightctl_lighting_gis_id = g.id ");
+            /*sql.append("on l.nnlightctl_lighting_gis_id = g.id ");
+            countSql.append("on l.nnlightctl_lighting_gis_id = g.id ");*/
         }
         if (request.getModelLoopId() != null) {
             sql.append("and l.nnlightctl_elebox_model_loop_id = ? ");
