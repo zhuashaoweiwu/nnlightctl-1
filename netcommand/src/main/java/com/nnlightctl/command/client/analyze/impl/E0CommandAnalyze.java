@@ -2,6 +2,7 @@ package com.nnlightctl.command.client.analyze.impl;
 
 import com.nnlight.common.Arithmetic;
 import com.nnlight.common.ByteConvert;
+import com.nnlightctl.command.client.Context;
 import com.nnlightctl.command.client.analyze.CommandAnalyzer;
 import com.nnlightctl.net.CommandData;
 
@@ -69,6 +70,9 @@ public class E0CommandAnalyze implements CommandAnalyzer {
         stringBuilder.append(gpsStr);
 
         stringBuilder.append("]");
+
+        //向终端回复ack指令
+        Context.getGlobalContext().commandReplyTerminal((byte)0xe0, true);
 
         return stringBuilder.toString();
 

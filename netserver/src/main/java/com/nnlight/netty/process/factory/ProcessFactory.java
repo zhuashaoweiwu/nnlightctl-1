@@ -38,6 +38,10 @@ public class ProcessFactory {
             case (byte)0x80:
                 return e80;
 
+                //命令层应答
+            case (byte)0xb8:
+                return b80;
+
                 //无控制码默认返回消息到上层命令客户端
                 default:
                 return commonProcess;
@@ -52,5 +56,6 @@ public class ProcessFactory {
     private static final Process e0 = new E0Process();
     private static final Process c8 = new C8Process();
     private static final Process e80 = new E80Process();
+    private static final Process b80 = new B8Process();
     private static final Process commonProcess = new CommonProcess();
 }

@@ -137,6 +137,19 @@ public class EchoServer {
     }
 
     /**
+     * 发送全部终端ack回应信息
+     * @param control
+     * @param success
+     */
+    public void allSendTerminalACK(byte control, Boolean success) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getACKCommandData(control, success));
+        }
+    }
+
+    /**
      * 发送全部命令客户端消息
      * @param commandData
      */

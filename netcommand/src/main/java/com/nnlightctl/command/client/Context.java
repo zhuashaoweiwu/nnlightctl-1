@@ -2,17 +2,26 @@ package com.nnlightctl.command.client;
 
 import com.nnlightctl.command.Command;
 import com.nnlightctl.net.CommandData;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.CharsetUtil;
 
 import java.util.concurrent.CountDownLatch;
 
 public class Context {
 
+    private static Context globalContext;
+
+    public static Context getGlobalContext() {
+        if (globalContext == null) {
+            throw new RuntimeException("Context 未初始化");
+        }
+
+        return globalContext;
+    }
+
     public Context() {
         this.countDownLatch = new CountDownLatch(1);
+
+        globalContext = this;
     }
 
     public Context(Command command) {
@@ -60,6 +69,10 @@ public class Context {
 
     public void commandReadTerminalInfo() {
         channelHandlerContext.writeAndFlush(CommandData.getC8CommandData());
+    }
+
+    public void commandReplyTerminal(byte control, Boolean success) {
+        channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandData(control, success));
     }
 
     public ChannelHandlerContext getChannelHandlerContext() {

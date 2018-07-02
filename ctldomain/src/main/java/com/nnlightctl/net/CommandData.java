@@ -91,7 +91,9 @@ public class CommandData implements Serializable {
         sum += this.control;
         sum += this.dataLength;
 
-        for (int i = 0; i < this.dataLength; ++i) {
+        int tmpDataLength = ByteConvert.byteToUbyte(this.dataLength);
+
+        for (int i = 0; i < tmpDataLength; ++i) {
             sum += this.data[i];
         }
 
@@ -144,6 +146,24 @@ public class CommandData implements Serializable {
         CommandData commandData = new CommandData();
 
         commandData.setControl((byte)0xe8);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    public static CommandData getACKCommandData(byte control, Boolean success) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0x80);
+        commandData.setDataLength((byte)2);
+        byte[] data = new byte[2];
+        data[0] = control;
+        if (success) {
+            data[1] = 0x00;
+        } else {
+            data[1] = 0x01;
+        }
+        commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -269,6 +289,24 @@ public class CommandData implements Serializable {
         CommandData commandData = new CommandData();
 
         commandData.setControl((byte)0xc8);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
+     * 命令层B80应答指令
+     * @return
+     */
+    public static CommandData getB80ReplyCommandData(byte control, Boolean success) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xb8);
+        commandData.setDataLength((byte)2);
+        byte[] data = new byte[2];
+        data[0] = control;
+        data[1] = success ? (byte)0x00 : (byte)0x01;
+        commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
