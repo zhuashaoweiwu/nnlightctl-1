@@ -21,7 +21,7 @@
 
     <br/>
 
-    <div class="row">
+    <!--<div class="row">
         <div class="col-sm-1">
             <label class="form-control">命令返回：</label>
         </div>
@@ -29,7 +29,7 @@
         <div class="col-sm-8">
             <textarea class="form-control" id="resultText" rows="3"></textarea>
         </div>
-    </div>
+    </div>-->
 
     <br/>
     <hr/>
@@ -113,9 +113,9 @@
             <button type="button" class="btn btn-primary" id="readTerminalInfo">读取终端信息</button>
         </div>
 
-        <div class="col-sm-5">
+        <!--<div class="col-sm-5">
             <textarea class="form-control" id="terminalInfoTextArea" rows="3"></textarea>
-        </div>
+        </div>-->
     </div>
 
     <br/>
@@ -150,7 +150,7 @@
 <script type="text/javascript">
     $("#sendCommand").click(function () {
         $.post("/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
-            $("#resultText").val(result);
+            // $("#resultText").val(result);
         }, "text");
     });
 
@@ -170,11 +170,15 @@
             if (!result) {
                 return;
             }
+            var newMsg = result.body.data[0];
+            if (!newMsg) {
+                return;
+            }
             var text = $("#netMessageTextArea").val();
             text += "\r\n";
-            text += (new Date().toLocaleString() + "  " + result);
+            text += (new Date().toLocaleString() + "  " + newMsg);
             $("#netMessageTextArea").val(text);
-        }, "text");
+        }, "json");
     }, 5000);
 
     //周期发送调光指令
@@ -215,7 +219,7 @@
     //读取终端信息
     $("#readTerminalInfo").click(function () {
         $.post("/api/command/commandReadTerminalInfo", {}, function (data) {
-            $("#terminalInfoTextArea").val(JSON.stringify(data));
+            // $("#terminalInfoTextArea").val(JSON.stringify(data));
         });
     });
 </script>

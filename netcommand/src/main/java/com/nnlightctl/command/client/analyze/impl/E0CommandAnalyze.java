@@ -5,6 +5,7 @@ import com.nnlight.common.ByteConvert;
 import com.nnlightctl.command.client.analyze.CommandAnalyzer;
 import com.nnlightctl.net.CommandData;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 public class E0CommandAnalyze implements CommandAnalyzer {
@@ -70,5 +71,6 @@ public class E0CommandAnalyze implements CommandAnalyzer {
         stringBuilder.append("]");
 
         return stringBuilder.toString();
+
     }
 }

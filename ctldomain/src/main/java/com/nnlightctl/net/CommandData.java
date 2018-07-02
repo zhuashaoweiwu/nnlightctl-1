@@ -111,7 +111,7 @@ public class CommandData implements Serializable {
     public static CommandData getTerminalResetCommand() {
         CommandData commandData = new CommandData();
         commandData.setControl((byte)0xe4);
-        commandData.setCheck(commandData.getCheck());
+        commandData.setCheck(commandData.createCheck());
 
         return commandData;
     }
@@ -192,8 +192,15 @@ public class CommandData implements Serializable {
     public CommandData(String command) {
         this.control = (byte)0xc1;
         byte[] strBytes = command.getBytes();
-        this.dataLength = (byte)strBytes.length;
-        this.data = new byte[strBytes.length];
+        byte tmpDataLength = (byte)0;
+        if (strBytes.length > 255) {
+            tmpDataLength = (byte)0xff;
+        } else {
+            tmpDataLength = (byte)strBytes.length;
+        }
+
+        this.dataLength = tmpDataLength;
+        this.data = new byte[ByteConvert.byteToUbyte(tmpDataLength)];
         System.arraycopy(strBytes, 0, this.data, 0, strBytes.length);
         this.check = createCheck();
     }
@@ -273,8 +280,8 @@ public class CommandData implements Serializable {
     private byte[] addr = new byte[6];
     private byte start1 = 0x68;
     private byte control;
-    private byte dataLength;
-    private byte[] data;
+    private byte dataLength = (byte)0;
+    private byte[] data = new byte[0];
     private byte check;
     private byte end0 = 0x16;
     private byte[] end1 = new byte[] {(byte)0xFE, (byte)0xFD, (byte)0xFC, (byte)0xFB, (byte)0xFA, (byte)0xF9};

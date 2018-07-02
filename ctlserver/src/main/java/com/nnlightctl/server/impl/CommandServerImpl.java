@@ -18,28 +18,14 @@ public class CommandServerImpl implements CommandServer {
         @Override
         public void receiveMsg(CommandData msg) {
             globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
-            if (countDownLatch != null) {
-                countDownLatch.countDown();
-            }
         }
     });
 
     private String globalMsg;
-    private CountDownLatch countDownLatch;
 
     @Override
-    public String sendCommand(String msg) {
-        countDownLatch = new CountDownLatch(1);
+    public void sendCommand(String msg) {
         command.sendMsg(msg);
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        countDownLatch = null;
-        String ret = new String(globalMsg);
-        globalMsg = null;
-        return ret;
     }
 
     @Override
@@ -74,17 +60,7 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
-    public String commandReadTerminalInfo() {
-        countDownLatch = new CountDownLatch(1);
+    public void commandReadTerminalInfo() {
         command.commandReadTerminalInfo();
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        countDownLatch = null;
-        String ret = new String(globalMsg);
-        globalMsg = null;
-        return ret;
     }
 }

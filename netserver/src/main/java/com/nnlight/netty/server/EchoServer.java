@@ -143,7 +143,7 @@ public class EchoServer {
     public void allClientSendCommand(CommandData commandData) {
         for (Map.Entry<String, ChannelWrap> entry : commandMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
-            context.writeAndFlush(commandData);
+            context.channel().writeAndFlush(commandData);
         }
     }
 
@@ -187,8 +187,8 @@ public class EchoServer {
             public void run() {
                 final EchoServerHandler serverHandler = new EchoServerHandler(EchoServer.this);
                 final HeartbeatServerHandler heartbeatServerHandler = new HeartbeatServerHandler();
-                EventLoopGroup group = new NioEventLoopGroup(50);
-                EventLoopGroup workGroup = new NioEventLoopGroup(1000);
+                EventLoopGroup group = new NioEventLoopGroup();
+                EventLoopGroup workGroup = new NioEventLoopGroup();
                 try {
                     ServerBootstrap b = new ServerBootstrap();
                     b.group(group, workGroup)

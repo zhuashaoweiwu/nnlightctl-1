@@ -16,6 +16,6 @@ public class C5Process implements Process {
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
         logger.info("命令客户端C5指令【设置终端定时发送消息周期】");
 
-        EchoServer.getGlobalApplicationContext().allSendCommandConfigTerminalSendMsgPeriod(ByteConvert.bytesToInt(msg.getData()));
+        EchoServer.getGlobalApplicationContext().allSendCommandConfigTerminalSendMsgPeriod(ByteConvert.bytesToUshort(msg.getData()));
     }
 }

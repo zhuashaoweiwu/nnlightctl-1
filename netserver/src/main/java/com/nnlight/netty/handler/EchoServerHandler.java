@@ -39,6 +39,8 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         Process process = ProcessFactory.getProcess(commandData.getControl());
 
         process.process(ctx, commandData);
+
+        ctx.fireChannelRead(msg);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         if (applicationContext != null) {
             ChannelWrap wrap = new ChannelWrap();
             Channel channel = ctx.channel();
-            String name = channel.id().asLongText();
+            String name = channel.id().asShortText();
             wrap.setUuid(name);
             wrap.setName(name);
             wrap.setChannel(channel);
@@ -67,10 +69,10 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ChannelWrap wrap = applicationContext.getClientChannelMap().get(ctx.channel().id().asLongText());
+        ChannelWrap wrap = applicationContext.getClientChannelMap().get(ctx.channel().id().asShortText());
 
         logger.error(LocalDate.now() + " " + LocalTime.now() + " " + wrap.getChannel().remoteAddress().toString() + " 客户端关闭！");
-        applicationContext.getClientChannelMap().remove(ctx.channel().id().asLongText());
+        applicationContext.getClientChannelMap().remove(ctx.channel().id().asShortText());
         ctx.close();
     }
 
