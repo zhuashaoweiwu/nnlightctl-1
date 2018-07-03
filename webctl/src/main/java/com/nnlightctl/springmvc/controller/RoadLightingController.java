@@ -679,6 +679,7 @@ public class RoadLightingController extends BaseController {
     * */
     @RequestMapping("batchSetLightArea")
     public String batchSetLightArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
+
         logger.info("[POST] /api/roadlighting/batchSetLightArea");
 
         JsonResult jsonResult = null;
@@ -695,7 +696,7 @@ public class RoadLightingController extends BaseController {
     /*
      * 三十二、上传控制柜地图图标
      * */
-    @RequestMapping("batchSetLightArea")
+    @RequestMapping("uploadEleboxGisIcon")
     public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
 
         logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
