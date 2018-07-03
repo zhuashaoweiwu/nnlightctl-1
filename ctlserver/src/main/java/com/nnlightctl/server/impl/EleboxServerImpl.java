@@ -6,6 +6,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.EleboxModelMapper;
+import com.nnlightctl.jdbcdao.EleboxDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.server.EleboxModelServer;
@@ -48,6 +49,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private ModelLoopServer modelLoopServer;
+
+    @Autowired
+    private EleboxDao eleboxDao;
 
     @Override
     public int insertElebox(EleboxAddModelRequest request) {
@@ -305,5 +309,14 @@ public class EleboxServerImpl implements EleboxServer {
         }
 
         return wb;
+    }
+    @Override
+    public int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest){
+
+        return eleboxDao.batchSetEleboxArea(batchSetEleboxAreaRequest);
+    }
+    @Override
+    public int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
+        return eleboxDao.batchSetLightingArea(batchSetLightingAreaRequest);
     }
 }

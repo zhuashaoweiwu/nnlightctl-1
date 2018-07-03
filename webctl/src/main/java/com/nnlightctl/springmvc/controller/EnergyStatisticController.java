@@ -1,7 +1,9 @@
 package com.nnlightctl.springmvc.controller;
 
 import com.nnlightctl.po.EleboxVolEleRecord;
+import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.request.EleboxPowerRequest;
+import com.nnlightctl.request.LightingVolEleRecordRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EnergyStatisticServer;
 import org.slf4j.Logger;
@@ -37,7 +39,7 @@ public class EnergyStatisticController extends BaseController{
     }
 
     /*
-    *通过控制柜id获取某段时间范围内的电流
+    *四 通过控制柜id获取某段时间范围内的电流
     * */
     @RequestMapping("listEleboxElectric")
     public String listEleboxElectric(EleboxPowerRequest eleboxPowerRequest){
@@ -63,6 +65,49 @@ public class EnergyStatisticController extends BaseController{
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(eleboxVolEleRecordList);
+
+        return toJson(jsonResult);
+    }
+    /*
+    *八、获取一段时间范围内的一组灯具（至少选择一盏灯具）的平均电压值的集合
+    * */
+    @RequestMapping("listLightAvgVoltage")
+    public String listLightAvgVoltage(LightingVolEleRecordRequest lightingVolEleRecordRequest){
+
+        logger.info("[POST] /api/energyStatistic/listLightAvgVoltage");
+
+        List<LightingVolEleRecord> lightingVolEleRecordList = energyStatisticServer.listLightingVolEleRecord(lightingVolEleRecordRequest);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingVolEleRecordList);
+
+        return toJson(jsonResult);
+    }
+    /*
+    *九、获取一段时间范围内的一组灯具（至少选择一盏灯具）的平均电流值的集合
+    * */
+    @RequestMapping("listLightAvgElectric")
+    public String listLightAvgElectric(LightingVolEleRecordRequest lightingVolEleRecordRequest){
+        logger.info("[POST] /api/energyStatistic/listLightAvgElectric");
+
+        List<LightingVolEleRecord> lightingVolEleRecordList = energyStatisticServer.listLightingVolEleRecord(lightingVolEleRecordRequest);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingVolEleRecordList);
+
+        return toJson(jsonResult);
+    }
+    /*
+    *十、获取一段时间范围内的一组灯具（至少选择一盏灯具）的平均功率值的集合
+    * */
+    @RequestMapping("listLightAvgPower")
+    public String listLightAvgPower(LightingVolEleRecordRequest lightingVolEleRecordRequest){
+        logger.info("[POST] /api/energyStatistic/listLightAvgPower");
+
+        List<LightingVolEleRecord> lightingVolEleRecordList = energyStatisticServer.listLightingVolEleRecord(lightingVolEleRecordRequest);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingVolEleRecordList);
 
         return toJson(jsonResult);
     }

@@ -4,10 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
-import com.nnlightctl.request.BaseRequest;
-import com.nnlightctl.request.EleboxAddModelRequest;
-import com.nnlightctl.request.EleboxConditionRequest;
-import com.nnlightctl.request.EleboxRequest;
+import com.nnlightctl.request.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.IOException;
@@ -26,4 +23,6 @@ public interface EleboxServer {
     Tuple.TwoTuple<List<EleboxModelLoop>, Integer> listModelLoop(Long modelId);
     int importElebox(InputStream in, String fileName) throws IOException;
     HSSFWorkbook exportElebox(List<Long> eleboxIds);
+    int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest);
+    int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest);
 }

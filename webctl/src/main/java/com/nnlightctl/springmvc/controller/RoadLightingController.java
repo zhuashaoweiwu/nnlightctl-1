@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -650,5 +651,122 @@ public class RoadLightingController extends BaseController {
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(eleboxModelLoopList);
         return toJson(jsonResult);
+    }
+
+    /*
+    *前端接口-道路照明系统模块
+    *三十一、批量设置控制柜区域
+    * */
+    @RequestMapping("batchSetEleboxArea")
+    public String batchSetEleboxArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest){
+
+        logger.info("[POST] /api/roadlighting/batchSetEleboxArea");
+
+        int ret = eleboxServer.batchSetLightingArea(batchSetEleboxAreaRequest);
+        JsonResult jsonResult = null;
+
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    /*
+    * 三十三、批量设置灯具所属区域
+    * */
+    @RequestMapping("batchSetLightArea")
+    public String batchSetLightArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
+        logger.info("[POST] /api/roadlighting/batchSetLightArea");
+
+        JsonResult jsonResult = null;
+        int ret  = eleboxServer.batchSetLightingArea(batchSetLightingAreaRequest);
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    /*
+     * 三十二、上传控制柜地图图标
+     * */
+    @RequestMapping("batchSetLightArea")
+    public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
+
+        logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
+        JsonResult jsonResult = null;
+        if (eleboxGisIcon!=null) {
+            jsonResult.setMsg("文件不存在！");
+            return toJson(jsonResult);
+        }
+        String path=null;// 文件路径
+        String type=null;// 文件类型
+        String fileName=eleboxGisIcon.getOriginalFilename();// 文件原名称
+        // 判断文件类型
+        type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
+        if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
+            // 项目在容器中实际发布运行的根路径
+            String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
+            // 自定义的文件名称
+            String trueFileName="elebox";
+            // 设置存放图片文件的路径
+            path=realPath+trueFileName;
+            System.out.println("存放图片文件的路径:"+path);
+            try{
+                // 转存文件到指定的路径
+                eleboxGisIcon.transferTo(new File(path));
+                System.out.println("文件成功上传到指定目录下");
+            }catch (IOException o){
+                o.printStackTrace();
+            }
+        }else {
+            logger.info("不是我们想要的文件类型,请按要求重新上传");
+        }
+        return toJson(jsonResult);
+
+    }
+
+    /*
+     * 三十二、上传控制柜地图图标
+     * */
+    @RequestMapping("uploadLightGisIcon")
+    public String uploadLightGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
+
+        logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
+        JsonResult jsonResult = null;
+        if (eleboxGisIcon!=null) {
+            jsonResult.setMsg("文件不存在！");
+            return toJson(jsonResult);
+        }
+        String path=null;// 文件路径
+        String type=null;// 文件类型
+        String fileName=eleboxGisIcon.getOriginalFilename();// 文件原名称
+        // 判断文件类型
+        type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
+        if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
+            // 项目在容器中实际发布运行的根路径
+            String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
+            // 自定义的文件名称
+            String trueFileName="light";
+            // 设置存放图片文件的路径
+            path=realPath+trueFileName;
+            System.out.println("存放图片文件的路径:"+path);
+            try{
+                // 转存文件到指定的路径
+                eleboxGisIcon.transferTo(new File(path));
+                System.out.println("文件成功上传到指定目录下");
+            }catch (IOException o){
+                o.printStackTrace();
+            }
+        }else {
+            logger.info("不是我们想要的文件类型,请按要求重新上传");
+        }
+        return toJson(jsonResult);
+
     }
 }
