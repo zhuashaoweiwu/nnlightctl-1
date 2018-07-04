@@ -700,9 +700,10 @@ public class RoadLightingController extends BaseController {
     public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
 
         logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
-        JsonResult jsonResult = null;
-        if (eleboxGisIcon!=null) {
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        if (eleboxGisIcon == null) {
             jsonResult.setMsg("文件不存在！");
+            jsonResult = JsonResult.getFAILURE();
             return toJson(jsonResult);
         }
         String path=null;// 文件路径
@@ -714,11 +715,20 @@ public class RoadLightingController extends BaseController {
             // 项目在容器中实际发布运行的根路径
             String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="elebox";
+            String trueFileName="/elebox.png";
             // 设置存放图片文件的路径
             path=realPath+trueFileName;
             System.out.println("存放图片文件的路径:"+path);
             try{
+                File tempFile = new File( path);
+                // 判断父级目录是否存在，不存在则创建
+                if (!tempFile.getParentFile().exists()) {
+                    tempFile.getParentFile().mkdir();
+                }
+                // 判断文件是否存在，否则创建文件（夹）
+                if (!tempFile.exists()) {
+                    tempFile.mkdir();
+                }
                 // 转存文件到指定的路径
                 eleboxGisIcon.transferTo(new File(path));
                 System.out.println("文件成功上传到指定目录下");
@@ -736,30 +746,40 @@ public class RoadLightingController extends BaseController {
      * 三十二、上传控制柜地图图标
      * */
     @RequestMapping("uploadLightGisIcon")
-    public String uploadLightGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
+    public String uploadLightGisIcon(MultipartFile lightGisIcon ,HttpServletRequest request,HttpServletResponse response){
 
-        logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
-        JsonResult jsonResult = null;
-        if (eleboxGisIcon!=null) {
+        logger.info("[POST] /api/roadlighting/uploadLightGisIcon");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        if (lightGisIcon == null) {
             jsonResult.setMsg("文件不存在！");
+            jsonResult = JsonResult.getFAILURE();
             return toJson(jsonResult);
         }
         String path=null;// 文件路径
         String type=null;// 文件类型
-        String fileName=eleboxGisIcon.getOriginalFilename();// 文件原名称
+        String fileName=lightGisIcon  .getOriginalFilename();// 文件原名称
         // 判断文件类型
         type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
         if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
             // 项目在容器中实际发布运行的根路径
             String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="light";
+            String trueFileName="/light.png";
             // 设置存放图片文件的路径
             path=realPath+trueFileName;
             System.out.println("存放图片文件的路径:"+path);
             try{
+                File tempFile = new File( path);
+                // 判断父级目录是否存在，不存在则创建
+                if (!tempFile.getParentFile().exists()) {
+                    tempFile.getParentFile().mkdir();
+                }
+                // 判断文件是否存在，否则创建文件（夹）
+                if (!tempFile.exists()) {
+                    tempFile.mkdir();
+                }
                 // 转存文件到指定的路径
-                eleboxGisIcon.transferTo(new File(path));
+                lightGisIcon.transferTo(new File(path));
                 System.out.println("文件成功上传到指定目录下");
             }catch (IOException o){
                 o.printStackTrace();

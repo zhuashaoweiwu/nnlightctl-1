@@ -7,15 +7,15 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.RepairRecordMapper;
 import com.nnlightctl.jdbcdao.PropertyManagerDao;
 import com.nnlightctl.po.*;
-import com.nnlightctl.request.ListDeviceDamageCountByMonthRequest;
-import com.nnlightctl.request.ListDeviceRepairStatisticRequest;
-import com.nnlightctl.request.ListRepairRecordRequest;
-import com.nnlightctl.request.RepairRecordRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.server.ProjectServer;
 import com.nnlightctl.server.PropertyManagerServer;
 import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
 import com.nnlightctl.vo.ListDeviceRepairStatisticView;
 import com.sun.deploy.net.proxy.ProxyType;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -76,4 +76,46 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
     public int commitRepairRecord(List<Long> repairRecordIds){
         return propertyManagerDao.commitRepairRecord(repairRecordIds);
     }
+
+    @Override
+    public HSSFWorkbook exportDeviceOperation(ExportDeviceOperationRequest request) {
+
+        ListDeviceRepairStatisticRequest listDeviceRepairStatisticRequest = new ListDeviceRepairStatisticRequest();
+        listDeviceRepairStatisticRequest.setEndDate(request.getEndDate());
+        listDeviceRepairStatisticRequest.setStartDate(request.getStartDate());
+        List<ListDeviceRepairStatisticView> listDeviceRepairStatisticViewList = propertyManagerDao.listDeviceRepaireStatistic(listDeviceRepairStatisticRequest);
+
+        ListDeviceDamageCountByMonthRequest listDeviceDamageCountByMonthRequest = new ListDeviceDamageCountByMonthRequest();
+        listDeviceDamageCountByMonthRequest.setEndDate(request.getEndDate());
+        listDeviceDamageCountByMonthRequest.setStartDate(request.getStartDate());
+        List<ListDeviceDamageCountByMonthView> listDeviceDamageCountByMonthViews = propertyManagerDao.listDeviceDamageCountByMonth(listDeviceDamageCountByMonthRequest);
+//创建HSSFWorkbook对象(excel的文档对象)
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //建立新的sheet对象（excel的表单）
+        HSSFSheet sheet = wb.createSheet("设备运维概况");
+
+        //创建表头
+        //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
+        HSSFRow row1 = sheet.createRow(0);
+        //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
+        row1.createCell(0).setCellValue("设备名称");
+        row1.createCell(1).setCellValue("维修统计");
+        row1.createCell(2).setCellValue("月份");
+        row1.createCell(3).setCellValue("维修次数");
+        int rowIndex = 1;
+        for (ListDeviceRepairStatisticView listDeviceRepairStatisticView : listDeviceRepairStatisticViewList) {
+            HSSFRow row = sheet.createRow(rowIndex++);
+            //创建单元格并设置单元格内容
+            row.createCell(0).setCellValue(listDeviceRepairStatisticView.getMyCatalogName());
+            row.createCell(1).setCellValue(listDeviceRepairStatisticView.getListDeviceRepairStatisticCount());
+        }
+        for (ListDeviceDamageCountByMonthView listDeviceDamageCountByMonth : listDeviceDamageCountByMonthViews) {
+            HSSFRow row = sheet.createRow(rowIndex++);
+            //创建单元格并设置单元格内容
+            row.createCell(2).setCellValue(listDeviceDamageCountByMonth.getMonth());
+            row.createCell(3).setCellValue(listDeviceDamageCountByMonth.getMonthCount());
+        }
+        return wb;
+    }
+
 }
