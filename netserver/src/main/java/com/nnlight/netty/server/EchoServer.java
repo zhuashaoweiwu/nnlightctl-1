@@ -126,6 +126,18 @@ public class EchoServer {
     }
 
     /**
+     * 发送全部终端重置任务开关策略
+     * @param c7Command
+     */
+    public void allConfigTerminalSwitchPolicy(CommandData c7Command) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command));
+        }
+    }
+
+    /**
      * 发送全部终端读取终端信息
      */
     public void allSendCommandReadTerminalInfo() {

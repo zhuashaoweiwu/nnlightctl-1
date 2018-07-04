@@ -37,6 +37,11 @@ public class E80CommandAnalyze implements CommandAnalyzer {
                 stringBuilder.append(command.toHexString());
                 break;
 
+            case (byte)0xe7:
+                stringBuilder.append("设置任务开关策略指令E7返回结果：");
+                stringBuilder.append(command.toHexString());
+                break;
+
         }
 
         return stringBuilder.toString();

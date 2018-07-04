@@ -2,8 +2,12 @@ package com.nnlightctl.net;
 
 import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
+import com.nnlightctl.vo.SceneView;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class CommandData implements Serializable {
     public byte getStart0() {
@@ -142,6 +146,19 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getConfigTerminalSwitchPolicy(CommandData c7Command) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xe7);
+
+        commandData.setDataLength(c7Command.getDataLength());
+        commandData.setData(c7Command.getData());
+
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     public static CommandData getCommandReadTerminalInfo() {
         CommandData commandData = new CommandData();
 
@@ -275,6 +292,55 @@ public class CommandData implements Serializable {
         commandData.setDataLength((byte)1);
         byte[] data = new byte[1];
         data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
+     * 命令层C7设置终端开关灯策略
+     * @param switchTaskList
+     * @return
+     */
+    public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc7);
+
+        int dataLength = 14 * switchTaskList.size();
+        if (dataLength > 255) {
+            throw new RuntimeException("设置开关任务策略大于15条错误");
+        }
+
+        commandData.setDataLength((byte)dataLength);
+
+        byte[] data = new byte[dataLength];
+        int k = 0;
+
+        for (SceneView.SwitchTask switchTask : switchTaskList) {
+            //任务开始
+            data[k++] = switchTask.getPeriod();
+            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd-HH-mm");
+            String[] startDateStrArray = dateFormat.format(switchTask.getStartTime()).split("-");
+            data[k++] = Byte.parseByte(startDateStrArray[0]);
+            data[k++] = Byte.parseByte(startDateStrArray[1]);
+            data[k++] = Byte.parseByte(startDateStrArray[2]);
+            data[k++] = Byte.parseByte(startDateStrArray[3]);
+            data[k++] = Byte.parseByte(startDateStrArray[4]);
+            data[k++] = switchTask.getLightPercent();
+
+            //任务结束
+            data[k++] = switchTask.getPeriod();
+            String[] endDateStrArray = dateFormat.format(switchTask.getEndTime()).split("-");
+            data[k++] = Byte.parseByte(endDateStrArray[0]);
+            data[k++] = Byte.parseByte(endDateStrArray[1]);
+            data[k++] = Byte.parseByte(endDateStrArray[2]);
+            data[k++] = Byte.parseByte(endDateStrArray[3]);
+            data[k++] = Byte.parseByte(endDateStrArray[4]);
+            data[k++] = (byte)0;
+        }
+
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 

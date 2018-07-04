@@ -1,15 +1,20 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.server.CommandServer;
+import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @Service
@@ -62,5 +67,16 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void commandReadTerminalInfo() {
         command.commandReadTerminalInfo();
+    }
+
+    @Override
+    public void configTerminalSwitchPolicy(List<SwitchTask> switchTasks) {
+        List<SceneView.SwitchTask> switchViewList = new ArrayList<>(8);
+        for (SwitchTask switchTask : switchTasks) {
+            SceneView.SwitchTask switchTaskView = new SceneView.SwitchTask();
+            ReflectCopyUtil.beanSameFieldCopy(switchTask, switchTaskView);
+            switchViewList.add(switchTaskView);
+        }
+        command.configTerminalSwitchPolicy(switchViewList);
     }
 }

@@ -1,5 +1,9 @@
 package com.nnlightctl.server;
 
+import com.nnlightctl.po.SwitchTask;
+
+import java.util.List;
+
 public interface CommandServer {
     void sendCommand(String msg);
     void sendLightAdjustCommand(int percent);
@@ -8,4 +12,5 @@ public interface CommandServer {
     void configTerminalSendMsgPeriod(int period);
     void commandTerminalEleboxOn(Boolean terminalEleboxOn);
     void commandReadTerminalInfo();
+    void configTerminalSwitchPolicy(List<SwitchTask> switchTasks);
 }

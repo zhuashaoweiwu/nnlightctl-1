@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/html/css/bootstrap/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="/html/css/bootstrap/bootstrap-datetimepicker.min.css">
     <title>设备调试</title>
 </head>
 <body>
@@ -103,6 +104,105 @@
     <hr/>
     <br/>
 
+    <!-- 开关任务策略 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务1：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch1TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input1" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input1" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input2" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input2" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent1" class="form-control" type="text" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务2：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch2TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input3" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input3">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input4" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input4">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input4" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent2" class="form-control" type="text" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <button id="sendTerminalSwitchBtn" type="button" class="btn btn-primary">发送开关任务策略命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
     <!-- 读取终端信息 -->
     <div class="row">
         <div class="col-sm-1">
@@ -147,6 +247,8 @@
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/html/js/bootstrap/bootstrap-switch.min.js"></script>
+<script src="/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
+<script src="/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
     $("#sendCommand").click(function () {
         $.post("/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
@@ -216,12 +318,35 @@
         });
     });
 
+    //任务开关策略
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        minuteStep : 5
+    });
+    $("#sendTerminalSwitchBtn").click(function () {
+        var sendData = {"switch1Type" : $("#switch1TypeSelect").val(), "switch1StartDate" : $("#dtp_input1").val(),
+            "switch1EndDate" : $("#dtp_input2").val(), "switch1Percent" : $("#percent1").val(),
+            "switch2Type" : $("#switch2TypeSelect").val(), "switch2StartDate" : $("#dtp_input3").val(),
+            "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val()};
+        $.post("/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
+
+        });
+    });
+
     //读取终端信息
     $("#readTerminalInfo").click(function () {
         $.post("/api/command/commandReadTerminalInfo", {}, function (data) {
             // $("#terminalInfoTextArea").val(JSON.stringify(data));
         });
     });
+
 </script>
 </body>
 </html>

@@ -2,8 +2,10 @@ package com.nnlightctl.command.client;
 
 import com.nnlightctl.command.Command;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.vo.SceneView;
 import io.netty.channel.ChannelHandlerContext;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class Context {
@@ -65,6 +67,10 @@ public class Context {
 
     public void commandTerminalEleboxOn(Boolean eleboxOn) {
         channelHandlerContext.writeAndFlush(CommandData.getC6CommandData(eleboxOn));
+    }
+
+    public void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks) {
+        channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks));
     }
 
     public void commandReadTerminalInfo() {

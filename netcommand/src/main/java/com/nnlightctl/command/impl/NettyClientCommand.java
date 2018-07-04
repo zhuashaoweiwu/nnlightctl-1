@@ -6,9 +6,11 @@ import com.nnlightctl.command.client.Context;
 import com.nnlightctl.command.client.EchoClient;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -66,6 +68,11 @@ public class NettyClientCommand implements Command {
     @Override
     public void commandTerminalEleboxOn(Boolean eleboxOn) {
         context.commandTerminalEleboxOn(eleboxOn);
+    }
+
+    @Override
+    public void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks) {
+        context.configTerminalSwitchPolicy(switchTasks);
     }
 
     @Override
