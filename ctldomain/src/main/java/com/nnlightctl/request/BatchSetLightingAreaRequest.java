@@ -4,7 +4,6 @@ import java.util.List;
 
 public class BatchSetLightingAreaRequest {
 
-
     private Long beAreaId;// -- 区域id
 
     private List<Long> lightIds;//  -- 批量设置的灯具的id的集合
