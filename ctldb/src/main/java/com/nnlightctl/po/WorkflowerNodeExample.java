@@ -355,6 +355,76 @@ public class WorkflowerNodeExample {
             return (Criteria) this;
         }
 
+        public Criteria andWorkflowerNodeCodeIsNull() {
+            addCriterion("workflower_node_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeIsNotNull() {
+            addCriterion("workflower_node_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeEqualTo(String value) {
+            addCriterion("workflower_node_code =", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeNotEqualTo(String value) {
+            addCriterion("workflower_node_code <>", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeGreaterThan(String value) {
+            addCriterion("workflower_node_code >", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("workflower_node_code >=", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeLessThan(String value) {
+            addCriterion("workflower_node_code <", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeLessThanOrEqualTo(String value) {
+            addCriterion("workflower_node_code <=", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeLike(String value) {
+            addCriterion("workflower_node_code like", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeNotLike(String value) {
+            addCriterion("workflower_node_code not like", value, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeIn(List<String> values) {
+            addCriterion("workflower_node_code in", values, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeNotIn(List<String> values) {
+            addCriterion("workflower_node_code not in", values, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeBetween(String value1, String value2) {
+            addCriterion("workflower_node_code between", value1, value2, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkflowerNodeCodeNotBetween(String value1, String value2) {
+            addCriterion("workflower_node_code not between", value1, value2, "workflowerNodeCode");
+            return (Criteria) this;
+        }
+
         public Criteria andCtypeIsNull() {
             addCriterion("ctype is null");
             return (Criteria) this;

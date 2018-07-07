@@ -415,6 +415,126 @@ public class WorkOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andWorkCreatedIsNull() {
+            addCriterion("work_created is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedIsNotNull() {
+            addCriterion("work_created is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedEqualTo(Date value) {
+            addCriterion("work_created =", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedNotEqualTo(Date value) {
+            addCriterion("work_created <>", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedGreaterThan(Date value) {
+            addCriterion("work_created >", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("work_created >=", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedLessThan(Date value) {
+            addCriterion("work_created <", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedLessThanOrEqualTo(Date value) {
+            addCriterion("work_created <=", value, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedIn(List<Date> values) {
+            addCriterion("work_created in", values, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedNotIn(List<Date> values) {
+            addCriterion("work_created not in", values, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedBetween(Date value1, Date value2) {
+            addCriterion("work_created between", value1, value2, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkCreatedNotBetween(Date value1, Date value2) {
+            addCriterion("work_created not between", value1, value2, "workCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneIsNull() {
+            addCriterion("work_done is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneIsNotNull() {
+            addCriterion("work_done is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneEqualTo(Date value) {
+            addCriterion("work_done =", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneNotEqualTo(Date value) {
+            addCriterion("work_done <>", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneGreaterThan(Date value) {
+            addCriterion("work_done >", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneGreaterThanOrEqualTo(Date value) {
+            addCriterion("work_done >=", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneLessThan(Date value) {
+            addCriterion("work_done <", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneLessThanOrEqualTo(Date value) {
+            addCriterion("work_done <=", value, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneIn(List<Date> values) {
+            addCriterion("work_done in", values, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneNotIn(List<Date> values) {
+            addCriterion("work_done not in", values, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneBetween(Date value1, Date value2) {
+            addCriterion("work_done between", value1, value2, "workDone");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkDoneNotBetween(Date value1, Date value2) {
+            addCriterion("work_done not between", value1, value2, "workDone");
+            return (Criteria) this;
+        }
+
         public Criteria andNnlightctlWorkflowerIdIsNull() {
             addCriterion("nnlightctl_workflower_id is null");
             return (Criteria) this;
@@ -1042,6 +1162,66 @@ public class WorkOrderExample {
 
         public Criteria andWorkSourceNotBetween(Byte value1, Byte value2) {
             addCriterion("work_source not between", value1, value2, "workSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdIsNull() {
+            addCriterion("nnlightctl_project_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdIsNotNull() {
+            addCriterion("nnlightctl_project_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdEqualTo(Long value) {
+            addCriterion("nnlightctl_project_id =", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdNotEqualTo(Long value) {
+            addCriterion("nnlightctl_project_id <>", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdGreaterThan(Long value) {
+            addCriterion("nnlightctl_project_id >", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_project_id >=", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdLessThan(Long value) {
+            addCriterion("nnlightctl_project_id <", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_project_id <=", value, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdIn(List<Long> values) {
+            addCriterion("nnlightctl_project_id in", values, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdNotIn(List<Long> values) {
+            addCriterion("nnlightctl_project_id not in", values, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_project_id between", value1, value2, "nnlightctlProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectIdNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_project_id not between", value1, value2, "nnlightctlProjectId");
             return (Criteria) this;
         }
     }

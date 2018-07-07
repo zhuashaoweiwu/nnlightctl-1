@@ -18,6 +18,8 @@ public class RepertoryOutApply implements Serializable {
 
     private Byte applyState;
 
+    private String refuseReason;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -76,6 +78,14 @@ public class RepertoryOutApply implements Serializable {
         this.applyState = applyState;
     }
 
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason == null ? null : refuseReason.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -94,7 +104,8 @@ public class RepertoryOutApply implements Serializable {
             && (this.getSerialnumber() == null ? other.getSerialnumber() == null : this.getSerialnumber().equals(other.getSerialnumber()))
             && (this.getNnlightctlPropertyId() == null ? other.getNnlightctlPropertyId() == null : this.getNnlightctlPropertyId().equals(other.getNnlightctlPropertyId()))
             && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()))
-            && (this.getApplyState() == null ? other.getApplyState() == null : this.getApplyState().equals(other.getApplyState()));
+            && (this.getApplyState() == null ? other.getApplyState() == null : this.getApplyState().equals(other.getApplyState()))
+            && (this.getRefuseReason() == null ? other.getRefuseReason() == null : this.getRefuseReason().equals(other.getRefuseReason()));
     }
 
     @Override
@@ -108,6 +119,7 @@ public class RepertoryOutApply implements Serializable {
         result = prime * result + ((getNnlightctlPropertyId() == null) ? 0 : getNnlightctlPropertyId().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
         result = prime * result + ((getApplyState() == null) ? 0 : getApplyState().hashCode());
+        result = prime * result + ((getRefuseReason() == null) ? 0 : getRefuseReason().hashCode());
         return result;
     }
 
@@ -124,6 +136,7 @@ public class RepertoryOutApply implements Serializable {
         sb.append(", nnlightctlPropertyId=").append(nnlightctlPropertyId);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
         sb.append(", applyState=").append(applyState);
+        sb.append(", refuseReason=").append(refuseReason);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

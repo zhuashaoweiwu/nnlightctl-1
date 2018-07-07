@@ -19,6 +19,8 @@ public class EleboxVolEleRecord implements Serializable {
 
     private BigDecimal electricity;
 
+    private BigDecimal energy;
+
     private BigDecimal eleboxPower;
 
     private static final long serialVersionUID = 1L;
@@ -79,6 +81,14 @@ public class EleboxVolEleRecord implements Serializable {
         this.electricity = electricity;
     }
 
+    public BigDecimal getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(BigDecimal energy) {
+        this.energy = energy;
+    }
+
     public BigDecimal getEleboxPower() {
         return eleboxPower;
     }
@@ -106,6 +116,7 @@ public class EleboxVolEleRecord implements Serializable {
             && (this.getRealtimeDate() == null ? other.getRealtimeDate() == null : this.getRealtimeDate().equals(other.getRealtimeDate()))
             && (this.getVoltage() == null ? other.getVoltage() == null : this.getVoltage().equals(other.getVoltage()))
             && (this.getElectricity() == null ? other.getElectricity() == null : this.getElectricity().equals(other.getElectricity()))
+            && (this.getEnergy() == null ? other.getEnergy() == null : this.getEnergy().equals(other.getEnergy()))
             && (this.getEleboxPower() == null ? other.getEleboxPower() == null : this.getEleboxPower().equals(other.getEleboxPower()));
     }
 
@@ -120,6 +131,7 @@ public class EleboxVolEleRecord implements Serializable {
         result = prime * result + ((getRealtimeDate() == null) ? 0 : getRealtimeDate().hashCode());
         result = prime * result + ((getVoltage() == null) ? 0 : getVoltage().hashCode());
         result = prime * result + ((getElectricity() == null) ? 0 : getElectricity().hashCode());
+        result = prime * result + ((getEnergy() == null) ? 0 : getEnergy().hashCode());
         result = prime * result + ((getEleboxPower() == null) ? 0 : getEleboxPower().hashCode());
         return result;
     }
@@ -137,6 +149,7 @@ public class EleboxVolEleRecord implements Serializable {
         sb.append(", realtimeDate=").append(realtimeDate);
         sb.append(", voltage=").append(voltage);
         sb.append(", electricity=").append(electricity);
+        sb.append(", energy=").append(energy);
         sb.append(", eleboxPower=").append(eleboxPower);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

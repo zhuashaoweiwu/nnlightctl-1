@@ -7,6 +7,8 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
     <result column="classify" property="classify" jdbcType="TINYINT" />
+    <result column="work_created" property="workCreated" jdbcType="TIMESTAMP" />
+    <result column="work_done" property="workDone" jdbcType="TIMESTAMP" />
     <result column="nnlightctl_workflower_id" property="nnlightctlWorkflowerId" jdbcType="BIGINT" />
     <result column="state" property="state" jdbcType="TINYINT" />
     <result column="priority" property="priority" jdbcType="TINYINT" />
@@ -17,6 +19,7 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="attach_file_path" property="attachFilePath" jdbcType="VARCHAR" />
     <result column="work_source" property="workSource" jdbcType="TINYINT" />
+    <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,9 +80,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, serial_number, classify, nnlightctl_workflower_id, 
+    id, gmt_created, gmt_updated, serial_number, classify, work_created, work_done, nnlightctl_workflower_id, 
     state, priority, nnlightctl_region_id, address, nnlightctl_workflower_move_record_id, 
-    nnlightctl_masker_id, content, attach_file_path, work_source
+    nnlightctl_masker_id, content, attach_file_path, work_source, nnlightctl_project_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.WorkOrderExample" >
     select
@@ -117,17 +120,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_work_order (gmt_created, gmt_updated, serial_number, 
-      classify, nnlightctl_workflower_id, state, 
-      priority, nnlightctl_region_id, address, 
-      nnlightctl_workflower_move_record_id, nnlightctl_masker_id, 
-      content, attach_file_path, work_source
-      )
+      classify, work_created, work_done, 
+      nnlightctl_workflower_id, state, priority, 
+      nnlightctl_region_id, address, nnlightctl_workflower_move_record_id, 
+      nnlightctl_masker_id, content, attach_file_path, 
+      work_source, nnlightctl_project_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialNumber,jdbcType=VARCHAR}, 
-      #{classify,jdbcType=TINYINT}, #{nnlightctlWorkflowerId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT}, 
-      #{priority,jdbcType=TINYINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
-      #{nnlightctlWorkflowerMoveRecordId,jdbcType=BIGINT}, #{nnlightctlMaskerId,jdbcType=BIGINT}, 
-      #{content,jdbcType=VARCHAR}, #{attachFilePath,jdbcType=VARCHAR}, #{workSource,jdbcType=TINYINT}
-      )
+      #{classify,jdbcType=TINYINT}, #{workCreated,jdbcType=TIMESTAMP}, #{workDone,jdbcType=TIMESTAMP}, 
+      #{nnlightctlWorkflowerId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, 
+      #{nnlightctlRegionId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{nnlightctlWorkflowerMoveRecordId,jdbcType=BIGINT}, 
+      #{nnlightctlMaskerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{attachFilePath,jdbcType=VARCHAR}, 
+      #{workSource,jdbcType=TINYINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.WorkOrder" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -146,6 +149,12 @@
       </if>
       <if test="classify != null" >
         classify,
+      </if>
+      <if test="workCreated != null" >
+        work_created,
+      </if>
+      <if test="workDone != null" >
+        work_done,
       </if>
       <if test="nnlightctlWorkflowerId != null" >
         nnlightctl_workflower_id,
@@ -177,6 +186,9 @@
       <if test="workSource != null" >
         work_source,
       </if>
+      <if test="nnlightctlProjectId != null" >
+        nnlightctl_project_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -190,6 +202,12 @@
       </if>
       <if test="classify != null" >
         #{classify,jdbcType=TINYINT},
+      </if>
+      <if test="workCreated != null" >
+        #{workCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workDone != null" >
+        #{workDone,jdbcType=TIMESTAMP},
       </if>
       <if test="nnlightctlWorkflowerId != null" >
         #{nnlightctlWorkflowerId,jdbcType=BIGINT},
@@ -221,6 +239,9 @@
       <if test="workSource != null" >
         #{workSource,jdbcType=TINYINT},
       </if>
+      <if test="nnlightctlProjectId != null" >
+        #{nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.nnlightctl.po.WorkOrderExample" resultType="java.lang.Integer" >
@@ -246,6 +267,12 @@
       </if>
       <if test="record.classify != null" >
         classify = #{record.classify,jdbcType=TINYINT},
+      </if>
+      <if test="record.workCreated != null" >
+        work_created = #{record.workCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.workDone != null" >
+        work_done = #{record.workDone,jdbcType=TIMESTAMP},
       </if>
       <if test="record.nnlightctlWorkflowerId != null" >
         nnlightctl_workflower_id = #{record.nnlightctlWorkflowerId,jdbcType=BIGINT},
@@ -277,6 +304,9 @@
       <if test="record.workSource != null" >
         work_source = #{record.workSource,jdbcType=TINYINT},
       </if>
+      <if test="record.nnlightctlProjectId != null" >
+        nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -289,6 +319,8 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       serial_number = #{record.serialNumber,jdbcType=VARCHAR},
       classify = #{record.classify,jdbcType=TINYINT},
+      work_created = #{record.workCreated,jdbcType=TIMESTAMP},
+      work_done = #{record.workDone,jdbcType=TIMESTAMP},
       nnlightctl_workflower_id = #{record.nnlightctlWorkflowerId,jdbcType=BIGINT},
       state = #{record.state,jdbcType=TINYINT},
       priority = #{record.priority,jdbcType=TINYINT},
@@ -298,7 +330,8 @@
       nnlightctl_masker_id = #{record.nnlightctlMaskerId,jdbcType=BIGINT},
       content = #{record.content,jdbcType=VARCHAR},
       attach_file_path = #{record.attachFilePath,jdbcType=VARCHAR},
-      work_source = #{record.workSource,jdbcType=TINYINT}
+      work_source = #{record.workSource,jdbcType=TINYINT},
+      nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -317,6 +350,12 @@
       </if>
       <if test="classify != null" >
         classify = #{classify,jdbcType=TINYINT},
+      </if>
+      <if test="workCreated != null" >
+        work_created = #{workCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workDone != null" >
+        work_done = #{workDone,jdbcType=TIMESTAMP},
       </if>
       <if test="nnlightctlWorkflowerId != null" >
         nnlightctl_workflower_id = #{nnlightctlWorkflowerId,jdbcType=BIGINT},
@@ -348,6 +387,9 @@
       <if test="workSource != null" >
         work_source = #{workSource,jdbcType=TINYINT},
       </if>
+      <if test="nnlightctlProjectId != null" >
+        nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -357,6 +399,8 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       serial_number = #{serialNumber,jdbcType=VARCHAR},
       classify = #{classify,jdbcType=TINYINT},
+      work_created = #{workCreated,jdbcType=TIMESTAMP},
+      work_done = #{workDone,jdbcType=TIMESTAMP},
       nnlightctl_workflower_id = #{nnlightctlWorkflowerId,jdbcType=BIGINT},
       state = #{state,jdbcType=TINYINT},
       priority = #{priority,jdbcType=TINYINT},
@@ -366,7 +410,8 @@
       nnlightctl_masker_id = #{nnlightctlMaskerId,jdbcType=BIGINT},
       content = #{content,jdbcType=VARCHAR},
       attach_file_path = #{attachFilePath,jdbcType=VARCHAR},
-      work_source = #{workSource,jdbcType=TINYINT}
+      work_source = #{workSource,jdbcType=TINYINT},
+      nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

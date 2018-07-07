@@ -6,6 +6,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="workflower_node_name" property="workflowerNodeName" jdbcType="VARCHAR" />
+    <result column="workflower_node_code" property="workflowerNodeCode" jdbcType="VARCHAR" />
     <result column="ctype" property="ctype" jdbcType="TINYINT" />
     <result column="nnlightctl_user_id" property="nnlightctlUserId" jdbcType="BIGINT" />
   </resultMap>
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, workflower_node_name, ctype, nnlightctl_user_id
+    id, gmt_created, gmt_updated, workflower_node_name, workflower_node_code, ctype, 
+    nnlightctl_user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.WorkflowerNodeExample" >
     select
@@ -106,9 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_workflower_node (gmt_created, gmt_updated, workflower_node_name, 
-      ctype, nnlightctl_user_id)
+      workflower_node_code, ctype, nnlightctl_user_id
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{workflowerNodeName,jdbcType=VARCHAR}, 
-      #{ctype,jdbcType=TINYINT}, #{nnlightctlUserId,jdbcType=BIGINT})
+      #{workflowerNodeCode,jdbcType=VARCHAR}, #{ctype,jdbcType=TINYINT}, #{nnlightctlUserId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.WorkflowerNode" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -124,6 +128,9 @@
       </if>
       <if test="workflowerNodeName != null" >
         workflower_node_name,
+      </if>
+      <if test="workflowerNodeCode != null" >
+        workflower_node_code,
       </if>
       <if test="ctype != null" >
         ctype,
@@ -141,6 +148,9 @@
       </if>
       <if test="workflowerNodeName != null" >
         #{workflowerNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="workflowerNodeCode != null" >
+        #{workflowerNodeCode,jdbcType=VARCHAR},
       </if>
       <if test="ctype != null" >
         #{ctype,jdbcType=TINYINT},
@@ -171,6 +181,9 @@
       <if test="record.workflowerNodeName != null" >
         workflower_node_name = #{record.workflowerNodeName,jdbcType=VARCHAR},
       </if>
+      <if test="record.workflowerNodeCode != null" >
+        workflower_node_code = #{record.workflowerNodeCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.ctype != null" >
         ctype = #{record.ctype,jdbcType=TINYINT},
       </if>
@@ -188,6 +201,7 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       workflower_node_name = #{record.workflowerNodeName,jdbcType=VARCHAR},
+      workflower_node_code = #{record.workflowerNodeCode,jdbcType=VARCHAR},
       ctype = #{record.ctype,jdbcType=TINYINT},
       nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -206,6 +220,9 @@
       <if test="workflowerNodeName != null" >
         workflower_node_name = #{workflowerNodeName,jdbcType=VARCHAR},
       </if>
+      <if test="workflowerNodeCode != null" >
+        workflower_node_code = #{workflowerNodeCode,jdbcType=VARCHAR},
+      </if>
       <if test="ctype != null" >
         ctype = #{ctype,jdbcType=TINYINT},
       </if>
@@ -220,6 +237,7 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       workflower_node_name = #{workflowerNodeName,jdbcType=VARCHAR},
+      workflower_node_code = #{workflowerNodeCode,jdbcType=VARCHAR},
       ctype = #{ctype,jdbcType=TINYINT},
       nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

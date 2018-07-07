@@ -19,6 +19,8 @@ public class LightingVolEleRecord implements Serializable {
 
     private BigDecimal electricty;
 
+    private BigDecimal energy;
+
     private BigDecimal dampness;
 
     private BigDecimal temperature;
@@ -89,6 +91,14 @@ public class LightingVolEleRecord implements Serializable {
         this.electricty = electricty;
     }
 
+    public BigDecimal getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(BigDecimal energy) {
+        this.energy = energy;
+    }
+
     public BigDecimal getDampness() {
         return dampness;
     }
@@ -156,6 +166,7 @@ public class LightingVolEleRecord implements Serializable {
             && (this.getRecordDatetime() == null ? other.getRecordDatetime() == null : this.getRecordDatetime().equals(other.getRecordDatetime()))
             && (this.getVoltage() == null ? other.getVoltage() == null : this.getVoltage().equals(other.getVoltage()))
             && (this.getElectricty() == null ? other.getElectricty() == null : this.getElectricty().equals(other.getElectricty()))
+            && (this.getEnergy() == null ? other.getEnergy() == null : this.getEnergy().equals(other.getEnergy()))
             && (this.getDampness() == null ? other.getDampness() == null : this.getDampness().equals(other.getDampness()))
             && (this.getTemperature() == null ? other.getTemperature() == null : this.getTemperature().equals(other.getTemperature()))
             && (this.getBeam() == null ? other.getBeam() == null : this.getBeam().equals(other.getBeam()))
@@ -175,6 +186,7 @@ public class LightingVolEleRecord implements Serializable {
         result = prime * result + ((getRecordDatetime() == null) ? 0 : getRecordDatetime().hashCode());
         result = prime * result + ((getVoltage() == null) ? 0 : getVoltage().hashCode());
         result = prime * result + ((getElectricty() == null) ? 0 : getElectricty().hashCode());
+        result = prime * result + ((getEnergy() == null) ? 0 : getEnergy().hashCode());
         result = prime * result + ((getDampness() == null) ? 0 : getDampness().hashCode());
         result = prime * result + ((getTemperature() == null) ? 0 : getTemperature().hashCode());
         result = prime * result + ((getBeam() == null) ? 0 : getBeam().hashCode());
@@ -197,6 +209,7 @@ public class LightingVolEleRecord implements Serializable {
         sb.append(", recordDatetime=").append(recordDatetime);
         sb.append(", voltage=").append(voltage);
         sb.append(", electricty=").append(electricty);
+        sb.append(", energy=").append(energy);
         sb.append(", dampness=").append(dampness);
         sb.append(", temperature=").append(temperature);
         sb.append(", beam=").append(beam);

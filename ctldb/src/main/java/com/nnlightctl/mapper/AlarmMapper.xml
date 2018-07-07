@@ -14,6 +14,7 @@
     <result column="remove_alarm_time" property="removeAlarmTime" jdbcType="TIMESTAMP" />
     <result column="msg" property="msg" jdbcType="VARCHAR" />
     <result column="alarm_count" property="alarmCount" jdbcType="BIGINT" />
+    <result column="is_use" property="isUse" jdbcType="TINYINT" />
     <result column="nnlightctl_alarm_config_id" property="nnlightctlAlarmConfigId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, code_number, alarm_source, alarm_level, state, ctype, 
-    alarm_time, remove_alarm_time, msg, alarm_count, nnlightctl_alarm_config_id
+    alarm_time, remove_alarm_time, msg, alarm_count, is_use, nnlightctl_alarm_config_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.AlarmExample" >
     select
@@ -116,13 +117,13 @@
     insert into nnlightctl_alarm (gmt_created, gmt_updated, code_number, 
       alarm_source, alarm_level, state, 
       ctype, alarm_time, remove_alarm_time, 
-      msg, alarm_count, nnlightctl_alarm_config_id
-      )
+      msg, alarm_count, is_use, 
+      nnlightctl_alarm_config_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
       #{alarmSource,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
       #{ctype,jdbcType=TINYINT}, #{alarmTime,jdbcType=TIMESTAMP}, #{removeAlarmTime,jdbcType=TIMESTAMP}, 
-      #{msg,jdbcType=VARCHAR}, #{alarmCount,jdbcType=BIGINT}, #{nnlightctlAlarmConfigId,jdbcType=BIGINT}
-      )
+      #{msg,jdbcType=VARCHAR}, #{alarmCount,jdbcType=BIGINT}, #{isUse,jdbcType=TINYINT}, 
+      #{nnlightctlAlarmConfigId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Alarm" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -163,6 +164,9 @@
       <if test="alarmCount != null" >
         alarm_count,
       </if>
+      <if test="isUse != null" >
+        is_use,
+      </if>
       <if test="nnlightctlAlarmConfigId != null" >
         nnlightctl_alarm_config_id,
       </if>
@@ -200,6 +204,9 @@
       </if>
       <if test="alarmCount != null" >
         #{alarmCount,jdbcType=BIGINT},
+      </if>
+      <if test="isUse != null" >
+        #{isUse,jdbcType=TINYINT},
       </if>
       <if test="nnlightctlAlarmConfigId != null" >
         #{nnlightctlAlarmConfigId,jdbcType=BIGINT},
@@ -251,6 +258,9 @@
       <if test="record.alarmCount != null" >
         alarm_count = #{record.alarmCount,jdbcType=BIGINT},
       </if>
+      <if test="record.isUse != null" >
+        is_use = #{record.isUse,jdbcType=TINYINT},
+      </if>
       <if test="record.nnlightctlAlarmConfigId != null" >
         nnlightctl_alarm_config_id = #{record.nnlightctlAlarmConfigId,jdbcType=BIGINT},
       </if>
@@ -273,6 +283,7 @@
       remove_alarm_time = #{record.removeAlarmTime,jdbcType=TIMESTAMP},
       msg = #{record.msg,jdbcType=VARCHAR},
       alarm_count = #{record.alarmCount,jdbcType=BIGINT},
+      is_use = #{record.isUse,jdbcType=TINYINT},
       nnlightctl_alarm_config_id = #{record.nnlightctlAlarmConfigId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -314,6 +325,9 @@
       <if test="alarmCount != null" >
         alarm_count = #{alarmCount,jdbcType=BIGINT},
       </if>
+      <if test="isUse != null" >
+        is_use = #{isUse,jdbcType=TINYINT},
+      </if>
       <if test="nnlightctlAlarmConfigId != null" >
         nnlightctl_alarm_config_id = #{nnlightctlAlarmConfigId,jdbcType=BIGINT},
       </if>
@@ -333,6 +347,7 @@
       remove_alarm_time = #{removeAlarmTime,jdbcType=TIMESTAMP},
       msg = #{msg,jdbcType=VARCHAR},
       alarm_count = #{alarmCount,jdbcType=BIGINT},
+      is_use = #{isUse,jdbcType=TINYINT},
       nnlightctl_alarm_config_id = #{nnlightctlAlarmConfigId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

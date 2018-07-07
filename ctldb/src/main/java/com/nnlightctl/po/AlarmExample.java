@@ -855,6 +855,66 @@ public class AlarmExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsUseIsNull() {
+            addCriterion("is_use is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseIsNotNull() {
+            addCriterion("is_use is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseEqualTo(Byte value) {
+            addCriterion("is_use =", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseNotEqualTo(Byte value) {
+            addCriterion("is_use <>", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseGreaterThan(Byte value) {
+            addCriterion("is_use >", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseGreaterThanOrEqualTo(Byte value) {
+            addCriterion("is_use >=", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseLessThan(Byte value) {
+            addCriterion("is_use <", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseLessThanOrEqualTo(Byte value) {
+            addCriterion("is_use <=", value, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseIn(List<Byte> values) {
+            addCriterion("is_use in", values, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseNotIn(List<Byte> values) {
+            addCriterion("is_use not in", values, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseBetween(Byte value1, Byte value2) {
+            addCriterion("is_use between", value1, value2, "isUse");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsUseNotBetween(Byte value1, Byte value2) {
+            addCriterion("is_use not between", value1, value2, "isUse");
+            return (Criteria) this;
+        }
+
         public Criteria andNnlightctlAlarmConfigIdIsNull() {
             addCriterion("nnlightctl_alarm_config_id is null");
             return (Criteria) this;

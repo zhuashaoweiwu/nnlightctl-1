@@ -12,6 +12,8 @@ public class WorkflowerNode implements Serializable {
 
     private String workflowerNodeName;
 
+    private String workflowerNodeCode;
+
     private Byte ctype;
 
     private Long nnlightctlUserId;
@@ -50,6 +52,14 @@ public class WorkflowerNode implements Serializable {
         this.workflowerNodeName = workflowerNodeName == null ? null : workflowerNodeName.trim();
     }
 
+    public String getWorkflowerNodeCode() {
+        return workflowerNodeCode;
+    }
+
+    public void setWorkflowerNodeCode(String workflowerNodeCode) {
+        this.workflowerNodeCode = workflowerNodeCode == null ? null : workflowerNodeCode.trim();
+    }
+
     public Byte getCtype() {
         return ctype;
     }
@@ -82,6 +92,7 @@ public class WorkflowerNode implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getWorkflowerNodeName() == null ? other.getWorkflowerNodeName() == null : this.getWorkflowerNodeName().equals(other.getWorkflowerNodeName()))
+            && (this.getWorkflowerNodeCode() == null ? other.getWorkflowerNodeCode() == null : this.getWorkflowerNodeCode().equals(other.getWorkflowerNodeCode()))
             && (this.getCtype() == null ? other.getCtype() == null : this.getCtype().equals(other.getCtype()))
             && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()));
     }
@@ -94,6 +105,7 @@ public class WorkflowerNode implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getWorkflowerNodeName() == null) ? 0 : getWorkflowerNodeName().hashCode());
+        result = prime * result + ((getWorkflowerNodeCode() == null) ? 0 : getWorkflowerNodeCode().hashCode());
         result = prime * result + ((getCtype() == null) ? 0 : getCtype().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
         return result;
@@ -109,6 +121,7 @@ public class WorkflowerNode implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", workflowerNodeName=").append(workflowerNodeName);
+        sb.append(", workflowerNodeCode=").append(workflowerNodeCode);
         sb.append(", ctype=").append(ctype);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
         sb.append(", serialVersionUID=").append(serialVersionUID);

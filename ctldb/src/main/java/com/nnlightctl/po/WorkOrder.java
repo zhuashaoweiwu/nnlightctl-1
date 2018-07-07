@@ -14,6 +14,10 @@ public class WorkOrder implements Serializable {
 
     private Byte classify;
 
+    private Date workCreated;
+
+    private Date workDone;
+
     private Long nnlightctlWorkflowerId;
 
     private Byte state;
@@ -33,6 +37,8 @@ public class WorkOrder implements Serializable {
     private String attachFilePath;
 
     private Byte workSource;
+
+    private Long nnlightctlProjectId;
 
     private static final long serialVersionUID = 1L;
 
@@ -74,6 +80,22 @@ public class WorkOrder implements Serializable {
 
     public void setClassify(Byte classify) {
         this.classify = classify;
+    }
+
+    public Date getWorkCreated() {
+        return workCreated;
+    }
+
+    public void setWorkCreated(Date workCreated) {
+        this.workCreated = workCreated;
+    }
+
+    public Date getWorkDone() {
+        return workDone;
+    }
+
+    public void setWorkDone(Date workDone) {
+        this.workDone = workDone;
     }
 
     public Long getNnlightctlWorkflowerId() {
@@ -156,6 +178,14 @@ public class WorkOrder implements Serializable {
         this.workSource = workSource;
     }
 
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -173,6 +203,8 @@ public class WorkOrder implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getSerialNumber() == null ? other.getSerialNumber() == null : this.getSerialNumber().equals(other.getSerialNumber()))
             && (this.getClassify() == null ? other.getClassify() == null : this.getClassify().equals(other.getClassify()))
+            && (this.getWorkCreated() == null ? other.getWorkCreated() == null : this.getWorkCreated().equals(other.getWorkCreated()))
+            && (this.getWorkDone() == null ? other.getWorkDone() == null : this.getWorkDone().equals(other.getWorkDone()))
             && (this.getNnlightctlWorkflowerId() == null ? other.getNnlightctlWorkflowerId() == null : this.getNnlightctlWorkflowerId().equals(other.getNnlightctlWorkflowerId()))
             && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
             && (this.getPriority() == null ? other.getPriority() == null : this.getPriority().equals(other.getPriority()))
@@ -182,7 +214,8 @@ public class WorkOrder implements Serializable {
             && (this.getNnlightctlMaskerId() == null ? other.getNnlightctlMaskerId() == null : this.getNnlightctlMaskerId().equals(other.getNnlightctlMaskerId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getAttachFilePath() == null ? other.getAttachFilePath() == null : this.getAttachFilePath().equals(other.getAttachFilePath()))
-            && (this.getWorkSource() == null ? other.getWorkSource() == null : this.getWorkSource().equals(other.getWorkSource()));
+            && (this.getWorkSource() == null ? other.getWorkSource() == null : this.getWorkSource().equals(other.getWorkSource()))
+            && (this.getNnlightctlProjectId() == null ? other.getNnlightctlProjectId() == null : this.getNnlightctlProjectId().equals(other.getNnlightctlProjectId()));
     }
 
     @Override
@@ -194,6 +227,8 @@ public class WorkOrder implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getSerialNumber() == null) ? 0 : getSerialNumber().hashCode());
         result = prime * result + ((getClassify() == null) ? 0 : getClassify().hashCode());
+        result = prime * result + ((getWorkCreated() == null) ? 0 : getWorkCreated().hashCode());
+        result = prime * result + ((getWorkDone() == null) ? 0 : getWorkDone().hashCode());
         result = prime * result + ((getNnlightctlWorkflowerId() == null) ? 0 : getNnlightctlWorkflowerId().hashCode());
         result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
         result = prime * result + ((getPriority() == null) ? 0 : getPriority().hashCode());
@@ -204,6 +239,7 @@ public class WorkOrder implements Serializable {
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getAttachFilePath() == null) ? 0 : getAttachFilePath().hashCode());
         result = prime * result + ((getWorkSource() == null) ? 0 : getWorkSource().hashCode());
+        result = prime * result + ((getNnlightctlProjectId() == null) ? 0 : getNnlightctlProjectId().hashCode());
         return result;
     }
 
@@ -218,6 +254,8 @@ public class WorkOrder implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", serialNumber=").append(serialNumber);
         sb.append(", classify=").append(classify);
+        sb.append(", workCreated=").append(workCreated);
+        sb.append(", workDone=").append(workDone);
         sb.append(", nnlightctlWorkflowerId=").append(nnlightctlWorkflowerId);
         sb.append(", state=").append(state);
         sb.append(", priority=").append(priority);
@@ -228,6 +266,7 @@ public class WorkOrder implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", attachFilePath=").append(attachFilePath);
         sb.append(", workSource=").append(workSource);
+        sb.append(", nnlightctlProjectId=").append(nnlightctlProjectId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

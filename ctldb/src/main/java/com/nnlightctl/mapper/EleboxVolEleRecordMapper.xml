@@ -9,6 +9,7 @@
     <result column="realtime_date" property="realtimeDate" jdbcType="TIMESTAMP" />
     <result column="voltage" property="voltage" jdbcType="DECIMAL" />
     <result column="electricity" property="electricity" jdbcType="DECIMAL" />
+    <result column="energy" property="energy" jdbcType="DECIMAL" />
     <result column="elebox_power" property="eleboxPower" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, realtime_date, voltage, electricity, elebox_power
+    id, gmt_created, gmt_updated, uid, realtime_date, voltage, electricity, energy, elebox_power
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxVolEleRecordExample" >
     select
@@ -109,10 +110,10 @@
     </selectKey>
     insert into nnlightctl_elebox_vol_ele_record (gmt_created, gmt_updated, uid, 
       realtime_date, voltage, electricity, 
-      elebox_power)
+      energy, elebox_power)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{realtimeDate,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricity,jdbcType=DECIMAL}, 
-      #{eleboxPower,jdbcType=DECIMAL})
+      #{energy,jdbcType=DECIMAL}, #{eleboxPower,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -138,6 +139,9 @@
       <if test="electricity != null" >
         electricity,
       </if>
+      <if test="energy != null" >
+        energy,
+      </if>
       <if test="eleboxPower != null" >
         elebox_power,
       </if>
@@ -160,6 +164,9 @@
       </if>
       <if test="electricity != null" >
         #{electricity,jdbcType=DECIMAL},
+      </if>
+      <if test="energy != null" >
+        #{energy,jdbcType=DECIMAL},
       </if>
       <if test="eleboxPower != null" >
         #{eleboxPower,jdbcType=DECIMAL},
@@ -196,6 +203,9 @@
       <if test="record.electricity != null" >
         electricity = #{record.electricity,jdbcType=DECIMAL},
       </if>
+      <if test="record.energy != null" >
+        energy = #{record.energy,jdbcType=DECIMAL},
+      </if>
       <if test="record.eleboxPower != null" >
         elebox_power = #{record.eleboxPower,jdbcType=DECIMAL},
       </if>
@@ -213,6 +223,7 @@
       realtime_date = #{record.realtimeDate,jdbcType=TIMESTAMP},
       voltage = #{record.voltage,jdbcType=DECIMAL},
       electricity = #{record.electricity,jdbcType=DECIMAL},
+      energy = #{record.energy,jdbcType=DECIMAL},
       elebox_power = #{record.eleboxPower,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,6 +250,9 @@
       <if test="electricity != null" >
         electricity = #{electricity,jdbcType=DECIMAL},
       </if>
+      <if test="energy != null" >
+        energy = #{energy,jdbcType=DECIMAL},
+      </if>
       <if test="eleboxPower != null" >
         elebox_power = #{eleboxPower,jdbcType=DECIMAL},
       </if>
@@ -253,6 +267,7 @@
       realtime_date = #{realtimeDate,jdbcType=TIMESTAMP},
       voltage = #{voltage,jdbcType=DECIMAL},
       electricity = #{electricity,jdbcType=DECIMAL},
+      energy = #{energy,jdbcType=DECIMAL},
       elebox_power = #{eleboxPower,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>

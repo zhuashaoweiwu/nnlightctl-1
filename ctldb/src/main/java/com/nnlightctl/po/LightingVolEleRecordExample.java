@@ -536,6 +536,66 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andEnergyIsNull() {
+            addCriterion("energy is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyIsNotNull() {
+            addCriterion("energy is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyEqualTo(BigDecimal value) {
+            addCriterion("energy =", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyNotEqualTo(BigDecimal value) {
+            addCriterion("energy <>", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyGreaterThan(BigDecimal value) {
+            addCriterion("energy >", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("energy >=", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyLessThan(BigDecimal value) {
+            addCriterion("energy <", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("energy <=", value, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyIn(List<BigDecimal> values) {
+            addCriterion("energy in", values, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyNotIn(List<BigDecimal> values) {
+            addCriterion("energy not in", values, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("energy between", value1, value2, "energy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnergyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("energy not between", value1, value2, "energy");
+            return (Criteria) this;
+        }
+
         public Criteria andDampnessIsNull() {
             addCriterion("dampness is null");
             return (Criteria) this;

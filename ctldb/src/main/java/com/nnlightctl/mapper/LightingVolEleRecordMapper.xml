@@ -9,6 +9,7 @@
     <result column="record_datetime" property="recordDatetime" jdbcType="TIMESTAMP" />
     <result column="voltage" property="voltage" jdbcType="DECIMAL" />
     <result column="electricty" property="electricty" jdbcType="DECIMAL" />
+    <result column="energy" property="energy" jdbcType="DECIMAL" />
     <result column="dampness" property="dampness" jdbcType="DECIMAL" />
     <result column="temperature" property="temperature" jdbcType="DECIMAL" />
     <result column="beam" property="beam" jdbcType="DECIMAL" />
@@ -75,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, record_datetime, voltage, electricty, dampness, 
-    temperature, beam, persist1, persist2, persist3
+    id, gmt_created, gmt_updated, uid, record_datetime, voltage, electricty, energy, 
+    dampness, temperature, beam, persist1, persist2, persist3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingVolEleRecordExample" >
     select
@@ -115,14 +116,14 @@
     </selectKey>
     insert into nnlightctl_lighting_vol_ele_record (gmt_created, gmt_updated, uid, 
       record_datetime, voltage, electricty, 
-      dampness, temperature, beam, 
-      persist1, persist2, persist3
-      )
+      energy, dampness, temperature, 
+      beam, persist1, persist2, 
+      persist3)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{recordDatetime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricty,jdbcType=DECIMAL}, 
-      #{dampness,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, #{beam,jdbcType=DECIMAL}, 
-      #{persist1,jdbcType=DECIMAL}, #{persist2,jdbcType=DECIMAL}, #{persist3,jdbcType=DECIMAL}
-      )
+      #{energy,jdbcType=DECIMAL}, #{dampness,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, 
+      #{beam,jdbcType=DECIMAL}, #{persist1,jdbcType=DECIMAL}, #{persist2,jdbcType=DECIMAL}, 
+      #{persist3,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -147,6 +148,9 @@
       </if>
       <if test="electricty != null" >
         electricty,
+      </if>
+      <if test="energy != null" >
+        energy,
       </if>
       <if test="dampness != null" >
         dampness,
@@ -185,6 +189,9 @@
       </if>
       <if test="electricty != null" >
         #{electricty,jdbcType=DECIMAL},
+      </if>
+      <if test="energy != null" >
+        #{energy,jdbcType=DECIMAL},
       </if>
       <if test="dampness != null" >
         #{dampness,jdbcType=DECIMAL},
@@ -236,6 +243,9 @@
       <if test="record.electricty != null" >
         electricty = #{record.electricty,jdbcType=DECIMAL},
       </if>
+      <if test="record.energy != null" >
+        energy = #{record.energy,jdbcType=DECIMAL},
+      </if>
       <if test="record.dampness != null" >
         dampness = #{record.dampness,jdbcType=DECIMAL},
       </if>
@@ -268,6 +278,7 @@
       record_datetime = #{record.recordDatetime,jdbcType=TIMESTAMP},
       voltage = #{record.voltage,jdbcType=DECIMAL},
       electricty = #{record.electricty,jdbcType=DECIMAL},
+      energy = #{record.energy,jdbcType=DECIMAL},
       dampness = #{record.dampness,jdbcType=DECIMAL},
       temperature = #{record.temperature,jdbcType=DECIMAL},
       beam = #{record.beam,jdbcType=DECIMAL},
@@ -299,6 +310,9 @@
       <if test="electricty != null" >
         electricty = #{electricty,jdbcType=DECIMAL},
       </if>
+      <if test="energy != null" >
+        energy = #{energy,jdbcType=DECIMAL},
+      </if>
       <if test="dampness != null" >
         dampness = #{dampness,jdbcType=DECIMAL},
       </if>
@@ -328,6 +342,7 @@
       record_datetime = #{recordDatetime,jdbcType=TIMESTAMP},
       voltage = #{voltage,jdbcType=DECIMAL},
       electricty = #{electricty,jdbcType=DECIMAL},
+      energy = #{energy,jdbcType=DECIMAL},
       dampness = #{dampness,jdbcType=DECIMAL},
       temperature = #{temperature,jdbcType=DECIMAL},
       beam = #{beam,jdbcType=DECIMAL},

@@ -28,6 +28,8 @@ public class Alarm implements Serializable {
 
     private Long alarmCount;
 
+    private Byte isUse;
+
     private Long nnlightctlAlarmConfigId;
 
     private static final long serialVersionUID = 1L;
@@ -128,6 +130,14 @@ public class Alarm implements Serializable {
         this.alarmCount = alarmCount;
     }
 
+    public Byte getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(Byte isUse) {
+        this.isUse = isUse;
+    }
+
     public Long getNnlightctlAlarmConfigId() {
         return nnlightctlAlarmConfigId;
     }
@@ -160,6 +170,7 @@ public class Alarm implements Serializable {
             && (this.getRemoveAlarmTime() == null ? other.getRemoveAlarmTime() == null : this.getRemoveAlarmTime().equals(other.getRemoveAlarmTime()))
             && (this.getMsg() == null ? other.getMsg() == null : this.getMsg().equals(other.getMsg()))
             && (this.getAlarmCount() == null ? other.getAlarmCount() == null : this.getAlarmCount().equals(other.getAlarmCount()))
+            && (this.getIsUse() == null ? other.getIsUse() == null : this.getIsUse().equals(other.getIsUse()))
             && (this.getNnlightctlAlarmConfigId() == null ? other.getNnlightctlAlarmConfigId() == null : this.getNnlightctlAlarmConfigId().equals(other.getNnlightctlAlarmConfigId()));
     }
 
@@ -179,6 +190,7 @@ public class Alarm implements Serializable {
         result = prime * result + ((getRemoveAlarmTime() == null) ? 0 : getRemoveAlarmTime().hashCode());
         result = prime * result + ((getMsg() == null) ? 0 : getMsg().hashCode());
         result = prime * result + ((getAlarmCount() == null) ? 0 : getAlarmCount().hashCode());
+        result = prime * result + ((getIsUse() == null) ? 0 : getIsUse().hashCode());
         result = prime * result + ((getNnlightctlAlarmConfigId() == null) ? 0 : getNnlightctlAlarmConfigId().hashCode());
         return result;
     }
@@ -201,6 +213,7 @@ public class Alarm implements Serializable {
         sb.append(", removeAlarmTime=").append(removeAlarmTime);
         sb.append(", msg=").append(msg);
         sb.append(", alarmCount=").append(alarmCount);
+        sb.append(", isUse=").append(isUse);
         sb.append(", nnlightctlAlarmConfigId=").append(nnlightctlAlarmConfigId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
