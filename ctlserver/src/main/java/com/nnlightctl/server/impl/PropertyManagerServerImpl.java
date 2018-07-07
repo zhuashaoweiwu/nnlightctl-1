@@ -1,24 +1,19 @@
 package com.nnlightctl.server.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.nnlight.common.DigesterUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.RepairRecordMapper;
 import com.nnlightctl.jdbcdao.PropertyManagerDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
-import com.nnlightctl.server.ProjectServer;
 import com.nnlightctl.server.PropertyManagerServer;
 import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
 import com.nnlightctl.vo.ListDeviceRepairStatisticView;
-import com.sun.deploy.net.proxy.ProxyType;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
