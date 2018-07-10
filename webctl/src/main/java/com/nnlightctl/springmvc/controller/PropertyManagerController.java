@@ -1,17 +1,17 @@
 package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
-import com.nnlightctl.po.AlarmHistory;
-import com.nnlightctl.po.Masker;
-import com.nnlightctl.po.ProjectCountry;
-import com.nnlightctl.po.RepairRecord;
+import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.MaskerServer;
 import com.nnlightctl.server.PropertyManagerServer;
+import com.nnlightctl.server.RepertoryServer;
 import com.nnlightctl.util.DownloadUtil;
 import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
 import com.nnlightctl.vo.ListDeviceRepairStatisticView;
+import com.nnlightctl.vo.ListRepertoryUserView;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,8 @@ public class PropertyManagerController extends BaseController {
     private PropertyManagerServer propertyManagerServer;
     @Autowired
     private MaskerServer maskerServer;
-
+    @Autowired
+    private RepertoryServer repertoryServer;
     /*
     * 前端接口-资产管理系统
     *一、通过时间范围搜索设备的维修统计情况
@@ -51,7 +52,6 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     /*
     * 前端接口-资产管理系统
     *二、通过时间范围搜索基于月的设备损坏总数统计
@@ -67,7 +67,6 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     /*
      * 前端接口-资产管理系统
      *二、通过时间范围搜索基于月的设备损坏总数统计
@@ -86,7 +85,6 @@ public class PropertyManagerController extends BaseController {
         DownloadUtil.downloadExcel(response, downloadFileName, workbook);
 
     }
-
     /*
     * 前端接口-资产管理系统
     *四、通过搜索条件分页获取维修记录
@@ -104,7 +102,6 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     /*
     * 前端接口-资产管理系统
     * 五、新建/修改维修记录
@@ -124,7 +121,6 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     /*
      * 前端接口-资产管理系统
      * 六、批量删除维修记录
@@ -143,7 +139,6 @@ public class PropertyManagerController extends BaseController {
         }
         return toJson(jsonResult);
     }
-
     /*
     * 前端接口-资产管理系统
     * 七、批量提交维修记录
@@ -160,7 +155,6 @@ public class PropertyManagerController extends BaseController {
         }
         return toJson(jsonResult);
     }
-
     /*
      * 前端接口-资产管理系统-联系人管理
      * 一、新增/修改联系人
@@ -180,7 +174,6 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     /*
      * 前端接口-资产管理系统-联系人管理
      * 二、删除联系人
@@ -232,5 +225,385 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
-}
+    /*
+     * 库存管理
+     * 一、新增/修改仓库信息
+     * */
+    @RequestMapping("addOrUpdateRepertory")
+    public String addOrUpdateRepertory(RepertoryRequest request){
+        logger.info("[POST] /api/propertyManager/addOrUpdateRepertory");
+        int ret = repertoryServer.addOrUpdateRepertory(request);
 
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理
+     * 二、删除仓库
+     * */
+    @RequestMapping("deleteRepertory")
+    public String deleteRepertory(DeleteRepertoryRequest request){
+        logger.info("[POST] /api/propertyManager/deleteRepertory");
+
+        int ret = repertoryServer.deleteRepairRecord(request.getRepertoryIds());
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理
+     * 三、通过搜索条件分页获取仓库集合
+     * */
+    @RequestMapping("listRepertory")
+    public String listRepertory(BaseRequest request){
+        logger.info("[POST] /api/propertyManager/listRepertory");
+
+        Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> tuple = repertoryServer.listRepertory(request);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理
+     * 四、通过仓库id获取单个仓库信息
+     * */
+    @RequestMapping("getRepertory")
+    public String getRepertory(Long id){
+        logger.info("[POST] /api/propertyManager/getRepertory");
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> tuple = repertoryServer.getRepertory(id);
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理
+     * 五、资产转移操作接口
+     * */
+    @RequestMapping("transferProperty")
+    public String transferProperty(TransferPropertyRequest request){
+        logger.info("[POST] /api/propertyManager/transferProperty");
+
+        int ret = repertoryServer.transferProperty(request);
+        JsonResult jsonResult = JsonResult.getSUCCESS();;
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理
+     * 六、通过搜索条件分页显示资产转移记录
+     * */
+    @RequestMapping("listPropertyTransRecord")
+    public String listPropertyTransRecord(BaseRequest request){
+        logger.info("[POST] /api/propertyManager/listPropertyTransRecord");
+        Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> tuple = repertoryServer.listPropertyTransRecord(request);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-主页相关接口
+     * 一、通过搜索条件分页显示入库申请
+     * */
+    @RequestMapping("listApplyInRepertory")
+    public String listApplyInRepertory(BaseRequest request){
+        logger.info("[POST] /api/propertyManager/listApplyInRepertory");
+
+        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = repertoryServer.listApplyInRepertory(request);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-主页相关接口
+     * 二、通过搜索条件分页显示出库申请
+     * */
+    @RequestMapping("listApplyOutRepertory")
+    public String listApplyOutRepertory(BaseRequest request){
+        logger.info("[POST] /api/propertyManager/listApplyOutRepertory");
+        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = repertoryServer.listApplyOutRepertory(request);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-主页相关接口
+     * 三、统计入库申请
+     * */
+    @RequestMapping("countApplyInRepertory")
+    public String countApplyInRepertory(){
+        logger.info("[POST] /api/propertyManager/countApplyInRepertory");
+
+        Long total = repertoryServer.countApplyInRepertory();
+
+        List<Long> listTatol = new ArrayList<>();
+        listTatol.add(total);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(listTatol);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-主页相关接口
+     * 四、统计出库申请
+     * */
+    @RequestMapping("countApplyOutRepertory")
+    public String countApplyOutRepertory(){
+        logger.info("[POST] /api/propertyManager/countApplyOutRepertory");
+
+        Long total = repertoryServer.countApplyOutRepertory();
+
+        List<Long> listTatol = new ArrayList<>();
+        listTatol.add(total);
+
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(listTatol);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *一、新增/修改入库申请
+     * */
+    @RequestMapping("addOrUpdateApplyInRepertory")
+    public String addOrUpdateApplyInRepertory(RepertoryInApplyRequest request){
+        logger.info("[POST] /api/propertyManager/addOrUpdateApplyInRepertory");
+
+        int ret = repertoryServer.addOrUpdateApplyInRepertory(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *二、删除入库申请
+     * */
+    @RequestMapping("deleteApplyInRepertory")
+    public String deleteApplyInRepertory(RepertoryInApplyRequest request){
+        logger.info("[POST] /api/propertyManager/deleteApplyInRepertory");
+
+        int ret =repertoryServer.deleteApplyInRepertory(request.getApplyInRepertoryIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *三、通过id获取单个入库申请
+     * */
+    @RequestMapping("getApplyInRepertoryById")
+    public String getApplyInRepertoryById(Long id){
+        logger.info("[POST] /api/propertyManager/getApplyInRepertoryById");
+
+        RepertoryInApply repertoryInApply = repertoryServer.getApplyInRepertoryById(id);
+        List<RepertoryInApply> repertoryInApplyList =new ArrayList<RepertoryInApply>();
+        repertoryInApplyList.add(repertoryInApply);
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(repertoryInApplyList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *四、新增/修改出库申请
+     * */
+    @RequestMapping("addOrUpdateApplyOutRepertory")
+    public String addOrUpdateApplyOutRepertory(RepertoryOutApplyRequest request){
+        logger.info("[POST] /api/propertyManager/addOrUpdateApplyOutRepertory");
+        int ret = repertoryServer.addOrUpdateApplyOutRepertory(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *五、删除出库申请
+     * */
+    @RequestMapping("deleteApplyOutRepertory")
+    public String deleteApplyOutRepertory(RepertoryOutApplyRequest request){
+        logger.info("[POST]  /api/propertyManager/deleteApplyOutRepertory");
+        int ret = repertoryServer.deleteApplyOutRepertory(request.getApplyOutRepertoryIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 库存管理-资产申请相关接口
+     *六、通过出库申请id获取单个出库申请信息
+     * */
+    @RequestMapping("getApplyOutRepertoryById")
+    public String getApplyOutRepertoryById(Long id){
+        logger.info("[POST]  /api/propertyManager/getApplyOutRepertoryById");
+
+        RepertoryOutApply repertoryOutApply = repertoryServer.getApplyOutRepertoryById(id);
+        List<RepertoryOutApply> repertoryOutApplyList =new ArrayList<RepertoryOutApply>();
+        repertoryOutApplyList.add(repertoryOutApply);
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(repertoryOutApplyList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *一、分页获取入库申请待审批集合
+     * */
+    @RequestMapping("listApplyInApprovePending")
+    public String listApplyInApprovePending(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listApplyInApprovePending");
+        int ret = 1;
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = repertoryServer.listApplyInApprovePending(request , ret);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *二、分页获取出库申请待审批集合
+     * */
+    @RequestMapping("listApplyOutApprovePending")
+    public String listApplyOutApprovePending(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listApplyOutApprovePending");
+        Integer ret = 1;
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = repertoryServer.listApplyOutApprovePending(request,ret);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *三、分页显示入库申请已审批历史记录
+     * */
+    @RequestMapping("listApplyInHistory")
+    public String listApplyInHistory(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listApplyInHistory");
+        Integer ret3 = 3;
+        Integer ret4 = 4;
+        JsonResult jsonResult = JsonResult.SUCCESS;
+
+        List<Integer> applyStates = new ArrayList<Integer>();
+        applyStates.add(ret3);
+        applyStates.add(ret4);
+        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = repertoryServer.listApplyInHistory(request,applyStates);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *四、分页显示出库申请已审批历史记录
+     * */
+    @RequestMapping("listApplyOutHistory")
+    public String listApplyOutHistory(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listApplyOutHistory");
+        Integer ret3 = 3;
+        Integer ret4 = 4;
+        List<Integer> applyStates = new ArrayList<Integer>();
+        applyStates.add(ret3);
+        applyStates.add(ret4);
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = repertoryServer.listApplyOutHistory(request,applyStates);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *五、入库申请审批操作
+     * */
+    @RequestMapping("approveApplyInRepertory")
+    public String approveApplyInRepertory( ApproveApplyInRepertoryRequest request){
+        logger.info("[POST]  /api/propertyManager/approveApplyInRepertory");
+        int ret = repertoryServer.approveApplyInRepertory(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 资产审批
+     *六、出库申请审批操作
+     * */
+    @RequestMapping("approveApplyOutRepertory")
+   public String approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
+        logger.info("[POST]  /api/propertyManager/approveApplyOutRepertory");
+        int ret = repertoryServer.approveApplyOutRepertory(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+   }
+    /*
+     * 基础数据
+     *一、供应商的新增和修改
+     * */
+    @RequestMapping("addOrUpdateSupplier")
+   public String addOrUpdateSupplier(SupplierRequest request){
+        logger.info("[POST]  /api/propertyManager/addOrUpdateSupplier");
+        int ret =1;
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+}
