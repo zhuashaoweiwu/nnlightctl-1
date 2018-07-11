@@ -4,9 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
-import com.nnlightctl.server.MaskerServer;
-import com.nnlightctl.server.PropertyManagerServer;
-import com.nnlightctl.server.RepertoryServer;
+import com.nnlightctl.server.*;
 import com.nnlightctl.util.DownloadUtil;
 import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
 import com.nnlightctl.vo.ListDeviceRepairStatisticView;
@@ -37,6 +35,10 @@ public class PropertyManagerController extends BaseController {
     private MaskerServer maskerServer;
     @Autowired
     private RepertoryServer repertoryServer;
+    @Autowired
+    private SupplierServer supplierServer;
+    @Autowired
+    private PropertyClassifyCatalogServer propertyClassifyCatalogServer;
     /*
     * 前端接口-资产管理系统
     *一、通过时间范围搜索设备的维修统计情况
@@ -597,7 +599,134 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("addOrUpdateSupplier")
    public String addOrUpdateSupplier(SupplierRequest request){
         logger.info("[POST]  /api/propertyManager/addOrUpdateSupplier");
-        int ret =1;
+
+        int ret =supplierServer.addOrUpdateRepertory(request);
+        JsonResult jsonResult = null;
+
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *二、删除供应商
+     * */
+    @RequestMapping("deleteSupplier")
+    public String deleteSupplier(SupplierRequest request){
+        logger.info("[POST]  /api/propertyManager/deleteSupplier");
+
+        int ret = supplierServer.deleteSupplier(request.getSupplierIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *三、按搜索条件分页显示供应商
+     * */
+    @RequestMapping("listSupplier")
+    public String listSupplier(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listSupplier");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Tuple.TwoTuple<List<Supplier>, Integer> tuple = supplierServer.listSupplier(request);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *四、通过供应商id获取单个供应商信息
+     * */
+    @RequestMapping("getSupplier")
+    public String getSupplier(Long id){
+        logger.info("[POST]  /api/propertyManager/getSupplier");
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Supplier supplier = supplierServer.getSupplier(id);
+        List<Supplier> supplierList = new ArrayList<Supplier>();
+        supplierList.add(supplier);
+        jsonResult.setData(supplierList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *五、新增/修改资产分类目录
+     * */
+    @RequestMapping("addOrUpdatePropertyClassifyCatalog")
+    public String addOrUpdatePropertyClassifyCatalog(PropertyClassifyCatalogRequest request){
+        logger.info("[POST]  /api/propertyManager/addOrUpdatePropertyClassifyCatalog");
+        int ret = propertyClassifyCatalogServer.addOrUpdatePropertyClassifyCatalog(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *六、删除资产分类目录（同时删除其全部子目录）
+     * */
+    @RequestMapping("deletePropertyClassifyCatalog")
+    public String deletePropertyClassifyCatalog(PropertyClassifyCatalogRequest request){
+        logger.info("[POST]  /api/propertyManager/deletePropertyClassifyCatalog");
+        int ret = propertyClassifyCatalogServer.deletePropertyClassifyCatalog(request.getPropertyClassifyCatalogIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *七、获取全部一级资产分类目录
+     * */
+    @RequestMapping("listPropertyClassifyCatalogLevel1")
+    public String listPropertyClassifyCatalogLevel1(){
+        logger.info("[POST]  /api/propertyManager/listPropertyClassifyCatalogLevel1");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.listPropertyClassifyCatalogLevel1();
+        jsonResult.setData(propertyClassifyCatalogList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *八、通过资产分类目录id获取全部子目录（下一层深度）
+     * */
+    @RequestMapping("listSubPropertyClassifyCatalog")
+    public String listSubPropertyClassifyCatalog(Long id){
+        logger.info("[POST]  /api/propertyManager/listSubPropertyClassifyCatalog");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<Long> ids = new ArrayList<Long>();
+        ids.add(id);
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.propertyClassifyCatalog(ids);
+        jsonResult.setData(propertyClassifyCatalogList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *九、新增/修改入库原因
+     * */
+    @RequestMapping("addOrUpdateRepertoryInReason")
+    public String addOrUpdateRepertoryInReason(RepertoryInReasonRequest request){
+        logger.info("[POST]  /api/propertyManager/addOrUpdateRepertoryInReason");
+        int ret = 1;//propertyClassifyCatalogServer.addOrUpdatePropertyClassifyCatalog(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
