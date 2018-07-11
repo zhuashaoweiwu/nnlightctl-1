@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import java.util.List;
+
 public class RepertoryInReasonRequest {
 
     private Long id; // -- 入库原因id,新增时不传该值
@@ -7,6 +9,16 @@ public class RepertoryInReasonRequest {
     private String codeNumber;  //-- 入库原因编码
 
     private String reasonDesc;  //-- 入库原因描述
+
+   private List<Long> repertoryInReasonIds;
+
+    public List<Long> getRepertoryInReasonIds() {
+        return repertoryInReasonIds;
+    }
+
+    public void setRepertoryInReasonIds(List<Long> repertoryInReasonIds) {
+        this.repertoryInReasonIds = repertoryInReasonIds;
+    }
 
     public Long getId() {
         return id;

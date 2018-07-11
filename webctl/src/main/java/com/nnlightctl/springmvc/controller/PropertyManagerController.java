@@ -39,6 +39,10 @@ public class PropertyManagerController extends BaseController {
     private SupplierServer supplierServer;
     @Autowired
     private PropertyClassifyCatalogServer propertyClassifyCatalogServer;
+    @Autowired
+    private RepertoryInReasonServer repertoryInReasonServer;
+    @Autowired
+    private RepertoryOutReasonServer repertoryOutReasonServer;
     /*
     * 前端接口-资产管理系统
     *一、通过时间范围搜索设备的维修统计情况
@@ -726,13 +730,121 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("addOrUpdateRepertoryInReason")
     public String addOrUpdateRepertoryInReason(RepertoryInReasonRequest request){
         logger.info("[POST]  /api/propertyManager/addOrUpdateRepertoryInReason");
-        int ret = 1;//propertyClassifyCatalogServer.addOrUpdatePropertyClassifyCatalog(request);
+        int ret = repertoryInReasonServer.addOrUpdateRepertoryInReason(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
             jsonResult = JsonResult.getFAILURE();
         }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十、删除入库原因
+     * */
+    @RequestMapping("deleteRepertoryInReason")
+    public String deleteRepertoryInReason(RepertoryInReasonRequest request){
+        logger.info("[POST]  /api/propertyManager/deleteRepertoryInReason");
+        int ret = repertoryInReasonServer.deleteRepertoryInReason(request.getRepertoryInReasonIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十一、分页获取全部入库原因
+     * */
+    @RequestMapping("listRepertoryInReason")
+    public String listRepertoryInReason(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listRepertoryInReason");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Tuple.TwoTuple<List<RepertoryInReason>, Integer> tuple = repertoryInReasonServer.listRepertoryInReason(request);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十二、通过id获取单个入库原因
+     * */
+    @RequestMapping("getRepertoryInReasonById")
+    public String getRepertoryInReasonById(Long id){
+        logger.info("[POST]  /api/propertyManager/getRepertoryInReasonById");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        RepertoryInReason repertoryInReason = repertoryInReasonServer.getRepertoryInReasonById(id);
+        List<RepertoryInReason> repertoryInReasonList = new ArrayList<RepertoryInReason>();
+        repertoryInReasonList.add(repertoryInReason);
+        jsonResult.setData(repertoryInReasonList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十三、新增/修改出库原因
+     * */
+    @RequestMapping("addOrUpdateRepertoryOutReason")
+    public String addOrUpdateRepertoryOutReason(RepertoryOutReasonRequest request){
+        logger.info("[POST]  /api/propertyManager/addOrUpdateRepertoryOutReason");
+        int ret = repertoryOutReasonServer.addOrUpdateRepertoryOutReason(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十四、删除出库原因
+     * */
+    @RequestMapping("deleteRepertoryOutReason")
+    public String deleteRepertoryOutReason(RepertoryOutReasonRequest request){
+        logger.info("[POST]  /api/propertyManager/deleteRepertoryOutReason");
+        int ret = repertoryOutReasonServer.deleteRepertoryOutReason(request.getRepertoryOutReasonIds());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十五、分页获取全部出库原因
+     * */
+    @RequestMapping("listRepertoryOutReason")
+    public String listRepertoryOutReason(BaseRequest request){
+        logger.info("[POST]  /api/propertyManager/listRepertoryOutReason");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Tuple.TwoTuple<List<RepertoryOutReason>, Integer> tuple = repertoryOutReasonServer.listRepertoryOutReason(request);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+    /*
+     * 基础数据
+     *十五、分页获取全部出库原因
+     * */
+    @RequestMapping("getRepertoryOutReason")
+    public String getRepertoryOutReason(Long id){
+        logger.info("[POST]  /api/propertyManager/getRepertoryOutReason");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        RepertoryOutReason repertoryOutReason = repertoryOutReasonServer.getRepertoryOutReason(id);
+        List<RepertoryOutReason> repertoryOutReasonList = new ArrayList<RepertoryOutReason>();
+        repertoryOutReasonList.add(repertoryOutReason);
+        jsonResult.setData(repertoryOutReasonList);
+
         return toJson(jsonResult);
     }
 }
