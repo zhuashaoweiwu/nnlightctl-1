@@ -6,6 +6,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="realtime_uid" property="realtimeUid" jdbcType="VARCHAR" />
     <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
     <result column="manufacture" property="manufacture" jdbcType="TIMESTAMP" />
     <result column="longitude" property="longitude" jdbcType="VARCHAR" />
@@ -80,9 +81,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, code_number, manufacture, longitude, latitude, 
-    use_date, rated_voltage, rated_electricty, power_rating, max_use_time, spd, main_switch, 
-    nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
+    id, gmt_created, gmt_updated, uid, realtime_uid, code_number, manufacture, longitude, 
+    latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time, 
+    spd, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample" >
     select
@@ -120,17 +121,19 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_elebox (gmt_created, gmt_updated, uid, 
-      code_number, manufacture, longitude, 
-      latitude, use_date, rated_voltage, 
-      rated_electricty, power_rating, max_use_time, 
-      spd, main_switch, nnlightctl_elebox_gis_id, 
-      nnlightctl_region_id, nnlightctl_project_id)
+      realtime_uid, code_number, manufacture, 
+      longitude, latitude, use_date, 
+      rated_voltage, rated_electricty, power_rating, 
+      max_use_time, spd, main_switch, 
+      nnlightctl_elebox_gis_id, nnlightctl_region_id, 
+      nnlightctl_project_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{codeNumber,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, 
-      #{latitude,jdbcType=VARCHAR}, #{useDate,jdbcType=TIMESTAMP}, #{ratedVoltage,jdbcType=DECIMAL}, 
-      #{ratedElectricty,jdbcType=DECIMAL}, #{powerRating,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
-      #{spd,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT}, 
-      #{nnlightctlRegionId,jdbcType=BIGINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
+      #{realtimeUid,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{useDate,jdbcType=TIMESTAMP}, 
+      #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectricty,jdbcType=DECIMAL}, #{powerRating,jdbcType=DECIMAL}, 
+      #{maxUseTime,jdbcType=BIGINT}, #{spd,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, 
+      #{nnlightctlEleboxGisId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
+      #{nnlightctlProjectId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Elebox" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -146,6 +149,9 @@
       </if>
       <if test="uid != null" >
         uid,
+      </if>
+      <if test="realtimeUid != null" >
+        realtime_uid,
       </if>
       <if test="codeNumber != null" >
         code_number,
@@ -199,6 +205,9 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeUid != null" >
+        #{realtimeUid,jdbcType=VARCHAR},
       </if>
       <if test="codeNumber != null" >
         #{codeNumber,jdbcType=VARCHAR},
@@ -265,6 +274,9 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=VARCHAR},
       </if>
+      <if test="record.realtimeUid != null" >
+        realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
+      </if>
       <if test="record.codeNumber != null" >
         code_number = #{record.codeNumber,jdbcType=VARCHAR},
       </if>
@@ -318,6 +330,7 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
+      realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
       code_number = #{record.codeNumber,jdbcType=VARCHAR},
       manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
       longitude = #{record.longitude,jdbcType=VARCHAR},
@@ -347,6 +360,9 @@
       </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeUid != null" >
+        realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
       </if>
       <if test="codeNumber != null" >
         code_number = #{codeNumber,jdbcType=VARCHAR},
@@ -398,6 +414,7 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
+      realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
       code_number = #{codeNumber,jdbcType=VARCHAR},
       manufacture = #{manufacture,jdbcType=TIMESTAMP},
       longitude = #{longitude,jdbcType=VARCHAR},

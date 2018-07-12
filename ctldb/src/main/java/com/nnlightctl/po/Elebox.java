@@ -13,6 +13,8 @@ public class Elebox implements Serializable {
 
     private String uid;
 
+    private String realtimeUid;
+
     private String codeNumber;
 
     private Date manufacture;
@@ -73,6 +75,14 @@ public class Elebox implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getRealtimeUid() {
+        return realtimeUid;
+    }
+
+    public void setRealtimeUid(String realtimeUid) {
+        this.realtimeUid = realtimeUid == null ? null : realtimeUid.trim();
     }
 
     public String getCodeNumber() {
@@ -203,6 +213,7 @@ public class Elebox implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getRealtimeUid() == null ? other.getRealtimeUid() == null : this.getRealtimeUid().equals(other.getRealtimeUid()))
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
             && (this.getManufacture() == null ? other.getManufacture() == null : this.getManufacture().equals(other.getManufacture()))
             && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
@@ -227,6 +238,7 @@ public class Elebox implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getRealtimeUid() == null) ? 0 : getRealtimeUid().hashCode());
         result = prime * result + ((getCodeNumber() == null) ? 0 : getCodeNumber().hashCode());
         result = prime * result + ((getManufacture() == null) ? 0 : getManufacture().hashCode());
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
@@ -254,6 +266,7 @@ public class Elebox implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", realtimeUid=").append(realtimeUid);
         sb.append(", codeNumber=").append(codeNumber);
         sb.append(", manufacture=").append(manufacture);
         sb.append(", longitude=").append(longitude);

@@ -356,6 +356,76 @@ public class LightingExample {
             return (Criteria) this;
         }
 
+        public Criteria andRealtimeUidIsNull() {
+            addCriterion("realtime_uid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidIsNotNull() {
+            addCriterion("realtime_uid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidEqualTo(String value) {
+            addCriterion("realtime_uid =", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidNotEqualTo(String value) {
+            addCriterion("realtime_uid <>", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidGreaterThan(String value) {
+            addCriterion("realtime_uid >", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidGreaterThanOrEqualTo(String value) {
+            addCriterion("realtime_uid >=", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidLessThan(String value) {
+            addCriterion("realtime_uid <", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidLessThanOrEqualTo(String value) {
+            addCriterion("realtime_uid <=", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidLike(String value) {
+            addCriterion("realtime_uid like", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidNotLike(String value) {
+            addCriterion("realtime_uid not like", value, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidIn(List<String> values) {
+            addCriterion("realtime_uid in", values, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidNotIn(List<String> values) {
+            addCriterion("realtime_uid not in", values, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidBetween(String value1, String value2) {
+            addCriterion("realtime_uid between", value1, value2, "realtimeUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealtimeUidNotBetween(String value1, String value2) {
+            addCriterion("realtime_uid not between", value1, value2, "realtimeUid");
+            return (Criteria) this;
+        }
+
         public Criteria andManufactureIsNull() {
             addCriterion("manufacture is null");
             return (Criteria) this;

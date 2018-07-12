@@ -6,6 +6,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="realtime_uid" property="realtimeUid" jdbcType="VARCHAR" />
     <result column="manufacture" property="manufacture" jdbcType="TIMESTAMP" />
     <result column="use_date" property="useDate" jdbcType="TIMESTAMP" />
     <result column="lamppost" property="lamppost" jdbcType="VARCHAR" />
@@ -82,10 +83,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, manufacture, use_date, lamppost, lamphead, nnlightctl_lighting_model_id, 
-    nnlightctl_lighting_gis_id, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
-    nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, 
-    fault_tag
+    id, gmt_created, gmt_updated, uid, realtime_uid, manufacture, use_date, lamppost, 
+    lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, property_serial_number, 
+    decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
+    nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, fault_tag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingExample" >
     select
@@ -123,17 +124,19 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_lighting (gmt_created, gmt_updated, uid, 
-      manufacture, use_date, lamppost, 
-      lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
-      property_serial_number, decay, max_use_time, 
-      mem, nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
+      realtime_uid, manufacture, use_date, 
+      lamppost, lamphead, nnlightctl_lighting_model_id, 
+      nnlightctl_lighting_gis_id, property_serial_number, 
+      decay, max_use_time, mem, 
+      nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
       nnlightctl_project_id, nnlightctl_elebox_id, 
       loop_priority, fault_tag)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, 
-      #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
-      #{propertySerialNumber,jdbcType=VARCHAR}, #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, 
-      #{mem,jdbcType=VARCHAR}, #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
+      #{realtimeUid,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, 
+      #{lamppost,jdbcType=VARCHAR}, #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, 
+      #{nnlightctlLightingGisId,jdbcType=BIGINT}, #{propertySerialNumber,jdbcType=VARCHAR}, 
+      #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{mem,jdbcType=VARCHAR}, 
+      #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
       #{nnlightctlProjectId,jdbcType=BIGINT}, #{nnlightctlEleboxId,jdbcType=BIGINT}, 
       #{loopPriority,jdbcType=TINYINT}, #{faultTag,jdbcType=TINYINT})
   </insert>
@@ -151,6 +154,9 @@
       </if>
       <if test="uid != null" >
         uid,
+      </if>
+      <if test="realtimeUid != null" >
+        realtime_uid,
       </if>
       <if test="manufacture != null" >
         manufacture,
@@ -210,6 +216,9 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeUid != null" >
+        #{realtimeUid,jdbcType=VARCHAR},
       </if>
       <if test="manufacture != null" >
         #{manufacture,jdbcType=TIMESTAMP},
@@ -282,6 +291,9 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=VARCHAR},
       </if>
+      <if test="record.realtimeUid != null" >
+        realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
+      </if>
       <if test="record.manufacture != null" >
         manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
       </if>
@@ -341,6 +353,7 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
+      realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
       manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
       use_date = #{record.useDate,jdbcType=TIMESTAMP},
       lamppost = #{record.lamppost,jdbcType=VARCHAR},
@@ -372,6 +385,9 @@
       </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeUid != null" >
+        realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
       </if>
       <if test="manufacture != null" >
         manufacture = #{manufacture,jdbcType=TIMESTAMP},
@@ -429,6 +445,7 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
+      realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
       manufacture = #{manufacture,jdbcType=TIMESTAMP},
       use_date = #{useDate,jdbcType=TIMESTAMP},
       lamppost = #{lamppost,jdbcType=VARCHAR},
