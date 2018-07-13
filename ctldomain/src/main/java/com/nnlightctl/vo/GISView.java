@@ -9,12 +9,12 @@ public class GISView extends BaseView {
         this.longitude = longitude;
     }
 
-    public String getLantitude() {
-        return lantitude;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setLantitude(String lantitude) {
-        this.lantitude = lantitude;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getMem() {
@@ -26,6 +26,6 @@ public class GISView extends BaseView {
     }
 
     private String longitude;
-    private String lantitude;
+    private String latitude;
     private String mem;
 }

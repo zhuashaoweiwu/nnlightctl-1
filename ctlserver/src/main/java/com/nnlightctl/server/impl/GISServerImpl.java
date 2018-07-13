@@ -117,7 +117,7 @@ public class GISServerImpl implements GISServer {
                 gisView.setGmtCreated(lightingGIS1.getGmtCreated());
                 gisView.setGmtUpdated(lightingGIS1.getGmtUpdated());
                 gisView.setLongitude(lightingGIS1.getLongitude());
-                gisView.setLantitude(lightingGIS1.getLatitude());
+                gisView.setLatitude(lightingGIS1.getLatitude());
                 gisView.setMem(lightingGIS1.getMem());
 
                 gisViews.add(gisView);
@@ -142,7 +142,7 @@ public class GISServerImpl implements GISServer {
                 gisView.setGmtUpdated(eleboxGIS.getGmtUpdated());
 
                 gisView.setLongitude(eleboxGIS.getLongitude());
-                gisView.setLantitude(eleboxGIS.getLatitude());
+                gisView.setLatitude(eleboxGIS.getLatitude());
                 gisView.setMem(eleboxGIS.getMem());
 
                 gisViews.add(gisView);
