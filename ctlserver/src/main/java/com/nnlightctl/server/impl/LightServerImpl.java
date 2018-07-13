@@ -61,8 +61,10 @@ public class LightServerImpl implements LightServer {
         List<LightRequest> lightRequestList = request.getAddLightings();
         for (LightRequest lightRequest : lightRequestList) {
             Lighting lighting = new Lighting();
+            lighting.setDecay(new BigDecimal(lightRequest.getDecay()));
             ReflectCopyUtil.beanSameFieldCopy(lightRequest, lighting);
             lighting.setGmtCreated(new Date());
+
             lighting.setGmtUpdated(new Date());
             lightingMapper.insertSelective(lighting);
         }
