@@ -27,6 +27,10 @@ public class Lighting implements Serializable {
 
     private Long nnlightctlLightingGisId;
 
+    private String longitude;
+
+    private String latitude;
+
     private String propertySerialNumber;
 
     private BigDecimal decay;
@@ -137,6 +141,22 @@ public class Lighting implements Serializable {
         this.nnlightctlLightingGisId = nnlightctlLightingGisId;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
     public String getPropertySerialNumber() {
         return propertySerialNumber;
     }
@@ -240,6 +260,8 @@ public class Lighting implements Serializable {
             && (this.getLamphead() == null ? other.getLamphead() == null : this.getLamphead().equals(other.getLamphead()))
             && (this.getNnlightctlLightingModelId() == null ? other.getNnlightctlLightingModelId() == null : this.getNnlightctlLightingModelId().equals(other.getNnlightctlLightingModelId()))
             && (this.getNnlightctlLightingGisId() == null ? other.getNnlightctlLightingGisId() == null : this.getNnlightctlLightingGisId().equals(other.getNnlightctlLightingGisId()))
+            && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
+            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
             && (this.getPropertySerialNumber() == null ? other.getPropertySerialNumber() == null : this.getPropertySerialNumber().equals(other.getPropertySerialNumber()))
             && (this.getDecay() == null ? other.getDecay() == null : this.getDecay().equals(other.getDecay()))
             && (this.getMaxUseTime() == null ? other.getMaxUseTime() == null : this.getMaxUseTime().equals(other.getMaxUseTime()))
@@ -267,6 +289,8 @@ public class Lighting implements Serializable {
         result = prime * result + ((getLamphead() == null) ? 0 : getLamphead().hashCode());
         result = prime * result + ((getNnlightctlLightingModelId() == null) ? 0 : getNnlightctlLightingModelId().hashCode());
         result = prime * result + ((getNnlightctlLightingGisId() == null) ? 0 : getNnlightctlLightingGisId().hashCode());
+        result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
+        result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getPropertySerialNumber() == null) ? 0 : getPropertySerialNumber().hashCode());
         result = prime * result + ((getDecay() == null) ? 0 : getDecay().hashCode());
         result = prime * result + ((getMaxUseTime() == null) ? 0 : getMaxUseTime().hashCode());
@@ -297,6 +321,8 @@ public class Lighting implements Serializable {
         sb.append(", lamphead=").append(lamphead);
         sb.append(", nnlightctlLightingModelId=").append(nnlightctlLightingModelId);
         sb.append(", nnlightctlLightingGisId=").append(nnlightctlLightingGisId);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", latitude=").append(latitude);
         sb.append(", propertySerialNumber=").append(propertySerialNumber);
         sb.append(", decay=").append(decay);
         sb.append(", maxUseTime=").append(maxUseTime);
