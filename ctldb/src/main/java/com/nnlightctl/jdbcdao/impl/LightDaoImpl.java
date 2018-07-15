@@ -53,8 +53,8 @@ public class LightDaoImpl implements LightDao {
         countSql.append("from nnlightctl_lighting l left join nnlightctl_lighting_gis g ");
 
         if (request.getProjectId() != null) {
-            sql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ?");
-            countSql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ?");
+            sql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
+            countSql.append("on l.nnlightctl_lighting_gis_id = g.id where l.nnlightctl_project_id = ? ");
 
             params.add(request.getProjectId());
         } else {
