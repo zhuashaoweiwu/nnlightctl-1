@@ -10,11 +10,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class QuartzUtil {
 
-    public static void addJob(Class jobClass, Date date) {
+    public static void addJob(Class jobClass, Date date, Map<String, Object> params) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String dateStr = dateFormat.format(date);
         String[] dateArray = dateStr.split("-");
@@ -34,7 +35,11 @@ public class QuartzUtil {
         cron.append(dateArray[0]);
 
         addJob("jobName" + String.valueOf(new Date().getTime()), DEFAULT_JOB_GROUP_NAME,
-                "tiggerName" + String.valueOf(new Date().getTime()), DEFAULT_TRIGGER_GROUP_NAME, jobClass, cron.toString());
+                "tiggerName" + String.valueOf(new Date().getTime()), DEFAULT_TRIGGER_GROUP_NAME, jobClass, cron.toString(), params);
+    }
+
+    public static void addJob(Class jobClass, Date date) {
+        addJob(jobClass, date, null);
     }
 
     /**
@@ -47,7 +52,7 @@ public class QuartzUtil {
      * @Description: 添加一个定时任务
      */
     public static void addJob(String jobName, String jobGroupName,
-                              String triggerName, String triggerGroupName, Class jobClass, String cron) {
+                              String triggerName, String triggerGroupName, Class jobClass, String cron, Map<String, Object> params) {
         try {
             Scheduler sched = StdSchedulerFactory.getDefaultScheduler();
             if (!sched.isStarted()) {
@@ -55,6 +60,11 @@ public class QuartzUtil {
             }
 
             JobDetail jobDetail = newJob(jobClass).withIdentity(jobName, jobGroupName).build();
+            if (params != null) {
+                for (Map.Entry<String, Object> entry : params.entrySet()) {
+                    jobDetail.getJobDataMap().put(entry.getKey(), entry.getValue());
+                }
+            }
 
             //触发器
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();

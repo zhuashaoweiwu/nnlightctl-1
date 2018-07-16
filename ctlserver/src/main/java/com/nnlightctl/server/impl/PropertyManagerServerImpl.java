@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.Constants;
 import com.nnlight.common.QuartzUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class PropertyManagerServerImpl implements PropertyManagerServer {
@@ -133,7 +136,10 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
         }
 
         //启动定时器
-        QuartzUtil.addJob(QuartzRepairRecordAutoCommitServerImpl.class, request.getCommitDate());
+        Map<String, Object> params = new ConcurrentHashMap<>(2);
+        params.put(Constants.JOB_PARAM_KEY_REPAIRRECORDAUTOCOMMITMAPPER, repairRecordAutoCommitMapper);
+        params.put(Constants.JOB_PARAM_KEY_REPAIRRECORDMAPPER, this.repairRecordMapper);
+        QuartzUtil.addJob(QuartzRepairRecordAutoCommitServerImpl.class, request.getCommitDate(), params);
 
         return 1;
     }

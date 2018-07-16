@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.Constants;
 import com.nnlight.common.DateTimeUtil;
 import com.nnlightctl.dao.RepairRecordAutoCommitMapper;
 import com.nnlightctl.dao.RepairRecordMapper;
@@ -7,24 +8,21 @@ import com.nnlightctl.po.RepairRecord;
 import com.nnlightctl.po.RepairRecordAutoCommit;
 import com.nnlightctl.po.RepairRecordAutoCommitExample;
 import org.quartz.Job;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class QuartzRepairRecordAutoCommitServerImpl implements Job {
-
-    @Autowired
-    private RepairRecordAutoCommitMapper repairRecordAutoCommitMapper;
-
-    @Autowired
-    private RepairRecordMapper repairRecordMapper;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
+        RepairRecordAutoCommitMapper repairRecordAutoCommitMapper =
+                (RepairRecordAutoCommitMapper)jobDataMap.get(Constants.JOB_PARAM_KEY_REPAIRRECORDAUTOCOMMITMAPPER);
+        RepairRecordMapper repairRecordMapper = (RepairRecordMapper)jobDataMap.get(Constants.JOB_PARAM_KEY_REPAIRRECORDMAPPER);
+
         RepairRecordAutoCommitExample example = new RepairRecordAutoCommitExample();
         example.createCriteria().andAutoCommitTimeEqualTo(DateTimeUtil.nowWithoutSecond());
         List<RepairRecordAutoCommit> repairRecordAutoCommits = repairRecordAutoCommitMapper.selectByExample(example);
