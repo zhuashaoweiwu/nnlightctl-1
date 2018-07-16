@@ -1,7 +1,9 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.QuartzUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.RepairRecordAutoCommitMapper;
 import com.nnlightctl.dao.RepairRecordMapper;
 import com.nnlightctl.jdbcdao.PropertyManagerDao;
 import com.nnlightctl.po.*;
@@ -24,6 +26,8 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
     private PropertyManagerDao propertyManagerDao;
     @Autowired
     private RepairRecordMapper repairRecordMapper;
+    @Autowired
+    private RepairRecordAutoCommitMapper repairRecordAutoCommitMapper;
 
     @Override
     public List<ListDeviceRepairStatisticView> listDeviceRepaireStatistic(ListDeviceRepairStatisticRequest listDeviceRepairStatisticRequest){
@@ -113,4 +117,24 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
         return wb;
     }
 
+    @Override
+    public int setDateAutoCommitRepairRecord(RepaireRecordConditionRequest request) {
+        //生成自动提交维修记录
+        List<Long> autoCommitRCIds = request.getRepairRecordIds();
+        for (Long repairedRecordId : autoCommitRCIds) {
+            RepairRecordAutoCommit repairRecordAutoCommit = new RepairRecordAutoCommit();
+            repairRecordAutoCommit.setGmtCreated(new Date());
+            repairRecordAutoCommit.setGmtUpdated(new Date());
+            repairRecordAutoCommit.setRepairRecordId(repairedRecordId);
+            repairRecordAutoCommit.setAutoCommitTime(request.getCommitDate());
+            repairRecordAutoCommit.setCommitState((byte)0);
+
+            this.repairRecordAutoCommitMapper.insertSelective(repairRecordAutoCommit);
+        }
+
+        //启动定时器
+        QuartzUtil.addJob(QuartzRepairRecordAutoCommitServerImpl.class, request.getCommitDate());
+
+        return 1;
+    }
 }

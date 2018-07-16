@@ -847,4 +847,13 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("configAutoCommitRepairRecord")
+    public String configAutoCommitRepairRecord(RepaireRecordConditionRequest request) {
+        logger.info("[POST] /api/propertyManager/configAutoCommitRepairRecord");
+
+        //todo
+
+        return "";
+    }
 }

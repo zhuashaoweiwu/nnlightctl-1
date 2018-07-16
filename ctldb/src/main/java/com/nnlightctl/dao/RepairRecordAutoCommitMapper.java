@@ -10,13 +10,21 @@ public interface RepairRecordAutoCommitMapper {
 
     int deleteByExample(RepairRecordAutoCommitExample example);
 
+    int deleteByPrimaryKey(Long id);
+
     int insert(RepairRecordAutoCommit record);
 
     int insertSelective(RepairRecordAutoCommit record);
 
     List<RepairRecordAutoCommit> selectByExample(RepairRecordAutoCommitExample example);
 
+    RepairRecordAutoCommit selectByPrimaryKey(Long id);
+
     int updateByExampleSelective(@Param("record") RepairRecordAutoCommit record, @Param("example") RepairRecordAutoCommitExample example);
 
     int updateByExample(@Param("record") RepairRecordAutoCommit record, @Param("example") RepairRecordAutoCommitExample example);
+
+    int updateByPrimaryKeySelective(RepairRecordAutoCommit record);
+
+    int updateByPrimaryKey(RepairRecordAutoCommit record);
 }
