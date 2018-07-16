@@ -23,6 +23,8 @@ public class WorkOrderRequest {
 
     //private MultipartFile attachFilePath; // -- 附件
 
+    private String attachFilePath;
+
     private Date date;//  -- 日期
 
     private Integer timeType;//  -- 时间类型，0 - 月统计 1 - 年统计
@@ -69,6 +71,14 @@ public class WorkOrderRequest {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAttachFilePath() {
+        return attachFilePath;
+    }
+
+    public void setAttachFilePath(String attachFilePath) {
+        this.attachFilePath = attachFilePath;
     }
 
     public String getSerialNumber() {

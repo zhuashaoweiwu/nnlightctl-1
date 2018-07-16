@@ -25,4 +25,5 @@ public interface EleboxServer {
     HSSFWorkbook exportElebox(List<Long> eleboxIds);
     int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest);
     int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest);
+    int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest);
 }

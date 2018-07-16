@@ -1,8 +1,10 @@
 package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.WorkFlowerMapper;
+import com.nnlightctl.dao.WorkOrderHistoryMapper;
 import com.nnlightctl.dao.WorkOrderMapper;
 import com.nnlightctl.jdbcdao.WorkOrderDao;
 import com.nnlightctl.po.*;
@@ -24,6 +26,8 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     private WorkOrderMapper workOrderMapper;
     @Autowired
     private WorkOrderDao workOrderDao;
+    @Autowired
+    private WorkOrderHistoryMapper workOrderHistoryMapper;
     @Override
     public List<StatisticWorkOrderView> statisticWorkOrder(WorkOrderRequest request){
         List<StatisticWorkOrderView> statisticWorkOrderViewList = new ArrayList<>();
@@ -117,4 +121,38 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         return ret;
     }
 
+    @Override
+    public int addWordOrder(WorkOrderRequest request){
+        WorkOrder workOrder = new WorkOrder();
+        workOrder.setGmtUpdated(new Date());
+        workOrder.setAttachFilePath(request.getAttachFilePath());
+        workOrder.setGmtCreated(new Date());
+        workOrder.setSerialNumber(request.getSerialNumber());
+        workOrder.setClassify(request.getClassify());
+        workOrder.setNnlightctlWorkflowerId(request.getNnlightctlWorkflowerId());
+        workOrder.setPriority(request.getPriority());
+        workOrder.setNnlightctlRegionId(request.getNnlightctlRegionId());
+        workOrder.setAddress(request.getAddress());
+        workOrder.setNnlightctlMaskerId(request.getNnlightctlMaskerId());
+        workOrder.setContent(request.getContent());;
+        int ret = workOrderMapper.updateByPrimaryKey(workOrder);
+        return ret;
+    }
+    @Override
+    public Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(BaseRequest request){
+        Tuple.TwoTuple<List<WorkOrderHistory>, Integer> tuple = new Tuple.TwoTuple<>();
+
+        WorkOrderHistoryExample workOrderHistoryExample = new WorkOrderHistoryExample();
+        workOrderHistoryExample.setOrderByClause("id DESC");
+
+        int total =workOrderHistoryMapper.countByExample(workOrderHistoryExample);
+        tuple.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+
+        List<WorkOrderHistory> repertoryOutReasonList = workOrderHistoryMapper.selectByExample(workOrderHistoryExample);
+        tuple.setFirst(repertoryOutReasonList);
+
+        return tuple;
+    }
 }

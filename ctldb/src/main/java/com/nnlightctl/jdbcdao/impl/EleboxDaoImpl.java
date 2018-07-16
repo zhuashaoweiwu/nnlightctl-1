@@ -1,6 +1,7 @@
 package com.nnlightctl.jdbcdao.impl;
 
 import com.nnlightctl.jdbcdao.EleboxDao;
+import com.nnlightctl.request.BatchConfigLightsBeEleboxRequest;
 import com.nnlightctl.request.BatchSetEleboxAreaRequest;
 import com.nnlightctl.request.BatchSetLightingAreaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,16 @@ public class EleboxDaoImpl implements EleboxDao {
                 "id in (:lightIds)");
 
         return namedParameterJdbcTemplate.update(sql.toString(), params);
+    }
+
+    public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest){
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> params = new HashMap<>(3);
+        params.put("lightIds", batchConfigLightsBeEleboxRequest.getLightIds());
+        params.put("modelLoopId",batchConfigLightsBeEleboxRequest.getModelLoopId());
+        params.put("eleboxId",batchConfigLightsBeEleboxRequest.getBeEleboxId());
+        sql.append("update nnlightctl_lighting set nnlightctl_elebox_model_loop_id = :modelLoopId , nnlightctl_elebox_id = :eleboxId  where " +
+                "id in (:lightIds)");
+        return namedParameterJdbcTemplate.update(sql.toString(),params);
     }
 }

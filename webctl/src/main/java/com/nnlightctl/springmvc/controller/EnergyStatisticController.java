@@ -4,14 +4,19 @@ import com.nnlightctl.po.EleboxVolEleRecord;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.request.EleboxPowerRequest;
 import com.nnlightctl.request.LightingVolEleRecordRequest;
+import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EnergyStatisticServer;
+import com.nnlightctl.vo.CommonEnergyStatisticView;
+import com.nnlightctl.vo.GetEleboxEnergyStatisticView;
+import com.nnlightctl.vo.ListEleboxEnergyStatisticView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +28,30 @@ public class EnergyStatisticController extends BaseController{
     @Autowired
     private EnergyStatisticServer energyStatisticServer;
 
+    /*
+     *一、获取常规能耗统计数据
+     * */
+    @RequestMapping("getCommonEnergyStatistic")
+    public String getCommonEnergyStatistic(){
+        logger.info("[POST] /api/energyStatistic/getCommonEnergyStatistic");
+        List<CommonEnergyStatisticView> commonEnergyStatisticViewList = energyStatisticServer.getCommonEnergyStatistic();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(commonEnergyStatisticViewList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     *二、按月份获取每天的能耗
+     * */
+    @RequestMapping("listEnergyStatisticByDay")
+    public String listEnergyStatisticByDay(int month  ){
+        logger.info("[POST] /api/energyStatistic/listEnergyStatisticByDay");
+        List<CommonEnergyStatisticView> commonEnergyStatisticViewList = energyStatisticServer.listEnergyStatisticByDay(month);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(commonEnergyStatisticViewList);
+
+        return toJson(jsonResult);
+    }
     /*
     *三、通过控制柜id获取某段时间范围内的功率 （包括有功功率及无功功率）
     * */
@@ -65,6 +94,35 @@ public class EnergyStatisticController extends BaseController{
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(eleboxVolEleRecordList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     *六、通过时间段分页获取全部控制柜的能耗统计信息（每个控制柜都包括“亮灯率”、“消耗电能（kW*h）”、“节约电能”、“节能率”、“满载功率（kW）”）
+     * 现阶段只能获取到能耗，其余没有数据。
+     * */
+    @RequestMapping("listEleboxEnergyStatistic")
+    public String listEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request){
+        logger.info("[POST] /api/energyStatistic/listEleboxEnergyStatistic");
+        List<ListEleboxEnergyStatisticView> listEleboxEnergyStatisticViewList = energyStatisticServer.listEleboxEnergyStatistic(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(listEleboxEnergyStatisticViewList);
+
+        return toJson(jsonResult);
+    }
+    /*
+     *七、通过控制柜id获取单个控制柜的统计信息（每个控制柜都包括“亮灯率”、“消耗电能（kW*h）”、“节约电能”、“节能率”、“满载功率（kW）”）
+     * ，当时间范围多于一天时，同时返回控制柜每天的能耗，便于前端在选择一个控制柜后生成图表
+     * 现阶段只能获取到能耗，其余没有数据。
+     * */
+    @RequestMapping("getEleboxEnergyStatistic")
+    public String getEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request){
+        logger.info("[POST] /api/energyStatistic/getEleboxEnergyStatistic");
+        List<GetEleboxEnergyStatisticView> listEleboxEnergyStatisticViewList = energyStatisticServer.getEleboxEnergyStatistic(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(listEleboxEnergyStatisticViewList);
 
         return toJson(jsonResult);
     }

@@ -790,4 +790,19 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
 
     }
+    /*
+     *三十五、批量设置灯具所属控制柜
+     * */
+    @RequestMapping("batchConfigLightsBeElebox")
+    public String batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest request){
+        logger.info("[POST] /api/roadlighting/batchConfigLightsBeElebox");
+        int ret =eleboxServer.batchConfigLightsBeElebox(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
 }

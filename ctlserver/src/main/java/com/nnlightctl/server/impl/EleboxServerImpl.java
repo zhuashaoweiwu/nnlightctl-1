@@ -319,4 +319,8 @@ public class EleboxServerImpl implements EleboxServer {
     public int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
         return eleboxDao.batchSetLightingArea(batchSetLightingAreaRequest);
     }
+
+    public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest){
+        return eleboxDao.batchConfigLightsBeElebox(batchConfigLightsBeEleboxRequest);
+    }
 }
