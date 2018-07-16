@@ -852,8 +852,14 @@ public class PropertyManagerController extends BaseController {
     public String configAutoCommitRepairRecord(RepaireRecordConditionRequest request) {
         logger.info("[POST] /api/propertyManager/configAutoCommitRepairRecord");
 
-        //todo
+        int ret = propertyManagerServer.setDateAutoCommitRepairRecord(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
 
-        return "";
+        return toJson(jsonResult);
     }
 }

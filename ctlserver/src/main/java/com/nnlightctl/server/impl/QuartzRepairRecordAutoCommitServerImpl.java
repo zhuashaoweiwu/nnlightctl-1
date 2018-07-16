@@ -38,6 +38,7 @@ public class QuartzRepairRecordAutoCommitServerImpl implements Job {
 
             //更新自动提交维修记录表已执行状态
             repairRecordAutoCommit.setCommitState((byte)1);
+            repairRecordAutoCommitMapper.updateByPrimaryKeySelective(repairRecordAutoCommit);
         }
     }
 }
