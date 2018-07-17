@@ -100,6 +100,14 @@ public class LightRequest {
         this.mem = mem;
     }
 
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
     private Long id;
     private String uid;
     private Date manufacture;
@@ -112,6 +120,7 @@ public class LightRequest {
     private String decay;
     private Long maxUseTime;
     private String mem;
+    private Long nnlightctlProjectId;
 
     public static class BatchLightRequest {
         public List<LightRequest> getAddLightings() {
