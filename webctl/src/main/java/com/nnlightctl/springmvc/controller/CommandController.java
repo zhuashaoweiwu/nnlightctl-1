@@ -132,4 +132,47 @@ public class CommandController extends BaseController {
 
         commandServer.commandReadTerminalInfo();
     }
+
+    @RequestMapping("sendLightAdjustCommandBatch")
+    public String batchLightAdjustCommand(CommandRequest request) {
+        logger.info("[POST] /api/command/sendLightAdjustCommandBatch");
+
+        //todo
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("resetCommandBatch")
+    public String batchResetCommand(CommandRequest request) {
+        logger.info("[POST] /api/command/resetCommandBatch");
+
+        //todo
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("configTerminalSendMsgPeriodBatch")
+    public String batchConfigTerminalSendMsgPeriod(CommandRequest request) {
+        logger.info("[POST] /api/command/configTerminalSendMsgPeriodBatch");
+
+        //todo
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("commandTerminalEleboxOnBatch")
+    public String batchCommandTerminalEleboxOn(CommandRequest request) {
+        logger.info("[POST] /api/command/commandTerminalEleboxOnBatch");
+
+        //todo
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("commandReadTerminalInfoBatch")
+    public void batchCommandReadTerminalInfo(CommandRequest request) {
+        logger.info("[POST] /api/command/commandReadTerminalInfoBatch");
+
+        //todo
+    }
 }

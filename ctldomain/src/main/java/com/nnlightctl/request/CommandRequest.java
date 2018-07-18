@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import java.util.List;
+
 public class CommandRequest {
     public String getMsg() {
         return msg;
@@ -32,6 +34,27 @@ public class CommandRequest {
     public void setTerminalEleboxOn(Boolean terminalEleboxOn) {
         this.terminalEleboxOn = terminalEleboxOn;
     }
+
+
+    public List<Long> getEleboxIds() {
+        return eleboxIds;
+    }
+
+    public void setEleboxIds(List<Long> eleboxIds) {
+        this.eleboxIds = eleboxIds;
+    }
+
+    public List<Long> getLightIds() {
+        return lightIds;
+    }
+
+    public void setLightIds(List<Long> lightIds) {
+        this.lightIds = lightIds;
+    }
+
+    private List<Long> eleboxIds;
+
+    private List<Long> lightIds;
 
     private Boolean terminalEleboxOn;
 
