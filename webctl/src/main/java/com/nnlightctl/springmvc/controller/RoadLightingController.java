@@ -805,4 +805,20 @@ public class RoadLightingController extends BaseController {
         }
         return toJson(jsonResult);
     }
+
+    @RequestMapping("updateLightPriority")
+    public String updateLightPriority(LightConditionRequest request) {
+        logger.info("[POST] /api/roadlighting/updateLightPriority");
+
+        int ret = lightServer.updateLightPriority(request);
+
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }

@@ -295,4 +295,13 @@ public class LightServerImpl implements LightServer {
     public Tuple.TwoTuple<List<LightingView>, Integer> listLoopLighting(LightConditionRequest request) {
         return lightDao.listLoopLightingView(request);
     }
+
+    @Override
+    public int updateLightPriority(LightConditionRequest request) {
+        Lighting lighting = new Lighting();
+        lighting.setId(request.getId());
+        lighting.setLoopPriority(request.getPriority().byteValue());
+
+        return lightingMapper.updateByPrimaryKeySelective(lighting);
+    }
 }

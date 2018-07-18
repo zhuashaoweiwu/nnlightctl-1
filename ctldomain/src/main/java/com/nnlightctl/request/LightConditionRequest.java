@@ -99,6 +99,25 @@ public class LightConditionRequest extends BaseRequest {
         this.originalLightIds = originalLightIds;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
+    private Long id;
+    private Integer priority;
+
     private String startLongitude;
     private String startLatitude;
     private String endLongitude;
