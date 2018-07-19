@@ -238,7 +238,7 @@ public class CommandData implements Serializable {
 
         this.dataLength = tmpDataLength;
         this.data = new byte[ByteConvert.byteToUbyte(tmpDataLength)];
-        System.arraycopy(strBytes, 0, this.data, 0, strBytes.length);
+        System.arraycopy(strBytes, 0, this.data, 0, data.length);
         this.check = createCheck();
     }
 
