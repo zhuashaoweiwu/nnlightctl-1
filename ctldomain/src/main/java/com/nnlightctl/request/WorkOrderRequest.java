@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 public class WorkOrderRequest {
@@ -21,9 +23,9 @@ public class WorkOrderRequest {
 
     private String content;  //-- 工单内容
 
-    //private MultipartFile attachFilePath; // -- 附件
+    private MultipartFile attachFilePath; // -- 附件
 
-    private String attachFilePath;
+    private String path;
 
     private Date date;//  -- 日期
 
@@ -73,11 +75,19 @@ public class WorkOrderRequest {
         this.id = id;
     }
 
-    public String getAttachFilePath() {
+    public MultipartFile getAttachFilePath() {
         return attachFilePath;
     }
 
-    public void setAttachFilePath(String attachFilePath) {
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setAttachFilePath(MultipartFile attachFilePath) {
         this.attachFilePath = attachFilePath;
     }
 

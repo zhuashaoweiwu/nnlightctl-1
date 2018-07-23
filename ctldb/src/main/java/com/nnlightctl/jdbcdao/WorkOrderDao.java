@@ -1,8 +1,11 @@
 package com.nnlightctl.jdbcdao;
 
 import com.nnlightctl.po.WorkOrder;
+import com.nnlightctl.po.WorkflowerNode;
+import com.nnlightctl.request.WorkFlowerRequest;
 import com.nnlightctl.request.WorkOrderRequest;
 import com.nnlightctl.vo.StatisticWorkOrderView;
+import com.nnlightctl.vo.WorkFlowerNodeMapView;
 
 import java.util.List;
 
@@ -24,7 +27,9 @@ public interface WorkOrderDao {
     List<StatisticWorkOrderView> statisticWorkOrderYearTotalByRegion(String date);
     //通过区域分类查询年的完成的工单总数
     List<StatisticWorkOrderView> statisticWorkOrderYearFinishByRegion(String date);
-
     List<WorkOrder> listWorkOrderMouth(String date);
     List<WorkOrder> listWorkOrderYear(String date);
+    int addOrUpdateWorkFlowerMap(List<Long> workFlowerNodeIds , Long WorkFlowerId);
+    List<WorkFlowerNodeMapView> listWorkflowerNodeMapByWorkflowerId(Long workflowerId);
+    int deleteWorkflowerNodeMapByWorkflowerId(Long workflowerId);
 }

@@ -117,16 +117,16 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticYear(){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) as totel  ,SUBSTR(record_datetime ,1,4) as year FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
-        Date date = new Date();
-        String year = date.getYear()+"";
-        sql.append("and SUBSTR(record_datetime ,1,4) = "+year);
-        param.add("year");
+        sql.append("SELECT sum(energy) as total  ,SUBSTR(record_datetime ,1,4) as year FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        Calendar now = Calendar.getInstance();
+        String year = now.get(Calendar.YEAR)+"";
+        sql.append("and SUBSTR(record_datetime ,1,4) = ? ");
+        param.add(year);
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
-                commonEnergyStatisticView.setTotal(resultSet.getLong("totel"));
+                commonEnergyStatisticView.setTotal(resultSet.getLong("total"));
                 commonEnergyStatisticView.setYear(resultSet.getString("year"));
                 return commonEnergyStatisticView;
             }
@@ -140,8 +140,15 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         List<Object> param = new ArrayList<>(1);
         sql.append("SELECT sum(energy) total ,SUBSTR(record_datetime ,1,7) as mouth   FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
         Date date = new Date();
-        String year = date.getYear()+"";
-        String mouth = (date.getMonth()+1)+"";
+        Calendar now = Calendar.getInstance();
+        String year = now.get(Calendar.YEAR)+"";
+        String mouth = "";
+        if (date.getMonth()+1 < 10){
+            mouth = "0"+(date.getMonth()+1);
+        }else {
+            mouth = ""+(date.getMonth()+1);
+        }
+
         sql.append(" and SUBSTR(record_datetime ,1,7) = ? ");
         param.add(year+"-"+mouth);
 
@@ -162,11 +169,24 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticDate(){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) as totel ,SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT sum(energy) as total ,SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
         Date date = new Date();
-        String year = date.getYear()+"";
-        String mouth = (date.getMonth()+1)+"";
-        String d = date.getDate()-1+"";
+        Calendar now = Calendar.getInstance();
+        String year = now.get(Calendar.YEAR)+"";
+        String mouth = "";
+        String d = "";
+        if (date.getMonth()+1<10){
+           mouth = ("0"+(date.getMonth()+1));
+        }else {
+            mouth = (date.getMonth()+1)+"";
+        }
+        if (date.getDate() < 11) {
+            d = "0"+(date.getDate()-1);
+        }else {
+            d = ""+(date.getDate()-1);
+        }
+
+
         String yestoday = year +"-"+ mouth+"-"+d;
 
         sql.append("and SUBSTR(record_datetime ,1,10) = ? ");
@@ -188,11 +208,17 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<CommonEnergyStatisticView> listEnergyStatisticByDay(int month ){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) AS total , SUBSTR(record_datetime ,1,10) as time FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT sum(energy) AS total , SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
 
         sql.append("and SUBSTR(record_datetime ,1,7) = ? ");
-        Date date = new Date();
-        param.add(date.getYear()+"-"+month);
+        Calendar now = Calendar.getInstance();
+        String year = now.get(Calendar.YEAR)+"";
+        if (month < 10) {
+            param.add(year+"-0"+month);
+        }else {
+            param.add(year+"-"+month);
+        }
+
         sql.append(" GROUP BY SUBSTR(record_datetime ,1,10)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
@@ -210,13 +236,13 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<ListEleboxEnergyStatisticView> listEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(2);
-        sql.append("SELECT uid ,SUM(electricity) as total  from nnlightctl_elebox_vol_ele_record ");
+        sql.append("SELECT uid ,SUM(electricity) as total  from nnlightctl_elebox_vol_ele_record where 1=1 ");
         if (request.getStartDate() != null){
             sql.append("and realtime_date >= ? ");
             param.add(request.getStartDate());
         }
         if(request.getEndDate() != null){
-            sql.append("and realtime_date <= ? ");
+            sql.append(" and realtime_date <= ? ");
             param.add(request.getEndDate());
         }
         sql.append(" GROUP BY uid ");

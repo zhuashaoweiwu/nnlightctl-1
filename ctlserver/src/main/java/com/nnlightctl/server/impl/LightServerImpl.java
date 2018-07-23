@@ -12,9 +12,8 @@ import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.vo.LightingView;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -224,6 +223,8 @@ public class LightServerImpl implements LightServer {
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
         HSSFRow row1 = sheet.createRow(0);
         //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
+        Font font = wb.createFont();
+        font.setColor(HSSFFont.COLOR_RED);
         row1.createCell(0).setCellValue("UID");
         row1.createCell(1).setCellValue("生产日期");
         row1.createCell(2).setCellValue("使用日期");

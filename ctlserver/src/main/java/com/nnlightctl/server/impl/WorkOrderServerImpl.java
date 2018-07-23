@@ -3,15 +3,15 @@ package com.nnlightctl.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
-import com.nnlightctl.dao.WorkFlowerMapper;
-import com.nnlightctl.dao.WorkOrderHistoryMapper;
-import com.nnlightctl.dao.WorkOrderMapper;
+import com.nnlightctl.dao.*;
 import com.nnlightctl.jdbcdao.WorkOrderDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.WorkOrderRequest;
+import com.nnlightctl.server.WorkFlowerNodeServer;
 import com.nnlightctl.server.WorkOrderServer;
 import com.nnlightctl.vo.StatisticWorkOrderView;
+import com.nnlightctl.vo.WorkFlowerNodeMapView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,12 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     private WorkOrderDao workOrderDao;
     @Autowired
     private WorkOrderHistoryMapper workOrderHistoryMapper;
+    @Autowired
+    private WorkFlowerMapper workFlowerMapper;
+    @Autowired
+    private WorkflowerMoveRecordMapper workflowerMoveRecordMapper;
+    @Autowired
+    private WorkflowerNodeMapper workflowerNodeMapper;
     @Override
     public List<StatisticWorkOrderView> statisticWorkOrder(WorkOrderRequest request){
         List<StatisticWorkOrderView> statisticWorkOrderViewList = new ArrayList<>();
@@ -92,6 +98,51 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         return statisticWorkOrderViewList;
     }
     @Override
+    public List<WorkOrder> statisticWorkOrderAvg(WorkOrderRequest request){
+        List<WorkOrder> workOrderList1 = new ArrayList<>();
+        if (request.getTimeType()==0){
+            SimpleDateFormat df=new SimpleDateFormat("yyyy-MM");
+            String  time=  df.format(request.getDate());
+            workOrderList1 = workOrderDao.listWorkOrderMouth(time);
+        }else if (request.getTimeType()==1){
+            SimpleDateFormat df=new SimpleDateFormat("yyyy");
+            String  time=  df.format(request.getDate());
+            workOrderList1 = workOrderDao.listWorkOrderYear(time);
+        }
+        if (!workOrderList1.isEmpty()) {
+            for (int i = 0 ; i < workOrderList1.size() ; i++){
+                Long done =  workOrderList1.get(i).getWorkDone().getTime();
+                Long  created= workOrderList1.get(i).getWorkCreated().getTime();
+                System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
+                System.out.println(done +"*****"+created);
+                Long time = done -created;
+                workOrderList1.get(i).setNnlightctlRegionId(time);
+            }
+        }
+        List<WorkOrder> workOrderList = new ArrayList<>();
+        for (int j = 0 ; j<workOrderList1.size() ;j++){
+            int count = 1;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss");
+
+            Long project = workOrderList1.get(j).getNnlightctlProjectId();
+            Long totalTime = workOrderList1.get(j).getNnlightctlRegionId();
+            for (int k = 0 ; k <workOrderList1.size() ; k++){
+                if (workOrderList1.get(k).getNnlightctlProjectId()== project){
+                    if (j!=k){
+                        count++;
+                        totalTime = totalTime+workOrderList1.get(k).getNnlightctlRegionId();
+                    }
+                    workOrderList1.remove(k);
+                }
+            }
+            Long avg = totalTime/count/60/1000/60;
+            System.out.println(avg+"&&&&&&&&&&&&&&&");
+            workOrderList1.get(j).setNnlightctlRegionId(avg);
+        }
+        return workOrderList1;
+
+    }
+    @Override
     public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(BaseRequest request){
         Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = new Tuple.TwoTuple<>();
 
@@ -111,21 +162,44 @@ public class WorkOrderServerImpl implements WorkOrderServer {
 
     @Override
     public  int claimWordOrder(WorkOrderRequest request){
+       WorkOrder workOrder2 = workOrderMapper.selectByPrimaryKey(request.getWorkOrderId());
+
+        WorkflowerMoveRecord workflowerMoveRecord = new WorkflowerMoveRecord();
+        workflowerMoveRecord.setGmtCreated(new Date());
+        workflowerMoveRecord.setGmtUpdated(new Date());
+        workflowerMoveRecord.setNnlightctlWorkOrderId(request.getWorkOrderId());
+        workflowerMoveRecord.setNnlightctlWorkflowerId(workOrder2.getNnlightctlWorkflowerId());
+        Byte passState = 0;
+        workflowerMoveRecord.setPassState(passState);
+
+        workflowerMoveRecordMapper.insertSelective(workflowerMoveRecord);
+
         WorkOrder workOrder = new WorkOrder();
         workOrder.setId(request.getWorkOrderId());
         workOrder.setGmtUpdated(new Date());
         workOrder.setNnlightctlMaskerId(request.getTaskerId());
         Byte state = 2;
         workOrder.setState(state);
-        int ret = workOrderMapper.updateByPrimaryKey(workOrder);
+        int ret = workOrderMapper.updateByPrimaryKeySelective(workOrder);
         return ret;
     }
 
     @Override
     public int addWordOrder(WorkOrderRequest request){
+
+        WorkFlower workFlower = new WorkFlower();
+
+        workFlower.setGmtUpdated(new Date());
+        workFlower.setGmtCreated(new Date());
+        Byte state = 0;
+        workFlower.setState(state);
+        workFlower.setMem(request.getContent());
+        workFlower.setWorkflowerName(request.getAddress());
+        int ret2 = workFlowerMapper.insertSelective(workFlower);
+
         WorkOrder workOrder = new WorkOrder();
         workOrder.setGmtUpdated(new Date());
-        workOrder.setAttachFilePath(request.getAttachFilePath());
+        workOrder.setAttachFilePath(request.getPath());
         workOrder.setGmtCreated(new Date());
         workOrder.setSerialNumber(request.getSerialNumber());
         workOrder.setClassify(request.getClassify());
@@ -135,7 +209,11 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         workOrder.setAddress(request.getAddress());
         workOrder.setNnlightctlMaskerId(request.getNnlightctlMaskerId());
         workOrder.setContent(request.getContent());;
-        int ret = workOrderMapper.updateByPrimaryKey(workOrder);
+        workOrder.setNnlightctlWorkflowerId(workFlower.getId());
+        Byte s = 1;
+        workOrder.setState(s );
+        workOrder.setWorkCreated(new Date());
+        int ret = workOrderMapper.insertSelective(workOrder);
         return ret;
     }
     @Override
@@ -154,5 +232,17 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         tuple.setFirst(repertoryOutReasonList);
 
         return tuple;
+    }
+    @Override
+    public  List<WorkflowerNode> selectPreviewWorkFlower(Long workOrderId){
+        WorkOrder workOrder = workOrderMapper.selectByPrimaryKey(workOrderId);
+        Long workFlowerId = workOrder.getNnlightctlWorkflowerId();
+        List<WorkFlowerNodeMapView> workFlowerNodeMapViewList = workOrderDao.listWorkflowerNodeMapByWorkflowerId(workFlowerId);
+        List<WorkflowerNode> workflowerNodeList = new ArrayList<>();
+        for(int i = 0 ; i<workFlowerNodeMapViewList.size() ; i++ ){
+            WorkflowerNode workflowerNode = workflowerNodeMapper.selectByPrimaryKey(workFlowerNodeMapViewList.get(i).getNnlightctlWorkflowerNodeId());
+            workflowerNodeList.add(workflowerNode);
+        }
+        return workflowerNodeList;
     }
 }

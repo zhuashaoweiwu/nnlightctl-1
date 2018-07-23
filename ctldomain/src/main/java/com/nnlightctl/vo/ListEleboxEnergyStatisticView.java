@@ -2,7 +2,7 @@ package com.nnlightctl.vo;
 
 import com.nnlightctl.request.BaseRequest;
 
-public class ListEleboxEnergyStatisticView extends BaseRequest{
+public class ListEleboxEnergyStatisticView{
 
     private Long total;
 

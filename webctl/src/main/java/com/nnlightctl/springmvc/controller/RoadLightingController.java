@@ -715,12 +715,12 @@ public class RoadLightingController extends BaseController {
             // 项目在容器中实际发布运行的根路径
             String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="/elebox.png";
+            String trueFileName="\\elebox.png";
             // 设置存放图片文件的路径
             path=realPath+trueFileName;
             System.out.println("存放图片文件的路径:"+path);
             try{
-                File tempFile = new File( path);
+                File tempFile = new File( realPath);
                 // 判断父级目录是否存在，不存在则创建
                 if (!tempFile.getParentFile().exists()) {
                     tempFile.getParentFile().mkdir();
@@ -743,7 +743,7 @@ public class RoadLightingController extends BaseController {
     }
 
     /*
-     * 三十二、上传控制柜地图图标
+     * 三十四、上传灯具在GIS地图上显示的图标
      * */
     @RequestMapping("uploadLightGisIcon")
     public String uploadLightGisIcon(MultipartFile lightGisIcon ,HttpServletRequest request,HttpServletResponse response){
@@ -764,12 +764,12 @@ public class RoadLightingController extends BaseController {
             // 项目在容器中实际发布运行的根路径
             String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="/light.png";
+            String trueFileName="\\light.png";
             // 设置存放图片文件的路径
             path=realPath+trueFileName;
             System.out.println("存放图片文件的路径:"+path);
             try{
-                File tempFile = new File( path);
+                File tempFile = new File( realPath);
                 // 判断父级目录是否存在，不存在则创建
                 if (!tempFile.getParentFile().exists()) {
                     tempFile.getParentFile().mkdir();

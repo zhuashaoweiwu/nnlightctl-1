@@ -1,9 +1,13 @@
 package com.nnlightctl.jdbcdao.impl;
 
 import com.nnlightctl.jdbcdao.WorkOrderDao;
+import com.nnlightctl.jdbcmapper.LightingGroupMapBatch;
+import com.nnlightctl.jdbcmapper.WorkflowerNodeMapBatch;
 import com.nnlightctl.po.WorkOrder;
+import com.nnlightctl.request.WorkFlowerRequest;
 import com.nnlightctl.request.WorkOrderRequest;
 import com.nnlightctl.vo.StatisticWorkOrderView;
+import com.nnlightctl.vo.WorkFlowerNodeMapView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -274,5 +278,46 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
             }
         });
         return workOrderList;
+    }
+    @Override
+    public int addOrUpdateWorkFlowerMap(List<Long> workFlowerNodeIds , Long WorkFlowerId){
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("INSERT INTO nnlightctl_workflower_node_map(gmt_created, gmt_updated, nnlightctl_workflower_id, nnlightctl_workflower_node_id ,order_number) " +
+                "values (?, ?, ?, ?,?)");
+
+        int[] result = jdbcTemplate.batchUpdate(sql.toString(), new WorkflowerNodeMapBatch(WorkFlowerId, workFlowerNodeIds));
+
+        return result.length;
+    }
+    @Override
+    public List<WorkFlowerNodeMapView> listWorkflowerNodeMapByWorkflowerId(Long workflowerId){
+        StringBuilder sql = new StringBuilder();
+        List<Object> param = new ArrayList<>(1);
+        sql.append("SELECT id,gmt_created ,gmt_updated ,nnlightctl_workflower_id ,nnlightctl_workflower_node_id ,order_number FROM nnlightctl_workflower_node_map ");
+        if (workflowerId !=null ){
+            sql.append(" where nnlightctl_workflower_id = ?");
+            param.add(workflowerId);
+        }
+        List<WorkFlowerNodeMapView> workFlowerNodeMapViewList = jdbcTemplate.query(sql.toString(), param.toArray(),new RowMapper<WorkFlowerNodeMapView>() {
+            @Override
+            public WorkFlowerNodeMapView mapRow(ResultSet resultSet, int i) throws SQLException {
+                WorkFlowerNodeMapView workFlowerNodeMapView = new WorkFlowerNodeMapView();
+                workFlowerNodeMapView.setId(resultSet.getLong("id"));
+                workFlowerNodeMapView.setGmtCreated(resultSet.getDate("gmt_created"));
+                workFlowerNodeMapView.setGmtUpdated(resultSet.getDate("gmt_updated"));
+                workFlowerNodeMapView.setNnlightctlWorkflowerId(resultSet.getLong("nnlightctl_workflower_id"));
+                workFlowerNodeMapView.setNnlightctlWorkflowerNodeId(resultSet.getLong("nnlightctl_workflower_node_id"));
+                workFlowerNodeMapView.setOrderNumber(resultSet.getLong("order_number"));
+                return workFlowerNodeMapView;
+            }
+        });
+        return workFlowerNodeMapViewList;
+    }
+    @Override
+    public int deleteWorkflowerNodeMapByWorkflowerId(Long workflowerId){
+        StringBuilder sql = new StringBuilder();
+        sql.append("delete from nnlightctl_workflower_node_map where nnlightctl_workflower_id = ?");
+        return jdbcTemplate.update(sql.toString(), new Object[] {workflowerId});
     }
 }
