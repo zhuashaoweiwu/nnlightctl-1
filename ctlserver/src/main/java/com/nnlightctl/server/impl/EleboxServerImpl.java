@@ -12,14 +12,8 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -289,14 +283,14 @@ public class EleboxServerImpl implements EleboxServer {
             row.createCell(0).setCellValue(elebox.getUid());
             row.createCell(1).setCellValue(elebox.getCodeNumber());
             if (elebox.getManufacture() != null) {
-                row.createCell(2).setCellValue(elebox.getManufacture());
+                row.createCell(2).setCellValue(elebox.getManufacture()+"");
             } else {
                 row.createCell(2).setCellValue("");
             }
             row.createCell(3).setCellValue(elebox.getLongitude());
             row.createCell(4).setCellValue(elebox.getLatitude());
             if (elebox.getUseDate() != null) {
-                row.createCell(5).setCellValue(elebox.getUseDate());
+                row.createCell(5).setCellValue(elebox.getUseDate()+"");
             } else {
                 row.createCell(5).setCellValue("");
             }

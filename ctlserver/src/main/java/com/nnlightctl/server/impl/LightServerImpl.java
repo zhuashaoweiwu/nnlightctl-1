@@ -243,12 +243,12 @@ public class LightServerImpl implements LightServer {
             //创建单元格并设置单元格内容
             row.createCell(0).setCellValue(lighting.getUid());
             if (lighting.getManufacture() != null) {
-                row.createCell(1).setCellValue(lighting.getManufacture());
+                row.createCell(1).setCellValue(lighting.getManufacture()+"");
             } else {
                 row.createCell(1).setCellValue("");
             }
             if (lighting.getUseDate() != null) {
-                row.createCell(2).setCellValue(lighting.getUseDate());
+                row.createCell(2).setCellValue(lighting.getUseDate()+"");
             } else {
                 row.createCell(2).setCellValue("");
             }
