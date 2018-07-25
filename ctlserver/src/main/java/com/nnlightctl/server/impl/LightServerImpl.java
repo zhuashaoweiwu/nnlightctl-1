@@ -195,8 +195,8 @@ public class LightServerImpl implements LightServer {
                     lighting.setLamppost(hssfRow.getCell(3).getStringCellValue());
                     lighting.setLamphead(hssfRow.getCell(4).getStringCellValue());
                     lighting.setPropertySerialNumber(hssfRow.getCell(5).getStringCellValue());
-                    lighting.setDecay(new BigDecimal(hssfRow.getCell(6).getStringCellValue()));
-                    lighting.setMaxUseTime(Long.parseLong(hssfRow.getCell(7).getStringCellValue()));
+                    lighting.setDecay(new BigDecimal(hssfRow.getCell(6).getNumericCellValue()));
+                    lighting.setMaxUseTime(Math.round((hssfRow.getCell(7).getNumericCellValue())));
                     lighting.setMem(hssfRow.getCell(8).getStringCellValue());
 
                     lighting.setGmtCreated(new Date());

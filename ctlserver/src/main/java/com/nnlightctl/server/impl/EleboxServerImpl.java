@@ -13,8 +13,10 @@ import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -230,7 +232,7 @@ public class EleboxServerImpl implements EleboxServer {
                     elebox.setRatedElectricty(new BigDecimal(hssfRow.getCell(7).getStringCellValue()));
                     elebox.setPowerRating(new BigDecimal(hssfRow.getCell(8).getStringCellValue()));
                     try {
-                        elebox.setMaxUseTime(Long.parseLong(hssfRow.getCell(9).getStringCellValue()));
+                        elebox.setMaxUseTime(Math.round(hssfRow.getCell(9).getNumericCellValue()));
                     } catch (NumberFormatException e) {
                         elebox.setMaxUseTime(null);
                     }
@@ -260,6 +262,18 @@ public class EleboxServerImpl implements EleboxServer {
         //创建表头
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
         HSSFRow row1 = sheet.createRow(0);
+
+        HSSFCellStyle cellStyle= wb.createCellStyle();
+
+        cellStyle.setBottomBorderColor(HSSFColor.BLACK.index);
+
+        cellStyle.setLeftBorderColor(HSSFColor.BLACK.index);
+
+        cellStyle.setRightBorderColor(HSSFColor.BLACK.index);
+
+        cellStyle.setTopBorderColor(HSSFColor.BLACK.index);
+
+        row1.setRowStyle(cellStyle);
         //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
         row1.createCell(0).setCellValue("UID");
         row1.createCell(1).setCellValue("唯一编码");
