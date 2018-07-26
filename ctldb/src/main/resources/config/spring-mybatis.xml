@@ -18,7 +18,7 @@
 
     <!-- ========================================配置数据源========================================= -->
     <!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
-    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean name="dataSourceMaster" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url}" />
         <property name="username" value="${jdbc_username}" />
         <property name="password" value="${jdbc_password}" />
@@ -66,6 +66,112 @@
         <!-- 监控统计拦截的filters,日志记录 -->
         <property name="filters">
             <value>stat,wall,slf4j</value>
+        </property>
+    </bean>
+
+    <!-- slave1 -->
+    <bean name="dataSourceSlave1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc_url_slave1}" />
+        <property name="username" value="${jdbc_username}" />
+        <property name="password" value="${jdbc_password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="5" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="20" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 每隔n毫秒数把监控数据输出到日志中 -->
+        <property name ="timeBetweenLogStatsMillis" value ="600000" />
+        <!-- 自定义实现输入监控数据到日志 -->
+        <!--<property name ="statLogger" ref ="localStatLogger" />-->
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+        <!-- 监控数据库 -->
+        <!-- 监控统计拦截的filters,日志记录 -->
+        <!-- 并在filters属性中配置了log4j -->
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter" />
+                <ref bean="log-filter" />
+            </list>
+        </property>
+        <!-- <property name="filters" value="stat" /> -->
+        <!--<property name="filters" value="mergeStat" />-->
+        <!-- 监控统计拦截的filters,日志记录 -->
+        <property name="filters">
+            <value>stat,wall,slf4j</value>
+        </property>
+    </bean>
+
+    <!-- slave2 -->
+    <bean name="dataSourceSlave2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc_url_slave2}" />
+        <property name="username" value="${jdbc_username}" />
+        <property name="password" value="${jdbc_password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="5" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="20" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 每隔n毫秒数把监控数据输出到日志中 -->
+        <property name ="timeBetweenLogStatsMillis" value ="600000" />
+        <!-- 自定义实现输入监控数据到日志 -->
+        <!--<property name ="statLogger" ref ="localStatLogger" />-->
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+        <!-- 监控数据库 -->
+        <!-- 监控统计拦截的filters,日志记录 -->
+        <!-- 并在filters属性中配置了log4j -->
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter" />
+                <ref bean="log-filter" />
+            </list>
+        </property>
+        <!-- <property name="filters" value="stat" /> -->
+        <!--<property name="filters" value="mergeStat" />-->
+        <!-- 监控统计拦截的filters,日志记录 -->
+        <property name="filters">
+            <value>stat,wall,slf4j</value>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.nnlightctl.dynamicdatasource.DynamicDataSource">
+        <property name="master" ref="dataSourceMaster"></property>
+        <property name="slaves">
+            <list>
+                <ref bean="dataSourceSlave1"></ref>
+                <ref bean="dataSourceSlave2"></ref>
+            </list>
         </property>
     </bean>
 
@@ -127,7 +233,7 @@
     </bean>
 
     <!-- 配置Spring的事务管理器 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="com.nnlightctl.dynamicdatasource.DynamicDataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
@@ -144,10 +250,10 @@
             <tx:method name="addOrUpdate*" propagation="REQUIRED" />
             <tx:method name="add*" propagation="REQUIRED" />
 
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="select*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" />
         </tx:attributes>
     </tx:advice>
 
