@@ -37,19 +37,18 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     protected DataSource determineTargetDataSource() {
         DataSource dataSource = null;
-        if (DateSourceHolder.isMaster())
+        if (DateSourceHolder.isMaster()) {
             dataSource = master;
-        else if (DateSourceHolder.isSlave()) {
+        } else {
             int count = counter.getAndIncrement();
             if (count > 1000000)
                 counter.set(0);
-            //简单轮循
+            //轮循策略
             int sequence = count % slaves.size();
             dataSource = slaves.get(sequence);
-        } else
-            dataSource = master;
+        }
 
-        //纯粹为了调试打印，线上需要注释掉
+        //调试，打印出DataSource
         if (dataSource instanceof com.alibaba.druid.pool.DruidDataSource) {
             com.alibaba.druid.pool.DruidDataSource ds = (com.alibaba.druid.pool.DruidDataSource) dataSource;
             String jdbcUrl = ds.getUrl();

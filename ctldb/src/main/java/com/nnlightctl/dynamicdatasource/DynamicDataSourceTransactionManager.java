@@ -8,10 +8,12 @@ public class DynamicDataSourceTransactionManager extends DataSourceTransactionMa
     @Override
     protected void doBegin(Object transaction, TransactionDefinition definition) {
         boolean readOnly = definition.isReadOnly();//获取当前事务切点的方法的读写属性（在spring的xml或者事务注解中的配置）
-        if (readOnly)
+        if (readOnly) {
             DateSourceHolder.setSlave();
-        else
+        }
+        else {
             DateSourceHolder.setMaster();
+        }
         super.doBegin(transaction, definition);
     }
 
