@@ -6,6 +6,7 @@ import com.nnlight.netcodec.CommandDataEncoder;
 import com.nnlight.netty.handler.EchoServerHandler;
 import com.nnlight.netty.handler.HeartbeatServerHandler;
 import com.nnlight.netty.server.po.ChannelWrap;
+import com.nnlightctl.kafka.produce.Produce;
 import com.nnlightctl.net.CommandData;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -31,6 +32,8 @@ public class EchoServer {
     private Map<String, ChannelWrap> commandMap;
 
     private static EchoServer globalApplicationContext;
+
+    private final Produce produce = new Produce();
 
     public EchoServer(int port) {
         this.port = port;
@@ -170,6 +173,14 @@ public class EchoServer {
             ChannelHandlerContext context = entry.getValue().getContext();
             context.channel().writeAndFlush(commandData);
         }
+    }
+
+    /**
+     * 将E0消息发送到Kafka
+     * @param e0CommandData
+     */
+    public void sendE02Kafka(CommandData e0CommandData) {
+        produce.send(e0CommandData);
     }
 
 

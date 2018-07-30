@@ -16,5 +16,7 @@ public class E0Process implements Process {
         logger.info("接收E0固定消息");
 
         EchoServer.getGlobalApplicationContext().allClientSendCommand(msg);
+        //发送E0消息到Kafka
+        EchoServer.getGlobalApplicationContext().sendE02Kafka(msg);
     }
 }

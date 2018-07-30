@@ -1,6 +1,9 @@
 package com.nnlightctl.kafka.produce;
 
+import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlightctl.kafka.topic.TopicConstant;
+import com.nnlightctl.net.CommandData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -9,45 +12,40 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Produce {
-    private int total = 1000000;
 
-    public static void main(String[] args) {
+    private int key = 1;
 
-        new Produce().send();
+    public void send(CommandData commandData) {
+        send(commandData, TopicConstant.TOPIC_LIGHT);
     }
 
-    public void send(){
+    public void send(CommandData commandData, String topic) {
 
         long start = System.currentTimeMillis();
-        System.out.println("Kafka Producer send msg start,total msgs:"+total);
 
-        // set up the producer
-        Producer<String, String> producer = null;
+        Producer<String, byte[]> producer = null;
         try {
             Properties props = PropertiesUtil.load("kafka/producer_config.properties");
             producer = new KafkaProducer<>(props);
 
-            for (int i = 0; i < total; i++){
-                producer.send(new ProducerRecord<String, String>("elebox",
-                        String.valueOf(i), String.format("{\"type\":\"test\", \"t\":%d, \"k\":%d}", System.currentTimeMillis(), i)));
+            producer.send(new ProducerRecord<String, byte[]>(topic, String.valueOf(key++),
+                    ObjectTransferUtil.object2ByteArray(commandData)));
 
-                // every so often send to a different topic
-                if (i % 1000 == 0) {
-                    producer.send(new ProducerRecord<String, String>("elebox", String.format("{\"type\":\"marker\", \"t\":%d, \"k\":%d}", System.currentTimeMillis(), i)));
-                    producer.send(new ProducerRecord<String, String>("light", String.format("{\"type\":\"marker\", \"t\":%d, \"k\":%d}", System.currentTimeMillis(), i)));
+            producer.flush();
 
-                    producer.flush();
-                    System.out.println("Sent msg number " + i);
-                }
-
+            if (key > 100000) {
+                key = 1;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             producer.close();
         }
 
-        System.out.println("Kafka Producer send msg over,cost time:"+(System.currentTimeMillis()-start)+"ms");
+        System.out.println("Kafka Producer send msg over,cost time:" + (System.currentTimeMillis() - start) + "ms");
+    }
+
+    public static void main(String[] args) {
+        new Produce().send(CommandData.getC8CommandData());
     }
 }

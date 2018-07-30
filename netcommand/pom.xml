@@ -20,5 +20,9 @@
             <groupId>com.nnlight</groupId>
             <artifactId>ctlcommon</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.nnlight</groupId>
+            <artifactId>ctldb</artifactId>
+        </dependency>
     </dependencies>
 </project>
