@@ -7,8 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/html/css/bootstrap/bootstrap-switch.min.css">
-    <link rel="stylesheet" href="/html/css/bootstrap/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-datetimepicker.min.css">
     <title>设备调试</title>
 </head>
 <body>
@@ -246,18 +246,18 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="/html/js/bootstrap/bootstrap-switch.min.js"></script>
-<script src="/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
-<script src="/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-switch.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
     $("#sendCommand").click(function () {
-        $.post("/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
+        $.post("/nnlightctl/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
             // $("#resultText").val(result);
         }, "text");
     });
 
     $("#sendCommandLightAdjust").click(function() {
-        $.post("/api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
+        $.post("/nnlightctl/api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
         });
     });
 
@@ -268,7 +268,7 @@
 
     //定时获取服务器端消息
     var timeGetMessage = setInterval(function () {
-        $.post("/api/command/webClientReceiveMsg", {}, function (result) {
+        $.post("/nnlightctl/api/command/webClientReceiveMsg", {}, function (result) {
             if (!result) {
                 return;
             }
@@ -296,7 +296,7 @@
 
     //重启复位
     $("#resetBtn").click(function () {
-        $.post("/api/command/resetCommand", {}, function () {
+        $.post("/nnlightctl/api/command/resetCommand", {}, function () {
 
         });
     });
@@ -304,7 +304,7 @@
     //设置定时发送参数
     $("#sendPeriodBtn").click(function () {
         var period = $("#sendPeriod").val().trim();
-        $.post("/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
+        $.post("/nnlightctl/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
             
         });
     });
@@ -313,7 +313,7 @@
     $("#eleboxOnBtn").bootstrapSwitch();
     $('#eleboxOnBtn').on('switchChange.bootstrapSwitch', function (event, state) {
         console.log(state);
-        $.post("/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
+        $.post("/nnlightctl/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
 
         });
     });
@@ -335,14 +335,14 @@
             "switch1EndDate" : $("#dtp_input2").val(), "switch1Percent" : $("#percent1").val(),
             "switch2Type" : $("#switch2TypeSelect").val(), "switch2StartDate" : $("#dtp_input3").val(),
             "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val()};
-        $.post("/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
+        $.post("/nnlightctl/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
 
         });
     });
 
     //读取终端信息
     $("#readTerminalInfo").click(function () {
-        $.post("/api/command/commandReadTerminalInfo", {}, function (data) {
+        $.post("/nnlightctl/api/command/commandReadTerminalInfo", {}, function (data) {
             // $("#terminalInfoTextArea").val(JSON.stringify(data));
         });
     });
