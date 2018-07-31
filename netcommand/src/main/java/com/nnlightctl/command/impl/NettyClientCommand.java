@@ -7,8 +7,8 @@ import com.nnlightctl.command.client.EchoClient;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.vo.SceneView;
-import io.netty.buffer.ByteBuf;
-import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -16,6 +16,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class NettyClientCommand implements Command {
+
+    private static final Logger logger = LoggerFactory.getLogger(NettyClientCommand.class);
 
     public NettyClientCommand(MessageEvent event) {
         this();
@@ -32,7 +34,7 @@ public class NettyClientCommand implements Command {
                 new EchoClient(properties.getProperty("host", "127.0.0.1"), Integer.parseInt(properties.getProperty("port", "56556")), context).start();
             } catch (Exception e) {
                 context.run();
-                System.err.println(e.getMessage());
+                logger.error(e.getMessage());
             }
         });
 
