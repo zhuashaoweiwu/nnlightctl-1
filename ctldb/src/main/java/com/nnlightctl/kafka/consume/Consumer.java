@@ -11,6 +11,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -23,7 +26,8 @@ public class Consumer {
     @Autowired
     private LightingVolEleRecordMapper lightingVolEleRecordMapper;
 
-
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     public void consume() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -52,7 +56,12 @@ public class Consumer {
                                     LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
                                     lightingVolEleRecord.setGmtCreated(new Date());
                                     lightingVolEleRecord.setGmtUpdated(new Date());
-                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                                        @Override
+                                        protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                                            lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                        }
+                                    });
                                     break;
                                 default:
                                     throw new IllegalStateException("Shouldn't be possible to get message on topic " + record.topic());
