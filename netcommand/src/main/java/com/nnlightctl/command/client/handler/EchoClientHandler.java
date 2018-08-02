@@ -8,9 +8,13 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ChannelHandler.Sharable
 public class EchoClientHandler extends SimpleChannelInboundHandler<CommandData> {
+
+    private static final Logger logger = LoggerFactory.getLogger(EchoClientHandler.class);
 
     public EchoClientHandler() {}
 
@@ -34,8 +38,10 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<CommandData> 
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
+        logger.error(cause.getMessage());
         ctx.close();
+
+        context.reConnect();
     }
 
     private Context context;

@@ -99,6 +99,12 @@ public class Context {
         }
     }
 
+    public void reConnect() {
+        if (command != null) {
+            command.reConnect();
+        }
+    }
+
     private Command command;
     private ChannelHandlerContext channelHandlerContext;
     private CountDownLatch countDownLatch;

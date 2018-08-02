@@ -2,22 +2,28 @@ package com.nnlightctl.kafka.consume;
 
 import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.kafka.topic.TopicConstant;
+import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.po.LightingVolEleRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Consumer {
-    public static void main(String[] args) {
-        new Consumer().consume();
-    }
+    @Autowired
+    private LightingVolEleRecordMapper lightingVolEleRecordMapper;
+
+
 
     public void consume() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -43,6 +49,10 @@ public class Consumer {
                                     break;
                                 case TopicConstant.TOPIC_LIGHT:
                                     CommandData lightE0Command = (CommandData) ObjectTransferUtil.byteArray2Object(record.value());
+                                    LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
+                                    lightingVolEleRecord.setGmtCreated(new Date());
+                                    lightingVolEleRecord.setGmtUpdated(new Date());
+                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
                                     break;
                                 default:
                                     throw new IllegalStateException("Shouldn't be possible to get message on topic " + record.topic());
@@ -59,5 +69,9 @@ public class Consumer {
             }
         });
 
+    }
+
+    public static void main(String[] args) {
+        new Consumer().consume();
     }
 }

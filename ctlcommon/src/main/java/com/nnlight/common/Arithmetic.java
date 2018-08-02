@@ -14,4 +14,10 @@ public class Arithmetic {
         BigDecimal result = bdS.divide(new BigDecimal(divideNumber));
         return result.toString();
     }
+
+    public static String divide(String nString, String divideNumber) {
+        BigDecimal bds = new BigDecimal(nString);
+        BigDecimal result = bds.divide(new BigDecimal(divideNumber));
+        return result.toString();
+    }
 }

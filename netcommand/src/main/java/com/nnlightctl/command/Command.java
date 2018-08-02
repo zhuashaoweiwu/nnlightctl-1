@@ -15,4 +15,5 @@ public interface Command {
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
     void close();
+    void reConnect();
 }
