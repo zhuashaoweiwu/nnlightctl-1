@@ -12,7 +12,6 @@ import com.nnlightctl.vo.ListEleboxEnergyStatisticView;
 import java.util.List;
 
 public interface EnergyStatisticDao {
-
    List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest);
    List<LightingVolEleRecord> listLightingVolEleRecord(LightingVolEleRecordRequest lightingVolEleRecordRequest);
    List<CommonEnergyStatisticView> getCommonEnergyStatisticYear();

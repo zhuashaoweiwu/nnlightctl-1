@@ -31,8 +31,8 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,realtime_date ,voltage ,electricity ,voltage*electricity as elebox_power from nnlightctl_elebox_vol_ele_record where 1=1 ");
 
         if (eleboxPowerRequest.getEleboxId() != null) {
-            sql.append("and uid = ? ");
-            param.add(eleboxPowerRequest.getEleboxId());
+            sql.append("and  uid = ? ");
+            param.add(eleboxPowerRequest.getUid());
         }
         if(eleboxPowerRequest.getStartDate() != null){
             sql.append("and realtime_date >= ? ");

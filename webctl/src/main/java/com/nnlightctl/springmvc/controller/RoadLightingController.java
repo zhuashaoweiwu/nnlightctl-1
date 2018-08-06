@@ -697,7 +697,7 @@ public class RoadLightingController extends BaseController {
      * 三十二、上传控制柜地图图标
      * */
     @RequestMapping("uploadEleboxGisIcon")
-    public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request,HttpServletResponse response){
+    public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request){
 
         logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
         JsonResult jsonResult = JsonResult.getSUCCESS();

@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -330,5 +331,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest){
         return eleboxDao.batchConfigLightsBeElebox(batchConfigLightsBeEleboxRequest);
+    }
+
+    public void uploadImageElebox(MultipartFile eleboxGisIcon , String imagePath){
+
     }
 }

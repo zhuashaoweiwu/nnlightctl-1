@@ -1,6 +1,9 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.jdbcdao.EnergyStatisticDao;
+import com.nnlightctl.po.Elebox;
+import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxVolEleRecord;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.request.EleboxPowerRequest;
@@ -21,9 +24,16 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
 
     @Autowired
     private EnergyStatisticDao energyStatisticDao;
+    @Autowired
+    private EleboxMapper eleboxMapper;
 
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest){
+        Long id = eleboxPowerRequest.getEleboxId();
+        Elebox elebox = eleboxMapper.selectByPrimaryKey(id);
+        if (elebox != null){
+            eleboxPowerRequest.setUid(elebox.getUid());
+        }
         return energyStatisticDao.listEleboxPower(eleboxPowerRequest);
     }
     @Override

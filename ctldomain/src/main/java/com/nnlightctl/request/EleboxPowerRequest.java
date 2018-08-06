@@ -3,12 +3,21 @@ package com.nnlightctl.request;
 import java.util.Date;
 
 public class EleboxPowerRequest {
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     private Long eleboxId;
 
     private Date startDate;
 
     private Date endDate;
+
+    private String uid;
 
     public Long getEleboxId() {
         return eleboxId;
