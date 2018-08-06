@@ -27,6 +27,7 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest){
         //List<EleboxVolEleRecord> eleboxVolEleRecordList = null;
         StringBuilder sql = new StringBuilder();
+
         List<Object> param = new ArrayList<>(3);
         sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,realtime_date ,voltage ,electricity ,voltage*electricity as elebox_power from nnlightctl_elebox_vol_ele_record where 1=1 ");
 
