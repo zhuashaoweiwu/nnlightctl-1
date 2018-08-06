@@ -19,4 +19,5 @@ public interface PropertyManagerServer {
     int commitRepairRecord(List<Long> repairRecordIds);
     HSSFWorkbook exportDeviceOperation(ExportDeviceOperationRequest request);
     int setDateAutoCommitRepairRecord(RepaireRecordConditionRequest request);
+    int updateProperty(PropertyRequest request);
 }

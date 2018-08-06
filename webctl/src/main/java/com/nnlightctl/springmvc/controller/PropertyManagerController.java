@@ -862,4 +862,21 @@ public class PropertyManagerController extends BaseController {
 
         return toJson(jsonResult);
     }
+    /*
+     * 基础数据
+     *十七、编辑资产信息
+     * */
+    @RequestMapping("updateProperty")
+    public String updateProperty(PropertyRequest request){
+        logger.info("[POST] /api/propertyManager/updateProperty");
+        int ret = propertyManagerServer.updateProperty(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }

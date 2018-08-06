@@ -4,6 +4,7 @@ import com.nnlight.common.Constants;
 import com.nnlight.common.QuartzUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.PropertyMapper;
 import com.nnlightctl.dao.RepairRecordAutoCommitMapper;
 import com.nnlightctl.dao.RepairRecordMapper;
 import com.nnlightctl.jdbcdao.PropertyManagerDao;
@@ -31,6 +32,8 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
     private RepairRecordMapper repairRecordMapper;
     @Autowired
     private RepairRecordAutoCommitMapper repairRecordAutoCommitMapper;
+    @Autowired
+    private PropertyMapper propertyMapper;
 
     @Override
     public List<ListDeviceRepairStatisticView> listDeviceRepaireStatistic(ListDeviceRepairStatisticRequest listDeviceRepairStatisticRequest){
@@ -142,5 +145,14 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
         QuartzUtil.addJob(QuartzRepairRecordAutoCommitServerImpl.class, request.getCommitDate(), params);
 
         return 1;
+    }
+    @Override
+    public int updateProperty(PropertyRequest request){
+        int ret =-1;
+        Property propert  = new Property();
+        ReflectCopyUtil.beanSameFieldCopy(request, propert);
+        propert.setGmtUpdated(new Date());
+        ret = propertyMapper.updateByPrimaryKeySelective(propert);
+        return ret;
     }
 }
