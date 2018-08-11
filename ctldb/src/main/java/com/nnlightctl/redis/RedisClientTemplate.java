@@ -1,6 +1,8 @@
 package com.nnlightctl.redis;
 
 import com.nnlightctl.redis.datasource.RedisDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.*;
@@ -13,6 +15,8 @@ import java.util.Set;
 
 @Repository("redisClientTemplate")
 public class RedisClientTemplate {
+
+    private static final Logger logger = LoggerFactory.getLogger(RedisClientTemplate.class);
 
     @Autowired
     private RedisDataSource redisDataSource;
@@ -40,6 +44,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.set(key, value);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -65,6 +70,7 @@ public class RedisClientTemplate {
             result = shardedJedis.get(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -82,6 +88,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.exists(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -100,6 +107,7 @@ public class RedisClientTemplate {
             result = shardedJedis.type(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -124,6 +132,7 @@ public class RedisClientTemplate {
             result = shardedJedis.expire(key, seconds);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -149,6 +158,7 @@ public class RedisClientTemplate {
             result = shardedJedis.expireAt(key, unixTime);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -167,6 +177,7 @@ public class RedisClientTemplate {
             result = shardedJedis.ttl(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -185,6 +196,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.setbit(key, offset, value);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -203,6 +215,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getbit(key, offset);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -220,6 +233,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.setrange(key, offset, value);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -238,6 +252,7 @@ public class RedisClientTemplate {
             result = shardedJedis.getrange(key, startOffset, endOffset);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -255,6 +270,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getSet(key, value);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -272,6 +288,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.setnx(key, value);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -290,6 +307,7 @@ public class RedisClientTemplate {
             result = shardedJedis.setex(key, seconds, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -308,6 +326,7 @@ public class RedisClientTemplate {
             result = shardedJedis.decrBy(key, integer);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -326,6 +345,7 @@ public class RedisClientTemplate {
             result = shardedJedis.decr(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -344,6 +364,7 @@ public class RedisClientTemplate {
             result = shardedJedis.incrBy(key, integer);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -362,6 +383,7 @@ public class RedisClientTemplate {
             result = shardedJedis.incr(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -380,6 +402,7 @@ public class RedisClientTemplate {
             result = shardedJedis.append(key, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -398,6 +421,7 @@ public class RedisClientTemplate {
             result = shardedJedis.substr(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -416,6 +440,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hset(key, field, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -434,6 +459,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hget(key, field);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -452,6 +478,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hsetnx(key, field, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -470,6 +497,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hmset(key, hash);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -488,6 +516,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hmget(key, fields);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -506,6 +535,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hincrBy(key, field, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -524,6 +554,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hexists(key, field);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -542,6 +573,7 @@ public class RedisClientTemplate {
             result = shardedJedis.del(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -560,6 +592,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hdel(key, field);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -578,6 +611,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hlen(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -596,6 +630,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hkeys(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -614,6 +649,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hvals(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -632,6 +668,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hgetAll(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -651,6 +688,7 @@ public class RedisClientTemplate {
             result = shardedJedis.rpush(key, string);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -669,6 +707,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lpush(key, string);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -687,6 +726,7 @@ public class RedisClientTemplate {
             result = shardedJedis.llen(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -705,6 +745,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lrange(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -723,6 +764,7 @@ public class RedisClientTemplate {
             result = shardedJedis.ltrim(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -741,6 +783,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lindex(key, index);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -759,6 +802,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lset(key, index, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -777,6 +821,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lrem(key, count, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -795,6 +840,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lpop(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -813,6 +859,7 @@ public class RedisClientTemplate {
             result = shardedJedis.rpop(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -833,6 +880,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sadd(key, member);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -851,6 +899,7 @@ public class RedisClientTemplate {
             result = shardedJedis.smembers(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -869,6 +918,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.srem(key, member);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -886,6 +936,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.spop(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -904,6 +955,7 @@ public class RedisClientTemplate {
             result = shardedJedis.scard(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -921,6 +973,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.sismember(key, member);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -938,6 +991,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.srandmember(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -955,6 +1009,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.zadd(key, score, member);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -972,6 +1027,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.zrange(key, start, end);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -989,6 +1045,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.zrem(key, member);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1008,6 +1065,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zincrby(key, score, member);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1027,6 +1085,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrank(key, member);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1046,6 +1105,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrank(key, member);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1065,6 +1125,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrange(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1084,6 +1145,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeWithScores(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1103,6 +1165,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeWithScores(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1122,6 +1185,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zcard(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1141,6 +1205,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zscore(key, member);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1160,6 +1225,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sort(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1179,6 +1245,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sort(key, sortingParameters);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1198,6 +1265,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zcount(key, min, max);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1217,6 +1285,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScore(key, min, max);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1236,6 +1305,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScore(key, max, min);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1255,6 +1325,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScore(key, min, max, offset, count);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1274,6 +1345,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScore(key, max, min, offset, count);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1293,6 +1365,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScoreWithScores(key, min, max);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1312,6 +1385,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScoreWithScores(key, max, min);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1331,6 +1405,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScoreWithScores(key, min, max, offset, count);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1350,6 +1425,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScoreWithScores(key, max, min, offset, count);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1369,6 +1445,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zremrangeByRank(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1388,6 +1465,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zremrangeByScore(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1407,6 +1485,7 @@ public class RedisClientTemplate {
             result = shardedJedis.linsert(key, where, pivot, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1426,6 +1505,7 @@ public class RedisClientTemplate {
             result = shardedJedis.set(key, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1445,6 +1525,7 @@ public class RedisClientTemplate {
             result = shardedJedis.get(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1464,6 +1545,7 @@ public class RedisClientTemplate {
             result = shardedJedis.exists(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1483,6 +1565,7 @@ public class RedisClientTemplate {
             result = shardedJedis.type(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1502,6 +1585,7 @@ public class RedisClientTemplate {
             result = shardedJedis.expire(key, seconds);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1521,6 +1605,7 @@ public class RedisClientTemplate {
             result = shardedJedis.expireAt(key, unixTime);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1540,6 +1625,7 @@ public class RedisClientTemplate {
             result = shardedJedis.ttl(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1559,6 +1645,7 @@ public class RedisClientTemplate {
             result = shardedJedis.getSet(key, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1578,6 +1665,7 @@ public class RedisClientTemplate {
             result = shardedJedis.setnx(key, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1597,6 +1685,7 @@ public class RedisClientTemplate {
             result = shardedJedis.setex(key, seconds, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1616,6 +1705,7 @@ public class RedisClientTemplate {
             result = shardedJedis.decrBy(key, integer);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1635,6 +1725,7 @@ public class RedisClientTemplate {
             result = shardedJedis.decr(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1654,6 +1745,7 @@ public class RedisClientTemplate {
             result = shardedJedis.incrBy(key, integer);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1673,6 +1765,7 @@ public class RedisClientTemplate {
             result = shardedJedis.incr(key);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1692,6 +1785,7 @@ public class RedisClientTemplate {
             result = shardedJedis.append(key, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1711,6 +1805,7 @@ public class RedisClientTemplate {
             result = shardedJedis.substr(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1730,6 +1825,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hset(key, field, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1749,6 +1845,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hget(key, field);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1768,7 +1865,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hsetnx(key, field, value);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1788,7 +1885,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hmset(key, hash);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1808,7 +1905,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hmget(key, fields);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1828,7 +1925,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hincrBy(key, field, value);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1848,7 +1945,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hexists(key, field);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1868,7 +1965,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hdel(key, field);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1888,7 +1985,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hlen(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1908,7 +2005,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hkeys(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1928,7 +2025,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hvals(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1948,7 +2045,7 @@ public class RedisClientTemplate {
             result = shardedJedis.hgetAll(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1968,7 +2065,7 @@ public class RedisClientTemplate {
             result = shardedJedis.rpush(key, string);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -1988,7 +2085,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lpush(key, string);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2008,7 +2105,7 @@ public class RedisClientTemplate {
             result = shardedJedis.llen(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2028,7 +2125,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lrange(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2048,6 +2145,7 @@ public class RedisClientTemplate {
             result = shardedJedis.ltrim(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2067,7 +2165,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lindex(key, index);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2087,7 +2185,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lset(key, index, value);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2107,7 +2205,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lrem(key, count, value);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2127,7 +2225,7 @@ public class RedisClientTemplate {
             result = shardedJedis.lpop(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2147,7 +2245,7 @@ public class RedisClientTemplate {
             result = shardedJedis.rpop(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2167,7 +2265,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sadd(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2187,7 +2285,7 @@ public class RedisClientTemplate {
             result = shardedJedis.smembers(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2207,7 +2305,7 @@ public class RedisClientTemplate {
             result = shardedJedis.srem(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2227,7 +2325,7 @@ public class RedisClientTemplate {
             result = shardedJedis.spop(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2247,7 +2345,7 @@ public class RedisClientTemplate {
             result = shardedJedis.scard(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2267,7 +2365,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sismember(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2287,7 +2385,7 @@ public class RedisClientTemplate {
             result = shardedJedis.srandmember(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2307,7 +2405,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zadd(key, score, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2327,7 +2425,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrange(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2347,7 +2445,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrem(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2367,7 +2465,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zincrby(key, score, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2387,7 +2485,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrank(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2407,7 +2505,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrank(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2427,7 +2525,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrange(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2447,7 +2545,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeWithScores(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2467,7 +2565,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeWithScores(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2487,7 +2585,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zcard(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2507,7 +2605,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zscore(key, member);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2527,7 +2625,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sort(key);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2547,7 +2645,7 @@ public class RedisClientTemplate {
             result = shardedJedis.sort(key, sortingParameters);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2567,7 +2665,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zcount(key, min, max);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2587,7 +2685,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScore(key, min, max);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2607,7 +2705,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScore(key, min, max, offset, count);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2627,7 +2725,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScoreWithScores(key, min, max);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2647,7 +2745,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrangeByScoreWithScores(key, min, max, offset, count);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2667,7 +2765,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScore(key, max, min);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2687,7 +2785,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScore(key, max, min, offset, count);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2707,7 +2805,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScoreWithScores(key, max, min);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2727,7 +2825,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zrevrangeByScoreWithScores(key, max, min, offset, count);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2747,7 +2845,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zremrangeByRank(key, start, end);
 
         } catch (Exception e) {
-
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2767,6 +2865,7 @@ public class RedisClientTemplate {
             result = shardedJedis.zremrangeByScore(key, start, end);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2786,6 +2885,7 @@ public class RedisClientTemplate {
             result = shardedJedis.linsert(key, where, pivot, value);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2803,6 +2903,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.pipelined(shardedJedisPipeline);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2820,6 +2921,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getShard(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2837,6 +2939,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getShard(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2854,6 +2957,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getShardInfo(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2871,6 +2975,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getShardInfo(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2888,6 +2993,7 @@ public class RedisClientTemplate {
         try {
             result = shardedJedis.getKeyTag(key);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2906,6 +3012,7 @@ public class RedisClientTemplate {
             result = shardedJedis.getAllShardInfo();
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
@@ -2924,6 +3031,7 @@ public class RedisClientTemplate {
             result = shardedJedis.getAllShards();
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             broken = true;
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);

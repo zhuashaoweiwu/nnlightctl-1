@@ -1,5 +1,6 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlightctl.redis.RedisClientTemplate;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.IndexServer;
 import com.nnlightctl.util.DownloadUtil;
@@ -13,6 +14,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +32,13 @@ import java.util.List;
 @Controller
 public class Index extends BaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(Index.class);
+
     @Autowired
     private IndexServer indexServer;
+
+    @Autowired
+    private RedisClientTemplate redisClientTemplate;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -82,6 +90,14 @@ public class Index extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "success";
+    }
+
+    @RequestMapping("/test_redis")
+    @ResponseBody
+    public String test_redis() {
+        redisClientTemplate.set("a", "abc");
+        logger.info(redisClientTemplate.get("a"));
         return "success";
     }
 

@@ -9,5 +9,6 @@ public class TestMain {
         RedisClientTemplate redisClient = (RedisClientTemplate)ac.getBean("redisClientTemplate");
         redisClient.set("a", "abc");
         System.out.println(redisClient.get("a"));
+        System.out.println("end");
     }
 }

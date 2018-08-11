@@ -8,7 +8,13 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:config/dbconfig.properties" />
+    <bean id="propertyConfigurerDataSource"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="location">
+            <value>classpath:config/dbconfig.properties</value>
+        </property>
+    </bean>
 
     <!-- ========================================配置数据源========================================= -->
     <!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
