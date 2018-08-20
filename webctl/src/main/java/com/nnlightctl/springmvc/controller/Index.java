@@ -1,5 +1,6 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlightctl.hbase.HBaseClient;
 import com.nnlightctl.redis.RedisClientTemplate;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.IndexServer;
@@ -98,6 +99,42 @@ public class Index extends BaseController {
     public String test_redis() {
         redisClientTemplate.set("a", "abc");
         logger.info(redisClientTemplate.get("a"));
+        return "success";
+    }
+
+    @RequestMapping("/test_hbase")
+    @ResponseBody
+    public String test_hbase() {
+        // 创建表
+        String tableName = "blog2";
+        String[] family = { "article", "author" };
+        try {
+            HBaseClient.creatTable(tableName, family);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return "success";
+    }
+
+    @RequestMapping("/test_hbase_addData")
+    @ResponseBody
+    public String test_hbase_addData() {
+        // 为表添加数据
+        String[] column1 = { "title", "content", "tag" };
+        String[] value1 = {
+                "Head First HBase",
+                "HBase is the Hadoop database. Use it when you need random, realtime read/write access to your Big Data.",
+                "Hadoop,HBase,NoSQL" };
+        String[] column2 = { "name", "nickname" };
+        String[] value2 = { "nicholas", "lee" };
+        try {
+            HBaseClient.addData("rowkey1", "blog2", column1, value1, column2, value2);
+            HBaseClient.addData("rowkey2", "blog2", column1, value1, column2, value2);
+            HBaseClient.addData("rowkey3", "blog2", column1, value1, column2, value2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "success";
     }
 
