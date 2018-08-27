@@ -7,6 +7,7 @@ import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.po.LightingVolEleRecord;
+import com.nnlightctl.redis.RedisClientTemplate;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -28,6 +29,9 @@ public class Consumer {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    private RedisClientTemplate redisClientTemplate;
 
     public void consume() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -56,12 +60,18 @@ public class Consumer {
                                     LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
                                     lightingVolEleRecord.setGmtCreated(new Date());
                                     lightingVolEleRecord.setGmtUpdated(new Date());
-                                    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                                        @Override
-                                        protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                                            lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
-                                        }
-                                    });
+                                    //写入Mysql
+//                                    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+//                                        @Override
+//                                        protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+//                                            lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+//                                        }
+//                                    });
+                                    //同时写入redis
+                                    redisClientTemplate.set(lightingVolEleRecord.getUid().getBytes(),
+                                            ObjectTransferUtil.object2ByteArray(lightingVolEleRecord));
+                                    //同时写入Hbase
+                                    //todo
                                     break;
                                 default:
                                     throw new IllegalStateException("Shouldn't be possible to get message on topic " + record.topic());
