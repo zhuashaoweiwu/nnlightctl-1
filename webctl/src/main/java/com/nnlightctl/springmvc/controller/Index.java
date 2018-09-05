@@ -47,8 +47,13 @@ public class Index extends BaseController {
         return indexServer.indexServer();
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/device")
     public String indexPage() {
+        return "redirect:/html/pages/indexForDevice.html";
+    }
+
+    @RequestMapping("/")
+    public String startPage() {
         return "redirect:/html/pages/index.html";
     }
 

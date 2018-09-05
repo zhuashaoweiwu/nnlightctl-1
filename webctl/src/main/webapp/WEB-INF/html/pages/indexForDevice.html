@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-datetimepicker.min.css">
+    <title>设备调试</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-1"><label class="form-control">命令：</label></div>
+        <div class="col-sm-8"><textarea class="form-control" id="comandText" rows="3"></textarea></div>
+        <div class="col-sm-3"><button type="button" class="btn btn-primary" id="sendCommand">发送命令</button></div>
+    </div>
+
+    <br/>
+
+    <!--<div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">命令返回：</label>
+        </div>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" id="resultText" rows="3"></textarea>
+        </div>
+    </div>-->
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 灯具调节 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">灯具灯光调节：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input type="text" class="form-control" id="lightPercent">
+        </div>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide" />
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 重启/复位 -->
+    <div class="row">
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="resetBtn">重启/复位</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 设置定时发送参数 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">定时发送(秒)：</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="sendPeriod">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendPeriodBtn">发送</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 控制柜断电通电 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">控制柜通断电：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="switch switch-large">
+                <input id="eleboxOnBtn" type="checkbox" checked />
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 开关任务策略 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务1：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch1TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input1" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input1" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input2" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input2" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent1" class="form-control" type="text" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务2：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch2TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input3" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input3">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input4" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input4">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input4" value="" /><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent2" class="form-control" type="text" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <button id="sendTerminalSwitchBtn" type="button" class="btn btn-primary">发送开关任务策略命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 读取终端信息 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">读取终端信息：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="readTerminalInfo">读取终端信息</button>
+        </div>
+
+        <!--<div class="col-sm-5">
+            <textarea class="form-control" id="terminalInfoTextArea" rows="3"></textarea>
+        </div>-->
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 客户端实时消息接收 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">实时消息接收：</label>
+        </div>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" id="netMessageTextArea" rows="8"></textarea>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-switch.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+    $("#sendCommand").click(function () {
+        $.post("/nnlightctl/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
+            // $("#resultText").val(result);
+        }, "text");
+    });
+
+    $("#sendCommandLightAdjust").click(function() {
+        $.post("/nnlightctl/api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
+        });
+    });
+
+    $("#lightPercentSlide").change(function () {
+        $("#lightPercent").val(this.value);
+        $("#sendCommandLightAdjust").click();
+    });
+
+    //定时获取服务器端消息
+    var timeGetMessage = setInterval(function () {
+        $.post("/nnlightctl/api/command/webClientReceiveMsg", {}, function (result) {
+            if (!result) {
+                return;
+            }
+            var newMsg = result.body.data[0];
+            if (!newMsg) {
+                return;
+            }
+            var text = $("#netMessageTextArea").val();
+            text += "\r\n";
+            text += (new Date().toLocaleString() + "  " + newMsg);
+            $("#netMessageTextArea").val(text);
+        }, "json");
+    }, 5000);
+
+    //周期发送调光指令
+    var value = 0;
+    // var timeTestLightAdjust = setInterval(function () {
+    //     $("#lightPercentSlide").val(value);
+    //     $("#lightPercentSlide").change();
+    //     value += 5;
+    //     if (value >= 100) {
+    //         value = 0;
+    //     }
+    // }, 5000);
+
+    //重启复位
+    $("#resetBtn").click(function () {
+        $.post("/nnlightctl/api/command/resetCommand", {}, function () {
+
+        });
+    });
+
+    //设置定时发送参数
+    $("#sendPeriodBtn").click(function () {
+        var period = $("#sendPeriod").val().trim();
+        $.post("/nnlightctl/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
+            
+        });
+    });
+
+    //控制柜通断电
+    $("#eleboxOnBtn").bootstrapSwitch();
+    $('#eleboxOnBtn').on('switchChange.bootstrapSwitch', function (event, state) {
+        console.log(state);
+        $.post("/nnlightctl/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
+
+        });
+    });
+
+    //任务开关策略
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        minuteStep : 5
+    });
+    $("#sendTerminalSwitchBtn").click(function () {
+        var sendData = {"switch1Type" : $("#switch1TypeSelect").val(), "switch1StartDate" : $("#dtp_input1").val(),
+            "switch1EndDate" : $("#dtp_input2").val(), "switch1Percent" : $("#percent1").val(),
+            "switch2Type" : $("#switch2TypeSelect").val(), "switch2StartDate" : $("#dtp_input3").val(),
+            "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val()};
+        $.post("/nnlightctl/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
+
+        });
+    });
+
+    //读取终端信息
+    $("#readTerminalInfo").click(function () {
+        $.post("/nnlightctl/api/command/commandReadTerminalInfo", {}, function (data) {
+            // $("#terminalInfoTextArea").val(JSON.stringify(data));
+        });
+    });
+
+</script>
+</body>
+</html>
