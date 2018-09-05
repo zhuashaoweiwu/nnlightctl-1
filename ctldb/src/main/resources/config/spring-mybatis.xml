@@ -91,6 +91,8 @@
             <tx:method name="create*" propagation="REQUIRED" />
             <tx:method name="addOrUpdate*" propagation="REQUIRED" />
             <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <tx:method name="unbind*" propagation="REQUIRED" />
 
             <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
             <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
