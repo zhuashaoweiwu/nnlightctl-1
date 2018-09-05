@@ -123,6 +123,7 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         String year = now.get(Calendar.YEAR)+"";
         sql.append("and SUBSTR(record_datetime ,1,4) = ? ");
         param.add(year);
+        sql.append(" GROUP BY SUBSTR(record_datetime ,1,4)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -149,10 +150,10 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         }else {
             mouth = ""+(date.getMonth()+1);
         }
-
+        String  m= year +"-"+ mouth;
         sql.append(" and SUBSTR(record_datetime ,1,7) = ? ");
-        param.add(year+"-"+mouth);
-
+        param.add(m);
+        sql.append(" GROUP BY SUBSTR(record_datetime ,1,7)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -192,7 +193,7 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
 
         sql.append("and SUBSTR(record_datetime ,1,10) = ? ");
         param.add(yestoday);
-
+        sql.append(" GROUP BY SUBSTR(record_datetime ,1,10)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {

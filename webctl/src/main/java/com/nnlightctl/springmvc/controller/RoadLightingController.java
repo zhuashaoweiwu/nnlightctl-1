@@ -656,7 +656,7 @@ public class RoadLightingController extends BaseController {
     /*
     *前端接口-道路照明系统模块
     *三十一、批量设置控制柜区域
-    * */
+    * */ 
     @RequestMapping("batchSetEleboxArea")
     public String batchSetEleboxArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest){
 
