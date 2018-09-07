@@ -17,55 +17,62 @@ public class E0CommandAnalyze implements CommandAnalyzer {
 
         byte[] data = command.getData();
 
+        //uuid
+        stringBuilder.append("UUID：");
+        byte[] uuidBytes = new byte[64];
+        System.arraycopy(data, 0, uuidBytes, 0, 64);
+        stringBuilder.append(new String(uuidBytes, Charset.forName("UTF-8")));
+        stringBuilder.append(",");
+
         //温度
         stringBuilder.append("温度：");
-        short temperature = (short) ByteConvert.bytesToUshort(data, 0);
+        short temperature = (short) ByteConvert.bytesToUshort(data, 64);
         stringBuilder.append(Arithmetic.divide(temperature, "10"));
         stringBuilder.append(",");
 
         //湿度
         stringBuilder.append("湿度：");
-        short dampness = (short) ByteConvert.bytesToUshort(data, 2);
+        short dampness = (short) ByteConvert.bytesToUshort(data, 66);
         stringBuilder.append(Arithmetic.divide(dampness, "10"));
         stringBuilder.append(",");
 
         //光照
         stringBuilder.append("光照：");
-        short beam = (short) ByteConvert.bytesToUshort(data, 4);
+        short beam = (short) ByteConvert.bytesToUshort(data, 68);
         stringBuilder.append(String.valueOf(beam));
         stringBuilder.append(",");
 
         //电流
         stringBuilder.append("电流：");
-        short unsignedEletric = (short)ByteConvert.bytesToUbyte(data, 6);
+        short unsignedEletric = (short)ByteConvert.bytesToUshort(data, 70);
         stringBuilder.append(String.valueOf(unsignedEletric));
         stringBuilder.append(",");
 
         //电压
         stringBuilder.append("电压：");
-        short unsignedVoltage = (short)ByteConvert.bytesToUbyte(data, 7);
+        short unsignedVoltage = (short)ByteConvert.bytesToUshort(data, 72);
         stringBuilder.append(String.valueOf(unsignedVoltage));
         stringBuilder.append(",");
 
         //信号强度
         stringBuilder.append("信号强度：");
-        short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, 8);
+        short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, 74);
         stringBuilder.append("-" + String.valueOf(unSignalIntensity));
         stringBuilder.append(",");
 
         //时间
         stringBuilder.append("时间：");
-        short unHour = (short)ByteConvert.bytesToUbyte(data, 9);
-        short unMinute = (short)ByteConvert.bytesToUbyte(data, 10);
-        short unSecond = (short)ByteConvert.bytesToUbyte(data, 11);
+        short unHour = (short)ByteConvert.bytesToUbyte(data, 75);
+        short unMinute = (short)ByteConvert.bytesToUbyte(data, 76);
+        short unSecond = (short)ByteConvert.bytesToUbyte(data, 77);
         stringBuilder.append(String.valueOf(unHour) + "-" + String.valueOf(unMinute) + "-" + String.valueOf(unSecond));
         stringBuilder.append(",");
 
         //GPS
         stringBuilder.append("GPS：");
-        int gpsByteLength = data.length - 1 - 11;
+        int gpsByteLength = data.length - 1 - 77;
         byte[] gpsByte = new byte[gpsByteLength];
-        System.arraycopy(data, 12, gpsByte, 0, gpsByteLength);
+        System.arraycopy(data, 78, gpsByte, 0, gpsByteLength);
         String gpsStr = new String(gpsByte, Charset.forName("UTF-8"));
         stringBuilder.append(gpsStr);
 

@@ -111,7 +111,6 @@
           <element id="library" level="project" name="Maven: tomcat:jasper-runtime:5.5.23" />
           <element id="library" level="project" name="Maven: xmlenc:xmlenc:0.52" />
           <element id="library" level="project" name="Maven: org.apache.zookeeper:zookeeper:3.4.6" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" />
           <element id="library" level="project" name="Maven: jline:jline:0.9.94" />
           <element id="archive" name="ctldomain-1.0-SNAPSHOT.jar">
             <element id="module-output" name="ctldomain" />
