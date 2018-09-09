@@ -1,0 +1,3 @@
+<ehcache>
+    <cache name="loginUserCache" maxElementsInMemory="1000" />
+</ehcache>

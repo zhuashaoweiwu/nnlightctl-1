@@ -178,4 +178,9 @@ public class UserOpLogServerImpl implements UserOpLogServer {
         is.close();
         return  1;
     }
+
+    @Override
+    public int addUserOpLog(UserOperationLog usereOpLog) {
+        return userOperationLogMapper.insertSelective(usereOpLog);
+    }
 }
