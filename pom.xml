@@ -47,6 +47,7 @@
         <hadoop.hdfs.version>2.2.0</hadoop.hdfs.version>
         <zookeeper.version>3.4.6</zookeeper.version>
         <ehcache.version>2.10.4</ehcache.version>
+        <shiro.version>1.2.2</shiro.version>
     </properties>
 
     <repositories>
@@ -324,6 +325,13 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
+            </dependency>
+
+            <!-- apache shiro -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
             </dependency>
 
             <!-- 工程依赖 -->

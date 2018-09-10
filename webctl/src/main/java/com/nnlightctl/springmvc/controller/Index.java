@@ -143,6 +143,12 @@ public class Index extends BaseController {
         return "success";
     }
 
+    @RequestMapping("/test_ehcache_userOpLog")
+    @ResponseBody
+    public String test_ehcache_userOpLog() {
+        return indexServer.testEhcache(1);
+    }
+
     private void readExcel(InputStream is, String fileName) throws IOException {
         Workbook hssfWorkbook = null;
         if (fileName.endsWith("xlsx")){

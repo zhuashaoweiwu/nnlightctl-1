@@ -17,8 +17,6 @@
 
     <cache:annotation-driven />
 
-    <bean id="userOpLogFilter" class="com.nnlightctl.filter.OpLogFilter" />
-
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcache" />
     </bean>
@@ -27,8 +25,10 @@
         <property name="configLocation" value="classpath:config/ehcache.xml" />
     </bean>
 
+    <bean id="userOpLogFilter" class="com.nnlightctl.filter.OpLogFilter" />
+
     <aop:config>
-        <aop:pointcut id="userOpPointcut" expression="within(com.nnlightctl.springmvc.controller.BaseController+)" />
+        <aop:pointcut id="userOpPointcut" expression="execution(public * com.nnlightctl.springmvc.controller.Index.*(..))" />
 
         <aop:advisor id="userOpAdvisor" advice-ref="userOpLogFilter" pointcut-ref="userOpPointcut" />
     </aop:config>

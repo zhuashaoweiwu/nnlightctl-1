@@ -33,6 +33,7 @@ public class OpLogFilter implements MethodBeforeAdvice {
 
     @Override
     public void before(Method method, Object[] objects, Object o) throws Throwable {
+        logger.info("生成用户操作记录");
         //获取注解
         RequestMapping annoRequestMapping = method.getAnnotation(RequestMapping.class);
         String[] annoValues = annoRequestMapping.value();
