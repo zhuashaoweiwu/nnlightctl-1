@@ -575,7 +575,6 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
-
     @RequestMapping("exportElebox")
     public void exportElebox(EleboxConditionRequest request, HttpServletResponse response) {
         logger.info("[POST] /api/roadlighting/exportElebox");

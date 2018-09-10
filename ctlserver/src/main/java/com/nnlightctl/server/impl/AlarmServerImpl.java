@@ -7,6 +7,7 @@ import com.nnlightctl.dao.AlarmMapper;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.AlarmConfigRequest;
+import com.nnlightctl.request.AlarmRequest;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.server.ALarmServer;
 import com.nnlightctl.vo.AlarmAndAlarmConfigView;
@@ -218,6 +219,21 @@ public class AlarmServerImpl implements ALarmServer{
         alarmConfig.setIsNoticeWeixin(larmConfigRequest.getIsNoticeWeixin());
         int tep =  alarmConfigMapper.insert(alarmConfig);
         return tep;
+    }
+    @Override
+    public int configIsUseAlarm(List<AlarmRequest> request){
+        AlarmExample alarmExample = new AlarmExample();
+        alarmExample.setOrderByClause("id DESC");
+        for (AlarmRequest alarmRequest :request) {
+            alarmExample.createCriteria().andAlarmSourceEqualTo(alarmRequest.getAlarmSource());
+            alarmExample.createCriteria().andCtypeEqualTo(alarmRequest.getCtype());
+            List<Alarm> alarmList = alarmMapper.selectByExample(alarmExample);
+            for (Alarm alarm : alarmList) {
+                alarm.setIsUse(alarmRequest.getIsUse());
+                alarmMapper.updateByPrimaryKeySelective(alarm);
+            }
+        }
+        return 1;
     }
 
 }

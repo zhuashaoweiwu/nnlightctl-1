@@ -162,6 +162,22 @@ public class PropertyManagerController extends BaseController {
         return toJson(jsonResult);
     }
     /*
+     * 前端接口-资产管理系统
+     * 八、通过id获取单个维修记录
+     * */
+    @RequestMapping("getRepairRecord")
+    public String getRepairRecord(Long id){
+        logger.info("[POST] /api/propertyManager/getRepairRecord");
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        RepairRecord RepairRecord = propertyManagerServer.getRepairRecord(id);
+        List<RepairRecord> repairRecordList = new ArrayList<>();
+        repairRecordList.add(RepairRecord);
+        jsonResult.setData(repairRecordList);
+        return toJson(jsonResult);
+    }
+
+    /*
      * 前端接口-资产管理系统-联系人管理
      * 一、新增/修改联系人
      * */

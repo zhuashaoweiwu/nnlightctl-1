@@ -132,4 +132,19 @@ public class AlarmController extends BaseController{
         }
         return toJson(jsonResult);
     }
+    /*
+    *  是否启用报警信息
+    * */
+    @RequestMapping("configIsUseAlarm")
+    public String configIsUseAlarm(List<AlarmRequest> alarmRequestList){
+
+        JsonResult jsonResult = null;
+        int ret = aLarmServer.configIsUseAlarm(alarmRequestList);
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
 }

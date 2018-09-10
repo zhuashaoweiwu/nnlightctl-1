@@ -13,4 +13,33 @@ public class AlarmRequest extends BaseRequest{
         this.alarmIds = alarmIds;
     }
 
+    private Byte ctype;
+
+    private Byte isUse;
+
+    private String alarmSource;
+
+    public Byte getCtype() {
+        return ctype;
+    }
+
+    public void setCtype(Byte ctype) {
+        this.ctype = ctype;
+    }
+
+    public Byte getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(Byte isUse) {
+        this.isUse = isUse;
+    }
+
+    public String getAlarmSource() {
+        return alarmSource;
+    }
+
+    public void setAlarmSource(String alarmSource) {
+        this.alarmSource = alarmSource;
+    }
 }

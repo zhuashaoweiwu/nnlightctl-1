@@ -155,4 +155,8 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
         ret = propertyMapper.updateByPrimaryKeySelective(propert);
         return ret;
     }
+    @Override
+    public RepairRecord getRepairRecord(Long id){
+        return repairRecordMapper.selectByPrimaryKey(id);
+    }
 }

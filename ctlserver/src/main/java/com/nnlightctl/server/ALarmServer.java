@@ -4,6 +4,7 @@ import com.nnlightctl.po.Alarm;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.AlarmHistory;
 import com.nnlightctl.request.AlarmConfigRequest;
+import com.nnlightctl.request.AlarmRequest;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.vo.AlarmAndAlarmConfigView;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -27,4 +28,6 @@ public interface ALarmServer {
     HSSFWorkbook exportAlarmHistory(List<Long> alarmHistoryIds);
 
     int configAlarm(AlarmConfigRequest alarmConfigRequest);
+
+    int configIsUseAlarm(List<AlarmRequest> request);
 }
