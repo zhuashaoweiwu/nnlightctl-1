@@ -5,14 +5,6 @@ public class AlarmRequest extends BaseRequest{
 
     private List<Long> alarmIds;
 
-    public List<Long> getAlarmIds() {
-        return alarmIds;
-    }
-
-    public void setAlarmIds(List<Long> alarmIds) {
-        this.alarmIds = alarmIds;
-    }
-
     private Byte ctype;
 
     private Byte isUse;
@@ -41,5 +33,13 @@ public class AlarmRequest extends BaseRequest{
 
     public void setAlarmSource(String alarmSource) {
         this.alarmSource = alarmSource;
+    }
+
+    public List<Long> getAlarmIds() {
+        return alarmIds;
+    }
+
+    public void setAlarmIds(List<Long> alarmIds) {
+        this.alarmIds = alarmIds;
     }
 }

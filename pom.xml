@@ -46,7 +46,7 @@
         <hbase.clinet.version>0.96.2-hadoop2</hbase.clinet.version>
         <hadoop.hdfs.version>2.2.0</hadoop.hdfs.version>
         <zookeeper.version>3.4.6</zookeeper.version>
-        <ehcache.version>3.5.2</ehcache.version>
+        <ehcache.version>2.10.4</ehcache.version>
     </properties>
 
     <repositories>
@@ -142,7 +142,7 @@
 
             <!-- ehcache -->
             <dependency>
-                <groupId>org.ehcache</groupId>
+                <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
             </dependency>
