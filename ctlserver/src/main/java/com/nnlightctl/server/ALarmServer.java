@@ -29,5 +29,5 @@ public interface ALarmServer {
 
     int configAlarm(AlarmConfigRequest alarmConfigRequest);
 
-    int configIsUseAlarm(List<AlarmRequest> request);
+    int updateIsUseAlarm(List<AlarmRequest> request);
 }

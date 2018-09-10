@@ -221,7 +221,7 @@ public class AlarmServerImpl implements ALarmServer{
         return tep;
     }
     @Override
-    public int configIsUseAlarm(List<AlarmRequest> request){
+    public int updateIsUseAlarm(List<AlarmRequest> request){
         AlarmExample alarmExample = new AlarmExample();
         alarmExample.setOrderByClause("id DESC");
         for (AlarmRequest alarmRequest :request) {

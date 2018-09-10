@@ -11,6 +11,20 @@ public class AlarmRequest extends BaseRequest{
 
     private String alarmSource;
 
+    public static class BatchAlarmRequest {
+        public List<AlarmRequest> getAlarmRequestList() {
+            return alarmRequestList;
+        }
+
+        public void setAlarmRequestList(List<AlarmRequest> alarmRequestList) {
+            this.alarmRequestList = alarmRequestList;
+        }
+
+        private List<AlarmRequest> alarmRequestList;
+    }
+
+
+
     public Byte getCtype() {
         return ctype;
     }
