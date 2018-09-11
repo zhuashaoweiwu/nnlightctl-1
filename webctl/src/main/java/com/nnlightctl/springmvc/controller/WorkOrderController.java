@@ -6,6 +6,7 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.WorkFlowerNodeServer;
 import com.nnlightctl.server.WorkOrderServer;
+import com.nnlightctl.vo.CountWorkOrderStateView;
 import com.nnlightctl.vo.StatisticWorkOrderView;
 import com.nnlightctl.vo.WorkFlowerNodeMapView;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class WorkOrderController extends BaseController{
     private WorkFlowerNodeServer workFlowerNodeServer;
     /*
     *工单概况
-    *一、按月、年统计工单概况
+    * 一、按月、年统计工单概况
     * */
     @RequestMapping("statisticWorkOrder")
     public String statisticWorkOrder(WorkOrderRequest request){
@@ -47,11 +48,23 @@ public class WorkOrderController extends BaseController{
         return toJson(jsonResult);
     }
     /*
-     *工单概况
+     *我的工单
+     *一、统计工单状态
+     * */
+    @RequestMapping("countWorkOrderState")
+    public String countWorkOrderState(){
+        logger.info("[POST]  /api/workOrder/countWorkOrderState");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<CountWorkOrderStateView> list = workOrderServer.countWorkOrderState();
+        jsonResult.setData(list);
+        return toJson(jsonResult);
+    }
+    /*
+     *我的工单
      *二、分页获取我的工单信息
      * */
     @RequestMapping("listWorkOrder")
-    public String workOrderServer(BaseRequest request){
+    public String workOrderServer(ListWorkOrderRequest request){
         logger.info("[POST]  /api/workOrder/listWorkOrder");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = workOrderServer.listWorkOrder(request);
@@ -62,7 +75,7 @@ public class WorkOrderController extends BaseController{
         return toJson(jsonResult);
     }
     /*
-     *工单概况
+     *我的工单
      *三、认领工单操作
      * */
     @RequestMapping("claimWordOrder")
@@ -79,7 +92,7 @@ public class WorkOrderController extends BaseController{
         return toJson(jsonResult);
     }
     /*
-     *工单概况
+     *我的工单
      *四、新增工单
      * */
     @RequestMapping(value = "addWordOrder")
@@ -136,7 +149,7 @@ public class WorkOrderController extends BaseController{
         }
     }
     /*
-     *工单概况
+     *我的工单
      *五、通过搜索条件分页获取历史工单信息
      * */
     @RequestMapping("listWorkOrderHistory")
@@ -151,7 +164,7 @@ public class WorkOrderController extends BaseController{
         return toJson(jsonResult);
     }
     /*
-     *工单概况
+     *我的工单
      *六、已认领工单工作流执行预览
      * */
     @RequestMapping("previewWorkFlower")
@@ -164,6 +177,22 @@ public class WorkOrderController extends BaseController{
         jsonResult.setData(workflowerNodeList);
         return toJson(jsonResult);
     }
+    /*
+     *我的工单
+     *七、分页获取我所在工作流中的节点中的所有工单
+     * */
+    @RequestMapping("listWorkFlowerWorkOrder")
+    public String listWorkFlowerWorkOrder(BaseRequest request){
+        logger.info("[POST]  /api/workOrder/listWorkFlowerWorkOrder");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = workOrderServer.listWorkFlowerWorkOrder(request);
+
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
     /*
      *流程管理
      *一、新增/修改流程节点

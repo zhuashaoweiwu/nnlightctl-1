@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-public class WorkOrderRequest {
+public class WorkOrderRequest extends BaseRequest{
     private Long id;    //-- 工单id
 
     private String serialNumber; // -- 编号

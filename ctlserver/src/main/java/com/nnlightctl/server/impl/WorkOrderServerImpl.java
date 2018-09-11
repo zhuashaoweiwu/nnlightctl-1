@@ -7,9 +7,11 @@ import com.nnlightctl.dao.*;
 import com.nnlightctl.jdbcdao.WorkOrderDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.ListWorkOrderRequest;
 import com.nnlightctl.request.WorkOrderRequest;
 import com.nnlightctl.server.WorkFlowerNodeServer;
 import com.nnlightctl.server.WorkOrderServer;
+import com.nnlightctl.vo.CountWorkOrderStateView;
 import com.nnlightctl.vo.StatisticWorkOrderView;
 import com.nnlightctl.vo.WorkFlowerNodeMapView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +70,8 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             for (int i = 0 ; i < workOrderList1.size() ; i++){
                 Long done =  workOrderList1.get(i).getWorkDone().getTime();
                 Long  created= workOrderList1.get(i).getWorkCreated().getTime();
-                System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
-                System.out.println(done +"*****"+created);
+               /* System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
+                System.out.println(done +"*****"+created);*/
                 Long time = done -created;
                 workOrderList1.get(i).setNnlightctlRegionId(time);
             }
@@ -91,12 +93,33 @@ public class WorkOrderServerImpl implements WorkOrderServer {
                 }
             }
             Long avg = totalTime/count/60/1000/60;
-            System.out.println(avg+"&&&&&&&&&&&&&&&");
+            //System.out.println(avg+"&&&&&&&&&&&&&&&");
             workOrderList1.get(j).setNnlightctlRegionId(avg);
         }
 
         return statisticWorkOrderViewList;
     }
+    @Override
+    public List<CountWorkOrderStateView> countWorkOrderState(){
+        WorkOrderExample workOrderExample = new WorkOrderExample();
+        List<CountWorkOrderStateView> list = new ArrayList<>();
+        workOrderExample.setOrderByClause("id DESC");
+
+        int total =workOrderMapper.countByExample(workOrderExample);
+        Byte state = 1;
+        workOrderExample.createCriteria().andStateEqualTo(state);
+        int finishTotal = workOrderMapper.countByExample(workOrderExample);
+        Byte state1 =2;
+        workOrderExample.createCriteria().andStateEqualTo(state1);
+        int noFinishTotal = workOrderMapper.countByExample(workOrderExample);
+        CountWorkOrderStateView countWorkOrderStateView  = new CountWorkOrderStateView();
+        countWorkOrderStateView.setFinishTotal(finishTotal);
+        countWorkOrderStateView.setTotal(total);
+        countWorkOrderStateView.setNoFinishTotal(noFinishTotal);
+        list.add(countWorkOrderStateView);
+        return list;
+    }
+
     @Override
     public List<WorkOrder> statisticWorkOrderAvg(WorkOrderRequest request){
         List<WorkOrder> workOrderList1 = new ArrayList<>();
@@ -143,10 +166,11 @@ public class WorkOrderServerImpl implements WorkOrderServer {
 
     }
     @Override
-    public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(BaseRequest request){
+    public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(ListWorkOrderRequest request){
         Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = new Tuple.TwoTuple<>();
 
         WorkOrderExample workOrderExample = new WorkOrderExample();
+        workOrderExample.createCriteria().andStateEqualTo(request.getState());
         workOrderExample.setOrderByClause("id DESC");
 
         int total =workOrderMapper.countByExample(workOrderExample);
@@ -244,5 +268,25 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             workflowerNodeList.add(workflowerNode);
         }
         return workflowerNodeList;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkFlowerWorkOrder(BaseRequest request){
+        Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = new Tuple.TwoTuple<>();
+
+        WorkOrderExample workOrderExample = new WorkOrderExample();
+        workOrderExample.createCriteria().andNnlightctlWorkflowerIdIsNotNull();
+
+        workOrderExample.setOrderByClause("id DESC");
+
+        int total =workOrderMapper.countByExample(workOrderExample);
+        tuple.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+
+        List<WorkOrder> repertoryOutReasonList = workOrderMapper.selectByExample(workOrderExample);
+        tuple.setFirst(repertoryOutReasonList);
+
+        return tuple;
     }
 }
