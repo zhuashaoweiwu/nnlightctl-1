@@ -57,6 +57,8 @@ public class Index extends BaseController {
         return "redirect:/html/pages/index.html";
     }
 
+
+
     @RequestMapping("/uploadFile")
     @ResponseBody
     public String uploadFile(MultipartFile file) {

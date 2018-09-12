@@ -15,6 +15,8 @@ public interface UserServer {
 
     User getUser(Long id);
 
+    User getUserByLoginName(String loginName);
+
     int deleteUser(List<Long> userIds);
 
     int updateUserPwd(UserConditionRequest request);

@@ -34,7 +34,7 @@ public class UserServerImpl implements UserServer {
         user.setGmtUpdated(new Date());
 
         if (!StringUtils.isEmpty(request.getLoginPwd())) {
-            user.setLoginPwd(DigesterUtil.digestSHA256(request.getLoginPwd()));
+            user.setLoginPwd(DigesterUtil.digestSHA256(request.getLoginPwd() + request.getLoginName()));
         }
 
         int ret = -1;
@@ -80,6 +80,19 @@ public class UserServerImpl implements UserServer {
     @Override
     public User getUser(Long id) {
         return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public User getUserByLoginName(String loginName) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(loginName);
+
+        List<User> findUsers = userMapper.selectByExample(userExample);
+        if (findUsers != null && findUsers.size() > 0) {
+            return findUsers.get(0);
+        }
+
+        return null;
     }
 
     @Override

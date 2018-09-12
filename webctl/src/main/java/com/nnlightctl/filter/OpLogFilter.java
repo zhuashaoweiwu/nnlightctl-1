@@ -3,6 +3,8 @@ package com.nnlightctl.filter;
 import com.nnlight.common.PropertiesUtil;
 import com.nnlightctl.po.UserOperationLog;
 import com.nnlightctl.server.UserOpLogServer;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.MethodBeforeAdvice;
@@ -14,7 +16,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Properties;
 
-public class OpLogFilter implements MethodBeforeAdvice {
+public class OpLogFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(OpLogFilter.class);
 
@@ -31,11 +33,10 @@ public class OpLogFilter implements MethodBeforeAdvice {
         }
     }
 
-    @Override
-    public void before(Method method, Object[] objects, Object o) throws Throwable {
+    public void before(JoinPoint jp) {
         logger.info("生成用户操作记录");
         //获取注解
-        RequestMapping annoRequestMapping = method.getAnnotation(RequestMapping.class);
+        RequestMapping annoRequestMapping = ((MethodSignature)jp.getSignature()).getMethod().getAnnotation(RequestMapping.class);
         String[] annoValues = annoRequestMapping.value();
 
         //获取注解描述
