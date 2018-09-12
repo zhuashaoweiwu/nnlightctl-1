@@ -2,10 +2,8 @@ package com.nnlight.common;
 
 import sun.misc.IOUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 public class PropertiesUtil {
@@ -26,9 +24,10 @@ public class PropertiesUtil {
 
     public static Properties load(String path) throws IOException{
 
-        try (InputStream in = PropertiesUtil.class.getClassLoader().getResourceAsStream(path)) {
+        try (InputStream in = PropertiesUtil.class.getClassLoader().getResourceAsStream(path);
+             Reader reader = new InputStreamReader(in, Charset.forName("GBK"))) {
             Properties props = new Properties();
-            props.load(in);
+            props.load(reader);
 
             return props;
 
