@@ -13,11 +13,11 @@
         <property name="securityManager" ref="securityManager"></property>
         <!-- 注入系统的登录访问路径 -->
         <!-- 跳转到登录页面 -->
-        <property name="loginUrl" value="/loginUrl"></property>
+        <property name="loginUrl" value="/api/login/loginUrl"></property>
         <!-- 成功页面 -->
-        <property name="successUrl" value="/sucessUrl"></property>
+        <property name="successUrl" value="/api/login/sucessUrl"></property>
         <!-- 权限不足的错误提示页面 -->
-        <property name="unauthorizedUrl" value="/unauthorizedUrl"></property>
+        <property name="unauthorizedUrl" value="/api/login/loginUrl"></property>
         <!-- 基于URL拦截权限控制 -->
         <property name="filters">
             <map>
@@ -36,9 +36,9 @@
         <property name="filterChainDefinitions">
             <value>
                 /html/** = anon
-                /loginUrl = anon
-                /test_ehcache_userOpLog = anon
-                /* = authc
+                /api/login/loginUrl = anon
+                /api/login/Login = anon
+                /** = authc
             </value>
         </property>
     </bean>

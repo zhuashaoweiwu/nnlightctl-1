@@ -51,7 +51,8 @@
 
     <aop:config>
         <aop:aspect ref="userOpLogFilter">
-            <aop:pointcut id="userOpPointcut" expression="within(com.nnlightctl.springmvc.controller.BaseController+)" />
+            <aop:pointcut id="userOpPointcut" expression="within(com.nnlightctl.springmvc.controller.BaseController+)
+                    and !within(com.nnlightctl.springmvc.controller.BaseController)" />
             <aop:before method="before" pointcut-ref="userOpPointcut" />
         </aop:aspect>
     </aop:config>

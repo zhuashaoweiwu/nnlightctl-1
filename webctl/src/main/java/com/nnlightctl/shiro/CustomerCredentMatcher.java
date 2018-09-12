@@ -12,6 +12,7 @@ public class CustomerCredentMatcher extends SimpleCredentialsMatcher {
 
         UsernamePasswordToken usertoken = (UsernamePasswordToken) token;
 
-        return equals(getCredentials(info), new Sha256Hash(String.valueOf(usertoken.getPassword()), usertoken.getUsername()));
+        return getCredentials(info).toString()
+                .equalsIgnoreCase(new Sha256Hash(String.valueOf(usertoken.getPassword()), usertoken.getUsername()).toString());
     }
 }

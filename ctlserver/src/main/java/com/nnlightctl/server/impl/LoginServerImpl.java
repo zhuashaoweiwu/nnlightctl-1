@@ -20,7 +20,7 @@ public class LoginServerImpl implements LoginServer {
         String password = request.getPwd();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        if (request.getIsRememberMe() == 1) {
+        if (request.getIsRememberMe() != null && request.getIsRememberMe() == 1) {
             token.setRememberMe(true);
         }
         try {
