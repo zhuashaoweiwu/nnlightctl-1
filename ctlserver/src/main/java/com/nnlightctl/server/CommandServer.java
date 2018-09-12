@@ -13,4 +13,5 @@ public interface CommandServer {
     void commandTerminalEleboxOn(Boolean terminalEleboxOn);
     void commandReadTerminalInfo();
     void configTerminalSwitchPolicy(List<SwitchTask> switchTasks);
+    void configTerminalAutoModel(int model);
 }

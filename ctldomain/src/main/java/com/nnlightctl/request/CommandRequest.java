@@ -52,6 +52,17 @@ public class CommandRequest {
         this.lightIds = lightIds;
     }
 
+    public Integer getAutoModel() {
+        return autoModel;
+    }
+
+    public void setAutoModel(Integer autoModel) {
+        this.autoModel = autoModel;
+    }
+
+
+    private Integer autoModel;
+
     private List<Long> eleboxIds;
 
     private List<Long> lightIds;

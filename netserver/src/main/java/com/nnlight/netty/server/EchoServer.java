@@ -152,6 +152,18 @@ public class EchoServer {
     }
 
     /**
+     * 发送全部终端设置终端的工作模式
+     * @param model
+     */
+    public void allSendCommandTerminalAutoModel(byte model) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+
+            context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model));
+        }
+    }
+
+    /**
      * 发送全部终端ack回应信息
      * @param control
      * @param success

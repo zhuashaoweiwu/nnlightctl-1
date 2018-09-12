@@ -168,6 +168,29 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getCommandConfigTerminalModel(byte model) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xe9);
+        commandData.setDataLength((byte)1);
+        commandData.setData(new byte[] {model});
+
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    public static CommandData getReturnTerminalUUID(String uuid) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xf0);
+        commandData.setDataLength((byte)uuid.getBytes().length);
+        commandData.setData(uuid.getBytes());
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     public static CommandData getACKCommandData(byte control, Boolean success) {
         CommandData commandData = new CommandData();
 
@@ -355,6 +378,21 @@ public class CommandData implements Serializable {
         CommandData commandData = new CommandData();
 
         commandData.setControl((byte)0xc8);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
+     * 命令层C9设置终端的工作模式（自动-0或者手动-1）
+     * @return
+     */
+    public static CommandData getC9CommandData(int model) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc9);
+        commandData.setDataLength((byte)1);
+        commandData.setData(new byte[] {(byte)model});
         commandData.setCheck(commandData.createCheck());
 
         return commandData;

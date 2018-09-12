@@ -77,6 +77,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC8CommandData());
     }
 
+    public void configTerminalAutoModel(int model) {
+        channelHandlerContext.writeAndFlush(CommandData.getC9CommandData(model));
+    }
+
     public void commandReplyTerminal(byte control, Boolean success) {
         channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandData(control, success));
     }

@@ -103,6 +103,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void configTerminalAutoMode(int mode) {
+        context.configTerminalAutoModel(mode);
+    }
+
+    @Override
     public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);

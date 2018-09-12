@@ -14,6 +14,7 @@ public interface Command {
     void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks);
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
+    void configTerminalAutoMode(int mode);
     void close();
     void reConnect();
 }
