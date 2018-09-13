@@ -7,19 +7,24 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 
 public class MyRealm extends AuthorizingRealm {
 
+    private static final Logger log = LoggerFactory.getLogger(MyRealm.class);
+
     @Autowired
     private UserServer userServer;
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String) principals.getPrimaryPrincipal();
+        log.info("获取授权信息");
+        String loginName = (String) principals.getPrimaryPrincipal();
+        User loginUser = userServer.getUserByLoginName(loginName);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(new HashSet<String>(2));
         authorizationInfo.setStringPermissions(new HashSet<String>(50));
         return authorizationInfo;
     }

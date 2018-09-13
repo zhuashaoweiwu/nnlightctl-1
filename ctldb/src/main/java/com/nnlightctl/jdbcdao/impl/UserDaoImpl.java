@@ -43,4 +43,9 @@ public class UserDaoImpl implements UserDao {
         return userOperationLog;
 
     }
+
+    @Override
+    public List<String> getRightByLoginName(String loginName) {
+        return null;
+    }
 }

@@ -36,6 +36,22 @@ public class LoginController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("Logout")
+    @ResponseBody
+    public String logout() {
+        log.info("[POST] /api/login/Logout");
+
+        int ret = loginServer.logout();
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("loginUrl")
     public String loginUrl() {
         log.info("[POST] /api/login/loginUrl");

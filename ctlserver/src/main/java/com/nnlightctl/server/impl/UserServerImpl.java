@@ -141,4 +141,9 @@ public class UserServerImpl implements UserServer {
 
         return tuple;
     }
+
+    @Override
+    public List<String> getRightByLoginName(String loginName) {
+        return null;
+    }
 }

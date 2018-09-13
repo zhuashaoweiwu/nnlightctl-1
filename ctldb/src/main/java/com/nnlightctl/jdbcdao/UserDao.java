@@ -7,4 +7,6 @@ import java.util.List;
 public interface UserDao {
 
   List<UserOperationLog> listUserOpLog(Long id);
+
+  List<String> getRightByLoginName(String loginName);
 }
