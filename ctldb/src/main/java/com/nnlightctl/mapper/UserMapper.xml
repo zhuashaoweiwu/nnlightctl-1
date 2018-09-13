@@ -17,6 +17,7 @@
     <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
     <result column="user_type" property="userType" jdbcType="TINYINT" />
     <result column="nnlightctl_department_id" property="nnlightctlDepartmentId" jdbcType="BIGINT" />
+    <result column="user_state" property="userState" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,7 +79,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, login_name, login_pwd, is_remenber_pwd, user_name, 
-    sex, age, phone, email, place, code_number, user_type, nnlightctl_department_id
+    sex, age, phone, email, place, code_number, user_type, nnlightctl_department_id, 
+    user_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.UserExample" >
     select
@@ -119,12 +121,12 @@
       login_pwd, is_remenber_pwd, user_name, 
       sex, age, phone, email, 
       place, code_number, user_type, 
-      nnlightctl_department_id)
+      nnlightctl_department_id, user_state)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{loginName,jdbcType=VARCHAR}, 
       #{loginPwd,jdbcType=VARCHAR}, #{isRemenberPwd,jdbcType=TINYINT}, #{userName,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{age,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{place,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
-      #{nnlightctlDepartmentId,jdbcType=BIGINT})
+      #{nnlightctlDepartmentId,jdbcType=BIGINT}, #{userState,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.User" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -174,6 +176,9 @@
       <if test="nnlightctlDepartmentId != null" >
         nnlightctl_department_id,
       </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -217,6 +222,9 @@
       </if>
       <if test="nnlightctlDepartmentId != null" >
         #{nnlightctlDepartmentId,jdbcType=BIGINT},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -274,6 +282,9 @@
       <if test="record.nnlightctlDepartmentId != null" >
         nnlightctl_department_id = #{record.nnlightctlDepartmentId,jdbcType=BIGINT},
       </if>
+      <if test="record.userState != null" >
+        user_state = #{record.userState,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -295,7 +306,8 @@
       place = #{record.place,jdbcType=VARCHAR},
       code_number = #{record.codeNumber,jdbcType=VARCHAR},
       user_type = #{record.userType,jdbcType=TINYINT},
-      nnlightctl_department_id = #{record.nnlightctlDepartmentId,jdbcType=BIGINT}
+      nnlightctl_department_id = #{record.nnlightctlDepartmentId,jdbcType=BIGINT},
+      user_state = #{record.userState,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -345,6 +357,9 @@
       <if test="nnlightctlDepartmentId != null" >
         nnlightctl_department_id = #{nnlightctlDepartmentId,jdbcType=BIGINT},
       </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -363,7 +378,8 @@
       place = #{place,jdbcType=VARCHAR},
       code_number = #{codeNumber,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=TINYINT},
-      nnlightctl_department_id = #{nnlightctlDepartmentId,jdbcType=BIGINT}
+      nnlightctl_department_id = #{nnlightctlDepartmentId,jdbcType=BIGINT},
+      user_state = #{userState,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

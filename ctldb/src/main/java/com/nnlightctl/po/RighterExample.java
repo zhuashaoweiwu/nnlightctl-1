@@ -554,6 +554,66 @@ public class RighterExample {
             addCriterion("righter_level not between", value1, value2, "righterLevel");
             return (Criteria) this;
         }
+
+        public Criteria andParentRighterIdIsNull() {
+            addCriterion("parent_righter_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdIsNotNull() {
+            addCriterion("parent_righter_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdEqualTo(Long value) {
+            addCriterion("parent_righter_id =", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdNotEqualTo(Long value) {
+            addCriterion("parent_righter_id <>", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdGreaterThan(Long value) {
+            addCriterion("parent_righter_id >", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("parent_righter_id >=", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdLessThan(Long value) {
+            addCriterion("parent_righter_id <", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdLessThanOrEqualTo(Long value) {
+            addCriterion("parent_righter_id <=", value, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdIn(List<Long> values) {
+            addCriterion("parent_righter_id in", values, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdNotIn(List<Long> values) {
+            addCriterion("parent_righter_id not in", values, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdBetween(Long value1, Long value2) {
+            addCriterion("parent_righter_id between", value1, value2, "parentRighterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentRighterIdNotBetween(Long value1, Long value2) {
+            addCriterion("parent_righter_id not between", value1, value2, "parentRighterId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

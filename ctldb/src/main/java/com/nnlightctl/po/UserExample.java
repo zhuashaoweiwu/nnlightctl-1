@@ -1074,6 +1074,66 @@ public class UserExample {
             addCriterion("nnlightctl_department_id not between", value1, value2, "nnlightctlDepartmentId");
             return (Criteria) this;
         }
+
+        public Criteria andUserStateIsNull() {
+            addCriterion("user_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateIsNotNull() {
+            addCriterion("user_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateEqualTo(Byte value) {
+            addCriterion("user_state =", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateNotEqualTo(Byte value) {
+            addCriterion("user_state <>", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateGreaterThan(Byte value) {
+            addCriterion("user_state >", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateGreaterThanOrEqualTo(Byte value) {
+            addCriterion("user_state >=", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateLessThan(Byte value) {
+            addCriterion("user_state <", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateLessThanOrEqualTo(Byte value) {
+            addCriterion("user_state <=", value, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateIn(List<Byte> values) {
+            addCriterion("user_state in", values, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateNotIn(List<Byte> values) {
+            addCriterion("user_state not in", values, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateBetween(Byte value1, Byte value2) {
+            addCriterion("user_state between", value1, value2, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStateNotBetween(Byte value1, Byte value2) {
+            addCriterion("user_state not between", value1, value2, "userState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

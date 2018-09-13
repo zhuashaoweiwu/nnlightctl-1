@@ -16,7 +16,7 @@
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://47.105.38.215/nnlightctl" userId="root" password="Root(12345678)">
+                        connectionURL="jdbc:mysql://192.168.9.152/nnlightctl" userId="root" password="Root(12345678)">
         </jdbcConnection>
         <javaTypeResolver>
             <!-- This property is used to specify whether MyBatis Generator should

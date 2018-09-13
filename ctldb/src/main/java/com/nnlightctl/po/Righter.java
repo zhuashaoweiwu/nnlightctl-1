@@ -18,6 +18,8 @@ public class Righter implements Serializable {
 
     private Byte righterLevel;
 
+    private Long parentRighterId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -76,6 +78,14 @@ public class Righter implements Serializable {
         this.righterLevel = righterLevel;
     }
 
+    public Long getParentRighterId() {
+        return parentRighterId;
+    }
+
+    public void setParentRighterId(Long parentRighterId) {
+        this.parentRighterId = parentRighterId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -94,7 +104,8 @@ public class Righter implements Serializable {
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
             && (this.getRighterName() == null ? other.getRighterName() == null : this.getRighterName().equals(other.getRighterName()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getRighterLevel() == null ? other.getRighterLevel() == null : this.getRighterLevel().equals(other.getRighterLevel()));
+            && (this.getRighterLevel() == null ? other.getRighterLevel() == null : this.getRighterLevel().equals(other.getRighterLevel()))
+            && (this.getParentRighterId() == null ? other.getParentRighterId() == null : this.getParentRighterId().equals(other.getParentRighterId()));
     }
 
     @Override
@@ -108,6 +119,7 @@ public class Righter implements Serializable {
         result = prime * result + ((getRighterName() == null) ? 0 : getRighterName().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getRighterLevel() == null) ? 0 : getRighterLevel().hashCode());
+        result = prime * result + ((getParentRighterId() == null) ? 0 : getParentRighterId().hashCode());
         return result;
     }
 
@@ -124,6 +136,7 @@ public class Righter implements Serializable {
         sb.append(", righterName=").append(righterName);
         sb.append(", url=").append(url);
         sb.append(", righterLevel=").append(righterLevel);
+        sb.append(", parentRighterId=").append(parentRighterId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
