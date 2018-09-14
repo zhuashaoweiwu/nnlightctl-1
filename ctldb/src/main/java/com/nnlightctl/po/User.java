@@ -34,6 +34,8 @@ public class User implements Serializable {
 
     private Long nnlightctlDepartmentId;
 
+    private Byte userState;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -156,6 +158,14 @@ public class User implements Serializable {
         this.nnlightctlDepartmentId = nnlightctlDepartmentId;
     }
 
+    public Byte getUserState() {
+        return userState;
+    }
+
+    public void setUserState(Byte userState) {
+        this.userState = userState;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -182,7 +192,8 @@ public class User implements Serializable {
             && (this.getPlace() == null ? other.getPlace() == null : this.getPlace().equals(other.getPlace()))
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
             && (this.getUserType() == null ? other.getUserType() == null : this.getUserType().equals(other.getUserType()))
-            && (this.getNnlightctlDepartmentId() == null ? other.getNnlightctlDepartmentId() == null : this.getNnlightctlDepartmentId().equals(other.getNnlightctlDepartmentId()));
+            && (this.getNnlightctlDepartmentId() == null ? other.getNnlightctlDepartmentId() == null : this.getNnlightctlDepartmentId().equals(other.getNnlightctlDepartmentId()))
+            && (this.getUserState() == null ? other.getUserState() == null : this.getUserState().equals(other.getUserState()));
     }
 
     @Override
@@ -204,6 +215,7 @@ public class User implements Serializable {
         result = prime * result + ((getCodeNumber() == null) ? 0 : getCodeNumber().hashCode());
         result = prime * result + ((getUserType() == null) ? 0 : getUserType().hashCode());
         result = prime * result + ((getNnlightctlDepartmentId() == null) ? 0 : getNnlightctlDepartmentId().hashCode());
+        result = prime * result + ((getUserState() == null) ? 0 : getUserState().hashCode());
         return result;
     }
 
@@ -228,6 +240,7 @@ public class User implements Serializable {
         sb.append(", codeNumber=").append(codeNumber);
         sb.append(", userType=").append(userType);
         sb.append(", nnlightctlDepartmentId=").append(nnlightctlDepartmentId);
+        sb.append(", userState=").append(userState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

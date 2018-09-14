@@ -11,6 +11,6 @@ public class DigesterUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(digestSHA256("123"));
+        System.out.println(digestSHA256("adminadmin"));
     }
 }

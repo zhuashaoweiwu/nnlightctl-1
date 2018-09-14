@@ -222,6 +222,23 @@
     <hr/>
     <br/>
 
+    <!-- 设置终端自动模式0-自动 1-手动 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">终端手动模式：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="switch switch-large">
+                <input id="terminalAutoModel" type="checkbox" checked />
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
     <!-- 客户端实时消息接收 -->
     <div class="row">
         <div class="col-sm-1">
@@ -344,6 +361,19 @@
     $("#readTerminalInfo").click(function () {
         $.post("/nnlightctl/api/command/commandReadTerminalInfo", {}, function (data) {
             // $("#terminalInfoTextArea").val(JSON.stringify(data));
+        });
+    });
+
+    //终端自动模式
+    $("#terminalAutoModel").bootstrapSwitch();
+    $('#terminalAutoModel').on('switchChange.bootstrapSwitch', function (event, state) {
+        console.log(state);
+        var model = 0;
+        if (state) {
+            model = 1;
+        }
+        $.post("/nnlightctl/api/command/commandConfigTerminalAutModel", {"autoModel" : model}, function () {
+
         });
     });
 

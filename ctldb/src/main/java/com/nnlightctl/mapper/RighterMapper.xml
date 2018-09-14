@@ -9,6 +9,7 @@
     <result column="righter_name" property="righterName" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="righter_level" property="righterLevel" jdbcType="TINYINT" />
+    <result column="parent_righter_id" property="parentRighterId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, code_number, righter_name, url, righter_level
+    id, gmt_created, gmt_updated, code_number, righter_name, url, righter_level, parent_righter_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RighterExample" >
     select
@@ -107,11 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_righter (gmt_created, gmt_updated, code_number, 
-      righter_name, url, righter_level
-      )
+      righter_name, url, righter_level, 
+      parent_righter_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
-      #{righterName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{righterLevel,jdbcType=TINYINT}
-      )
+      #{righterName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{righterLevel,jdbcType=TINYINT}, 
+      #{parentRighterId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Righter" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -137,6 +138,9 @@
       <if test="righterLevel != null" >
         righter_level,
       </if>
+      <if test="parentRighterId != null" >
+        parent_righter_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -156,6 +160,9 @@
       </if>
       <if test="righterLevel != null" >
         #{righterLevel,jdbcType=TINYINT},
+      </if>
+      <if test="parentRighterId != null" >
+        #{parentRighterId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -189,6 +196,9 @@
       <if test="record.righterLevel != null" >
         righter_level = #{record.righterLevel,jdbcType=TINYINT},
       </if>
+      <if test="record.parentRighterId != null" >
+        parent_righter_id = #{record.parentRighterId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -202,7 +212,8 @@
       code_number = #{record.codeNumber,jdbcType=VARCHAR},
       righter_name = #{record.righterName,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
-      righter_level = #{record.righterLevel,jdbcType=TINYINT}
+      righter_level = #{record.righterLevel,jdbcType=TINYINT},
+      parent_righter_id = #{record.parentRighterId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,6 +239,9 @@
       <if test="righterLevel != null" >
         righter_level = #{righterLevel,jdbcType=TINYINT},
       </if>
+      <if test="parentRighterId != null" >
+        parent_righter_id = #{parentRighterId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -238,7 +252,8 @@
       code_number = #{codeNumber,jdbcType=VARCHAR},
       righter_name = #{righterName,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
-      righter_level = #{righterLevel,jdbcType=TINYINT}
+      righter_level = #{righterLevel,jdbcType=TINYINT},
+      parent_righter_id = #{parentRighterId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

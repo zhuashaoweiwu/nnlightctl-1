@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 当前对象用于创建shiro框架需要的过滤器对象 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 注入安全管理器 -->
+        <property name="securityManager" ref="securityManager"></property>
+        <!-- 注入系统的登录访问路径 -->
+        <!-- 跳转到登录页面 -->
+        <property name="loginUrl" value="/api/login/loginUrl"></property>
+        <!-- 成功页面 -->
+        <property name="successUrl" value="/api/login/sucessUrl"></property>
+        <!-- 权限不足的错误提示页面 -->
+        <property name="unauthorizedUrl" value="/api/login/loginUrl"></property>
+        <!-- 基于URL拦截权限控制 -->
+        <property name="filters">
+            <map>
+                <entry key="authc">
+                    <bean class="org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter"/>
+                </entry>
+            </map>
+        </property>
+        <!--
+            URL路径自上而下进行匹配
+         -->
+        <!--
+            anon过滤器处理原则 ：随便访问
+            authc需要进行权限认证
+         -->
+        <property name="filterChainDefinitions">
+            <value>
+                /html/** = anon
+                /api/login/loginUrl = anon
+                /api/login/Login = anon
+                /** = anon
+            </value>
+        </property>
+    </bean>
+    <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+    </bean>
+
+    <!-- 定义安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 注入realm -->
+        <property name="realm" ref="myRealm"></property>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="com.nnlightctl.shiro.MyRealm">
+        <property name="credentialsMatcher" ref="passwordMatcher" />
+    </bean>
+
+    <!-- 设置密码加密策略 -->
+    <bean id="passwordMatcher" class="com.nnlightctl.shiro.CustomerCredentMatcher"/>
+
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 使用shiro的注解需要的配置代码 -->
+    <!-- 开启shiro自动代理 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <!-- 指定强制使用cglib为action创建代理对象 -->
+        <property name="proxyTargetClass" value="true"></property>
+    </bean>
+
+    <aop:config proxy-target-class="true"></aop:config>
+
+    <!-- 配置切面类 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"></property>
+    </bean>
+
+</beans>

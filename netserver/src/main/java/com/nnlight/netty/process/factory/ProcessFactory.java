@@ -46,6 +46,14 @@ public class ProcessFactory {
             case (byte)0xc7:
                 return c7;
 
+                //命令层c9指令
+            case (byte)0xc9:
+                return c9;
+
+                //终端f0指令
+            case (byte)0xf0:
+                return f0;
+
                 //无控制码默认返回消息到上层命令客户端
                 default:
                 return commonProcess;
@@ -62,5 +70,7 @@ public class ProcessFactory {
     private static final Process e80 = new E80Process();
     private static final Process b80 = new B8Process();
     private static final Process c7 = new C7Process();
+    private static final Process c9 = new C9Process();
+    private static final Process f0 = new F0Process();
     private static final Process commonProcess = new CommonProcess();
 }

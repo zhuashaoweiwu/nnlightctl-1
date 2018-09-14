@@ -79,4 +79,9 @@ public class CommandServerImpl implements CommandServer {
         }
         command.configTerminalSwitchPolicy(switchViewList);
     }
+
+    @Override
+    public void configTerminalAutoModel(int model) {
+        command.configTerminalAutoMode(model);
+    }
 }

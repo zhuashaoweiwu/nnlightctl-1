@@ -133,6 +133,13 @@ public class CommandController extends BaseController {
         commandServer.commandReadTerminalInfo();
     }
 
+    @RequestMapping("commandConfigTerminalAutModel")
+    public void commandConfigTerminalAutoModel(CommandRequest request) {
+        logger.info("[POST] /api/command/commandConfigTerminalAutModel");
+
+        commandServer.configTerminalAutoModel(request.getAutoModel());
+    }
+
     @RequestMapping("sendLightAdjustCommandBatch")
     public String batchLightAdjustCommand(CommandRequest request) {
         logger.info("[POST] /api/command/sendLightAdjustCommandBatch");
