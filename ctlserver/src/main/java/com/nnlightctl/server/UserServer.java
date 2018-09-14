@@ -22,6 +22,4 @@ public interface UserServer {
     int updateUserPwd(UserConditionRequest request);
 
     Tuple.TwoTuple<List<User>, Integer> listOnlineUser();
-
-    List<String> getRightByLoginName(String loginName);
 }

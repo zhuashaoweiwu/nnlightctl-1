@@ -44,8 +44,4 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-    @Override
-    public List<String> getRightByLoginName(String loginName) {
-        return null;
-    }
 }
