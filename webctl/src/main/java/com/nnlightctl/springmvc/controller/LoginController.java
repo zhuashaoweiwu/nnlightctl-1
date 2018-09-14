@@ -52,6 +52,16 @@ public class LoginController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getMenu")
+    @ResponseBody
+    public String getMenu() {
+        log.info("[POST] /api/login/getMenu");
+
+        //todo
+
+        return "";
+    }
+
     @RequestMapping("loginUrl")
     public String loginUrl() {
         log.info("[POST] /api/login/loginUrl");

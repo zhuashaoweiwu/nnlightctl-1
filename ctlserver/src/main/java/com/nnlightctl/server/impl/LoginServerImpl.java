@@ -1,9 +1,10 @@
 package com.nnlightctl.server.impl;
 
-import com.nnlightctl.po.User;
+import com.nnlightctl.jdbcdao.LoginDao;
+import com.nnlightctl.po.Righter;
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.server.LoginServer;
-import com.nnlightctl.server.UserServer;
+import com.nnlightctl.vo.MenuView;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -15,10 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LoginServerImpl implements LoginServer {
 
     private static final Logger log = LoggerFactory.getLogger(LoginServerImpl.class);
+
+    @Autowired
+    private LoginDao loginDao;
 
     @Override
     public int login(LoginRequest request) {
@@ -54,5 +61,34 @@ public class LoginServerImpl implements LoginServer {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return 1;
+    }
+
+    @Override
+    public List<MenuView> listMenu() {
+        String loginName = (String)SecurityUtils.getSubject().getPrincipal();
+        List<Righter> righters = loginDao.getRightersByLoginName(loginName);
+        List<MenuView> menuViews = new ArrayList<>(8);
+
+        for (Righter righter : righters) {
+            //判断是否为一级菜单
+            if (righter.getRighterLevel() == 0) {
+                menuViews.add(getMenuView(righter, righters));
+            }
+        }
+
+        return menuViews;
+    }
+
+    private MenuView getMenuView(Righter righter, List<Righter> righterList) {
+        MenuView menuView = new MenuView();
+
+        menuView.setName(righter.getRighterName());
+        menuView.setUrl(righter.getUrl());
+
+        List<MenuView> menuViews = new ArrayList<>(8);
+
+
+
+        return menuView;
     }
 }

@@ -47,11 +47,14 @@ public class OpLogFilter {
 
         //判断登录用户权限
         Subject subject = SecurityUtils.getSubject();
-        String loginName = (String) subject.getPrincipal();
+        Object loginObject = subject.getPrincipal();
+        if (loginObject == null) {
+            return;
+        }
 
         logger.info("生成用户操作记录");
 
-        User user = userServer.getUserByLoginName(loginName);
+        User user = loginObject instanceof User ? (User)loginObject : userServer.getUserByLoginName((String)loginObject);
 
         //获取注解描述
         String opDesc = properties.getProperty(annoValues[0], annoValues[0]);
