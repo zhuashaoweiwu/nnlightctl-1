@@ -38,7 +38,7 @@
                 /html/** = anon
                 /api/login/loginUrl = anon
                 /api/login/Login = anon
-                /** = authc
+                /** = user
             </value>
         </property>
     </bean>

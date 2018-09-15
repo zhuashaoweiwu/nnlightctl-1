@@ -2,6 +2,7 @@ package com.nnlightctl.server.impl;
 
 import com.nnlightctl.jdbcdao.LoginDao;
 import com.nnlightctl.po.Righter;
+import com.nnlightctl.po.User;
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.server.LoginServer;
 import com.nnlightctl.vo.MenuView;
@@ -65,7 +66,8 @@ public class LoginServerImpl implements LoginServer {
 
     @Override
     public List<MenuView> listMenu() {
-        String loginName = (String)SecurityUtils.getSubject().getPrincipal();
+        Object loginObject = SecurityUtils.getSubject().getPrincipal();
+        String loginName = loginObject instanceof User ? ((User)loginObject).getLoginName() : (String)loginObject;
         List<Righter> righters = loginDao.getRightersByLoginName(loginName);
         List<MenuView> menuViews = new ArrayList<>(8);
 
@@ -87,8 +89,13 @@ public class LoginServerImpl implements LoginServer {
 
         List<MenuView> menuViews = new ArrayList<>(8);
 
+        for (Righter righter1 : righterList) {
+            if (righter1.getParentRighterId().equals(righter.getId())) {
+                menuViews.add(getMenuView(righter1, righterList));
+            }
+        }
 
-
+        menuView.setSubMenuViewList(menuViews);
         return menuView;
     }
 }
