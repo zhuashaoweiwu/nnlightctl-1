@@ -2,6 +2,8 @@ package com.nnlightctl.vo;
 
 public class StatisticWorkOrderView extends BaseView{
 
+    private Long avgTime;
+
     private String projectName;
 
     private String areaName;
@@ -82,6 +84,14 @@ public class StatisticWorkOrderView extends BaseView{
 
     public void setMouthFinishByProject(String mouthFinishByProject) {
         this.mouthFinishByProject = mouthFinishByProject;
+    }
+
+    public Long getAvgTime() {
+        return avgTime;
+    }
+
+    public void setAvgTime(Long avgTime) {
+        this.avgTime = avgTime;
     }
 
     public String getYearTotalByProject() {

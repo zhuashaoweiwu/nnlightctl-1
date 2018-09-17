@@ -121,16 +121,17 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     }
 
     @Override
-    public List<WorkOrder> statisticWorkOrderAvg(WorkOrderRequest request){
+    public List<StatisticWorkOrderView> statisticWorkOrderAvg(WorkOrderRequest request){
         List<WorkOrder> workOrderList1 = new ArrayList<>();
+        List<StatisticWorkOrderView> statisticWorkOrderViewList = new ArrayList<>();
         if (request.getTimeType()==0){
             SimpleDateFormat df=new SimpleDateFormat("yyyy-MM");
             String  time=  df.format(request.getDate());
-            //workOrderList1 = workOrderDao.listWorkOrderMouth(time);
+            workOrderList1 = workOrderDao.listWorkOrderMouth(time);
         }else if (request.getTimeType()==1){
             SimpleDateFormat df=new SimpleDateFormat("yyyy");
             String  time=  df.format(request.getDate());
-           // workOrderList1 = workOrderDao.listWorkOrderYear(time);
+            workOrderList1 = workOrderDao.listWorkOrderYear(time);
         }
         if (!workOrderList1.isEmpty()) {
             for (int i = 0 ; i < workOrderList1.size() ; i++){
@@ -144,6 +145,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         }
         List<WorkOrder> workOrderList = new ArrayList<>();
         for (int j = 0 ; j<workOrderList1.size() ;j++){
+            StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
             int count = 1;
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss");
 
@@ -155,14 +157,24 @@ public class WorkOrderServerImpl implements WorkOrderServer {
                         count++;
                         totalTime = totalTime+workOrderList1.get(k).getNnlightctlRegionId();
                     }
-                    workOrderList1.remove(k);
+                     workOrderList1.remove(k);
                 }
             }
             Long avg = totalTime/count/60/1000/60;
-            System.out.println(avg+"&&&&&&&&&&&&&&&");
-            workOrderList1.get(j).setNnlightctlRegionId(avg);
+            System.out.println(avg+"&&&&&&&&&&&&&&&"+workOrderList1.get(j).getAddress());
+            statisticWorkOrderView.setAvgTime(avg);
+            statisticWorkOrderView.setProjectName(workOrderList1.get(j).getAddress());
+            statisticWorkOrderViewList.add(statisticWorkOrderView);
         }
-        return workOrderList1;
+
+        for  ( int  i  =   0 ; i  <  statisticWorkOrderViewList.size()  -   1 ; i ++ )  {
+            for  ( int  j  =  statisticWorkOrderViewList.size()  -   1 ; j  >  i; j -- )  {
+                if  (statisticWorkOrderViewList.get(j).equals(statisticWorkOrderViewList.get(i)))  {
+                    statisticWorkOrderViewList.remove(j);
+                }
+            }
+        }
+        return statisticWorkOrderViewList;
 
     }
     @Override

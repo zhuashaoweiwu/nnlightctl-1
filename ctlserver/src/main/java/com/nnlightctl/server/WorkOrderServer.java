@@ -16,7 +16,7 @@ import java.util.List;
 public interface WorkOrderServer {
     List<StatisticWorkOrderView> statisticWorkOrder(WorkOrderRequest request);
     List<CountWorkOrderStateView> countWorkOrderState();
-    List<WorkOrder> statisticWorkOrderAvg(WorkOrderRequest request);
+    List<StatisticWorkOrderView> statisticWorkOrderAvg(WorkOrderRequest request);
     Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(ListWorkOrderRequest request);
     int claimWordOrder(WorkOrderRequest request);
     int addWordOrder(WorkOrderRequest request);

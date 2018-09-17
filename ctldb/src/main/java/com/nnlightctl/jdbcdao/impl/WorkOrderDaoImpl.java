@@ -204,33 +204,38 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public  List<WorkOrder> listWorkOrderMouth(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT id ,gmt_created ,gmt_updated ,serial_number ,classify ,work_created ,work_done ,nnlightctl_workflower_id ,state ,priority , nnlightctl_region_id ,address ,nnlightctl_workflower_move_record_id ,nnlightctl_masker_id ,content ,attach_file_path ,work_source ,nnlightctl_project_id from nnlightctl_work_order where state = 3 ");
+       /* sql.append("SELECT id ,gmt_created ,gmt_updated ,serial_number ,classify ,work_created ,work_done ,nnlightctl_workflower_id ,state ,priority , nnlightctl_region_id ,address ,nnlightctl_workflower_move_record_id ,nnlightctl_masker_id ,content ,attach_file_path ,work_source ,nnlightctl_project_id from nnlightctl_work_order where state = 3 ");
         if (date != null){
             sql.append(" and SUBSTR(work_created ,1,7) = ? ");
+            param.add(date);
+        }*/
+       sql.append("SELECT o.gmt_created ,o.work_created , o.work_done ,p.project_name ,o.state ,o.nnlightctl_region_id from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id AND o.state=3 ");
+        if (date != null){
+            sql.append(" AND SUBSTR(o.work_created ,1,7) = ? ");
             param.add(date);
         }
         List<WorkOrder> workOrderList = jdbcTemplate.query(sql.toString(),param.toArray(),new RowMapper<WorkOrder>() {
             @Override
             public WorkOrder mapRow(ResultSet resultSet, int i) throws SQLException {
                 WorkOrder workOrder = new WorkOrder();
-                workOrder.setId(resultSet.getLong("id"));
+                //workOrder.setId(resultSet.getLong("id"));
                 workOrder.setGmtCreated(resultSet.getDate("gmt_created"));
-                workOrder.setGmtUpdated(resultSet.getDate("gmt_updated"));
+                /*workOrder.setGmtUpdated(resultSet.getDate("gmt_updated"));
                 workOrder.setSerialNumber(resultSet.getString("serial_number"));
-                workOrder.setClassify(resultSet.getByte("classify"));
+                workOrder.setClassify(resultSet.getByte("classify"));*/
                 workOrder.setWorkCreated(resultSet.getTimestamp("work_created"));
                 workOrder.setWorkDone(resultSet.getTimestamp("work_done"));
-                workOrder.setNnlightctlWorkflowerId(resultSet.getLong("nnlightctl_workflower_id"));
+                //workOrder.setNnlightctlWorkflowerId(resultSet.getLong("nnlightctl_workflower_id"));
                 workOrder.setState(resultSet.getByte("state"));
-                workOrder.setPriority(resultSet.getByte("priority"));
+                // workOrder.setPriority(resultSet.getByte("priority"));
                 workOrder.setNnlightctlRegionId(resultSet.getLong("nnlightctl_region_id"));
-                workOrder.setAddress(resultSet.getString("address"));
-                workOrder.setNnlightctlWorkflowerMoveRecordId(resultSet.getLong("nnlightctl_workflower_move_record_id"));
+                workOrder.setAddress(resultSet.getString("project_name"));
+                /*  workOrder.setNnlightctlWorkflowerMoveRecordId(resultSet.getLong("nnlightctl_workflower_move_record_id"));
                 workOrder.setNnlightctlMaskerId(resultSet.getLong("nnlightctl_masker_id"));
                 workOrder.setContent(resultSet.getString("content"));
                 workOrder.setAttachFilePath(resultSet.getString("attach_file_path"));
                 workOrder.setWorkSource(resultSet.getByte("work_source"));
-                workOrder.setNnlightctlProjectId(resultSet.getLong("nnlightctl_project_id"));
+                workOrder.setNnlightctlProjectId(resultSet.getLong("nnlightctl_project_id"));*/
                 return workOrder;
             }
         });
@@ -240,34 +245,39 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<WorkOrder> listWorkOrderYear(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT id ,gmt_created ,gmt_updated ,serial_number ,classify ,work_created ,work_done ,nnlightctl_workflower_id ,state ,priority , ");
+        /*sql.append("SELECT id ,gmt_created ,gmt_updated ,serial_number ,classify ,work_created ,work_done ,nnlightctl_workflower_id ,state ,priority , ");
         sql.append("nnlightctl_region_id ,address ,nnlightctl_workflower_move_record_id ,nnlightctl_masker_id ,content ,attach_file_path ,work_source ,nnlightctl_project_id from nnlightctl_work_order where state = 3 ");
         if (date != null){
             sql.append(" and SUBSTR(work_created ,1,4) = ? ");
+            param.add(date);
+        }*/
+        sql.append("SELECT o.gmt_created ,o.work_created , o.work_done ,p.project_name ,o.state ,o.nnlightctl_region_id from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id AND o.state=3 ");
+        if (date != null){
+            sql.append(" AND SUBSTR(o.work_created ,1,4) = ? ");
             param.add(date);
         }
         List<WorkOrder> workOrderList = jdbcTemplate.query(sql.toString(), param.toArray(),new RowMapper<WorkOrder>() {
             @Override
             public WorkOrder mapRow(ResultSet resultSet, int i) throws SQLException {
                 WorkOrder workOrder = new WorkOrder();
-                workOrder.setId(resultSet.getLong("id"));
+                //workOrder.setId(resultSet.getLong("id"));
                 workOrder.setGmtCreated(resultSet.getDate("gmt_created"));
-                workOrder.setGmtUpdated(resultSet.getDate("gmt_updated"));
+                /*workOrder.setGmtUpdated(resultSet.getDate("gmt_updated"));
                 workOrder.setSerialNumber(resultSet.getString("serial_number"));
-                workOrder.setClassify(resultSet.getByte("classify"));
-                workOrder.setWorkCreated(resultSet.getDate("work_created"));
-                workOrder.setWorkDone(resultSet.getDate("work_done"));
-                workOrder.setNnlightctlWorkflowerId(resultSet.getLong("nnlightctl_workflower_id"));
+                workOrder.setClassify(resultSet.getByte("classify"));*/
+                workOrder.setWorkCreated(resultSet.getTimestamp("work_created"));
+                workOrder.setWorkDone(resultSet.getTimestamp("work_done"));
+                //workOrder.setNnlightctlWorkflowerId(resultSet.getLong("nnlightctl_workflower_id"));
                 workOrder.setState(resultSet.getByte("state"));
-                workOrder.setPriority(resultSet.getByte("priority"));
+                // workOrder.setPriority(resultSet.getByte("priority"));
                 workOrder.setNnlightctlRegionId(resultSet.getLong("nnlightctl_region_id"));
-                workOrder.setAddress(resultSet.getString("address"));
-                workOrder.setNnlightctlWorkflowerMoveRecordId(resultSet.getLong("nnlightctl_workflower_move_record_id"));
+                workOrder.setAddress(resultSet.getString("project_name"));
+                /*  workOrder.setNnlightctlWorkflowerMoveRecordId(resultSet.getLong("nnlightctl_workflower_move_record_id"));
                 workOrder.setNnlightctlMaskerId(resultSet.getLong("nnlightctl_masker_id"));
                 workOrder.setContent(resultSet.getString("content"));
                 workOrder.setAttachFilePath(resultSet.getString("attach_file_path"));
                 workOrder.setWorkSource(resultSet.getByte("work_source"));
-                workOrder.setNnlightctlProjectId(resultSet.getLong("nnlightctl_project_id"));
+                workOrder.setNnlightctlProjectId(resultSet.getLong("nnlightctl_project_id"));*/
                 return workOrder;
             }
         });
