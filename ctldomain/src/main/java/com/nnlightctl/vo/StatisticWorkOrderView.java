@@ -2,6 +2,10 @@ package com.nnlightctl.vo;
 
 public class StatisticWorkOrderView extends BaseView{
 
+    private String projectName;
+
+    private String areaName;
+
     private String projectTotal;
 
     private String mouthTotalByProject;
@@ -110,5 +114,21 @@ public class StatisticWorkOrderView extends BaseView{
 
     public void setMouth(String mouth) {
         this.mouth = mouth;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 }

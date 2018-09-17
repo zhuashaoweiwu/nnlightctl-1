@@ -42,8 +42,8 @@ public class WorkOrderController extends BaseController{
         logger.info("[POST]  /api/workOrder/statisticWorkOrder");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         List<StatisticWorkOrderView> statisticWorkOrderViewList = workOrderServer.statisticWorkOrder(request);
-        List<WorkOrder> workOrderList = workOrderServer.statisticWorkOrderAvg(request);
-        jsonResult.setData(workOrderList);
+        //List<WorkOrder> workOrderList = workOrderServer.statisticWorkOrderAvg(request);
+        //jsonResult.setData(workOrderList);
         jsonResult.setData(statisticWorkOrderViewList);
         return toJson(jsonResult);
     }

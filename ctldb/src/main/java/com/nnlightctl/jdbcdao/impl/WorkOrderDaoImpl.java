@@ -28,20 +28,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderMouthTotalByProject(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) total , a.mouth from (SELECT count(*) ,SUBSTR(work_created ,1,7) as mouth from nnlightctl_work_order GROUP BY nnlightctl_project_id) a where 1=1 ");
+        sql.append("SELECT count(*) as total, c.project_name as projectName FROM ");
+        sql.append("(SELECT p.project_name from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id ");
         if (date != null){
-            sql.append(" and a.mouth = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,7) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.mouth ");
+        sql.append("GROUP BY c.project_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
                 statisticWorkOrderView.setMouthTotalByProject(resultSet.getString("total"));
-                statisticWorkOrderView.setMouth(resultSet.getString("mouth"));
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
+                statisticWorkOrderView.setProjectName(resultSet.getString("projectName"));
                 return statisticWorkOrderView;
             }
         });
@@ -51,20 +50,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderMouthFinishByProject(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) totalFinish , a.mouthFinish from (SELECT count(*) ,SUBSTR(work_created ,1,7) as mouthFinish ,state from nnlightctl_work_order GROUP BY nnlightctl_project_id) a where a.state = '3' ");
+        sql.append("SELECT count(*) as total, c.project_name as projectName FROM ");
+        sql.append("(SELECT p.project_name from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id and o.state = 3 ");
         if (date != null){
-            sql.append(" and a.mouthFinish = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,7) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.mouthFinish ");
+        sql.append(" GROUP BY c.project_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
-                statisticWorkOrderView.setMouthFinishByProject(resultSet.getString("totalFinish"));
-                statisticWorkOrderView.setMouth(resultSet.getString("mouthFinish"));
+                statisticWorkOrderView.setMouthFinishByProject(resultSet.getString("total"));
+                statisticWorkOrderView.setProjectName(resultSet.getString("projectName"));
                 return statisticWorkOrderView;
             }
         });
@@ -74,19 +72,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderYearTotalByProject(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) total , a.year from (SELECT count(*) ,SUBSTR(work_created ,1,4) as year from nnlightctl_work_order GROUP BY nnlightctl_project_id) a where 1=1 ");
+        sql.append("SELECT count(*) as total, c.project_name as projectName FROM ");
+        sql.append("(SELECT p.project_name from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id ");
         if (date != null){
-            sql.append(" and a.year = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,4) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.year ");
+        sql.append("GROUP BY c.project_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-
                 statisticWorkOrderView.setYearTotalByProject(resultSet.getString("total"));
-                statisticWorkOrderView.setYear(resultSet.getString("year"));
+                statisticWorkOrderView.setProjectName(resultSet.getString("projectName"));
                 return statisticWorkOrderView;
             }
         });
@@ -96,20 +94,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderYearFinishByProject(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) totalFinish , a.yearFinish from (SELECT count(*) ,SUBSTR(work_created ,1,4) as yearFinish ,state from nnlightctl_work_order GROUP BY nnlightctl_project_id) a where a.state ='3' ");
+        sql.append("SELECT count(*) as total, c.project_name as projectName FROM ");
+        sql.append("(SELECT p.project_name from nnlightctl_work_order o INNER JOIN nnlightctl_project p ON o.nnlightctl_project_id = p.id and o.state = 3 ");
         if (date != null){
-            sql.append(" and a.yearFinish = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,4) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.yearFinish ");
+        sql.append("GROUP BY c.project_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
-                statisticWorkOrderView.setYearFinishByProject(resultSet.getString("totalFinish"));
-                statisticWorkOrderView.setYear(resultSet.getString("yearFinish"));
+                statisticWorkOrderView.setYearFinishByProject(resultSet.getString("total"));
+                statisticWorkOrderView.setProjectName(resultSet.getString("projectName"));
                 return statisticWorkOrderView;
             }
         });
@@ -119,20 +116,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public  List<StatisticWorkOrderView> statisticWorkOrderMouthTotalByRegion(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) total , a.mouth from (SELECT count(*) ,SUBSTR(work_created ,1,7) as mouth from nnlightctl_work_order GROUP BY nnlightctl_region_id) a where 1=1 ");
+        sql.append("SELECT count(*) as total, c.area_name as areaName FROM ");
+        sql.append("(SELECT r.area_name from nnlightctl_work_order o INNER JOIN nnlightctl_region r ON o.nnlightctl_region_id = r.id ");
         if (date != null){
-            sql.append(" and a.mouth = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,7) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.mouth ");
+        sql.append("GROUP BY c.area_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
                 statisticWorkOrderView.setMouthTotalByRegion(resultSet.getString("total"));
-                statisticWorkOrderView.setMouth(resultSet.getString("mouth"));
+                statisticWorkOrderView.setAreaName(resultSet.getString("areaName"));
                 return statisticWorkOrderView;
             }
         });
@@ -142,20 +138,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderMouthFinishByRegion(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) totalFinish , a.mouthFinish from (SELECT count(*) ,SUBSTR(work_created ,1,7) as mouthFinish ,state from nnlightctl_work_order GROUP BY nnlightctl_region_id) a where a.state = '3' ");
+        sql.append("SELECT count(*) as total, c.area_name as areaName FROM ");
+        sql.append("(SELECT r.area_name from nnlightctl_work_order o INNER JOIN nnlightctl_region r ON o.nnlightctl_region_id = r.id and o.state =3 ");
         if (date != null){
-            sql.append(" and a.mouthFinish = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,7) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.mouthFinish ");
+        sql.append("GROUP BY c.area_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
-                statisticWorkOrderView.setMouthFinishByRegion(resultSet.getString("totalFinish"));
-                statisticWorkOrderView.setMouth(resultSet.getString("mouthFinish"));
+                statisticWorkOrderView.setMouthFinishByRegion(resultSet.getString("total"));
+                statisticWorkOrderView.setAreaName(resultSet.getString("areaName"));
                 return statisticWorkOrderView;
             }
         });
@@ -165,20 +160,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderYearTotalByRegion(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) total , a.year from (SELECT count(*) ,SUBSTR(work_created ,1,4) as year from nnlightctl_work_order GROUP BY nnlightctl_region_id) a where 1=1 ");
+        sql.append("SELECT count(*) as total, c.area_name as areaName FROM ");
+        sql.append("(SELECT r.area_name from nnlightctl_work_order o INNER JOIN nnlightctl_region r ON o.nnlightctl_region_id = r.id ");
         if (date != null){
-            sql.append(" and a.year = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,4) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.year ");
+        sql.append("GROUP BY c.area_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-                /*statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
                 statisticWorkOrderView.setYearTotalByRegion(resultSet.getString("total"));
-                statisticWorkOrderView.setYear(resultSet.getString("year"));
+               statisticWorkOrderView.setAreaName(resultSet.getString("areaName"));
                 return statisticWorkOrderView;
             }
         });
@@ -188,20 +182,19 @@ public class WorkOrderDaoImpl implements WorkOrderDao {
     public List<StatisticWorkOrderView> statisticWorkOrderYearFinishByRegion(String date){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT count(*) totalFinish , a.yearFinish from (SELECT count(*) ,SUBSTR(work_created ,1,4) as yearFinish ,state from nnlightctl_work_order GROUP BY nnlightctl_region_id) a where a.state ='3' ");
+        sql.append("SELECT count(*) as total, c.area_name as areaName FROM ");
+        sql.append("(SELECT r.area_name from nnlightctl_work_order o INNER JOIN nnlightctl_region r ON o.nnlightctl_region_id = r.id and o.state = 3 ");
         if (date != null){
-            sql.append(" and a.yearFinish = ? ");
+            sql.append(" and SUBSTR(o.work_created ,1,4) = ? ) c ");
             param.add(date);
         }
-        sql.append(" GROUP BY a.yearFinish ");
+        sql.append("GROUP BY c.area_name");
         List<StatisticWorkOrderView> statisticWorkOrderViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<StatisticWorkOrderView>() {
             @Override
             public StatisticWorkOrderView mapRow(ResultSet resultSet, int i) throws SQLException {
                 StatisticWorkOrderView statisticWorkOrderView = new StatisticWorkOrderView();
-               /* statisticWorkOrderView.setProjectTotal(resultSet.getString("total"));
-                statisticWorkOrderView.setTime(resultSet.getString("mouth"));*/
-               statisticWorkOrderView.setYearFinishByRegion(resultSet.getString("totalFinish"));
-               statisticWorkOrderView.setYear(resultSet.getString("yearFinish"));
+                statisticWorkOrderView.setYearFinishByRegion(resultSet.getString("total"));
+                statisticWorkOrderView.setAreaName(resultSet.getString("areaName"));
                 return statisticWorkOrderView;
             }
         });

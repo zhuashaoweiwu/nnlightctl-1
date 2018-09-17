@@ -39,7 +39,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     @Override
     public List<StatisticWorkOrderView> statisticWorkOrder(WorkOrderRequest request){
         List<StatisticWorkOrderView> statisticWorkOrderViewList = new ArrayList<>();
-        List<WorkOrder> workOrderList1 = new ArrayList<>();
+        //List<WorkOrder> workOrderList1 = new ArrayList<>();
         if (request.getTimeType()==0){
             SimpleDateFormat df=new SimpleDateFormat("yyyy-MM");
             String  time=  df.format(request.getDate());
@@ -51,7 +51,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList2);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList3);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList4);
-            workOrderList1 = workOrderDao.listWorkOrderMouth(time);
+            //workOrderList1 = workOrderDao.listWorkOrderMouth(time);
         }else if (request.getTimeType()==1){
             SimpleDateFormat df=new SimpleDateFormat("yyyy");
             String  time=  df.format(request.getDate());
@@ -64,20 +64,20 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList2);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList3);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList4);
-            workOrderList1 = workOrderDao.listWorkOrderYear(time);
+            //workOrderList1 = workOrderDao.listWorkOrderYear(time);
         }
-        if (!workOrderList1.isEmpty()) {
+        /*if (!workOrderList1.isEmpty()) {
             for (int i = 0 ; i < workOrderList1.size() ; i++){
                 Long done =  workOrderList1.get(i).getWorkDone().getTime();
                 Long  created= workOrderList1.get(i).getWorkCreated().getTime();
-               /* System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
-                System.out.println(done +"*****"+created);*/
+               *//* System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
+                System.out.println(done +"*****"+created);*//*
                 Long time = done -created;
                 workOrderList1.get(i).setNnlightctlRegionId(time);
             }
         }
-        List<WorkOrder> workOrderList = new ArrayList<>();
-        for (int j = 0 ; j<workOrderList1.size() ;j++){
+        List<WorkOrder> workOrderList = new ArrayList<>();*/
+ /*       for (int j = 0 ; j<workOrderList1.size() ;j++){
             int count = 1;
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss");
 
@@ -95,7 +95,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             Long avg = totalTime/count/60/1000/60;
             //System.out.println(avg+"&&&&&&&&&&&&&&&");
             workOrderList1.get(j).setNnlightctlRegionId(avg);
-        }
+        }*/
 
         return statisticWorkOrderViewList;
     }
@@ -126,11 +126,11 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         if (request.getTimeType()==0){
             SimpleDateFormat df=new SimpleDateFormat("yyyy-MM");
             String  time=  df.format(request.getDate());
-            workOrderList1 = workOrderDao.listWorkOrderMouth(time);
+            //workOrderList1 = workOrderDao.listWorkOrderMouth(time);
         }else if (request.getTimeType()==1){
             SimpleDateFormat df=new SimpleDateFormat("yyyy");
             String  time=  df.format(request.getDate());
-            workOrderList1 = workOrderDao.listWorkOrderYear(time);
+           // workOrderList1 = workOrderDao.listWorkOrderYear(time);
         }
         if (!workOrderList1.isEmpty()) {
             for (int i = 0 ; i < workOrderList1.size() ; i++){
