@@ -16,7 +16,7 @@ public interface PropertyManagerServer {
     Tuple.TwoTuple<List<RepairRecord>, Integer> listRepairRecord(ListRepairRecordRequest request);
     int addOrUpdateRepairRecord(RepairRecordRequest request);
     int deleteRepairRecord(List<Long> repairRecordIds);
-    int commitRepairRecord(List<Long> repairRecordIds);
+    int updateCommitRepairRecord(List<Long> repairRecordIds);
     HSSFWorkbook exportDeviceOperation(ExportDeviceOperationRequest request);
     int setDateAutoCommitRepairRecord(RepaireRecordConditionRequest request);
     int updateProperty(PropertyRequest request);

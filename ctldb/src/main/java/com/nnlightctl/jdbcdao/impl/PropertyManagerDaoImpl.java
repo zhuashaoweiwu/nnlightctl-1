@@ -133,7 +133,7 @@ public class PropertyManagerDaoImpl implements PropertyManagerDao {
     }
 
     @Override
-    public int commitRepairRecord(List<Long> repairRecordIds){
+    public int updateCommitRepairRecord(List<Long> repairRecordIds){
         StringBuilder sql = new StringBuilder();
 
         Map<String, Object> params = new HashMap<>(1);

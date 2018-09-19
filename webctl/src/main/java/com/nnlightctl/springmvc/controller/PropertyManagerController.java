@@ -152,7 +152,7 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("commitRepairRecord")
     public String commitRepairRecord(DeleteRepairRecordRequest request){
         logger.info("[POST] /api/propertyManager/commitRepairRecord");
-        int ret = propertyManagerServer.commitRepairRecord(request.getRepairRecordIds());
+        int ret = propertyManagerServer.updateCommitRepairRecord(request.getRepairRecordIds());
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();

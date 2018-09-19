@@ -15,5 +15,5 @@ public interface PropertyManagerDao {
     List<ListDeviceRepairStatisticView> listDeviceRepaireStatistic(ListDeviceRepairStatisticRequest listDeviceRepairStatisticRequest);
     List<ListDeviceDamageCountByMonthView> listDeviceDamageCountByMonth(ListDeviceDamageCountByMonthRequest listDeviceDamageCountByMonthRequest);
     Tuple.TwoTuple<List<RepairRecord>, Integer> listRepairRecord(ListRepairRecordRequest request);
-    int commitRepairRecord(List<Long> repairRecordIds);
+    int updateCommitRepairRecord(List<Long> repairRecordIds);
 }

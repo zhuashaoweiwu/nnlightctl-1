@@ -78,8 +78,8 @@ public class PropertyManagerServerImpl implements PropertyManagerServer {
     }
 
     @Override
-    public int commitRepairRecord(List<Long> repairRecordIds){
-        return propertyManagerDao.commitRepairRecord(repairRecordIds);
+    public int updateCommitRepairRecord(List<Long> repairRecordIds){
+        return propertyManagerDao.updateCommitRepairRecord(repairRecordIds);
     }
 
     @Override
