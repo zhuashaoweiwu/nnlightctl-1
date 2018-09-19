@@ -7,11 +7,16 @@ import com.nnlightctl.net.CommandData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 
 public class Produce {
+
+    private static final Logger log = LoggerFactory.getLogger(Produce.class);
 
     private int key = 1;
 
@@ -20,6 +25,8 @@ public class Produce {
     }
 
     public void send(CommandData commandData, String topic) {
+
+        log.info("Kafka Produce Send Message To Topic");
 
         long start = System.currentTimeMillis();
 
@@ -38,6 +45,10 @@ public class Produce {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            log.error(e.getMessage());
+        } catch (Throwable e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             producer.close();
         }

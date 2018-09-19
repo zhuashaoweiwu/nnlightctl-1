@@ -4,6 +4,7 @@ import com.nnlight.netty.process.factory.ProcessFactory;
 import com.nnlight.netty.server.EchoServer;
 import com.nnlight.netty.server.po.ChannelWrap;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.util.BytesHexStrTranslate;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -35,6 +36,12 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         CommandData commandData = (CommandData)msg;
+
+        //将终端在netty中的唯一编码附带上
+        byte[] addr = BytesHexStrTranslate.toBytes(ctx.channel().id().asShortText());
+        System.arraycopy(addr, 0, commandData.getAddr(), 0, addr.length);
+        //重置命令校验码
+        commandData.resetCheck();
 
         Process process = ProcessFactory.getProcess(commandData.getControl());
 

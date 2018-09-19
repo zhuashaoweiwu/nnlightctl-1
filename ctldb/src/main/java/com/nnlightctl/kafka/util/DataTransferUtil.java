@@ -14,7 +14,6 @@ public class DataTransferUtil {
     public static LightingVolEleRecord transToLightingVolEleRecord(CommandData e0CommandData) {
         LightingVolEleRecord lightingVolEleRecord = new LightingVolEleRecord();
 
-
         byte[] data = e0CommandData.getData();
 
         //uuid

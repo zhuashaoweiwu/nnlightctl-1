@@ -305,4 +305,31 @@ public class LightServerImpl implements LightServer {
 
         return lightingMapper.updateByPrimaryKeySelective(lighting);
     }
+
+    @Override
+    public int updatePairLighting(Lighting lighting) {
+        //查询是否存在uuid对应的灯具信息记录
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andUidEqualTo(lighting.getUid());
+        List<Lighting> lightings = this.lightingMapper.selectByExample(lightingExample);
+        int count = lightings.size();
+
+        if (count > 0) {    //存在,更新
+            Lighting updateLighting = new Lighting();
+            updateLighting.setGmtUpdated(new Date());
+            updateLighting.setRealtimeUid(lighting.getRealtimeUid());
+            updateLighting.setId(lightings.get(0).getId());
+
+            this.lightingMapper.updateByPrimaryKeySelective(updateLighting);
+        } else {    //不存在，新增一个uuid确定的灯具
+            Lighting createLighting = new Lighting();
+            createLighting.setGmtCreated(new Date());
+            createLighting.setGmtUpdated(new Date());
+            createLighting.setUid(lighting.getUid());
+            createLighting.setRealtimeUid(lighting.getRealtimeUid());
+
+            this.lightingMapper.insertSelective(createLighting);
+        }
+        return 1;
+    }
 }

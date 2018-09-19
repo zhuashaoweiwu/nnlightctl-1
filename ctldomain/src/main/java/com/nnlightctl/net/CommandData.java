@@ -243,6 +243,13 @@ public class CommandData implements Serializable {
         return this.check == check;
     }
 
+    /**
+     * 变更CommandData对象任意数据，切记重置校验码
+     */
+    public void resetCheck() {
+        this.check = createCheck();
+    }
+
     /***************************************************命令客户端指令********************************************/
 
     /**

@@ -36,5 +36,16 @@ public class BytesHexStrTranslate {
             System.out.print(b);
             System.out.print(",");
         }
+
+        byte[] hexBytes = toBytes("c465");
+        System.out.print("[");
+        for (byte b : hexBytes) {
+            System.out.print(b);
+            System.out.print(",");
+        }
+        System.out.print("]");
+
+        String hex = bytesToHexFun(hexBytes);
+        System.out.println(hex);
     }
 }

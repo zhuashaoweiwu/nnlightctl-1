@@ -2,9 +2,13 @@ package com.nnlightctl.jdbcdao.impl;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.jdbcdao.LightDao;
+import com.nnlightctl.po.Lighting;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.vo.LightingView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,13 +16,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class LightDaoImpl implements LightDao {
+
+    private static final Logger log = LoggerFactory.getLogger(LightDaoImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -175,5 +178,28 @@ public class LightDaoImpl implements LightDao {
         tuple.setSecond(total);
 
         return tuple;
+    }
+
+    @Cacheable("commandCache")
+    @Override
+    public List<Lighting> getLightingByUUID(String uuid) {
+        log.info("通过uuid查询灯具");
+        StringBuilder sql = new StringBuilder();
+        List<Object> params = new ArrayList<>(1);
+        sql.append("select id, realtime_uid from nnlightctl_lighting where uid = ?");
+        params.add(uuid);
+        List<Lighting> lightingList = this.jdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Lighting>() {
+            @Override
+            public Lighting mapRow(ResultSet resultSet, int i) throws SQLException {
+                Lighting lighting1 = new Lighting();
+
+                lighting1.setId(resultSet.getLong("id"));
+                lighting1.setRealtimeUid(resultSet.getString("realtime_uid"));
+
+                return lighting1;
+            }
+        });
+
+        return lightingList;
     }
 }

@@ -28,4 +28,5 @@ public interface LightServer {
     int unbindLightBeElebox(List<Long> lightIds);
     Tuple.TwoTuple<List<LightingView>, Integer> listLoopLighting(LightConditionRequest request);
     int updateLightPriority(LightConditionRequest request);
+    int updatePairLighting(Lighting lighting);
 }
