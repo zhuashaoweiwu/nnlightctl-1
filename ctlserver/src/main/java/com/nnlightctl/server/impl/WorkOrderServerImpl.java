@@ -197,7 +197,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     }
 
     @Override
-    public  int claimWordOrder(WorkOrderRequest request){
+    public  int updateClaimWordOrder(WorkOrderRequest request){
        WorkOrder workOrder2 = workOrderMapper.selectByPrimaryKey(request.getWorkOrderId());
 
         WorkflowerMoveRecord workflowerMoveRecord = new WorkflowerMoveRecord();

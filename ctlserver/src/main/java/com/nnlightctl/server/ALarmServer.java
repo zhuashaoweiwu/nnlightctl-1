@@ -19,7 +19,7 @@ public interface ALarmServer {
 
     HSSFWorkbook exportElebox(List<Long> alarmIds);
 
-    int clearAlarm(List<Long> alarmIds);
+    int updateClearAlarm(List<Long> alarmIds);
 
     Tuple.TwoTuple<List<AlarmHistory>, Integer> listAlarmHistory(BaseRequest request);
 

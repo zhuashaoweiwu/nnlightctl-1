@@ -71,7 +71,7 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public int transferProperty(TransferPropertyRequest request){
+    public int updateTransferProperty(TransferPropertyRequest request){
 
         for(int i = 0 ; i < request.getPropertyIds().size() ; i++){
             Property property = propertyMapper.selectByPrimaryKey(request.getPropertyIds().get(i));
@@ -87,7 +87,7 @@ public class RepertoryServerImpl implements RepertoryServer {
             repertoryPropertyTranslateRecordMapper.insert(repertoryPropertyTranslateRecord);
         }
 
-        int ret = repertoryDao.transferProperty(request);
+        int ret = repertoryDao.updateTransferProperty(request);
 
         return 1;
     }
@@ -220,11 +220,11 @@ public class RepertoryServerImpl implements RepertoryServer {
         return repertoryInApplyDao.listApplyOutHistory(request,applyStates);
     }
     @Override
-    public int approveApplyInRepertory(ApproveApplyInRepertoryRequest request){
-        return repertoryInApplyDao.approveApplyInRepertory(request);
+    public int updateApproveApplyInRepertory(ApproveApplyInRepertoryRequest request){
+        return repertoryInApplyDao.updateApproveApplyInRepertory(request);
     }
     @Override
-    public int approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
-        return  repertoryInApplyDao.approveApplyOutRepertory(request);
+    public int updateApproveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
+        return  repertoryInApplyDao.updateApproveApplyOutRepertory(request);
     }
 }

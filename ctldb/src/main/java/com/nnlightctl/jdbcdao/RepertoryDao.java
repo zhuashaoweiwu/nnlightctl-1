@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface RepertoryDao {
 
-    int transferProperty(TransferPropertyRequest transferPropertyRequest);
+    int updateTransferProperty(TransferPropertyRequest transferPropertyRequest);
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertoryUser(BaseRequest request);
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> getRepertory(Long id);
     Long countApplyInRepertory();

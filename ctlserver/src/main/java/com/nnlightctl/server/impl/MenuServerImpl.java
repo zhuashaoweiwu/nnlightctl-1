@@ -31,14 +31,25 @@ public class MenuServerImpl implements MenuServer {
     }
     @Override
     public List<Righter> listMenuLevelSub(Integer parentId){
-
-
         RighterExample righterExample = new RighterExample();
         righterExample.createCriteria().andParentRighterIdEqualTo(parentId.longValue());
         List<Righter> righterList = righterMapper.selectByExample(righterExample);
+        if (!righterList.isEmpty()){
+            for (int i = 0 ; i<righterList.size() ; i++){
+            List<Righter> righterList2= new ArrayList<>();
+            List<Integer> list = new ArrayList<>();
+            list.add(righterList.get(i).getId().intValue());
+            righterList2=listMenuLevelSub(list.get(i));
+                if(righterList2.isEmpty()){
+                    break;
+                }else {
+                    righterList.addAll(righterList2);
+                }
 
-        List<Righter> righterList2= new ArrayList<>();
-        for (int i = 0 ; i<righterList.size() ; i++){
+            }
+        }
+        /*for (int i = 0 ; i<righterList.size() ; i++){
+            List<Righter> righterList2= new ArrayList<>();
             List<Integer> list = new ArrayList<>();
             list.add(righterList.get(i).getId().intValue());
             righterList2=listMenuLevelSub(list.get(i));
@@ -48,7 +59,7 @@ public class MenuServerImpl implements MenuServer {
                 righterList.addAll(righterList2);
             }
 
-        }
+        }*/
 
         return righterList;
     }

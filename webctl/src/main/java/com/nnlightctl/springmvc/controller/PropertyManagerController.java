@@ -323,7 +323,7 @@ public class PropertyManagerController extends BaseController {
     public String transferProperty(TransferPropertyRequest request){
         logger.info("[POST] /api/propertyManager/transferProperty");
 
-        int ret = repertoryServer.transferProperty(request);
+        int ret = repertoryServer.updateTransferProperty(request);
         JsonResult jsonResult = JsonResult.getSUCCESS();;
         return toJson(jsonResult);
     }
@@ -587,7 +587,7 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("approveApplyInRepertory")
     public String approveApplyInRepertory( ApproveApplyInRepertoryRequest request){
         logger.info("[POST]  /api/propertyManager/approveApplyInRepertory");
-        int ret = repertoryServer.approveApplyInRepertory(request);
+        int ret = repertoryServer.updateApproveApplyInRepertory(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -603,7 +603,7 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("approveApplyOutRepertory")
    public String approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
         logger.info("[POST]  /api/propertyManager/approveApplyOutRepertory");
-        int ret = repertoryServer.approveApplyOutRepertory(request);
+        int ret = repertoryServer.updateApproveApplyOutRepertory(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();

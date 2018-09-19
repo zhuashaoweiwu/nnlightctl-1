@@ -18,7 +18,7 @@ public interface WorkOrderServer {
     List<CountWorkOrderStateView> countWorkOrderState();
     List<StatisticWorkOrderView> statisticWorkOrderAvg(WorkOrderRequest request);
     Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(ListWorkOrderRequest request);
-    int claimWordOrder(WorkOrderRequest request);
+    int updateClaimWordOrder(WorkOrderRequest request);
     int addWordOrder(WorkOrderRequest request);
     Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(BaseRequest request);
     List<WorkflowerNode> selectPreviewWorkFlower(Long workOrderId);

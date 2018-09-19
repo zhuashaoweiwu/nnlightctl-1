@@ -40,7 +40,7 @@
                 /api/login/Login = anon
                 /device = anon
                 /api/command/** = anon
-                /** = user
+                /** = anon
             </value>
         </property>
     </bean>

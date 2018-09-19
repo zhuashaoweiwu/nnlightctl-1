@@ -14,6 +14,6 @@ public interface RepertoryInApplyDao {
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutApprovePending(BaseRequest request , Integer applyState);
     Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInHistory(BaseRequest request ,List<Integer> applyStates);
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutHistory(BaseRequest request ,List<Integer> applyStates);
-    int approveApplyInRepertory(ApproveApplyInRepertoryRequest request);
-    int approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request);
+    int updateApproveApplyInRepertory(ApproveApplyInRepertoryRequest request);
+    int updateApproveApplyOutRepertory(ApproveApplyOutRepertoryRequest request);
 }

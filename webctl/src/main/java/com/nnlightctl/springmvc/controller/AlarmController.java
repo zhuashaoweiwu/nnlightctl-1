@@ -72,7 +72,7 @@ public class AlarmController extends BaseController{
 
         logger.info("[POST] /api/alarm/clearAlarm");
         JsonResult jsonResult = null;
-        int ret = aLarmServer.clearAlarm(alarmRequest.getAlarmIds());
+        int ret = aLarmServer.updateClearAlarm(alarmRequest.getAlarmIds());
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {

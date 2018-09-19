@@ -13,7 +13,7 @@ public interface RepertoryServer {
     int deleteRepairRecord(List<Long> repertoryIds);
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertory(BaseRequest request);
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> getRepertory(Long id);
-    int transferProperty(TransferPropertyRequest request);
+    int updateTransferProperty(TransferPropertyRequest request);
     Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> listPropertyTransRecord(BaseRequest request);
     Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInRepertory(BaseRequest request);
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutRepertory(BaseRequest request);
@@ -29,6 +29,6 @@ public interface RepertoryServer {
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutApprovePending(BaseRequest request ,Integer applyState);
     Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInHistory(BaseRequest request ,List<Integer> applyStates);
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutHistory(BaseRequest request ,List<Integer> applyStates);
-    int approveApplyInRepertory(ApproveApplyInRepertoryRequest request);
-    int approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request);
+    int updateApproveApplyInRepertory(ApproveApplyInRepertoryRequest request);
+    int updateApproveApplyOutRepertory(ApproveApplyOutRepertoryRequest request);
 }

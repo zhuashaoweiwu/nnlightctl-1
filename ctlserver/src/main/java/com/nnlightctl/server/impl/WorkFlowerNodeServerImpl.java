@@ -158,7 +158,7 @@ public class WorkFlowerNodeServerImpl implements WorkFlowerNodeServer {
         return tuple;
     }
     @Override
-    public int approveWorkFlower(WorkflowerMoveRecordRequest request){
+    public int updateApproveWorkFlower(WorkflowerMoveRecordRequest request){
         WorkflowerMoveRecord workflowerMoveRecord = new WorkflowerMoveRecord();
         Integer  ret = request.getIsApproved();
         workflowerMoveRecord.setPassState(ret.byteValue());
@@ -168,7 +168,7 @@ public class WorkFlowerNodeServerImpl implements WorkFlowerNodeServer {
         return workflowerMoveRecordMapper.updateByPrimaryKeySelective(workflowerMoveRecord);
     }
     @Override
-    public int enableWorkFlower(WorkFlowerRequest request){
+    public int updateEnableWorkFlower(WorkFlowerRequest request){
         WorkFlower workFlower = new WorkFlower();
         workFlower.setId(request.getWorkFlowerId());
         workFlower.setGmtUpdated(new Date());

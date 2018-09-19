@@ -26,6 +26,6 @@ public interface WorkFlowerNodeServer {
     int deleteWorkflowerNodeMapByWorkflowerId(List<Long> workflowerIds);
     Tuple.TwoTuple<List<WorkFlower>, Integer> listWorkFlower(BaseRequest request);
     Tuple.TwoTuple<List<WorkflowerMoveRecord>, Integer> listWorkFlowerApprove(BaseRequest request);
-    int approveWorkFlower(WorkflowerMoveRecordRequest request);
-    int enableWorkFlower(WorkFlowerRequest request);
+    int updateApproveWorkFlower(WorkflowerMoveRecordRequest request);
+    int updateEnableWorkFlower(WorkFlowerRequest request);
 }

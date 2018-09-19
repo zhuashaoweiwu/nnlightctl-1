@@ -25,7 +25,7 @@ public class RepertoryDaoImpl implements RepertoryDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public int transferProperty(TransferPropertyRequest transferPropertyRequest){
+    public int updateTransferProperty(TransferPropertyRequest transferPropertyRequest){
         StringBuilder sql = new StringBuilder();
 
         Map<String, Object> params = new HashMap<>(3);

@@ -227,7 +227,7 @@ public class RepertoryInApplyDaoImpl implements RepertoryInApplyDao {
         return tuple;
     }
     @Override
-    public int approveApplyInRepertory(ApproveApplyInRepertoryRequest request){
+    public int updateApproveApplyInRepertory(ApproveApplyInRepertoryRequest request){
         StringBuilder sql = new StringBuilder();
 
         Map<String, Object> params = new HashMap<>(2);
@@ -244,7 +244,7 @@ public class RepertoryInApplyDaoImpl implements RepertoryInApplyDao {
     }
 
     @Override
-    public int approveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
+    public int updateApproveApplyOutRepertory(ApproveApplyOutRepertoryRequest request){
         StringBuilder sql = new StringBuilder();
 
         Map<String, Object> params = new HashMap<>(2);

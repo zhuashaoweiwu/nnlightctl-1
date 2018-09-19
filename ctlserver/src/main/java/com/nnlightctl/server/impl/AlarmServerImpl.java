@@ -121,7 +121,7 @@ public class AlarmServerImpl implements ALarmServer{
         return wb;
     }
 
-    public int clearAlarm(List<Long> alarmIds){
+    public int updateClearAlarm(List<Long> alarmIds){
         Alarm alarm = new Alarm();
         AlarmHistory alarmHistory = new AlarmHistory();
         Byte state = 3;

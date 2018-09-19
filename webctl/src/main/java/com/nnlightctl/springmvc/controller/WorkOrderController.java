@@ -81,7 +81,7 @@ public class WorkOrderController extends BaseController{
     @RequestMapping("claimWordOrder")
     public String claimWordOrder(WorkOrderRequest request){
         logger.info("[POST]  /api/workOrder/claimWordOrder");
-        int ret = workOrderServer.claimWordOrder(request);
+        int ret = workOrderServer.updateClaimWordOrder(request);
 
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -344,7 +344,7 @@ public class WorkOrderController extends BaseController{
     @RequestMapping("approveWorkFlower")
     public String approveWorkFlower(WorkflowerMoveRecordRequest request){
         logger.info("[POST]  /api/workOrder/approveWorkFlower");
-        int ret = workFlowerNodeServer.approveWorkFlower(request) ;
+        int ret = workFlowerNodeServer.updateApproveWorkFlower(request) ;
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -360,7 +360,7 @@ public class WorkOrderController extends BaseController{
     @RequestMapping("enableWorkFlower")
     public String enableWorkFlower(WorkFlowerRequest request){
         logger.info("[POST]  /api/workOrder/enableWorkFlower");
-        int ret = workFlowerNodeServer.enableWorkFlower(request);
+        int ret = workFlowerNodeServer.updateEnableWorkFlower(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
