@@ -732,11 +732,8 @@ public class PropertyManagerController extends BaseController {
     public String listSubPropertyClassifyCatalog(Long id){
         logger.info("[POST]  /api/propertyManager/listSubPropertyClassifyCatalog");
         JsonResult jsonResult = JsonResult.getSUCCESS();
-        List<Long> ids = new ArrayList<Long>();
-        ids.add(id);
-        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.propertyClassifyCatalog(ids);
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.propertyClassifyCatalogAll(id);
         jsonResult.setData(propertyClassifyCatalogList);
-
         return toJson(jsonResult);
     }
     /*

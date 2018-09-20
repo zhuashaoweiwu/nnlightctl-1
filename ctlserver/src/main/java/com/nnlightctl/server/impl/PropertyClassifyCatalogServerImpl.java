@@ -5,6 +5,7 @@ import com.nnlightctl.dao.PropertyClassifyCatalogMapper;
 import com.nnlightctl.jdbcdao.PropertyClassifyCatalogDao;
 import com.nnlightctl.po.Property;
 import com.nnlightctl.po.PropertyClassifyCatalog;
+import com.nnlightctl.po.PropertyClassifyCatalogExample;
 import com.nnlightctl.po.Supplier;
 import com.nnlightctl.request.PropertyClassifyCatalogRequest;
 import com.nnlightctl.server.PropertyClassifyCatalogServer;
@@ -65,6 +66,14 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
         }
         propertyClassifyCatalogList.addAll(propertyClassifyCatalogList2);
 
+        return propertyClassifyCatalogList;
+    }
+
+    public List<PropertyClassifyCatalog> propertyClassifyCatalogAll(Long id){
+       // List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalog(propertyClassifyCatalogIds);
+        PropertyClassifyCatalogExample propertyClassifyCatalogExample = new PropertyClassifyCatalogExample();
+        propertyClassifyCatalogExample.createCriteria().andNnlightctlPropertyClassifyCatalogIdEqualTo(id);
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogMapper.selectByExample(propertyClassifyCatalogExample);
         return propertyClassifyCatalogList;
     }
     @Override
