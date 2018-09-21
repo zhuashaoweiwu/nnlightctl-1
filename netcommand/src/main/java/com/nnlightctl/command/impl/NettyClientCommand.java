@@ -78,6 +78,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void batchSendLightAdjustCommand(List<String> realtime_ids, int percent) {
+        context.batchSendLightAdjust(realtime_ids, percent);
+    }
+
+    @Override
     public void resetCommand() {
         context.resetTerminal();
     }

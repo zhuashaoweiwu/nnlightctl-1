@@ -94,6 +94,21 @@ public class EchoServer {
     }
 
     /**
+     * 发送单灯调光指令
+     * @param channelId
+     * @param percent
+     */
+    public void sendCommandLightAdjust(String channelId, int percent) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            String shortChanelId = entry.getValue().getChannel().id().asShortText();
+            if (channelId.equalsIgnoreCase(shortChanelId)) {
+                entry.getValue().getContext().writeAndFlush(new CommandData((byte)percent));
+                break;
+            }
+        }
+    }
+
+    /**
      * 发送全部终端重启/复位指令
      */
     public void allSendCommandReset() {

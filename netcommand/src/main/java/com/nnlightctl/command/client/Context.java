@@ -57,6 +57,12 @@ public class Context {
         channelHandlerContext.writeAndFlush(new CommandData(percent, (byte)0xc2));
     }
 
+    public void batchSendLightAdjust(List<String> realtime_ids, int percent) {
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, percent, (byte)0xc2));
+        }
+    }
+
     public void resetTerminal() {
         channelHandlerContext.writeAndFlush(CommandData.getC4CommandData());
     }

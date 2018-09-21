@@ -144,7 +144,7 @@ public class CommandController extends BaseController {
     public String batchLightAdjustCommand(CommandRequest request) {
         logger.info("[POST] /api/command/sendLightAdjustCommandBatch");
 
-        //todo
+        commandServer.sendLightAdjustCommandBatch(request.getLightIds(), request.getLightPercent());
 
         return toJson(JsonResult.getSUCCESS());
     }

@@ -7,6 +7,7 @@ import java.util.List;
 public interface CommandServer {
     void sendCommand(String msg);
     void sendLightAdjustCommand(int percent);
+    void sendLightAdjustCommandBatch(List<Long> lightIds, int percent);
     String webRequireMsg();
     void resetCommand();
     void configTerminalSendMsgPeriod(int period);

@@ -46,11 +46,20 @@
             <input type="text" class="form-control" id="lightPercent">
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide" />
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="lightId" class="col-md-3 control-label">单灯id值：</label>
+                <div class="input-group col-md-8">
+                    <input id="lightId" class="form-control" size="16" type="text" value="" >
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
             <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
         </div>
     </div>
@@ -274,7 +283,8 @@
     });
 
     $("#sendCommandLightAdjust").click(function() {
-        $.post("/nnlightctl/api/command/sendLightAdjustCommand", {"lightPercent" : $("#lightPercent").val().trim()}, function (result) {
+        $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
+            {"lightPercent" : $("#lightPercent").val().trim(), "lightIds[0]" : $("#lightId").val().trim()}, function (result) {
         });
     });
 

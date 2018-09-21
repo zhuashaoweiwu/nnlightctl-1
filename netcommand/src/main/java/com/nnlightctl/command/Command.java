@@ -8,6 +8,7 @@ import java.util.List;
 public interface Command {
     void sendMsg(String msg);
     void sendLightAdjustCommand(int percent);
+    void batchSendLightAdjustCommand(List<String> realtime_ids, int percent);
     void resetCommand();
     void configTerminalSendMsgPeriod(int period);
     void commandTerminalEleboxOn(Boolean eleboxOn);

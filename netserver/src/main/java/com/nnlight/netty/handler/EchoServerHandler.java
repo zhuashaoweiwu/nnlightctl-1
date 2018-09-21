@@ -38,6 +38,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         CommandData commandData = (CommandData)msg;
 
         //将终端在netty中的唯一编码附带上
+        logger.info("id = " + ctx.channel().id() + ", id.asShortText=" + ctx.channel().id().asShortText());
         byte[] addr = BytesHexStrTranslate.toBytes(ctx.channel().id().asShortText());
         System.arraycopy(addr, 0, commandData.getAddr(), 0, addr.length);
         //重置命令校验码

@@ -6,11 +6,14 @@ import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.server.CommandServer;
+import com.nnlightctl.server.LightServer;
 import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +22,10 @@ import java.util.concurrent.CountDownLatch;
 
 @Service
 public class CommandServerImpl implements CommandServer {
+
+    @Autowired
+    private LightServer lightServer;
+
     private final Command command = CommandFactory.getNettyClientCommand(new MessageEvent() {
         @Override
         public void receiveMsg(CommandData msg) {
@@ -36,6 +43,21 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void sendLightAdjustCommand(int percent) {
         command.sendLightAdjustCommand(percent);
+    }
+
+    @Override
+    public void sendLightAdjustCommandBatch(List<Long> lightIds, int percent) {
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+
+        command.batchSendLightAdjustCommand(realtime_ids, percent);
     }
 
     @Override

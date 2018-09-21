@@ -278,10 +278,23 @@ public class CommandData implements Serializable {
      * @param control
      */
     public CommandData(int percent, byte control) {
+        this("", percent, control);
+    }
+
+    /**
+     * 单灯C2灯光调节命令
+     * @param realtime_uid
+     * @param percent
+     * @param control
+     */
+    public CommandData(String realtime_uid, int percent, byte control) {
+        byte[] realtime_uid_bytes = BytesHexStrTranslate.toBytes(realtime_uid);
         this.control = control;
-        this.dataLength = 1;
-        this.data = new byte[1];
+        this.dataLength = (byte) (1 + realtime_uid_bytes.length);
+        int uByteDataLength = ByteConvert.byteToUbyte(dataLength);
+        this.data = new byte[uByteDataLength];
         this.data[0] = (byte)percent;
+        System.arraycopy(realtime_uid_bytes, 0, this.data, 1, realtime_uid_bytes.length);
         this.check = createCheck();
     }
 

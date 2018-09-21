@@ -47,5 +47,8 @@ public class BytesHexStrTranslate {
 
         String hex = bytesToHexFun(hexBytes);
         System.out.println(hex);
+
+        byte[] bytes1 = new byte[] {0, 0, 0, 0};
+        System.out.println(bytesToHexFun(bytes1));
     }
 }
