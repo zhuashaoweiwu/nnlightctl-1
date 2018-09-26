@@ -3,6 +3,7 @@ package com.nnlightctl.kafka.consume;
 import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
+import com.nnlightctl.hbasedao.LightRealtimeDao;
 import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
 import com.nnlightctl.kafka.topic.TopicConstant;
@@ -45,6 +46,9 @@ public class Consumer {
 
     @Autowired
     private RedisClientTemplate redisClientTemplate;
+
+    @Autowired
+    private LightRealtimeDao lightRealtimeDao;
 
     public void consume() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -98,7 +102,7 @@ public class Consumer {
 //                                    redisClientTemplate.set(lightingVolEleRecord.getUid().getBytes(),
 //                                            ObjectTransferUtil.object2ByteArray(lightingVolEleRecord));
                                         //同时写入Hbase
-                                        //todo
+                                        lightRealtimeDao.addLightRealtimeRecord(lightingVolEleRecord);
                                         break;
                                     default:
                                         throw new IllegalStateException("Shouldn't be possible to get message on topic " + record.topic());

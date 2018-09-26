@@ -39,5 +39,18 @@ public class ObjectTransferUtil {
         System.out.println("before:" + integer);
         Integer alfterInteger = (Integer)byteArray2Object(object2ByteArray(integer));
         System.out.println("after:" + alfterInteger);
+
+        byte[] bytes = object2ByteArray(null);
+        System.out.print("[");
+        for (int i = 0; i < bytes.length; ++i) {
+            System.out.print(bytes[i]);
+            System.out.print(", ");
+        }
+        System.out.println("]");
+
+        System.out.println((Object) null);
+
+        Object o = byteArray2Object(bytes);
+        System.out.println(o);
     }
 }

@@ -1,29 +1,15 @@
 package com.nnlightctl.hbase;
 
 import java.io.IOException;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
+
+import com.nnlight.common.ObjectTransferUtil;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.KeyValue;
-import org.apache.hadoop.hbase.client.Delete;
-import org.apache.hadoop.hbase.client.Get;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 
 public class HBaseClient {
-    private static Configuration conf = null;
-    static {
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conf.set("hbase.zookeeper.quorum", "192.168.9.156,192.168.9.157,192.168.9.158");
-        conf.set("hbase.master", "192.168.9.152:60000");
-    }
 
     /*
      * 创建表
@@ -34,7 +20,7 @@ public class HBaseClient {
      */
     public static void creatTable(String tableName, String[] family)
             throws Exception {
-        HBaseAdmin admin = new HBaseAdmin(conf);
+        HBaseAdmin admin = new HBaseAdmin(HBaseUtils.getConfiguration());
         HTableDescriptor desc = new HTableDescriptor(tableName);
         for (int i = 0; i < family.length; i++) {
             desc.addFamily(new HColumnDescriptor(family[i]));
@@ -46,6 +32,35 @@ public class HBaseClient {
             admin.createTable(desc);
             System.out.println("create table Success!");
         }
+    }
+
+    public static void addData(String rowKey, String tableName,
+                               String[] column1, Object[] value1, String[] column2, Object[] value2)
+                    throws IOException {
+        Put put = new Put(Bytes.toBytes(rowKey));// 设置rowkey
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        // 获取表
+        HColumnDescriptor[] columnFamilies = table.getTableDescriptor() // 获取所有的列族
+                .getColumnFamilies();
+
+        for (int i = 0; i < columnFamilies.length; i++) {
+            String familyName = columnFamilies[i].getNameAsString(); // 获取列族名
+            if (familyName.equals("base")) {
+                for (int j = 0; j < column1.length; j++) {
+                    put.add(Bytes.toBytes(familyName),
+                            Bytes.toBytes(column1[j]), ObjectTransferUtil.object2ByteArray(value1[j]));
+                }
+            }
+            if (familyName.equals("high")) {
+                for (int j = 0; j < column2.length; j++) {
+                    put.add(Bytes.toBytes(familyName),
+                            Bytes.toBytes(column2[j]), ObjectTransferUtil.object2ByteArray(value2[j]));
+                }
+            }
+        }
+        table.put(put);
+        System.out.println("add data Success!");
     }
 
     /*
@@ -67,20 +82,21 @@ public class HBaseClient {
                                String[] column1, String[] value1, String[] column2, String[] value2)
             throws IOException {
         Put put = new Put(Bytes.toBytes(rowKey));// 设置rowkey
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));// HTabel负责跟记录相关的操作如增删改查等//
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
         // 获取表
         HColumnDescriptor[] columnFamilies = table.getTableDescriptor() // 获取所有的列族
                 .getColumnFamilies();
 
         for (int i = 0; i < columnFamilies.length; i++) {
             String familyName = columnFamilies[i].getNameAsString(); // 获取列族名
-            if (familyName.equals("article")) { // article列族put数据
+            if (familyName.equals("base")) {
                 for (int j = 0; j < column1.length; j++) {
                     put.add(Bytes.toBytes(familyName),
                             Bytes.toBytes(column1[j]), Bytes.toBytes(value1[j]));
                 }
             }
-            if (familyName.equals("author")) { // author列族put数据
+            if (familyName.equals("high")) {
                 for (int j = 0; j < column2.length; j++) {
                     put.add(Bytes.toBytes(familyName),
                             Bytes.toBytes(column2[j]), Bytes.toBytes(value2[j]));
@@ -101,7 +117,8 @@ public class HBaseClient {
     public static Result getResult(String tableName, String rowKey)
             throws IOException {
         Get get = new Get(Bytes.toBytes(rowKey));
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));// 获取表
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
         Result result = table.get(get);
         for (KeyValue kv : result.list()) {
             System.out.println("family:" + Bytes.toString(kv.getFamily()));
@@ -122,7 +139,8 @@ public class HBaseClient {
     public static void getResultScann(String tableName) throws IOException {
         Scan scan = new Scan();
         ResultScanner rs = null;
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
         try {
             rs = table.getScanner(scan);
             for (Result r : rs) {
@@ -155,7 +173,8 @@ public class HBaseClient {
         scan.setStartRow(Bytes.toBytes(start_rowkey));
         scan.setStopRow(Bytes.toBytes(stop_rowkey));
         ResultScanner rs = null;
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
         try {
             rs = table.getScanner(scan);
             for (Result r : rs) {
@@ -186,7 +205,8 @@ public class HBaseClient {
      */
     public static void getResultByColumn(String tableName, String rowKey,
                                          String familyName, String columnName) throws IOException {
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
         Get get = new Get(Bytes.toBytes(rowKey));
         get.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(columnName)); // 获取指定列族和列修饰符对应的列
         Result result = table.get(get);
@@ -216,7 +236,8 @@ public class HBaseClient {
     public static void updateTable(String tableName, String rowKey,
                                    String familyName, String columnName, String value)
             throws IOException {
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
         Put put = new Put(Bytes.toBytes(rowKey));
         put.add(Bytes.toBytes(familyName), Bytes.toBytes(columnName),
                 Bytes.toBytes(value));
@@ -237,7 +258,8 @@ public class HBaseClient {
      */
     public static void getResultByVersion(String tableName, String rowKey,
                                           String familyName, String columnName) throws IOException {
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
         Get get = new Get(Bytes.toBytes(rowKey));
         get.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(columnName));
         get.setMaxVersions(5);
@@ -270,7 +292,8 @@ public class HBaseClient {
      */
     public static void deleteColumn(String tableName, String rowKey,
                                     String falilyName, String columnName) throws IOException {
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
         Delete deleteColumn = new Delete(Bytes.toBytes(rowKey));
         deleteColumn.deleteColumns(Bytes.toBytes(falilyName),
                 Bytes.toBytes(columnName));
@@ -287,7 +310,8 @@ public class HBaseClient {
      */
     public static void deleteAllColumn(String tableName, String rowKey)
             throws IOException {
-        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+//        HTable table = new HTable(conf, Bytes.toBytes(tableName));
+        HTableInterface table = HBaseUtils.getConnection().getTable(tableName);
         Delete deleteAll = new Delete(Bytes.toBytes(rowKey));
         table.delete(deleteAll);
         System.out.println("all columns are deleted!");
@@ -299,7 +323,7 @@ public class HBaseClient {
      * @tableName 表名
      */
     public static void deleteTable(String tableName) throws IOException {
-        HBaseAdmin admin = new HBaseAdmin(conf);
+        HBaseAdmin admin = new HBaseAdmin(HBaseUtils.getConfiguration());
         admin.disableTable(tableName);
         admin.deleteTable(tableName);
         System.out.println(tableName + "is deleted!");
