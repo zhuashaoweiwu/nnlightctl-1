@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface PropertyClassifyCatalogServer {
     int addOrUpdatePropertyClassifyCatalog(PropertyClassifyCatalogRequest request);
-    List<PropertyClassifyCatalog> propertyClassifyCatalog(List<Long> propertyClassifyCatalogIds);
-    List<PropertyClassifyCatalog> propertyClassifyCatalogAll(Long id);
+    List<PropertyClassifyCatalog> listPropertyClassifyCatalog(List<Long> propertyClassifyCatalogIds);
+    List<PropertyClassifyCatalog> listPropertyClassifyCatalogAll(Long id);
     int deletePropertyClassifyCatalog(List<Long> propertyClassifyCatalogIds);
     List<PropertyClassifyCatalog> listPropertyClassifyCatalogLevel1();
+    String getPropertyClassifyCatalogDesc(Long id);
 }

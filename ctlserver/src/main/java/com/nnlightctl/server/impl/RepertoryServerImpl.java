@@ -8,8 +8,10 @@ import com.nnlightctl.jdbcdao.RepertoryDao;
 import com.nnlightctl.jdbcdao.RepertoryInApplyDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
+import com.nnlightctl.server.PropertyClassifyCatalogServer;
 import com.nnlightctl.server.RepertoryServer;
 import com.nnlightctl.vo.ListRepertoryUserView;
+import com.nnlightctl.vo.RepertoryInApplyView;
 import com.sun.org.apache.xerces.internal.impl.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,9 @@ public class RepertoryServerImpl implements RepertoryServer {
     private RepertoryInApplyDao repertoryInApplyDao;
     @Autowired
     private RepertoryInReasonMapper repertoryInReasonMapper;
+
+    @Autowired
+    private PropertyClassifyCatalogServer propertyClassifyCatalogServer;
 
     public int addOrUpdateRepertory(RepertoryRequest request){
         Repertory repertory = new Repertory();
@@ -109,8 +114,8 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInRepertory(BaseRequest request){
-        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(BaseRequest request){
+        Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryInApplyExample repertoryInApplyExample = new RepertoryInApplyExample();
         repertoryInApplyExample.setOrderByClause("id DESC");
@@ -119,8 +124,17 @@ public class RepertoryServerImpl implements RepertoryServer {
         tuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
+        List<RepertoryInApplyView> repertoryInApplyViews = new ArrayList<>(10);
         List<RepertoryInApply> repertoryInApplyList = repertoryInApplyMapper.selectByExample(repertoryInApplyExample);
-        tuple.setFirst(repertoryInApplyList);
+        for (RepertoryInApply apply : repertoryInApplyList) {
+            RepertoryInApplyView repertoryInApplyView = new RepertoryInApplyView();
+            ReflectCopyUtil.beanSameFieldCopy(apply, repertoryInApplyView);
+            //获取资产目录描述
+            String desc = propertyClassifyCatalogServer.getPropertyClassifyCatalogDesc(apply.getNnlightctlPropertyClassifyCatalogId());
+            repertoryInApplyView.setPropertyClassifyCatalogDesc(desc);
+            repertoryInApplyViews.add(repertoryInApplyView);
+        }
+        tuple.setFirst(repertoryInApplyViews);
 
         return tuple;
     }

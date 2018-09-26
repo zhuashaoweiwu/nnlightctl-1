@@ -9,6 +9,7 @@ import com.nnlightctl.util.DownloadUtil;
 import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
 import com.nnlightctl.vo.ListDeviceRepairStatisticView;
 import com.nnlightctl.vo.ListRepertoryUserView;
+import com.nnlightctl.vo.RepertoryInApplyView;
 import org.apache.kafka.common.protocol.types.Field;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -350,7 +351,7 @@ public class PropertyManagerController extends BaseController {
     public String listApplyInRepertory(BaseRequest request){
         logger.info("[POST] /api/propertyManager/listApplyInRepertory");
 
-        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = repertoryServer.listApplyInRepertory(request);
+        Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = repertoryServer.listApplyInRepertory(request);
 
         JsonResult jsonResult = JsonResult.SUCCESS;
         jsonResult.setData(tuple.getFirst());
@@ -732,7 +733,7 @@ public class PropertyManagerController extends BaseController {
     public String listSubPropertyClassifyCatalog(Long id){
         logger.info("[POST]  /api/propertyManager/listSubPropertyClassifyCatalog");
         JsonResult jsonResult = JsonResult.getSUCCESS();
-        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.propertyClassifyCatalogAll(id);
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalogServer.listPropertyClassifyCatalogAll(id);
         jsonResult.setData(propertyClassifyCatalogList);
         return toJson(jsonResult);
     }

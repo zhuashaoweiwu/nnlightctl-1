@@ -42,7 +42,7 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
         return ret;
     }
     @Override
-    public List<PropertyClassifyCatalog> propertyClassifyCatalog(List<Long> propertyClassifyCatalogIds){
+    public List<PropertyClassifyCatalog> listPropertyClassifyCatalog(List<Long> propertyClassifyCatalogIds){
         List<Long> ids = new ArrayList<Long>();
         List<PropertyClassifyCatalog> propertyClassifyCatalogList = new ArrayList<PropertyClassifyCatalog>();
         List<PropertyClassifyCatalog> propertyClassifyCatalogList1 = new ArrayList<PropertyClassifyCatalog>();
@@ -59,7 +59,7 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
         List<Long> propertyClassifyCatalogIds2 = new ArrayList<>();
         for(int k = 0 ;k<propertyClassifyCatalogList1.size() ;k++){
             propertyClassifyCatalogIds2.add(propertyClassifyCatalogList1.get(k).getId());
-            propertyClassifyCatalogList2 = propertyClassifyCatalog(propertyClassifyCatalogIds2);
+            propertyClassifyCatalogList2 = listPropertyClassifyCatalog(propertyClassifyCatalogIds2);
             if (propertyClassifyCatalogList2.isEmpty()) {
                 break;
             }
@@ -69,7 +69,7 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
         return propertyClassifyCatalogList;
     }
 
-    public List<PropertyClassifyCatalog> propertyClassifyCatalogAll(Long id){
+    public List<PropertyClassifyCatalog> listPropertyClassifyCatalogAll(Long id){
        // List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalog(propertyClassifyCatalogIds);
         PropertyClassifyCatalogExample propertyClassifyCatalogExample = new PropertyClassifyCatalogExample();
         propertyClassifyCatalogExample.createCriteria().andNnlightctlPropertyClassifyCatalogIdEqualTo(id);
@@ -78,7 +78,7 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
     }
     @Override
     public  int deletePropertyClassifyCatalog(List<Long> propertyClassifyCatalogIds){
-        List<PropertyClassifyCatalog> propertyClassifyCatalogList = propertyClassifyCatalog(propertyClassifyCatalogIds);
+        List<PropertyClassifyCatalog> propertyClassifyCatalogList = listPropertyClassifyCatalog(propertyClassifyCatalogIds);
         for (int j = 0 ;j < propertyClassifyCatalogList.size() ; j++) {
             propertyClassifyCatalogMapper.deleteByPrimaryKey(propertyClassifyCatalogList.get(j).getId());
         }
@@ -87,5 +87,17 @@ public class PropertyClassifyCatalogServerImpl implements PropertyClassifyCatalo
     @Override
     public List<PropertyClassifyCatalog> listPropertyClassifyCatalogLevel1(){
         return propertyClassifyCatalogDao.listPropertyClassifyCatalogLevel1();
+    }
+
+    @Override
+    public String getPropertyClassifyCatalogDesc(Long id) {
+        StringBuilder stringBuilder = new StringBuilder();
+        PropertyClassifyCatalog propertyClassifyCatalog = propertyClassifyCatalogMapper.selectByPrimaryKey(id);
+        if (propertyClassifyCatalog.getNnlightctlPropertyClassifyCatalogId() != null) {
+            stringBuilder.append(getPropertyClassifyCatalogDesc(propertyClassifyCatalog.getNnlightctlPropertyClassifyCatalogId()));
+            stringBuilder.append("-");
+        }
+        stringBuilder.append(propertyClassifyCatalog.getMyCatalogName());
+        return stringBuilder.toString();
     }
 }

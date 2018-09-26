@@ -4,6 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.vo.ListRepertoryUserView;
+import com.nnlightctl.vo.RepertoryInApplyView;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface RepertoryServer {
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> getRepertory(Long id);
     int updateTransferProperty(TransferPropertyRequest request);
     Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> listPropertyTransRecord(BaseRequest request);
-    Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInRepertory(BaseRequest request);
+    Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(BaseRequest request);
     Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutRepertory(BaseRequest request);
     Long countApplyInRepertory();
     Long countApplyOutRepertory();
