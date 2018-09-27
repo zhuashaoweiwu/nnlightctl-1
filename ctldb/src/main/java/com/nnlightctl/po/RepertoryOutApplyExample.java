@@ -475,6 +475,126 @@ public class RepertoryOutApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andNnlightctlOutRepertoryIdIsNull() {
+            addCriterion("nnlightctl_out_repertory_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdIsNotNull() {
+            addCriterion("nnlightctl_out_repertory_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdEqualTo(Long value) {
+            addCriterion("nnlightctl_out_repertory_id =", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdNotEqualTo(Long value) {
+            addCriterion("nnlightctl_out_repertory_id <>", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdGreaterThan(Long value) {
+            addCriterion("nnlightctl_out_repertory_id >", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_out_repertory_id >=", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdLessThan(Long value) {
+            addCriterion("nnlightctl_out_repertory_id <", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_out_repertory_id <=", value, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdIn(List<Long> values) {
+            addCriterion("nnlightctl_out_repertory_id in", values, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdNotIn(List<Long> values) {
+            addCriterion("nnlightctl_out_repertory_id not in", values, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_out_repertory_id between", value1, value2, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlOutRepertoryIdNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_out_repertory_id not between", value1, value2, "nnlightctlOutRepertoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdIsNull() {
+            addCriterion("nnlightctl_repertory_out_reason_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdIsNotNull() {
+            addCriterion("nnlightctl_repertory_out_reason_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdEqualTo(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id =", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdNotEqualTo(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id <>", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdGreaterThan(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id >", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id >=", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdLessThan(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id <", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_repertory_out_reason_id <=", value, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdIn(List<Long> values) {
+            addCriterion("nnlightctl_repertory_out_reason_id in", values, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdNotIn(List<Long> values) {
+            addCriterion("nnlightctl_repertory_out_reason_id not in", values, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_repertory_out_reason_id between", value1, value2, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlRepertoryOutReasonIdNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_repertory_out_reason_id not between", value1, value2, "nnlightctlRepertoryOutReasonId");
+            return (Criteria) this;
+        }
+
         public Criteria andApplyStateIsNull() {
             addCriterion("apply_state is null");
             return (Criteria) this;

@@ -16,6 +16,10 @@ public class RepertoryOutApply implements Serializable {
 
     private Long nnlightctlUserId;
 
+    private Long nnlightctlOutRepertoryId;
+
+    private Long nnlightctlRepertoryOutReasonId;
+
     private Byte applyState;
 
     private String refuseReason;
@@ -70,6 +74,22 @@ public class RepertoryOutApply implements Serializable {
         this.nnlightctlUserId = nnlightctlUserId;
     }
 
+    public Long getNnlightctlOutRepertoryId() {
+        return nnlightctlOutRepertoryId;
+    }
+
+    public void setNnlightctlOutRepertoryId(Long nnlightctlOutRepertoryId) {
+        this.nnlightctlOutRepertoryId = nnlightctlOutRepertoryId;
+    }
+
+    public Long getNnlightctlRepertoryOutReasonId() {
+        return nnlightctlRepertoryOutReasonId;
+    }
+
+    public void setNnlightctlRepertoryOutReasonId(Long nnlightctlRepertoryOutReasonId) {
+        this.nnlightctlRepertoryOutReasonId = nnlightctlRepertoryOutReasonId;
+    }
+
     public Byte getApplyState() {
         return applyState;
     }
@@ -104,6 +124,8 @@ public class RepertoryOutApply implements Serializable {
             && (this.getSerialnumber() == null ? other.getSerialnumber() == null : this.getSerialnumber().equals(other.getSerialnumber()))
             && (this.getNnlightctlPropertyId() == null ? other.getNnlightctlPropertyId() == null : this.getNnlightctlPropertyId().equals(other.getNnlightctlPropertyId()))
             && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()))
+            && (this.getNnlightctlOutRepertoryId() == null ? other.getNnlightctlOutRepertoryId() == null : this.getNnlightctlOutRepertoryId().equals(other.getNnlightctlOutRepertoryId()))
+            && (this.getNnlightctlRepertoryOutReasonId() == null ? other.getNnlightctlRepertoryOutReasonId() == null : this.getNnlightctlRepertoryOutReasonId().equals(other.getNnlightctlRepertoryOutReasonId()))
             && (this.getApplyState() == null ? other.getApplyState() == null : this.getApplyState().equals(other.getApplyState()))
             && (this.getRefuseReason() == null ? other.getRefuseReason() == null : this.getRefuseReason().equals(other.getRefuseReason()));
     }
@@ -118,6 +140,8 @@ public class RepertoryOutApply implements Serializable {
         result = prime * result + ((getSerialnumber() == null) ? 0 : getSerialnumber().hashCode());
         result = prime * result + ((getNnlightctlPropertyId() == null) ? 0 : getNnlightctlPropertyId().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
+        result = prime * result + ((getNnlightctlOutRepertoryId() == null) ? 0 : getNnlightctlOutRepertoryId().hashCode());
+        result = prime * result + ((getNnlightctlRepertoryOutReasonId() == null) ? 0 : getNnlightctlRepertoryOutReasonId().hashCode());
         result = prime * result + ((getApplyState() == null) ? 0 : getApplyState().hashCode());
         result = prime * result + ((getRefuseReason() == null) ? 0 : getRefuseReason().hashCode());
         return result;
@@ -135,6 +159,8 @@ public class RepertoryOutApply implements Serializable {
         sb.append(", serialnumber=").append(serialnumber);
         sb.append(", nnlightctlPropertyId=").append(nnlightctlPropertyId);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
+        sb.append(", nnlightctlOutRepertoryId=").append(nnlightctlOutRepertoryId);
+        sb.append(", nnlightctlRepertoryOutReasonId=").append(nnlightctlRepertoryOutReasonId);
         sb.append(", applyState=").append(applyState);
         sb.append(", refuseReason=").append(refuseReason);
         sb.append(", serialVersionUID=").append(serialVersionUID);
