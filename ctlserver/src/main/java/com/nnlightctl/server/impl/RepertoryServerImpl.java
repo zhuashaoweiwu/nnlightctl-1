@@ -28,6 +28,7 @@ public class RepertoryServerImpl implements RepertoryServer {
     private RepertoryPropertyTranslateRecordMapper repertoryPropertyTranslateRecordMapper;
     @Autowired
     private RepertoryDao repertoryDao;
+
     @Autowired
     private PropertyMapper propertyMapper;
     @Autowired
@@ -41,6 +42,12 @@ public class RepertoryServerImpl implements RepertoryServer {
 
     @Autowired
     private PropertyClassifyCatalogServer propertyClassifyCatalogServer;
+
+    @Autowired
+    private SupplierMapper supplierMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public int addOrUpdateRepertory(RepertoryRequest request){
         Repertory repertory = new Repertory();
@@ -129,9 +136,27 @@ public class RepertoryServerImpl implements RepertoryServer {
         for (RepertoryInApply apply : repertoryInApplyList) {
             RepertoryInApplyView repertoryInApplyView = new RepertoryInApplyView();
             ReflectCopyUtil.beanSameFieldCopy(apply, repertoryInApplyView);
+
             //获取资产目录描述
             String desc = propertyClassifyCatalogServer.getPropertyClassifyCatalogDesc(apply.getNnlightctlPropertyClassifyCatalogId());
             repertoryInApplyView.setPropertyClassifyCatalogDesc(desc);
+
+            //供应商名称
+            String supplierName = supplierMapper.selectByPrimaryKey(apply.getNnlightctlSupplier()).getApplierName();
+            repertoryInApplyView.setSupplierDesc(supplierName);
+
+            //入库原因
+            String repertoryInReason = repertoryInReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryInReasonId()).getReasonDesc();
+            repertoryInApplyView.setRepertoryInReason(repertoryInReason);
+
+            //入库仓库
+            String repertoryName = repertoryMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryId()).getRepertoryName();
+            repertoryInApplyView.setRepertoryName(repertoryName);
+
+            //入库申请人
+            String applierName = userMapper.selectByPrimaryKey(apply.getNnlightctlUserApplyId()).getUserName();
+            repertoryInApplyView.setUserApplyName(applierName);
+
             repertoryInApplyViews.add(repertoryInApplyView);
         }
         tuple.setFirst(repertoryInApplyViews);

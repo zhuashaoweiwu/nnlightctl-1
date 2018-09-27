@@ -108,6 +108,38 @@ public class RepertoryInApplyView extends BaseView {
         this.refuseReason = refuseReason;
     }
 
+    public String getSupplierDesc() {
+        return supplierDesc;
+    }
+
+    public void setSupplierDesc(String supplierDesc) {
+        this.supplierDesc = supplierDesc;
+    }
+
+    public String getRepertoryInReason() {
+        return repertoryInReason;
+    }
+
+    public void setRepertoryInReason(String repertoryInReason) {
+        this.repertoryInReason = repertoryInReason;
+    }
+
+    public String getRepertoryName() {
+        return repertoryName;
+    }
+
+    public void setRepertoryName(String repertoryName) {
+        this.repertoryName = repertoryName;
+    }
+
+    public String getUserApplyName() {
+        return userApplyName;
+    }
+
+    public void setUserApplyName(String userApplyName) {
+        this.userApplyName = userApplyName;
+    }
+
     private String serialnumber;
 
     private Date inRepertoryDate;
@@ -118,6 +150,8 @@ public class RepertoryInApplyView extends BaseView {
 
     private Long nnlightctlSupplier;
 
+    private String supplierDesc;    //供应商名称
+
     private String propertyName;
 
     private String propertyUid;
@@ -126,9 +160,15 @@ public class RepertoryInApplyView extends BaseView {
 
     private Long nnlightctlRepertoryInReasonId;
 
+    private String repertoryInReason;   //入库理由
+
     private Long nnlightctlRepertoryId;
 
+    private String repertoryName;   //入库仓库名称
+
     private Long nnlightctlUserApplyId;
+
+    private String userApplyName;   //入库申请人名称
 
     private Byte applyState;
 
