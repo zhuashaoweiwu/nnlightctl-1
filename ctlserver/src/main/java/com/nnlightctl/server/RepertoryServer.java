@@ -5,6 +5,7 @@ import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.vo.ListRepertoryUserView;
 import com.nnlightctl.vo.RepertoryInApplyView;
+import com.nnlightctl.vo.RepertoryOutApplyView;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface RepertoryServer {
     int updateTransferProperty(TransferPropertyRequest request);
     Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> listPropertyTransRecord(BaseRequest request);
     Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(BaseRequest request);
-    Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutRepertory(BaseRequest request);
+    Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(BaseRequest request);
     Long countApplyInRepertory();
     Long countApplyOutRepertory();
     int addOrUpdateApplyInRepertory(RepertoryInApplyRequest request);

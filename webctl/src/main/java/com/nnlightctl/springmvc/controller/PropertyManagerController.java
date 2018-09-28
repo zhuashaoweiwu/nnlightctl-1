@@ -6,10 +6,7 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.*;
 import com.nnlightctl.util.DownloadUtil;
-import com.nnlightctl.vo.ListDeviceDamageCountByMonthView;
-import com.nnlightctl.vo.ListDeviceRepairStatisticView;
-import com.nnlightctl.vo.ListRepertoryUserView;
-import com.nnlightctl.vo.RepertoryInApplyView;
+import com.nnlightctl.vo.*;
 import org.apache.kafka.common.protocol.types.Field;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -366,7 +363,7 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("listApplyOutRepertory")
     public String listApplyOutRepertory(BaseRequest request){
         logger.info("[POST] /api/propertyManager/listApplyOutRepertory");
-        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = repertoryServer.listApplyOutRepertory(request);
+        Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = repertoryServer.listApplyOutRepertory(request);
 
         JsonResult jsonResult = JsonResult.SUCCESS;
         jsonResult.setData(tuple.getFirst());

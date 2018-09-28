@@ -12,6 +12,7 @@ import com.nnlightctl.server.PropertyClassifyCatalogServer;
 import com.nnlightctl.server.RepertoryServer;
 import com.nnlightctl.vo.ListRepertoryUserView;
 import com.nnlightctl.vo.RepertoryInApplyView;
+import com.nnlightctl.vo.RepertoryOutApplyView;
 import com.sun.org.apache.xerces.internal.impl.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,9 @@ public class RepertoryServerImpl implements RepertoryServer {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RepertoryOutReasonMapper repertoryOutReasonMapper;
 
     public int addOrUpdateRepertory(RepertoryRequest request){
         Repertory repertory = new Repertory();
@@ -165,8 +169,8 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutRepertory(BaseRequest request){
-        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(BaseRequest request){
+        Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryOutApplyExample repertoryOutApplyExample = new RepertoryOutApplyExample();
         repertoryOutApplyExample.setOrderByClause("id DESC");
@@ -175,8 +179,27 @@ public class RepertoryServerImpl implements RepertoryServer {
         tuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
+        List<RepertoryOutApplyView> repertoryOutApplyViews = new ArrayList<>(10);
         List<RepertoryOutApply> repertoryOutApplyList = repertoryOutApplyMapper.selectByExample(repertoryOutApplyExample);
-        tuple.setFirst(repertoryOutApplyList);
+        for (RepertoryOutApply apply : repertoryOutApplyList) {
+            RepertoryOutApplyView view = new RepertoryOutApplyView();
+            ReflectCopyUtil.beanSameFieldCopy(apply, view);
+
+            //资产名称
+            view.setPropertyName(this.propertyMapper.selectByPrimaryKey(apply.getNnlightctlPropertyId()).getPropertyClassifyCatalogName());
+
+            //申请人用户名
+            view.setApplierName(this.userMapper.selectByPrimaryKey(apply.getNnlightctlUserId()).getUserName());
+
+            //出库仓库名称
+            view.setOutRepertoryName(this.repertoryMapper.selectByPrimaryKey(apply.getNnlightctlOutRepertoryId()).getRepertoryName());
+
+            //出库理由描述
+            view.setOutRepertoryReasonDesc(this.repertoryOutReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryOutReasonId()).getReason());
+
+        }
+
+        tuple.setFirst(repertoryOutApplyViews);
 
         return tuple;
     }
