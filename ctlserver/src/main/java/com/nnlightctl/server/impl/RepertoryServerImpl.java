@@ -13,6 +13,7 @@ import com.nnlightctl.server.RepertoryServer;
 import com.nnlightctl.vo.ListRepertoryUserView;
 import com.nnlightctl.vo.RepertoryInApplyView;
 import com.nnlightctl.vo.RepertoryOutApplyView;
+import com.nnlightctl.vo.RepertoryPropertyTranslateRecordView;
 import com.sun.org.apache.xerces.internal.impl.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,8 +109,8 @@ public class RepertoryServerImpl implements RepertoryServer {
         return 1;
     }
     @Override
-    public Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> listPropertyTransRecord(BaseRequest request){
-        Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> listPropertyTransRecord(BaseRequest request){
+        Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryPropertyTranslateRecordExample repertoryPropertyTranslateRecordExample = new RepertoryPropertyTranslateRecordExample();
         repertoryPropertyTranslateRecordExample.setOrderByClause("id DESC");
@@ -118,10 +119,57 @@ public class RepertoryServerImpl implements RepertoryServer {
         tuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
+        List<RepertoryPropertyTranslateRecordView> viewList = new ArrayList<>(10);
         List<RepertoryPropertyTranslateRecord> repertoryPropertyTranslateRecordList = repertoryPropertyTranslateRecordMapper.selectByExample(repertoryPropertyTranslateRecordExample);
-        tuple.setFirst(repertoryPropertyTranslateRecordList);
+        for (RepertoryPropertyTranslateRecord record : repertoryPropertyTranslateRecordList) {
+            RepertoryPropertyTranslateRecordView view = new RepertoryPropertyTranslateRecordView();
+            ReflectCopyUtil.beanSameFieldCopy(record, view);
+
+            //资产名称
+            view.setPropertyName(this.propertyMapper.selectByPrimaryKey(record.getNnlightctlPropertyId()).getPropertyClassifyCatalogName());
+
+            //源出库仓库名称
+            view.setSourceRepertyName(this.repertoryMapper.selectByPrimaryKey(record.getSourceRepertyId()).getRepertoryName());
+
+            //目标入库仓库名称
+            view.setTargetRepertoryName(this.repertoryMapper.selectByPrimaryKey(record.getTargetRepertyId()).getRepertoryName());
+
+            //转移申请人用户名
+            view.setApplierName(this.userMapper.selectByPrimaryKey(record.getNnlightctlUserIdApply()).getUserName());
+
+            //目标交接人用户名
+            view.setReceiverName(this.userMapper.selectByPrimaryKey(record.getNnlightctlUserIdReceive()).getUserName());
+
+            viewList.add(view);
+        }
+        tuple.setFirst(viewList);
 
         return tuple;
+    }
+
+    private void completionRepertoryInApply(RepertoryInApply apply, RepertoryInApplyView repertoryInApplyView) {
+
+        ReflectCopyUtil.beanSameFieldCopy(apply, repertoryInApplyView);
+
+        //获取资产目录描述
+        String desc = propertyClassifyCatalogServer.getPropertyClassifyCatalogDesc(apply.getNnlightctlPropertyClassifyCatalogId());
+        repertoryInApplyView.setPropertyClassifyCatalogDesc(desc);
+
+        //供应商名称
+        String supplierName = supplierMapper.selectByPrimaryKey(apply.getNnlightctlSupplier()).getApplierName();
+        repertoryInApplyView.setSupplierDesc(supplierName);
+
+        //入库原因
+        String repertoryInReason = repertoryInReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryInReasonId()).getReasonDesc();
+        repertoryInApplyView.setRepertoryInReason(repertoryInReason);
+
+        //入库仓库
+        String repertoryName = repertoryMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryId()).getRepertoryName();
+        repertoryInApplyView.setRepertoryName(repertoryName);
+
+        //入库申请人
+        String applierName = userMapper.selectByPrimaryKey(apply.getNnlightctlUserApplyId()).getUserName();
+        repertoryInApplyView.setUserApplyName(applierName);
     }
 
     @Override
@@ -139,33 +187,30 @@ public class RepertoryServerImpl implements RepertoryServer {
         List<RepertoryInApply> repertoryInApplyList = repertoryInApplyMapper.selectByExample(repertoryInApplyExample);
         for (RepertoryInApply apply : repertoryInApplyList) {
             RepertoryInApplyView repertoryInApplyView = new RepertoryInApplyView();
-            ReflectCopyUtil.beanSameFieldCopy(apply, repertoryInApplyView);
 
-            //获取资产目录描述
-            String desc = propertyClassifyCatalogServer.getPropertyClassifyCatalogDesc(apply.getNnlightctlPropertyClassifyCatalogId());
-            repertoryInApplyView.setPropertyClassifyCatalogDesc(desc);
-
-            //供应商名称
-            String supplierName = supplierMapper.selectByPrimaryKey(apply.getNnlightctlSupplier()).getApplierName();
-            repertoryInApplyView.setSupplierDesc(supplierName);
-
-            //入库原因
-            String repertoryInReason = repertoryInReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryInReasonId()).getReasonDesc();
-            repertoryInApplyView.setRepertoryInReason(repertoryInReason);
-
-            //入库仓库
-            String repertoryName = repertoryMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryId()).getRepertoryName();
-            repertoryInApplyView.setRepertoryName(repertoryName);
-
-            //入库申请人
-            String applierName = userMapper.selectByPrimaryKey(apply.getNnlightctlUserApplyId()).getUserName();
-            repertoryInApplyView.setUserApplyName(applierName);
+            completionRepertoryInApply(apply, repertoryInApplyView);
 
             repertoryInApplyViews.add(repertoryInApplyView);
         }
         tuple.setFirst(repertoryInApplyViews);
 
         return tuple;
+    }
+
+    private void completionRepertoryOutApplyView(RepertoryOutApply apply, RepertoryOutApplyView view) {
+        ReflectCopyUtil.beanSameFieldCopy(apply, view);
+
+        //资产名称
+        view.setPropertyName(this.propertyMapper.selectByPrimaryKey(apply.getNnlightctlPropertyId()).getPropertyClassifyCatalogName());
+
+        //申请人用户名
+        view.setApplierName(this.userMapper.selectByPrimaryKey(apply.getNnlightctlUserId()).getUserName());
+
+        //出库仓库名称
+        view.setOutRepertoryName(this.repertoryMapper.selectByPrimaryKey(apply.getNnlightctlOutRepertoryId()).getRepertoryName());
+
+        //出库理由描述
+        view.setOutRepertoryReasonDesc(this.repertoryOutReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryOutReasonId()).getReason());
     }
 
     @Override
@@ -183,20 +228,10 @@ public class RepertoryServerImpl implements RepertoryServer {
         List<RepertoryOutApply> repertoryOutApplyList = repertoryOutApplyMapper.selectByExample(repertoryOutApplyExample);
         for (RepertoryOutApply apply : repertoryOutApplyList) {
             RepertoryOutApplyView view = new RepertoryOutApplyView();
-            ReflectCopyUtil.beanSameFieldCopy(apply, view);
 
-            //资产名称
-            view.setPropertyName(this.propertyMapper.selectByPrimaryKey(apply.getNnlightctlPropertyId()).getPropertyClassifyCatalogName());
+            completionRepertoryOutApplyView(apply, view);
 
-            //申请人用户名
-            view.setApplierName(this.userMapper.selectByPrimaryKey(apply.getNnlightctlUserId()).getUserName());
-
-            //出库仓库名称
-            view.setOutRepertoryName(this.repertoryMapper.selectByPrimaryKey(apply.getNnlightctlOutRepertoryId()).getRepertoryName());
-
-            //出库理由描述
-            view.setOutRepertoryReasonDesc(this.repertoryOutReasonMapper.selectByPrimaryKey(apply.getNnlightctlRepertoryOutReasonId()).getReason());
-
+            repertoryOutApplyViews.add(view);
         }
 
         tuple.setFirst(repertoryOutApplyViews);
@@ -265,13 +300,45 @@ public class RepertoryServerImpl implements RepertoryServer {
         return repertoryOutApplyMapper.selectByPrimaryKey(id);
     }
     @Override
-    public Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInApprovePending(BaseRequest request ,int applyState){
-        return repertoryInApplyDao.listApplyInApprovePending(request,applyState);
+    public Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInApprovePending(BaseRequest request ,int applyState){
+        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tmpTuple = repertoryInApplyDao.listApplyInApprovePending(request,applyState);
+        List<RepertoryInApply> repertoryInApplyList = tmpTuple.getFirst();
+
+        List<RepertoryInApplyView> viewList = new ArrayList<>(10);
+        for (RepertoryInApply apply : repertoryInApplyList) {
+            RepertoryInApplyView view = new RepertoryInApplyView();
+
+            completionRepertoryInApply(apply, view);
+
+            viewList.add(view);
+        }
+
+        Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
+        tuple.setFirst(viewList);
+        tuple.setSecond(tmpTuple.getSecond());
+
+        return tuple;
     }
 
     @Override
-    public Tuple.TwoTuple<List<RepertoryOutApply>, Integer> listApplyOutApprovePending(BaseRequest request ,Integer applyState){
-        return repertoryInApplyDao.listApplyOutApprovePending(request,applyState);
+    public Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutApprovePending(BaseRequest request ,Integer applyState){
+        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tmpTuple = repertoryInApplyDao.listApplyOutApprovePending(request,applyState);
+        List<RepertoryOutApply> repertoryOutApplyList = tmpTuple.getFirst();
+
+        List<RepertoryOutApplyView> repertoryOutApplyViewList = new ArrayList<>(8);
+        for (RepertoryOutApply apply : repertoryOutApplyList) {
+            RepertoryOutApplyView view = new RepertoryOutApplyView();
+
+            completionRepertoryOutApplyView(apply, view);
+
+            repertoryOutApplyViewList.add(view);
+        }
+
+        Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
+        tuple.setFirst(repertoryOutApplyViewList);
+        tuple.setSecond(tmpTuple.getSecond());
+
+        return tuple;
     }
     @Override
     public Tuple.TwoTuple<List<RepertoryInApply>, Integer> listApplyInHistory(BaseRequest request ,List<Integer> applyStates){

@@ -332,7 +332,7 @@ public class PropertyManagerController extends BaseController {
     @RequestMapping("listPropertyTransRecord")
     public String listPropertyTransRecord(BaseRequest request){
         logger.info("[POST] /api/propertyManager/listPropertyTransRecord");
-        Tuple.TwoTuple<List<RepertoryPropertyTranslateRecord>, Integer> tuple = repertoryServer.listPropertyTransRecord(request);
+        Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> tuple = repertoryServer.listPropertyTransRecord(request);
 
         JsonResult jsonResult = JsonResult.SUCCESS;
         jsonResult.setData(tuple.getFirst());
@@ -514,7 +514,7 @@ public class PropertyManagerController extends BaseController {
         logger.info("[POST]  /api/propertyManager/listApplyInApprovePending");
         int ret = 1;
         JsonResult jsonResult = JsonResult.SUCCESS;
-        Tuple.TwoTuple<List<RepertoryInApply>, Integer> tuple = repertoryServer.listApplyInApprovePending(request , ret);
+        Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = repertoryServer.listApplyInApprovePending(request , ret);
 
         jsonResult.setData(tuple.getFirst());
         jsonResult.setTotal(tuple.getSecond());
@@ -530,7 +530,7 @@ public class PropertyManagerController extends BaseController {
         logger.info("[POST]  /api/propertyManager/listApplyOutApprovePending");
         Integer ret = 1;
         JsonResult jsonResult = JsonResult.SUCCESS;
-        Tuple.TwoTuple<List<RepertoryOutApply>, Integer> tuple = repertoryServer.listApplyOutApprovePending(request,ret);
+        Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = repertoryServer.listApplyOutApprovePending(request,ret);
 
         jsonResult.setData(tuple.getFirst());
         jsonResult.setTotal(tuple.getSecond());
