@@ -14,6 +14,8 @@ public class RepertoryOutApply implements Serializable {
 
     private Long nnlightctlPropertyId;
 
+    private Long outCounte;
+
     private Long nnlightctlUserId;
 
     private Long nnlightctlOutRepertoryId;
@@ -64,6 +66,14 @@ public class RepertoryOutApply implements Serializable {
 
     public void setNnlightctlPropertyId(Long nnlightctlPropertyId) {
         this.nnlightctlPropertyId = nnlightctlPropertyId;
+    }
+
+    public Long getOutCounte() {
+        return outCounte;
+    }
+
+    public void setOutCounte(Long outCounte) {
+        this.outCounte = outCounte;
     }
 
     public Long getNnlightctlUserId() {
@@ -123,6 +133,7 @@ public class RepertoryOutApply implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getSerialnumber() == null ? other.getSerialnumber() == null : this.getSerialnumber().equals(other.getSerialnumber()))
             && (this.getNnlightctlPropertyId() == null ? other.getNnlightctlPropertyId() == null : this.getNnlightctlPropertyId().equals(other.getNnlightctlPropertyId()))
+            && (this.getOutCounte() == null ? other.getOutCounte() == null : this.getOutCounte().equals(other.getOutCounte()))
             && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()))
             && (this.getNnlightctlOutRepertoryId() == null ? other.getNnlightctlOutRepertoryId() == null : this.getNnlightctlOutRepertoryId().equals(other.getNnlightctlOutRepertoryId()))
             && (this.getNnlightctlRepertoryOutReasonId() == null ? other.getNnlightctlRepertoryOutReasonId() == null : this.getNnlightctlRepertoryOutReasonId().equals(other.getNnlightctlRepertoryOutReasonId()))
@@ -139,6 +150,7 @@ public class RepertoryOutApply implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getSerialnumber() == null) ? 0 : getSerialnumber().hashCode());
         result = prime * result + ((getNnlightctlPropertyId() == null) ? 0 : getNnlightctlPropertyId().hashCode());
+        result = prime * result + ((getOutCounte() == null) ? 0 : getOutCounte().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
         result = prime * result + ((getNnlightctlOutRepertoryId() == null) ? 0 : getNnlightctlOutRepertoryId().hashCode());
         result = prime * result + ((getNnlightctlRepertoryOutReasonId() == null) ? 0 : getNnlightctlRepertoryOutReasonId().hashCode());
@@ -158,6 +170,7 @@ public class RepertoryOutApply implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", serialnumber=").append(serialnumber);
         sb.append(", nnlightctlPropertyId=").append(nnlightctlPropertyId);
+        sb.append(", outCounte=").append(outCounte);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
         sb.append(", nnlightctlOutRepertoryId=").append(nnlightctlOutRepertoryId);
         sb.append(", nnlightctlRepertoryOutReasonId=").append(nnlightctlRepertoryOutReasonId);

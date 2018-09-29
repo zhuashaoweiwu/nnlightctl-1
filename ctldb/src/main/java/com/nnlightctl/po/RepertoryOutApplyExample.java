@@ -415,6 +415,66 @@ public class RepertoryOutApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andOutCounteIsNull() {
+            addCriterion("out_counte is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteIsNotNull() {
+            addCriterion("out_counte is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteEqualTo(Long value) {
+            addCriterion("out_counte =", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteNotEqualTo(Long value) {
+            addCriterion("out_counte <>", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteGreaterThan(Long value) {
+            addCriterion("out_counte >", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteGreaterThanOrEqualTo(Long value) {
+            addCriterion("out_counte >=", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteLessThan(Long value) {
+            addCriterion("out_counte <", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteLessThanOrEqualTo(Long value) {
+            addCriterion("out_counte <=", value, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteIn(List<Long> values) {
+            addCriterion("out_counte in", values, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteNotIn(List<Long> values) {
+            addCriterion("out_counte not in", values, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteBetween(Long value1, Long value2) {
+            addCriterion("out_counte between", value1, value2, "outCounte");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutCounteNotBetween(Long value1, Long value2) {
+            addCriterion("out_counte not between", value1, value2, "outCounte");
+            return (Criteria) this;
+        }
+
         public Criteria andNnlightctlUserIdIsNull() {
             addCriterion("nnlightctl_user_id is null");
             return (Criteria) this;

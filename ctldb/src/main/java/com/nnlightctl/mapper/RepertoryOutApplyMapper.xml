@@ -7,6 +7,7 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
     <result column="nnlightctl_property_id" property="nnlightctlPropertyId" jdbcType="BIGINT" />
+    <result column="out_counte" property="outCounte" jdbcType="BIGINT" />
     <result column="nnlightctl_user_id" property="nnlightctlUserId" jdbcType="BIGINT" />
     <result column="nnlightctl_out_repertory_id" property="nnlightctlOutRepertoryId" jdbcType="BIGINT" />
     <result column="nnlightctl_repertory_out_reason_id" property="nnlightctlRepertoryOutReasonId" jdbcType="BIGINT" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, serialnumber, nnlightctl_property_id, nnlightctl_user_id, 
+    id, gmt_created, gmt_updated, serialnumber, nnlightctl_property_id, out_counte, nnlightctl_user_id, 
     nnlightctl_out_repertory_id, nnlightctl_repertory_out_reason_id, apply_state, refuse_reason
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RepertoryOutApplyExample" >
@@ -111,13 +112,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_repertory_out_apply (gmt_created, gmt_updated, serialnumber, 
-      nnlightctl_property_id, nnlightctl_user_id, nnlightctl_out_repertory_id, 
-      nnlightctl_repertory_out_reason_id, apply_state, 
-      refuse_reason)
+      nnlightctl_property_id, out_counte, nnlightctl_user_id, 
+      nnlightctl_out_repertory_id, nnlightctl_repertory_out_reason_id, 
+      apply_state, refuse_reason)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialnumber,jdbcType=VARCHAR}, 
-      #{nnlightctlPropertyId,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT}, #{nnlightctlOutRepertoryId,jdbcType=BIGINT}, 
-      #{nnlightctlRepertoryOutReasonId,jdbcType=BIGINT}, #{applyState,jdbcType=TINYINT}, 
-      #{refuseReason,jdbcType=VARCHAR})
+      #{nnlightctlPropertyId,jdbcType=BIGINT}, #{outCounte,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT}, 
+      #{nnlightctlOutRepertoryId,jdbcType=BIGINT}, #{nnlightctlRepertoryOutReasonId,jdbcType=BIGINT}, 
+      #{applyState,jdbcType=TINYINT}, #{refuseReason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.RepertoryOutApply" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -136,6 +137,9 @@
       </if>
       <if test="nnlightctlPropertyId != null" >
         nnlightctl_property_id,
+      </if>
+      <if test="outCounte != null" >
+        out_counte,
       </if>
       <if test="nnlightctlUserId != null" >
         nnlightctl_user_id,
@@ -165,6 +169,9 @@
       </if>
       <if test="nnlightctlPropertyId != null" >
         #{nnlightctlPropertyId,jdbcType=BIGINT},
+      </if>
+      <if test="outCounte != null" >
+        #{outCounte,jdbcType=BIGINT},
       </if>
       <if test="nnlightctlUserId != null" >
         #{nnlightctlUserId,jdbcType=BIGINT},
@@ -207,6 +214,9 @@
       <if test="record.nnlightctlPropertyId != null" >
         nnlightctl_property_id = #{record.nnlightctlPropertyId,jdbcType=BIGINT},
       </if>
+      <if test="record.outCounte != null" >
+        out_counte = #{record.outCounte,jdbcType=BIGINT},
+      </if>
       <if test="record.nnlightctlUserId != null" >
         nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT},
       </if>
@@ -234,6 +244,7 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
       nnlightctl_property_id = #{record.nnlightctlPropertyId,jdbcType=BIGINT},
+      out_counte = #{record.outCounte,jdbcType=BIGINT},
       nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT},
       nnlightctl_out_repertory_id = #{record.nnlightctlOutRepertoryId,jdbcType=BIGINT},
       nnlightctl_repertory_out_reason_id = #{record.nnlightctlRepertoryOutReasonId,jdbcType=BIGINT},
@@ -257,6 +268,9 @@
       </if>
       <if test="nnlightctlPropertyId != null" >
         nnlightctl_property_id = #{nnlightctlPropertyId,jdbcType=BIGINT},
+      </if>
+      <if test="outCounte != null" >
+        out_counte = #{outCounte,jdbcType=BIGINT},
       </if>
       <if test="nnlightctlUserId != null" >
         nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT},
@@ -282,6 +296,7 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       serialnumber = #{serialnumber,jdbcType=VARCHAR},
       nnlightctl_property_id = #{nnlightctlPropertyId,jdbcType=BIGINT},
+      out_counte = #{outCounte,jdbcType=BIGINT},
       nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT},
       nnlightctl_out_repertory_id = #{nnlightctlOutRepertoryId,jdbcType=BIGINT},
       nnlightctl_repertory_out_reason_id = #{nnlightctlRepertoryOutReasonId,jdbcType=BIGINT},
