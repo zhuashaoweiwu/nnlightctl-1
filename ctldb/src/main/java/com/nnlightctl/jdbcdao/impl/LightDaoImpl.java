@@ -183,7 +183,7 @@ public class LightDaoImpl implements LightDao {
     @Cacheable("commandCache")
     @Override
     public List<Lighting> getLightingByUUID(String uuid) {
-        log.info("通过uuid查询灯具");
+        log.info("通过uuid从数据库中查询灯具");
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>(1);
         sql.append("select id, realtime_uid from nnlightctl_lighting where uid = ?");

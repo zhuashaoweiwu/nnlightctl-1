@@ -28,10 +28,12 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
     public int mapLightingNet(Lighting lighting) {
         List<Object> params = new ArrayList<>(1);
 
+        log.info("------------------------UUID[" + lighting.getUid() + "]判断开始--------------------------");
         //判断是否存在UUID对应的灯具信息
         List<Lighting> lightingList = lightDao.getLightingByUUID(lighting.getUid());
 
         if (lightingList.size() > 0) {    //存在，则更新realtimeUid
+            log.info("-------------------------------从缓存或者数据库是查询1条以上该UUID的灯具记录--------------------------------");
             //判断是否已经更新
             if (lighting.getRealtimeUid().equalsIgnoreCase(lightingList.get(0).getRealtimeUid())) { //已经更新过了
                 return 1;
@@ -46,6 +48,7 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
 
             return this.jdbcTemplate.update(updateSql.toString(), params.toArray());
         } else {    //不存在，则新建一条UUID确定的灯具记录
+            log.info("-------------------------------从缓存或者数据库中没有查询到该UUID的灯具记录--------------------------------");
             StringBuilder createSql = new StringBuilder();
             createSql.append("insert into nnlightctl_lighting(gmt_created, gmt_updated, uid, realtime_uid) values(?, ?, ?, ?)");
             params.clear();
