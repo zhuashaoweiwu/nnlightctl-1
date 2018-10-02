@@ -92,12 +92,12 @@ public class Consumer {
                                         });
 
                                         //写入Mysql
-//                                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-//                                            @Override
-//                                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-//                                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
-//                                            }
-//                                        });
+                                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                                            @Override
+                                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                            }
+                                        });
                                         //同时写入redis
 //                                    redisClientTemplate.set(lightingVolEleRecord.getUid().getBytes(),
 //                                            ObjectTransferUtil.object2ByteArray(lightingVolEleRecord));

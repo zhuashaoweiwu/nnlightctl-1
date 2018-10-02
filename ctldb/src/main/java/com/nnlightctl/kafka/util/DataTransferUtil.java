@@ -42,6 +42,9 @@ public class DataTransferUtil {
         short unsignedVoltage = (short)ByteConvert.bytesToUshort(data, 44);
         lightingVolEleRecord.setVoltage(new BigDecimal(String.valueOf(unsignedVoltage)));
 
+        //计算能耗
+        lightingVolEleRecord.setEnergy(new BigDecimal(String.valueOf(unsignedEletric * unsignedVoltage * 10)));
+
         //信号强度
         short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, 46);
         lightingVolEleRecord.setPersist1(new BigDecimal(String.valueOf(unSignalIntensity)));
