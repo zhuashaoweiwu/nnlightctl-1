@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 public class InstitutionRequest {
@@ -61,6 +63,7 @@ public class InstitutionRequest {
 
     private Long id;
 
+    @NotEmpty
     private String institutionName;
 
     private Date createTime;

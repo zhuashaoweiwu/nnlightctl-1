@@ -48,6 +48,8 @@
         <zookeeper.version>3.4.6</zookeeper.version>
         <ehcache.version>2.10.4</ehcache.version>
         <shiro.version>1.2.3</shiro.version>
+        <hibernate.validate.version>4.2.0.Final</hibernate.validate.version>
+        <validate.api.version>1.1.0.Final</validate.api.version>
     </properties>
 
     <repositories>
@@ -333,6 +335,22 @@
                 <artifactId>shiro-all</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
+
+            <!-- JSR-380 validate  -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.validate.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validate.api.version}</version>
+            </dependency>
+
+
 
             <!-- 工程依赖 -->
             <dependency>

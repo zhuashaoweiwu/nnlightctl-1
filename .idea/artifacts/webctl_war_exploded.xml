@@ -112,6 +112,8 @@
           <element id="archive" name="ctldomain-1.0-SNAPSHOT.jar">
             <element id="module-output" name="ctldomain" />
           </element>
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:4.2.0.Final" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
           <element id="archive" name="netcommand-1.0-SNAPSHOT.jar">
             <element id="module-output" name="netcommand" />
           </element>

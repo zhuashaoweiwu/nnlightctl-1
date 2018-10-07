@@ -23,7 +23,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://D:/jdK/lib/jconsole.jar!/" />
+          <root url="jar://D:/Program Files/Java/jdk1.8.0_162/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -32,7 +32,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar://D:/jdK/lib/tools.jar!/" />
+          <root url="jar://D:/Program Files/Java/jdk1.8.0_162/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -72,6 +72,8 @@
     <orderEntry type="module" module-name="ctldomain" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.3.14.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.14.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:4.2.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hbase:hbase-client:0.96.2-hadoop2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hbase:hbase-common:0.96.2-hadoop2" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
@@ -126,7 +128,7 @@
     <orderEntry type="module-library">
       <library name="Maven: jdk.tools:jdk.tools:1.6">
         <CLASSES>
-          <root url="jar://D:/jdK/lib/tools.jar!/" />
+          <root url="jar://D:/Program Files/Java/jdk1.8.0_162/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

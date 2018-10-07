@@ -47,7 +47,7 @@ public class BaseController {
     @ExceptionHandler
     @ResponseBody
     public String caughtException(RuntimeException exception) {
-        JsonResult jsonResult = JsonResult.FAILURE;
+        JsonResult jsonResult = JsonResult.getFAILURE();
         jsonResult.setMsg(exception.getMessage());
         return toJson(jsonResult);
     }
