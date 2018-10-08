@@ -63,7 +63,7 @@ public class InstitutionRequest {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "机构名称不可为空")
     private String institutionName;
 
     private Date createTime;
