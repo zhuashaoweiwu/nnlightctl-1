@@ -13,6 +13,8 @@ public class Lighting implements Serializable {
 
     private String uid;
 
+    private String lightingCode;
+
     private String realtimeUid;
 
     private Date manufacture;
@@ -83,6 +85,14 @@ public class Lighting implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getLightingCode() {
+        return lightingCode;
+    }
+
+    public void setLightingCode(String lightingCode) {
+        this.lightingCode = lightingCode == null ? null : lightingCode.trim();
     }
 
     public String getRealtimeUid() {
@@ -253,6 +263,7 @@ public class Lighting implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getLightingCode() == null ? other.getLightingCode() == null : this.getLightingCode().equals(other.getLightingCode()))
             && (this.getRealtimeUid() == null ? other.getRealtimeUid() == null : this.getRealtimeUid().equals(other.getRealtimeUid()))
             && (this.getManufacture() == null ? other.getManufacture() == null : this.getManufacture().equals(other.getManufacture()))
             && (this.getUseDate() == null ? other.getUseDate() == null : this.getUseDate().equals(other.getUseDate()))
@@ -282,6 +293,7 @@ public class Lighting implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getLightingCode() == null) ? 0 : getLightingCode().hashCode());
         result = prime * result + ((getRealtimeUid() == null) ? 0 : getRealtimeUid().hashCode());
         result = prime * result + ((getManufacture() == null) ? 0 : getManufacture().hashCode());
         result = prime * result + ((getUseDate() == null) ? 0 : getUseDate().hashCode());
@@ -314,6 +326,7 @@ public class Lighting implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", lightingCode=").append(lightingCode);
         sb.append(", realtimeUid=").append(realtimeUid);
         sb.append(", manufacture=").append(manufacture);
         sb.append(", useDate=").append(useDate);

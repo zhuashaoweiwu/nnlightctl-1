@@ -14,6 +14,8 @@ public class ProjectProvince implements Serializable {
 
     private String provinceName;
 
+    private Long nnlightctlProjectCountryId;
+
     private String mem;
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +60,14 @@ public class ProjectProvince implements Serializable {
         this.provinceName = provinceName == null ? null : provinceName.trim();
     }
 
+    public Long getNnlightctlProjectCountryId() {
+        return nnlightctlProjectCountryId;
+    }
+
+    public void setNnlightctlProjectCountryId(Long nnlightctlProjectCountryId) {
+        this.nnlightctlProjectCountryId = nnlightctlProjectCountryId;
+    }
+
     public String getMem() {
         return mem;
     }
@@ -83,6 +93,7 @@ public class ProjectProvince implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
             && (this.getProvinceName() == null ? other.getProvinceName() == null : this.getProvinceName().equals(other.getProvinceName()))
+            && (this.getNnlightctlProjectCountryId() == null ? other.getNnlightctlProjectCountryId() == null : this.getNnlightctlProjectCountryId().equals(other.getNnlightctlProjectCountryId()))
             && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
     }
 
@@ -95,6 +106,7 @@ public class ProjectProvince implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getCodeNumber() == null) ? 0 : getCodeNumber().hashCode());
         result = prime * result + ((getProvinceName() == null) ? 0 : getProvinceName().hashCode());
+        result = prime * result + ((getNnlightctlProjectCountryId() == null) ? 0 : getNnlightctlProjectCountryId().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
         return result;
     }
@@ -110,6 +122,7 @@ public class ProjectProvince implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", codeNumber=").append(codeNumber);
         sb.append(", provinceName=").append(provinceName);
+        sb.append(", nnlightctlProjectCountryId=").append(nnlightctlProjectCountryId);
         sb.append(", mem=").append(mem);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

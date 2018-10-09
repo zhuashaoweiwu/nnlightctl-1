@@ -9,6 +9,7 @@
     <result column="terminal" property="terminal" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="alarm_history_channel" property="alarmHistoryChannel" jdbcType="VARCHAR" />
+    <result column="record_time" property="recordTime" jdbcType="TIMESTAMP" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, nnlightctl_alarm_id, terminal, address, alarm_history_channel, 
-    mem
+    record_time, mem
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.AlarmHistoryExample" >
     select
@@ -110,10 +111,10 @@
     </selectKey>
     insert into nnlightctl_alarm_history (gmt_created, gmt_updated, nnlightctl_alarm_id, 
       terminal, address, alarm_history_channel, 
-      mem)
+      record_time, mem)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{nnlightctlAlarmId,jdbcType=BIGINT}, 
       #{terminal,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{alarmHistoryChannel,jdbcType=VARCHAR}, 
-      #{mem,jdbcType=VARCHAR})
+      #{recordTime,jdbcType=TIMESTAMP}, #{mem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.AlarmHistory" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -139,6 +140,9 @@
       <if test="alarmHistoryChannel != null" >
         alarm_history_channel,
       </if>
+      <if test="recordTime != null" >
+        record_time,
+      </if>
       <if test="mem != null" >
         mem,
       </if>
@@ -161,6 +165,9 @@
       </if>
       <if test="alarmHistoryChannel != null" >
         #{alarmHistoryChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null" >
+        #{recordTime,jdbcType=TIMESTAMP},
       </if>
       <if test="mem != null" >
         #{mem,jdbcType=VARCHAR},
@@ -197,6 +204,9 @@
       <if test="record.alarmHistoryChannel != null" >
         alarm_history_channel = #{record.alarmHistoryChannel,jdbcType=VARCHAR},
       </if>
+      <if test="record.recordTime != null" >
+        record_time = #{record.recordTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.mem != null" >
         mem = #{record.mem,jdbcType=VARCHAR},
       </if>
@@ -214,6 +224,7 @@
       terminal = #{record.terminal,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       alarm_history_channel = #{record.alarmHistoryChannel,jdbcType=VARCHAR},
+      record_time = #{record.recordTime,jdbcType=TIMESTAMP},
       mem = #{record.mem,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,6 +251,9 @@
       <if test="alarmHistoryChannel != null" >
         alarm_history_channel = #{alarmHistoryChannel,jdbcType=VARCHAR},
       </if>
+      <if test="recordTime != null" >
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="mem != null" >
         mem = #{mem,jdbcType=VARCHAR},
       </if>
@@ -254,6 +268,7 @@
       terminal = #{terminal,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       alarm_history_channel = #{alarmHistoryChannel,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=TIMESTAMP},
       mem = #{mem,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

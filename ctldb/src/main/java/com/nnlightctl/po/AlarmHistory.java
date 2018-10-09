@@ -18,6 +18,8 @@ public class AlarmHistory implements Serializable {
 
     private String alarmHistoryChannel;
 
+    private Date recordTime;
+
     private String mem;
 
     private static final long serialVersionUID = 1L;
@@ -78,6 +80,14 @@ public class AlarmHistory implements Serializable {
         this.alarmHistoryChannel = alarmHistoryChannel == null ? null : alarmHistoryChannel.trim();
     }
 
+    public Date getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
+    }
+
     public String getMem() {
         return mem;
     }
@@ -105,6 +115,7 @@ public class AlarmHistory implements Serializable {
             && (this.getTerminal() == null ? other.getTerminal() == null : this.getTerminal().equals(other.getTerminal()))
             && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
             && (this.getAlarmHistoryChannel() == null ? other.getAlarmHistoryChannel() == null : this.getAlarmHistoryChannel().equals(other.getAlarmHistoryChannel()))
+            && (this.getRecordTime() == null ? other.getRecordTime() == null : this.getRecordTime().equals(other.getRecordTime()))
             && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
     }
 
@@ -119,6 +130,7 @@ public class AlarmHistory implements Serializable {
         result = prime * result + ((getTerminal() == null) ? 0 : getTerminal().hashCode());
         result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
         result = prime * result + ((getAlarmHistoryChannel() == null) ? 0 : getAlarmHistoryChannel().hashCode());
+        result = prime * result + ((getRecordTime() == null) ? 0 : getRecordTime().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
         return result;
     }
@@ -136,6 +148,7 @@ public class AlarmHistory implements Serializable {
         sb.append(", terminal=").append(terminal);
         sb.append(", address=").append(address);
         sb.append(", alarmHistoryChannel=").append(alarmHistoryChannel);
+        sb.append(", recordTime=").append(recordTime);
         sb.append(", mem=").append(mem);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

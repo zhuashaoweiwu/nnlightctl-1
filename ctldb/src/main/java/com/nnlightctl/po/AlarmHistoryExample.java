@@ -555,6 +555,66 @@ public class AlarmHistoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andRecordTimeIsNull() {
+            addCriterion("record_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeIsNotNull() {
+            addCriterion("record_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeEqualTo(Date value) {
+            addCriterion("record_time =", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeNotEqualTo(Date value) {
+            addCriterion("record_time <>", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeGreaterThan(Date value) {
+            addCriterion("record_time >", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("record_time >=", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeLessThan(Date value) {
+            addCriterion("record_time <", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeLessThanOrEqualTo(Date value) {
+            addCriterion("record_time <=", value, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeIn(List<Date> values) {
+            addCriterion("record_time in", values, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeNotIn(List<Date> values) {
+            addCriterion("record_time not in", values, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeBetween(Date value1, Date value2) {
+            addCriterion("record_time between", value1, value2, "recordTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordTimeNotBetween(Date value1, Date value2) {
+            addCriterion("record_time not between", value1, value2, "recordTime");
+            return (Criteria) this;
+        }
+
         public Criteria andMemIsNull() {
             addCriterion("mem is null");
             return (Criteria) this;

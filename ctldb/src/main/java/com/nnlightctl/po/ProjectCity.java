@@ -20,6 +20,8 @@ public class ProjectCity implements Serializable {
 
     private String timeZone;
 
+    private Long nnlightctlProjectProvinceId;
+
     private String mem;
 
     private static final long serialVersionUID = 1L;
@@ -88,6 +90,14 @@ public class ProjectCity implements Serializable {
         this.timeZone = timeZone == null ? null : timeZone.trim();
     }
 
+    public Long getNnlightctlProjectProvinceId() {
+        return nnlightctlProjectProvinceId;
+    }
+
+    public void setNnlightctlProjectProvinceId(Long nnlightctlProjectProvinceId) {
+        this.nnlightctlProjectProvinceId = nnlightctlProjectProvinceId;
+    }
+
     public String getMem() {
         return mem;
     }
@@ -116,6 +126,7 @@ public class ProjectCity implements Serializable {
             && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
             && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
             && (this.getTimeZone() == null ? other.getTimeZone() == null : this.getTimeZone().equals(other.getTimeZone()))
+            && (this.getNnlightctlProjectProvinceId() == null ? other.getNnlightctlProjectProvinceId() == null : this.getNnlightctlProjectProvinceId().equals(other.getNnlightctlProjectProvinceId()))
             && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
     }
 
@@ -131,6 +142,7 @@ public class ProjectCity implements Serializable {
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
         result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getTimeZone() == null) ? 0 : getTimeZone().hashCode());
+        result = prime * result + ((getNnlightctlProjectProvinceId() == null) ? 0 : getNnlightctlProjectProvinceId().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
         return result;
     }
@@ -149,6 +161,7 @@ public class ProjectCity implements Serializable {
         sb.append(", longitude=").append(longitude);
         sb.append(", latitude=").append(latitude);
         sb.append(", timeZone=").append(timeZone);
+        sb.append(", nnlightctlProjectProvinceId=").append(nnlightctlProjectProvinceId);
         sb.append(", mem=").append(mem);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

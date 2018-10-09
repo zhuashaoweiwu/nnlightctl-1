@@ -7,6 +7,7 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
     <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="nnlightctl_project_country_id" property="nnlightctlProjectCountryId" jdbcType="BIGINT" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, code_number, province_name, mem
+    id, gmt_created, gmt_updated, code_number, province_name, nnlightctl_project_country_id, 
+    mem
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.ProjectProvinceExample" >
     select
@@ -106,9 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_project_province (gmt_created, gmt_updated, code_number, 
-      province_name, mem)
+      province_name, nnlightctl_project_country_id, 
+      mem)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
-      #{provinceName,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR})
+      #{provinceName,jdbcType=VARCHAR}, #{nnlightctlProjectCountryId,jdbcType=BIGINT}, 
+      #{mem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.ProjectProvince" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -128,6 +132,9 @@
       <if test="provinceName != null" >
         province_name,
       </if>
+      <if test="nnlightctlProjectCountryId != null" >
+        nnlightctl_project_country_id,
+      </if>
       <if test="mem != null" >
         mem,
       </if>
@@ -144,6 +151,9 @@
       </if>
       <if test="provinceName != null" >
         #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlProjectCountryId != null" >
+        #{nnlightctlProjectCountryId,jdbcType=BIGINT},
       </if>
       <if test="mem != null" >
         #{mem,jdbcType=VARCHAR},
@@ -174,6 +184,9 @@
       <if test="record.provinceName != null" >
         province_name = #{record.provinceName,jdbcType=VARCHAR},
       </if>
+      <if test="record.nnlightctlProjectCountryId != null" >
+        nnlightctl_project_country_id = #{record.nnlightctlProjectCountryId,jdbcType=BIGINT},
+      </if>
       <if test="record.mem != null" >
         mem = #{record.mem,jdbcType=VARCHAR},
       </if>
@@ -189,6 +202,7 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       code_number = #{record.codeNumber,jdbcType=VARCHAR},
       province_name = #{record.provinceName,jdbcType=VARCHAR},
+      nnlightctl_project_country_id = #{record.nnlightctlProjectCountryId,jdbcType=BIGINT},
       mem = #{record.mem,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,6 +223,9 @@
       <if test="provinceName != null" >
         province_name = #{provinceName,jdbcType=VARCHAR},
       </if>
+      <if test="nnlightctlProjectCountryId != null" >
+        nnlightctl_project_country_id = #{nnlightctlProjectCountryId,jdbcType=BIGINT},
+      </if>
       <if test="mem != null" >
         mem = #{mem,jdbcType=VARCHAR},
       </if>
@@ -221,6 +238,7 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       code_number = #{codeNumber,jdbcType=VARCHAR},
       province_name = #{provinceName,jdbcType=VARCHAR},
+      nnlightctl_project_country_id = #{nnlightctlProjectCountryId,jdbcType=BIGINT},
       mem = #{mem,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

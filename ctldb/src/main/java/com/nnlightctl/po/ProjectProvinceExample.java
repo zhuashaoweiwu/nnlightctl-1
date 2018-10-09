@@ -425,6 +425,66 @@ public class ProjectProvinceExample {
             return (Criteria) this;
         }
 
+        public Criteria andNnlightctlProjectCountryIdIsNull() {
+            addCriterion("nnlightctl_project_country_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdIsNotNull() {
+            addCriterion("nnlightctl_project_country_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdEqualTo(Long value) {
+            addCriterion("nnlightctl_project_country_id =", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdNotEqualTo(Long value) {
+            addCriterion("nnlightctl_project_country_id <>", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdGreaterThan(Long value) {
+            addCriterion("nnlightctl_project_country_id >", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_project_country_id >=", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdLessThan(Long value) {
+            addCriterion("nnlightctl_project_country_id <", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdLessThanOrEqualTo(Long value) {
+            addCriterion("nnlightctl_project_country_id <=", value, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdIn(List<Long> values) {
+            addCriterion("nnlightctl_project_country_id in", values, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdNotIn(List<Long> values) {
+            addCriterion("nnlightctl_project_country_id not in", values, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_project_country_id between", value1, value2, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNnlightctlProjectCountryIdNotBetween(Long value1, Long value2) {
+            addCriterion("nnlightctl_project_country_id not between", value1, value2, "nnlightctlProjectCountryId");
+            return (Criteria) this;
+        }
+
         public Criteria andMemIsNull() {
             addCriterion("mem is null");
             return (Criteria) this;

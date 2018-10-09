@@ -6,6 +6,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="model_code" property="modelCode" jdbcType="VARCHAR" />
     <result column="model_name" property="modelName" jdbcType="VARCHAR" />
     <result column="power_rating" property="powerRating" jdbcType="DECIMAL" />
     <result column="electric_rating" property="electricRating" jdbcType="DECIMAL" />
@@ -76,8 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, model_name, power_rating, electric_rating, voltage_rating, 
-    air_switch_type, contactor_type, loop_count, nnlightctl_elebox_id, ac, loop_electricity
+    id, gmt_created, gmt_updated, uid, model_code, model_name, power_rating, electric_rating, 
+    voltage_rating, air_switch_type, contactor_type, loop_count, nnlightctl_elebox_id, 
+    ac, loop_electricity
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxModelExample" >
     select
@@ -115,15 +117,15 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_elebox_model (gmt_created, gmt_updated, uid, 
-      model_name, power_rating, electric_rating, 
-      voltage_rating, air_switch_type, contactor_type, 
-      loop_count, nnlightctl_elebox_id, ac, 
-      loop_electricity)
+      model_code, model_name, power_rating, 
+      electric_rating, voltage_rating, air_switch_type, 
+      contactor_type, loop_count, nnlightctl_elebox_id, 
+      ac, loop_electricity)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{modelName,jdbcType=VARCHAR}, #{powerRating,jdbcType=DECIMAL}, #{electricRating,jdbcType=DECIMAL}, 
-      #{voltageRating,jdbcType=DECIMAL}, #{airSwitchType,jdbcType=VARCHAR}, #{contactorType,jdbcType=VARCHAR}, 
-      #{loopCount,jdbcType=TINYINT}, #{nnlightctlEleboxId,jdbcType=BIGINT}, #{ac,jdbcType=VARCHAR}, 
-      #{loopElectricity,jdbcType=DECIMAL})
+      #{modelCode,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, #{powerRating,jdbcType=DECIMAL}, 
+      #{electricRating,jdbcType=DECIMAL}, #{voltageRating,jdbcType=DECIMAL}, #{airSwitchType,jdbcType=VARCHAR}, 
+      #{contactorType,jdbcType=VARCHAR}, #{loopCount,jdbcType=TINYINT}, #{nnlightctlEleboxId,jdbcType=BIGINT}, 
+      #{ac,jdbcType=VARCHAR}, #{loopElectricity,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.EleboxModel" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -139,6 +141,9 @@
       </if>
       <if test="uid != null" >
         uid,
+      </if>
+      <if test="modelCode != null" >
+        model_code,
       </if>
       <if test="modelName != null" >
         model_name,
@@ -180,6 +185,9 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null" >
+        #{modelCode,jdbcType=VARCHAR},
       </if>
       <if test="modelName != null" >
         #{modelName,jdbcType=VARCHAR},
@@ -234,6 +242,9 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=VARCHAR},
       </if>
+      <if test="record.modelCode != null" >
+        model_code = #{record.modelCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.modelName != null" >
         model_name = #{record.modelName,jdbcType=VARCHAR},
       </if>
@@ -275,6 +286,7 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
+      model_code = #{record.modelCode,jdbcType=VARCHAR},
       model_name = #{record.modelName,jdbcType=VARCHAR},
       power_rating = #{record.powerRating,jdbcType=DECIMAL},
       electric_rating = #{record.electricRating,jdbcType=DECIMAL},
@@ -300,6 +312,9 @@
       </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null" >
+        model_code = #{modelCode,jdbcType=VARCHAR},
       </if>
       <if test="modelName != null" >
         model_name = #{modelName,jdbcType=VARCHAR},
@@ -339,6 +354,7 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
+      model_code = #{modelCode,jdbcType=VARCHAR},
       model_name = #{modelName,jdbcType=VARCHAR},
       power_rating = #{powerRating,jdbcType=DECIMAL},
       electric_rating = #{electricRating,jdbcType=DECIMAL},

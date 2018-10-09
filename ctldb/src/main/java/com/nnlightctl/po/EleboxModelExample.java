@@ -356,6 +356,76 @@ public class EleboxModelExample {
             return (Criteria) this;
         }
 
+        public Criteria andModelCodeIsNull() {
+            addCriterion("model_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeIsNotNull() {
+            addCriterion("model_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeEqualTo(String value) {
+            addCriterion("model_code =", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeNotEqualTo(String value) {
+            addCriterion("model_code <>", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeGreaterThan(String value) {
+            addCriterion("model_code >", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("model_code >=", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeLessThan(String value) {
+            addCriterion("model_code <", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeLessThanOrEqualTo(String value) {
+            addCriterion("model_code <=", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeLike(String value) {
+            addCriterion("model_code like", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeNotLike(String value) {
+            addCriterion("model_code not like", value, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeIn(List<String> values) {
+            addCriterion("model_code in", values, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeNotIn(List<String> values) {
+            addCriterion("model_code not in", values, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeBetween(String value1, String value2) {
+            addCriterion("model_code between", value1, value2, "modelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelCodeNotBetween(String value1, String value2) {
+            addCriterion("model_code not between", value1, value2, "modelCode");
+            return (Criteria) this;
+        }
+
         public Criteria andModelNameIsNull() {
             addCriterion("model_name is null");
             return (Criteria) this;

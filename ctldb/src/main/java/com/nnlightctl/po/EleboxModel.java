@@ -13,6 +13,8 @@ public class EleboxModel implements Serializable {
 
     private String uid;
 
+    private String modelCode;
+
     private String modelName;
 
     private BigDecimal powerRating;
@@ -65,6 +67,14 @@ public class EleboxModel implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode == null ? null : modelCode.trim();
     }
 
     public String getModelName() {
@@ -163,6 +173,7 @@ public class EleboxModel implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getModelCode() == null ? other.getModelCode() == null : this.getModelCode().equals(other.getModelCode()))
             && (this.getModelName() == null ? other.getModelName() == null : this.getModelName().equals(other.getModelName()))
             && (this.getPowerRating() == null ? other.getPowerRating() == null : this.getPowerRating().equals(other.getPowerRating()))
             && (this.getElectricRating() == null ? other.getElectricRating() == null : this.getElectricRating().equals(other.getElectricRating()))
@@ -183,6 +194,7 @@ public class EleboxModel implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getModelCode() == null) ? 0 : getModelCode().hashCode());
         result = prime * result + ((getModelName() == null) ? 0 : getModelName().hashCode());
         result = prime * result + ((getPowerRating() == null) ? 0 : getPowerRating().hashCode());
         result = prime * result + ((getElectricRating() == null) ? 0 : getElectricRating().hashCode());
@@ -206,6 +218,7 @@ public class EleboxModel implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", modelCode=").append(modelCode);
         sb.append(", modelName=").append(modelName);
         sb.append(", powerRating=").append(powerRating);
         sb.append(", electricRating=").append(electricRating);

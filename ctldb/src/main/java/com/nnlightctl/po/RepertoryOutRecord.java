@@ -16,6 +16,8 @@ public class RepertoryOutRecord implements Serializable {
 
     private Long nnlightctlMaterialId;
 
+    private Long outCounte;
+
     private Long nnlightctlRepertoryId;
 
     private Long nnlightctlUserId;
@@ -70,6 +72,14 @@ public class RepertoryOutRecord implements Serializable {
         this.nnlightctlMaterialId = nnlightctlMaterialId;
     }
 
+    public Long getOutCounte() {
+        return outCounte;
+    }
+
+    public void setOutCounte(Long outCounte) {
+        this.outCounte = outCounte;
+    }
+
     public Long getNnlightctlRepertoryId() {
         return nnlightctlRepertoryId;
     }
@@ -104,6 +114,7 @@ public class RepertoryOutRecord implements Serializable {
             && (this.getSerialnumber() == null ? other.getSerialnumber() == null : this.getSerialnumber().equals(other.getSerialnumber()))
             && (this.getOutRepertoryDate() == null ? other.getOutRepertoryDate() == null : this.getOutRepertoryDate().equals(other.getOutRepertoryDate()))
             && (this.getNnlightctlMaterialId() == null ? other.getNnlightctlMaterialId() == null : this.getNnlightctlMaterialId().equals(other.getNnlightctlMaterialId()))
+            && (this.getOutCounte() == null ? other.getOutCounte() == null : this.getOutCounte().equals(other.getOutCounte()))
             && (this.getNnlightctlRepertoryId() == null ? other.getNnlightctlRepertoryId() == null : this.getNnlightctlRepertoryId().equals(other.getNnlightctlRepertoryId()))
             && (this.getNnlightctlUserId() == null ? other.getNnlightctlUserId() == null : this.getNnlightctlUserId().equals(other.getNnlightctlUserId()));
     }
@@ -118,6 +129,7 @@ public class RepertoryOutRecord implements Serializable {
         result = prime * result + ((getSerialnumber() == null) ? 0 : getSerialnumber().hashCode());
         result = prime * result + ((getOutRepertoryDate() == null) ? 0 : getOutRepertoryDate().hashCode());
         result = prime * result + ((getNnlightctlMaterialId() == null) ? 0 : getNnlightctlMaterialId().hashCode());
+        result = prime * result + ((getOutCounte() == null) ? 0 : getOutCounte().hashCode());
         result = prime * result + ((getNnlightctlRepertoryId() == null) ? 0 : getNnlightctlRepertoryId().hashCode());
         result = prime * result + ((getNnlightctlUserId() == null) ? 0 : getNnlightctlUserId().hashCode());
         return result;
@@ -135,6 +147,7 @@ public class RepertoryOutRecord implements Serializable {
         sb.append(", serialnumber=").append(serialnumber);
         sb.append(", outRepertoryDate=").append(outRepertoryDate);
         sb.append(", nnlightctlMaterialId=").append(nnlightctlMaterialId);
+        sb.append(", outCounte=").append(outCounte);
         sb.append(", nnlightctlRepertoryId=").append(nnlightctlRepertoryId);
         sb.append(", nnlightctlUserId=").append(nnlightctlUserId);
         sb.append(", serialVersionUID=").append(serialVersionUID);

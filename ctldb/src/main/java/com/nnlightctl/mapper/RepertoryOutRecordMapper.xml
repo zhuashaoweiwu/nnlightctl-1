@@ -8,6 +8,7 @@
     <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
     <result column="out_repertory_date" property="outRepertoryDate" jdbcType="TIMESTAMP" />
     <result column="nnlightctl_material_id" property="nnlightctlMaterialId" jdbcType="BIGINT" />
+    <result column="out_counte" property="outCounte" jdbcType="BIGINT" />
     <result column="nnlightctl_repertory_id" property="nnlightctlRepertoryId" jdbcType="BIGINT" />
     <result column="nnlightctl_user_id" property="nnlightctlUserId" jdbcType="BIGINT" />
   </resultMap>
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, serialnumber, out_repertory_date, nnlightctl_material_id, 
-    nnlightctl_repertory_id, nnlightctl_user_id
+    out_counte, nnlightctl_repertory_id, nnlightctl_user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RepertoryOutRecordExample" >
     select
@@ -110,10 +111,12 @@
     </selectKey>
     insert into nnlightctl_repertory_out_record (gmt_created, gmt_updated, serialnumber, 
       out_repertory_date, nnlightctl_material_id, 
-      nnlightctl_repertory_id, nnlightctl_user_id)
+      out_counte, nnlightctl_repertory_id, nnlightctl_user_id
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialnumber,jdbcType=VARCHAR}, 
       #{outRepertoryDate,jdbcType=TIMESTAMP}, #{nnlightctlMaterialId,jdbcType=BIGINT}, 
-      #{nnlightctlRepertoryId,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT})
+      #{outCounte,jdbcType=BIGINT}, #{nnlightctlRepertoryId,jdbcType=BIGINT}, #{nnlightctlUserId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.RepertoryOutRecord" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -135,6 +138,9 @@
       </if>
       <if test="nnlightctlMaterialId != null" >
         nnlightctl_material_id,
+      </if>
+      <if test="outCounte != null" >
+        out_counte,
       </if>
       <if test="nnlightctlRepertoryId != null" >
         nnlightctl_repertory_id,
@@ -158,6 +164,9 @@
       </if>
       <if test="nnlightctlMaterialId != null" >
         #{nnlightctlMaterialId,jdbcType=BIGINT},
+      </if>
+      <if test="outCounte != null" >
+        #{outCounte,jdbcType=BIGINT},
       </if>
       <if test="nnlightctlRepertoryId != null" >
         #{nnlightctlRepertoryId,jdbcType=BIGINT},
@@ -194,6 +203,9 @@
       <if test="record.nnlightctlMaterialId != null" >
         nnlightctl_material_id = #{record.nnlightctlMaterialId,jdbcType=BIGINT},
       </if>
+      <if test="record.outCounte != null" >
+        out_counte = #{record.outCounte,jdbcType=BIGINT},
+      </if>
       <if test="record.nnlightctlRepertoryId != null" >
         nnlightctl_repertory_id = #{record.nnlightctlRepertoryId,jdbcType=BIGINT},
       </if>
@@ -213,6 +225,7 @@
       serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
       out_repertory_date = #{record.outRepertoryDate,jdbcType=TIMESTAMP},
       nnlightctl_material_id = #{record.nnlightctlMaterialId,jdbcType=BIGINT},
+      out_counte = #{record.outCounte,jdbcType=BIGINT},
       nnlightctl_repertory_id = #{record.nnlightctlRepertoryId,jdbcType=BIGINT},
       nnlightctl_user_id = #{record.nnlightctlUserId,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -237,6 +250,9 @@
       <if test="nnlightctlMaterialId != null" >
         nnlightctl_material_id = #{nnlightctlMaterialId,jdbcType=BIGINT},
       </if>
+      <if test="outCounte != null" >
+        out_counte = #{outCounte,jdbcType=BIGINT},
+      </if>
       <if test="nnlightctlRepertoryId != null" >
         nnlightctl_repertory_id = #{nnlightctlRepertoryId,jdbcType=BIGINT},
       </if>
@@ -253,6 +269,7 @@
       serialnumber = #{serialnumber,jdbcType=VARCHAR},
       out_repertory_date = #{outRepertoryDate,jdbcType=TIMESTAMP},
       nnlightctl_material_id = #{nnlightctlMaterialId,jdbcType=BIGINT},
+      out_counte = #{outCounte,jdbcType=BIGINT},
       nnlightctl_repertory_id = #{nnlightctlRepertoryId,jdbcType=BIGINT},
       nnlightctl_user_id = #{nnlightctlUserId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

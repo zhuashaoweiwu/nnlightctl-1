@@ -10,6 +10,7 @@
     <result column="longitude" property="longitude" jdbcType="VARCHAR" />
     <result column="latitude" property="latitude" jdbcType="VARCHAR" />
     <result column="time_zone" property="timeZone" jdbcType="VARCHAR" />
+    <result column="nnlightctl_project_province_id" property="nnlightctlProjectProvinceId" jdbcType="BIGINT" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, code_number, city_name, longitude, latitude, time_zone, 
-    mem
+    nnlightctl_project_province_id, mem
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.ProjectCityExample" >
     select
@@ -111,10 +112,12 @@
     </selectKey>
     insert into nnlightctl_project_city (gmt_created, gmt_updated, code_number, 
       city_name, longitude, latitude, 
-      time_zone, mem)
+      time_zone, nnlightctl_project_province_id, mem
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
       #{cityName,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
-      #{timeZone,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR})
+      #{timeZone,jdbcType=VARCHAR}, #{nnlightctlProjectProvinceId,jdbcType=BIGINT}, #{mem,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.ProjectCity" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -143,6 +146,9 @@
       <if test="timeZone != null" >
         time_zone,
       </if>
+      <if test="nnlightctlProjectProvinceId != null" >
+        nnlightctl_project_province_id,
+      </if>
       <if test="mem != null" >
         mem,
       </if>
@@ -168,6 +174,9 @@
       </if>
       <if test="timeZone != null" >
         #{timeZone,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlProjectProvinceId != null" >
+        #{nnlightctlProjectProvinceId,jdbcType=BIGINT},
       </if>
       <if test="mem != null" >
         #{mem,jdbcType=VARCHAR},
@@ -207,6 +216,9 @@
       <if test="record.timeZone != null" >
         time_zone = #{record.timeZone,jdbcType=VARCHAR},
       </if>
+      <if test="record.nnlightctlProjectProvinceId != null" >
+        nnlightctl_project_province_id = #{record.nnlightctlProjectProvinceId,jdbcType=BIGINT},
+      </if>
       <if test="record.mem != null" >
         mem = #{record.mem,jdbcType=VARCHAR},
       </if>
@@ -225,6 +237,7 @@
       longitude = #{record.longitude,jdbcType=VARCHAR},
       latitude = #{record.latitude,jdbcType=VARCHAR},
       time_zone = #{record.timeZone,jdbcType=VARCHAR},
+      nnlightctl_project_province_id = #{record.nnlightctlProjectProvinceId,jdbcType=BIGINT},
       mem = #{record.mem,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -254,6 +267,9 @@
       <if test="timeZone != null" >
         time_zone = #{timeZone,jdbcType=VARCHAR},
       </if>
+      <if test="nnlightctlProjectProvinceId != null" >
+        nnlightctl_project_province_id = #{nnlightctlProjectProvinceId,jdbcType=BIGINT},
+      </if>
       <if test="mem != null" >
         mem = #{mem,jdbcType=VARCHAR},
       </if>
@@ -269,6 +285,7 @@
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
       time_zone = #{timeZone,jdbcType=VARCHAR},
+      nnlightctl_project_province_id = #{nnlightctlProjectProvinceId,jdbcType=BIGINT},
       mem = #{mem,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
