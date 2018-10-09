@@ -3,7 +3,7 @@ package com.nnlightctl.request;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LightGroupRequest {
+public class LightGroupRequest extends BaseRequest{
     public String getcGroupName() {
         return cGroupName;
     }

@@ -20,9 +20,12 @@ import com.nnlightctl.vo.ProjectView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +48,21 @@ public class ProjectController extends BaseController {
     private ProjectServer projectServer;
 
     @RequestMapping(value = "addorupdatecountry")
-    public String addOrUpdateCountry(ProjectCountryRequest request) {
+    public String addOrUpdateCountry(@Valid ProjectCountryRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/project/addorupdatecountry");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = projectCountryServer.addOrUpdateCountry(request);
         if (ret > 0) {
@@ -105,8 +121,21 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping("addorupdateProvince")
-    public String addOrUpdateProvince(ProjectProvinceRequest request) {
+    public String addOrUpdateProvince(@Valid ProjectProvinceRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/project/addorupdateProvince");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = projectProvinceServer.addOrUpdateProvince(request);
         if (ret > 0) {
@@ -142,8 +171,22 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping("addorupdatecity")
-    public String addOrUpdatedCity(ProjectCityRequest request) {
+    public String addOrUpdatedCity(@Valid ProjectCityRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/project/addorupdatecity");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
 
         int ret = projectCityServer.addOrUpdateCity(request);
         if (ret > 0) {
@@ -154,7 +197,7 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping("listproject")
-    public String listProject(BaseRequest request) {
+    public String listProject(ProjectRequest request) {
         logger.info("[POST] /api/project/listproject");
 
         Tuple.TwoTuple<List<ProjectView>, Integer> result = projectServer.listProject(request);
@@ -180,8 +223,21 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping("addproject")
-    public String addProject(ProjectRequest request) {
+    public String addProject(@Valid ProjectRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/project/addproject");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = projectServer.insertProject(request);
 

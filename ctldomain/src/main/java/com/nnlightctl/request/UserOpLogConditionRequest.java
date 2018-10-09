@@ -35,8 +35,17 @@ public class UserOpLogConditionRequest extends BaseRequest {
         this.content = content;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     private Integer operationType;
     private Date startDate;
     private Date endDate;
     private String content;
+    private Integer userId;
 }

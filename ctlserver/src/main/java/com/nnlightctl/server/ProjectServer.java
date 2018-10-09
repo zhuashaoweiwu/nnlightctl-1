@@ -10,7 +10,7 @@ import com.nnlightctl.vo.ProjectView;
 import java.util.List;
 
 public interface ProjectServer {
-    Tuple.TwoTuple<List<ProjectView>, Integer> listProject(BaseRequest request);
+    Tuple.TwoTuple<List<ProjectView>, Integer> listProject(ProjectRequest request);
     Project getProject(ProjectConditionRequest request);
     int insertProject(ProjectRequest request);
     int updateProject(ProjectRequest request);

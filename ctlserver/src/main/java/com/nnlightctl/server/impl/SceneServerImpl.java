@@ -69,10 +69,13 @@ public class SceneServerImpl implements SceneServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Scene>, Integer> listScene(BaseRequest request) {
+    public Tuple.TwoTuple<List<Scene>, Integer> listScene(SceneRequest request) {
         Tuple.TwoTuple<List<Scene>, Integer> tuple = new Tuple.TwoTuple<>();
 
         SceneExample sceneExample = new SceneExample();
+        if(request.getSceneName() != null){
+            sceneExample.createCriteria().andSceneNameEqualTo(request.getSceneName());
+        }
         sceneExample.setOrderByClause("id DESC");
 
         int total = sceneMapper.countByExample(sceneExample);

@@ -11,7 +11,7 @@ import java.util.List;
 public interface SwitchTaskServer {
     int addOrUpdateSwitchTask(SwitchTaskRequest request);
 
-    Tuple.TwoTuple<List<SwitchTask>, Integer> listSwitchTask(BaseRequest request);
+    Tuple.TwoTuple<List<SwitchTask>, Integer> listSwitchTask(SwitchTaskConditionRequest request);
 
     SwitchTask getSwitchTask(Long id);
 

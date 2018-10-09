@@ -38,7 +38,7 @@ public class ProjectServerImpl implements ProjectServer {
     private EleboxMapper eleboxMapper;
 
     @Override
-    public Tuple.TwoTuple<List<ProjectView>, Integer> listProject(BaseRequest request) {
+    public Tuple.TwoTuple<List<ProjectView>, Integer> listProject(ProjectRequest request) {
         Tuple.TwoTuple<List<ProjectView>, Integer> result = new Tuple.TwoTuple<>();
 
         List<ProjectView> projectViewList = projectDao.listProject(request);

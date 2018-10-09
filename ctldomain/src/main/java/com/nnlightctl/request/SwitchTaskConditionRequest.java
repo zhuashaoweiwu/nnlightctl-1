@@ -11,5 +11,15 @@ public class SwitchTaskConditionRequest extends BaseRequest {
         this.switchTaskIds = switchTaskIds;
     }
 
+    public String getSwitchName() {
+        return switchName;
+    }
+
+    public void setSwitchName(String switchName) {
+        this.switchName = switchName;
+    }
+
     private List<Long> switchTaskIds;
+
+    private String switchName;
 }

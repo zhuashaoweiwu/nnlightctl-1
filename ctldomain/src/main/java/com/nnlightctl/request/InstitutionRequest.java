@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
 
-public class InstitutionRequest {
+public class InstitutionRequest extends BaseRequest{
     public Long getId() {
         return id;
     }

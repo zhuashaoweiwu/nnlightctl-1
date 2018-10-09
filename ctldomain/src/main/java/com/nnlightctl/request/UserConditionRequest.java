@@ -35,6 +35,38 @@ public class UserConditionRequest extends BaseRequest {
         this.userType = userType;
     }
 
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCodeNumber() {
+        return codeNumber;
+    }
+
+    public void setCodeNumber(String codeNumber) {
+        this.codeNumber = codeNumber;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     private Integer userType;
 
     private List<Long> userIds;
@@ -42,4 +74,13 @@ public class UserConditionRequest extends BaseRequest {
     private Long id;
 
     private String newPwd;
+
+    private String loginName;// 按登录名模糊搜索
+
+    private String userName; //按用户名模糊搜索
+
+    private String codeNumber; //按编号模糊搜索
+
+    private String phone; //按手机号模糊搜索
+
 }

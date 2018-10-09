@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
+
 public class SceneShotcutRequest {
     public String getShotcutName() {
         return shotcutName;
@@ -27,6 +29,7 @@ public class SceneShotcutRequest {
 
     private Long id;
 
+    @NotNull(message = "快捷键名称不能为空！")
     private String shotcutName;
 
     private Long nnlightctlSceneId;

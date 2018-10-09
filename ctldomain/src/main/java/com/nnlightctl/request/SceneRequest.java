@@ -1,8 +1,9 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class SceneRequest {
+public class SceneRequest extends BaseRequest{
     public String getSceneName() {
         return sceneName;
     }
@@ -44,7 +45,7 @@ public class SceneRequest {
     }
 
     private Long id;
-
+    @NotNull(message = "场景模式名称不能为空！")
     private String sceneName;
 
     private String sceneDesc;

@@ -40,10 +40,17 @@ public class DepartmentServerImpl implements DepartmentServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Department>, Integer> listDepartment(BaseRequest request) {
+    public Tuple.TwoTuple<List<Department>, Integer> listDepartment(DepartmentRequest request) {
         Tuple.TwoTuple<List<Department>, Integer> tuple = new Tuple.TwoTuple<>();
 
         DepartmentExample departmentExample = new DepartmentExample();
+        DepartmentExample.Criteria criteria = departmentExample.createCriteria();
+        if(request.getAddr()!=null){
+            criteria.andAddrEqualTo(request.getAddr());
+        }
+        if(request.getDepartmentName()!=null){
+            criteria.andDepartmentNameEqualTo(request.getDepartmentName());
+        }
         departmentExample.setOrderByClause("id DESC");
 
         int total = departmentMapper.countByExample(departmentExample);

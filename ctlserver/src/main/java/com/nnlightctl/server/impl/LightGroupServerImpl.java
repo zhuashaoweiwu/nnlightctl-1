@@ -89,11 +89,12 @@ public class LightGroupServerImpl implements LightGroupServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(BaseRequest request) {
+    public Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupRequest request) {
         Tuple.TwoTuple<List<LightGroupView>, Integer> tuple = new Tuple.TwoTuple<>();
         List<LightGroupView> lightGroupViews = new ArrayList<>(8);
 
         LightingGroupExample lightingGroupExample = new LightingGroupExample();
+        lightingGroupExample.createCriteria().andCGroupNameEqualTo(request.getcGroupName());
         int total = this.lightingGroupMapper.countByExample(lightingGroupExample);
         tuple.setSecond(total);
 

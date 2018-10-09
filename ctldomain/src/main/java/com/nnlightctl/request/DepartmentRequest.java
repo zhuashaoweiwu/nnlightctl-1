@@ -1,8 +1,10 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
-public class DepartmentRequest {
+public class DepartmentRequest extends BaseRequest{
     public Long getId() {
         return id;
     }
@@ -69,12 +71,14 @@ public class DepartmentRequest {
 
     private Long id;
 
+    @NotEmpty
     private String departmentName;
 
     private Date createTime;
 
     private String addr;
 
+    @NotEmpty
     private Long nnlightctlInstitutionIdBelong;
 
     private String mem;

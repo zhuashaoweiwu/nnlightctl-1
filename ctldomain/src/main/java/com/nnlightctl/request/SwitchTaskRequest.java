@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class SwitchTaskRequest {
@@ -69,6 +70,7 @@ public class SwitchTaskRequest {
 
     private Long id;
 
+    @NotNull(message = "名称不能为空！")
     private String switchName;
 
     private Date startTime;
@@ -79,6 +81,7 @@ public class SwitchTaskRequest {
 
     private Byte isUsebeam;
 
+    @NotNull(message = "周期不能为空！")
     private Byte period;
 
     private Byte lightPercent;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
+
 public class ProjectCountryRequest {
     public Long getId() {
         return id;
@@ -34,7 +36,9 @@ public class ProjectCountryRequest {
     }
 
     private Long id;
+    @NotNull(message = "国家编码不能为空！")
     private String codeNumber;
+    @NotNull(message = "国家名称不能为空！")
     private String countryName;
     private String mem;
 }

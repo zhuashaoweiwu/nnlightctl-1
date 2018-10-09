@@ -149,15 +149,23 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Elebox>, Integer> listElebox(BaseRequest request) {
+    public Tuple.TwoTuple<List<Elebox>, Integer> listElebox(EleboxRequest request) {
         Tuple.TwoTuple<List<Elebox>, Integer> tuple = new Tuple.TwoTuple<>();
         EleboxExample eleboxExample = new EleboxExample();
-        if (request instanceof EleboxConditionRequest) {
-            Long projectId = ((EleboxConditionRequest)request).getProjectId();
+        EleboxExample.Criteria criteria = eleboxExample.createCriteria();
+        if (request instanceof EleboxRequest) {
+            Long projectId = ((EleboxRequest)request).getNnlightctlProjectId();
             if (projectId != null) {
-                eleboxExample.createCriteria().andNnlightctlProjectIdEqualTo(projectId);
+                criteria.andNnlightctlProjectIdEqualTo(projectId);
             }
         }
+        if (request.getUid() !=null ){
+            criteria.andUidEqualTo(request.getUid());
+        }
+        if (request.getCodeNumber() !=null ){
+            criteria.andCodeNumberEqualTo(request.getCodeNumber());
+        }
+
         int total = eleboxMapper.countByExample(eleboxExample);
         tuple.setSecond(total);
 

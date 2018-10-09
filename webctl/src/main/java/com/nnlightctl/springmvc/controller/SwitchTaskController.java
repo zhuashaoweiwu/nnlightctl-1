@@ -10,9 +10,12 @@ import com.nnlightctl.server.SwitchTaskServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,21 @@ public class SwitchTaskController extends BaseController {
     private SwitchTaskServer switchTaskServer;
 
     @RequestMapping("addOrUpdateSwitchTask")
-    public String addOrUpdateSwitchTask(SwitchTaskRequest request) {
+    public String addOrUpdateSwitchTask(@Valid SwitchTaskRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/switchTask/addOrUpdateSwitchTask");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = this.switchTaskServer.addOrUpdateSwitchTask(request);
         JsonResult jsonResult = null;

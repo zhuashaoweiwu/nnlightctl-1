@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -109,10 +110,13 @@ public class LightRequest {
     }
 
     private Long id;
+    @NotNull(message = "灯具唯一编码不能为空！")
     private String uid;
     private Date manufacture;
     private Date useDate;
+    @NotNull(message = "灯杆不能为空！")
     private String lamppost;
+    @NotNull(message = "灯头号不能为空！")
     private String lamphead;
     private Long nnlightctlLightingModelId;
     private Long nnlightctlLightingGisId;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
+
 public class ProjectCityRequest {
     public Long getId() {
         return id;
@@ -58,7 +60,9 @@ public class ProjectCityRequest {
     }
 
     private Long id;
+    @NotNull(message = "城市编码不呢为空！")
     private String codeNumber;
+    @NotNull(message = "城市名称不能为空！")
     private String cityName;
     private String longitude;
     private String latitude;

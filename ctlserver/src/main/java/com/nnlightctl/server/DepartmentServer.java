@@ -10,7 +10,7 @@ import java.util.List;
 public interface DepartmentServer {
     int addOrUpdateDepartment(DepartmentRequest request);
 
-    Tuple.TwoTuple<List<Department>, Integer> listDepartment(BaseRequest request);
+    Tuple.TwoTuple<List<Department>, Integer> listDepartment(DepartmentRequest request);
 
     Department getDepartment(Long id);
 

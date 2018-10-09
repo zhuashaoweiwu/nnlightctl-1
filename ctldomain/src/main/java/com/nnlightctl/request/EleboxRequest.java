@@ -1,9 +1,10 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class EleboxRequest {
+public class EleboxRequest extends BaseRequest{
     public Long getId() {
         return id;
     }
@@ -132,8 +133,19 @@ public class EleboxRequest {
         this.nnlightctlProjectId = nnlightctlProjectId;
     }
 
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+    private Long projectId;
     private Long id;
+    @NotNull(message = "控制柜uid不能为空！")
     private String uid;
+    @NotNull(message = "控制柜唯一编码不能为空！")
     private String codeNumber;
     private Date manufacture;
     private String longitude;
@@ -148,4 +160,5 @@ public class EleboxRequest {
     private Long nnlightctlEleboxGisId;
     private Long nnlightctlRegionId;
     private Long nnlightctlProjectId;
+
 }

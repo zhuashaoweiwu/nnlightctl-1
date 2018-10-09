@@ -46,10 +46,18 @@ public class InstitutionServerImpl implements InstitutionServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Institution>, Integer> listInstitution(BaseRequest request) {
+    public Tuple.TwoTuple<List<Institution>, Integer> listInstitution(InstitutionRequest request) {
         Tuple.TwoTuple<List<Institution>, Integer> tuple = new Tuple.TwoTuple<>();
 
         InstitutionExample institutionExample = new InstitutionExample();
+        InstitutionExample.Criteria criteria = institutionExample.createCriteria();
+        if (request.getAddr()!=null){
+            criteria.andAddrEqualTo(request.getAddr());
+        }
+        if(request.getInstitutionName()!=null){
+            criteria.andInstitutionNameEqualTo(request.getInstitutionName());
+        }
+
         institutionExample.setOrderByClause("id DESC");
 
         int total = institutionMapper.countByExample(institutionExample);

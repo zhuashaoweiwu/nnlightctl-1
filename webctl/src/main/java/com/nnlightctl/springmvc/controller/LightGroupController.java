@@ -68,7 +68,7 @@ public class LightGroupController extends BaseController {
     }
 
     @RequestMapping("listLightGroup")
-    public String listLightGroup(BaseRequest request) {
+    public String listLightGroup(LightGroupRequest request) {
         logger.info("[POST] /api/lightGroup/listLightGroup");
 
         Tuple.TwoTuple<List<LightGroupView>, Integer> tuple = this.lightGroupServer.listLightGroup(request);

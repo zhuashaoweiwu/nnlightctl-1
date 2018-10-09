@@ -2,8 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Elebox;
-import com.nnlightctl.po.Lighting;
-import com.nnlightctl.request.EleboxConditionRequest;
+import com.nnlightctl.request.EleboxRequest;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EleboxServer;
@@ -29,7 +28,7 @@ public class GisController extends BaseController {
     private LightServer lightServer;
 
     @RequestMapping("listElebox")
-    public String listElebox(EleboxConditionRequest request) {
+    public String listElebox(EleboxRequest request) {
         logger.info("[POST] /api/gis/listElebox");
 
         Tuple.TwoTuple<List<Elebox>, Integer> tuple = this.eleboxServer.listElebox(request);

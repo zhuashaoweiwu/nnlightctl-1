@@ -10,9 +10,12 @@ import com.nnlightctl.server.UserServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,21 @@ public class UserController extends BaseController {
     private UserServer userServer;
 
     @RequestMapping("addOrUpdateUser")
-    public String addOrUpdateUser(UserRequest request) {
+    public String addOrUpdateUser(@Valid UserRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/user/addOrUpdateUser");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = userServer.addOrUpdateUser(request);
 

@@ -10,9 +10,12 @@ import com.nnlightctl.server.DepartmentServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +29,21 @@ public class DepartmentController extends BaseController {
     private DepartmentServer departmentServer;
 
     @RequestMapping("addOrUpdateDepartment")
-    public String addOrUpdateDepartment(DepartmentRequest request) {
+    public String addOrUpdateDepartment(@Valid DepartmentRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/department/addOrUpdateDepartment");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = departmentServer.addOrUpdateDepartment(request);
 
@@ -42,7 +58,7 @@ public class DepartmentController extends BaseController {
     }
 
     @RequestMapping("listDepartment")
-    public String listDepartment(BaseRequest request) {
+    public String listDepartment(DepartmentRequest request) {
         logger.info("[POST] /api/department/listDepartment");
 
         Tuple.TwoTuple<List<Department>, Integer> tuple = departmentServer.listDepartment(request);

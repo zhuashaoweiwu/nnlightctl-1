@@ -40,10 +40,13 @@ public class SwitchTaskServerImpl implements SwitchTaskServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<SwitchTask>, Integer> listSwitchTask(BaseRequest request) {
+    public Tuple.TwoTuple<List<SwitchTask>, Integer> listSwitchTask(SwitchTaskConditionRequest request) {
         Tuple.TwoTuple<List<SwitchTask>, Integer> tuple = new Tuple.TwoTuple<>();
 
         SwitchTaskExample switchTaskExample = new SwitchTaskExample();
+        if(request.getSwitchName() !=null ){
+            switchTaskExample.createCriteria().andSwitchNameEqualTo(request.getSwitchName());
+        }
         switchTaskExample.setOrderByClause("id DESC");
 
         int total = this.switchTaskMapper.countByExample(switchTaskExample);

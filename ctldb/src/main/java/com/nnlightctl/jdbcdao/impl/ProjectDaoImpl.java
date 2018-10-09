@@ -3,6 +3,7 @@ package com.nnlightctl.jdbcdao.impl;
 import com.nnlightctl.jdbcdao.ProjectDao;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.MapProjectsToInstitutionRequest;
+import com.nnlightctl.request.ProjectRequest;
 import com.nnlightctl.vo.ProjectView;
 import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ProjectDaoImpl implements ProjectDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<ProjectView> listProject(BaseRequest request) {
+    public List<ProjectView> listProject(ProjectRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
         List<Object> param = new ArrayList<>(2);
 
@@ -30,7 +31,16 @@ public class ProjectDaoImpl implements ProjectDao {
         stringBuilder.append("from nnlightctl_project p ");
         stringBuilder.append("left join nnlightctl_project_country c on p.nnlightctl_project_country_id = c.id ");
         stringBuilder.append("left join nnlightctl_project_province pp on p.nnlightctl_project_province_id  = pp.id ");
-        stringBuilder.append("left join nnlightctl_project_city cc on p.nnlightctl_project_city_id = cc.id ");
+        stringBuilder.append("left join nnlightctl_project_city cc on p.nnlightctl_project_city_id = cc.id where 1=1 ");
+
+        if (request.getProjectCode() !=null ){
+            stringBuilder.append(" and p.code_number = ? ");
+            param.add(request.getProjectCode());
+        }
+        if (request.getProjectName() !=null ){
+            stringBuilder.append(" and p.project_name =? ");
+            param.add(request.getProjectName());
+        }
         stringBuilder.append("order by id DESC ");
         if (request.getPageSize() > 0 && request.getPageNumber() > 0) {
             stringBuilder.append("limit ?, ?");

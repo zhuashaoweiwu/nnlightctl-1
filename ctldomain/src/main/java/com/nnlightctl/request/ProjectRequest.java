@@ -1,6 +1,8 @@
 package com.nnlightctl.request;
 
-public class ProjectRequest {
+import javax.validation.constraints.NotNull;
+
+public class ProjectRequest extends BaseRequest{
 
     public int getType() {
         return type;
@@ -98,7 +100,9 @@ public class ProjectRequest {
     private String latitude;
     private int state;
     private int type;
+    @NotNull(message = "项目名称不能为空！")
     private String projectName;
+    @NotNull(message = "项目编号不能为空！")
     private String projectCode;
     private String mem;
 }

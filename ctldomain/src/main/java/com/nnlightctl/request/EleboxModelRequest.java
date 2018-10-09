@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class EleboxModelRequest {
@@ -116,17 +117,21 @@ public class EleboxModelRequest {
     }
 
     private Long id;
+    @NotNull(message = "唯一编码不能为空！")
     private String uid;
+    @NotNull(message = "模块名称不能为空！")
     private String modelName;
     private Double powerRating;
     private Double electricRating;
     private Double voltageRating;
     private String airSwitchType;
     private String contactorType;
+    @NotNull(message = "回路数量不能为空！")
     private Byte loopCount;
     private String ac;
     private Double loopElectricity;
     private List<ModelLoopRequest> modelLoopList;
     private Long nnlightctlEleboxId;
+    @NotNull(message = "数量不能为空！")
     private int count;
 }

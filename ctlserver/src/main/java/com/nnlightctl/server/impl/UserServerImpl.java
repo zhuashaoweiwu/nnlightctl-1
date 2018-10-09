@@ -52,19 +52,32 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<User>, Integer> listUser(BaseRequest request) {
+    public Tuple.TwoTuple<List<User>, Integer> listUser(UserConditionRequest request) {
         Tuple.TwoTuple<List<User>, Integer> tuple = new Tuple.TwoTuple<>();
 
         UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+
         userExample.setOrderByClause("id DESC");
 
         UserConditionRequest userConditionRequest =
                 request instanceof UserConditionRequest ? (UserConditionRequest)request : null;
 
         if (userConditionRequest != null && userConditionRequest.getUserType() != null) {
-            userExample.createCriteria().andUserTypeEqualTo(userConditionRequest.getUserType().byteValue());
+            criteria.andUserTypeEqualTo(userConditionRequest.getUserType().byteValue());
         }
-
+        if(userConditionRequest != null && userConditionRequest.getCodeNumber() != null){
+            criteria.andCodeNumberLike("%" + userConditionRequest.getCodeNumber() + "%");
+        }
+        if(userConditionRequest != null && userConditionRequest.getUserName() != null){
+            criteria.andUserNameLike("%" + userConditionRequest.getUserName() + "%");
+        }
+        if(userConditionRequest != null && userConditionRequest.getPhone() != null){
+            criteria.andPhoneLike("%" + userConditionRequest.getPhone() + "%");
+        }
+        if (userConditionRequest != null && userConditionRequest.getLoginName() != null){
+            criteria.andLoginNameLike("%" + userConditionRequest.getLoginName() + "%");
+        }
 
         int total = userMapper.countByExample(userExample);
         tuple.setSecond(total);

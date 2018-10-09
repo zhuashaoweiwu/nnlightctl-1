@@ -12,6 +12,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -132,8 +135,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("addelebox")
-    public String addEleBox(EleboxAddModelRequest request) {
+    public String addEleBox(@Valid EleboxAddModelRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/addelebox");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = eleboxServer.insertElebox(request);
         JsonResult jsonResult = null;
@@ -147,8 +163,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("updateelebox")
-    public String updateEleBox(EleboxRequest request) {
+    public String updateEleBox(@Valid EleboxRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/updateelebox");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = eleboxServer.updateElebox(request);
         JsonResult jsonResult = null;
@@ -236,8 +265,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("splitmodelloop")
-    public String modelLoopSplite(EleboxConditionRequest request) {
+    public String modelLoopSplite(@Valid EleboxConditionRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/splitmodelloop");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = eleboxServer.updateModelLoopSplite(request);
         JsonResult jsonResult = null;
@@ -266,7 +308,7 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("listelebox")
-    public String listElebox(BaseRequest request) {
+    public String listElebox(EleboxRequest request) {
         logger.info("[POST] /api/roadlighting/listelebox");
 
         Tuple.TwoTuple<List<Elebox>, Integer> tuple = eleboxServer.listElebox(request);
@@ -305,8 +347,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("addOrUpdateLighting")
-    public String addOrUpdateLighting(LightRequest request) {
+    public String addOrUpdateLighting(@Valid LightRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/addOrUpdateLighting");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = lightServer.addOrUpdateLight(request);
 
@@ -397,8 +452,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("addOrUpdateLightModel")
-    public String addOrUpdateLightModel(LightModelRequest request) {
+    public String addOrUpdateLightModel(@Valid LightModelRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/addOrUpdateLightModel");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = this.lightModelServer.addOrUpdateLightModel(request);
 
@@ -487,8 +555,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("addOrUpdateArea")
-    public String addOrUpdateArea(AreaRequest request) {
+    public String addOrUpdateArea(@Valid AreaRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/roadlighting/addOrUpdateArea");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = this.areaServer.addOrUpdateArea(request);
 

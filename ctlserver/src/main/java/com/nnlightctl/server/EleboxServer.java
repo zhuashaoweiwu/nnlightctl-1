@@ -19,7 +19,7 @@ public interface EleboxServer {
     int updateEleboxDevice(EleboxConditionRequest request);
     int updateModelLoopSplite(EleboxConditionRequest request);
     int deleteElebox(EleboxConditionRequest request);
-    Tuple.TwoTuple<List<Elebox>, Integer> listElebox(BaseRequest request);
+    Tuple.TwoTuple<List<Elebox>, Integer> listElebox(EleboxRequest request);
     Tuple.TwoTuple<List<EleboxModel>, Integer> listEleboxModel(EleboxConditionRequest request);
     Tuple.TwoTuple<List<EleboxModelLoop>, Integer> listModelLoop(Long modelId);
     int importElebox(InputStream in, String fileName) throws IOException;

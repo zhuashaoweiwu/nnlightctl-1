@@ -67,6 +67,10 @@ public class UserOpLogServerImpl implements UserOpLogServer {
             criteria.andOperationDescLike("%" + request.getContent() + "%");
         }
 
+        if(request.getUserId() != null){
+            criteria.andNnlightctlUserIdEqualTo(request.getUserId().longValue());
+        }
+
         int total = userOperationLogMapper.countByExample(userOperationLogExample);
         tuple.setSecond(total);
 

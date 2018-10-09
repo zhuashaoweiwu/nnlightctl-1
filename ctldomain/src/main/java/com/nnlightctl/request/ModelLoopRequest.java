@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
+
 public class ModelLoopRequest {
     public Long getId() {
         return id;
@@ -58,6 +60,7 @@ public class ModelLoopRequest {
     }
 
     private Long id;
+    @NotNull(message = "回路编码不能为空！")
     private String loopCode;
     private Double voltage;
     private Double electricity;

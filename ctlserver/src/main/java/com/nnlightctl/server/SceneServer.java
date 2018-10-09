@@ -10,7 +10,7 @@ import java.util.List;
 public interface SceneServer {
     int addOrUpdateScene(SceneRequest request);
 
-    Tuple.TwoTuple<List<Scene>, Integer> listScene(BaseRequest request);
+    Tuple.TwoTuple<List<Scene>, Integer> listScene(SceneRequest request);
 
     SceneView getScene(Long id);
 

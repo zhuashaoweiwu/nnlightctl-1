@@ -9,9 +9,12 @@ import com.nnlightctl.vo.SceneView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +27,21 @@ public class SceneController extends BaseController {
     private SceneServer sceneServer;
 
     @RequestMapping("addOrUpdateScene")
-    public String addOrUpdateScene(SceneRequest request) {
+    public String addOrUpdateScene(@Valid SceneRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/scene/addOrUpdateScene");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = sceneServer.addOrUpdateScene(request);
         JsonResult jsonResult = null;
@@ -39,7 +55,7 @@ public class SceneController extends BaseController {
     }
 
     @RequestMapping("listScene")
-    public String listScene(BaseRequest request) {
+    public String listScene(SceneRequest request) {
         logger.info("[POST] /api/scene/listScene");
 
         Tuple.TwoTuple<List<Scene>, Integer> tuple = sceneServer.listScene(request);
@@ -84,8 +100,21 @@ public class SceneController extends BaseController {
     }
 
     @RequestMapping("addOrUpdateSceneShotcut")
-    public String addOrUpdateSceneShotcut(SceneShotcutRequest request) {
+    public String addOrUpdateSceneShotcut(@Valid SceneShotcutRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/scene/addOrUpdateSceneShotcut");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = sceneServer.addOrUpdateSceneShotcut(request);
         JsonResult jsonResult = null;

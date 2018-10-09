@@ -59,7 +59,7 @@ public class InstitutionController extends BaseController {
     }
 
     @RequestMapping("listInsitution")
-    public String listInstitution(BaseRequest request) {
+    public String listInstitution(InstitutionRequest request) {
         logger.info("[POST] /api/institution/listInsitution");
 
         Tuple.TwoTuple<List<Institution>, Integer> tuple = institutionServer.listInstitution(request);

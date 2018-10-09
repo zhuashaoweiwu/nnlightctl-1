@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserServer {
     int addOrUpdateUser(UserRequest request);
 
-    Tuple.TwoTuple<List<User>, Integer> listUser(BaseRequest request);
+    Tuple.TwoTuple<List<User>, Integer> listUser(UserConditionRequest request);
 
     User getUser(Long id);
 

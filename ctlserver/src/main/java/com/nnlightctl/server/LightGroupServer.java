@@ -12,5 +12,5 @@ public interface LightGroupServer {
     int createLightGroupByLightUIDs(LightGroupRequest request);
     int createLightGroupByLightGroup(LightGroupRequest request);
 
-    Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(BaseRequest request);
+    Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupRequest request);
 }

@@ -1,5 +1,11 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 public class UserRequest {
     public Long getId() {
         return id;
@@ -107,24 +113,29 @@ public class UserRequest {
 
     private Long id;
 
+    @NotNull(message = "登录名不能为空！")
     private String loginName;
 
+    @NotNull(message = "登录密码不能为空！")
     private String loginPwd;
 
     private Byte isRemenberPwd;
 
+    @NotNull(message = "用户名不能为空！")
     private String userName;
 
     private Byte sex;
 
     private Byte age;
 
+    @Length(min =11 ,max = 11 ,message = "电话号码必须为11位数！")
     private String phone;
 
     private String email;
 
     private String place;
 
+    @NotNull(message = "编号不能为空！")
     private String codeNumber;
 
     private Byte userType;
