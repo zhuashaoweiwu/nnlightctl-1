@@ -5,9 +5,7 @@ import com.nnlightctl.po.RepertoryOutReason;
 import com.nnlightctl.po.WorkOrder;
 import com.nnlightctl.po.WorkOrderHistory;
 import com.nnlightctl.po.WorkflowerNode;
-import com.nnlightctl.request.BaseRequest;
-import com.nnlightctl.request.ListWorkOrderRequest;
-import com.nnlightctl.request.WorkOrderRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.vo.CountWorkOrderStateView;
 import com.nnlightctl.vo.StatisticWorkOrderView;
 
@@ -20,7 +18,7 @@ public interface WorkOrderServer {
     Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkOrder(ListWorkOrderRequest request);
     int updateClaimWordOrder(WorkOrderRequest request);
     int addWordOrder(WorkOrderRequest request);
-    Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(BaseRequest request);
+    Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(WorkOrderHistoryRequest request);
     List<WorkflowerNode> selectPreviewWorkFlower(Long workOrderId);
-    Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkFlowerWorkOrder(BaseRequest request);
+    Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkFlowerWorkOrder(WorkFlowerWorkOrderRequest request);
 }

@@ -12,10 +12,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,9 +114,22 @@ public class PropertyManagerController extends BaseController {
     * 五、新建/修改维修记录
     * */
     @RequestMapping("addOrUpdateRepairRecord")
-    public String addOrUpdateRepairRecord(RepairRecordRequest request){
-
+    public String addOrUpdateRepairRecord(@Valid RepairRecordRequest request, BindingResult bindingResult){
         logger.info("[POST] /api/propertyManager/addOrUpdateRepairRecord");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = propertyManagerServer.addOrUpdateRepairRecord(request);
 
         JsonResult jsonResult = null;
@@ -180,11 +196,23 @@ public class PropertyManagerController extends BaseController {
      * 一、新增/修改联系人
      * */
     @RequestMapping("addOrUpdateMasker")
-    public String addOrUpdateMasker(MaskerRequest request){
+    public String addOrUpdateMasker(@Valid MaskerRequest request, BindingResult bindingResult){
         logger.info("[POST] /api/propertyManager/addOrUpdateMasker");
 
-        int ret =maskerServer.addOrUpdateMasker(request);
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
 
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
+        int ret =maskerServer.addOrUpdateMasker(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -217,7 +245,7 @@ public class PropertyManagerController extends BaseController {
      * 三、分页获取工单执行联系人
      * */
     @RequestMapping("listMasker")
-    public String listMasker(BaseRequest request){
+    public String listMasker(MaskerRequest request){
         logger.info("[POST] /api/propertyManager/listMasker");
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
@@ -250,10 +278,23 @@ public class PropertyManagerController extends BaseController {
      * 一、新增/修改仓库信息
      * */
     @RequestMapping("addOrUpdateRepertory")
-    public String addOrUpdateRepertory(RepertoryRequest request){
+    public String addOrUpdateRepertory(@Valid RepertoryRequest request, BindingResult bindingResult){
         logger.info("[POST] /api/propertyManager/addOrUpdateRepertory");
-        int ret = repertoryServer.addOrUpdateRepertory(request);
 
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
+        int ret = repertoryServer.addOrUpdateRepertory(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -286,7 +327,7 @@ public class PropertyManagerController extends BaseController {
      * 三、通过搜索条件分页获取仓库集合
      * */
     @RequestMapping("listRepertory")
-    public String listRepertory(BaseRequest request){
+    public String listRepertory(ListRepertoryRequest request){
         logger.info("[POST] /api/propertyManager/listRepertory");
 
         Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> tuple = repertoryServer.listRepertory(request);
@@ -330,7 +371,7 @@ public class PropertyManagerController extends BaseController {
      * 六、通过搜索条件分页显示资产转移记录
      * */
     @RequestMapping("listPropertyTransRecord")
-    public String listPropertyTransRecord(BaseRequest request){
+    public String listPropertyTransRecord(ListPropertyTransRecordRequest request){
         logger.info("[POST] /api/propertyManager/listPropertyTransRecord");
         Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> tuple = repertoryServer.listPropertyTransRecord(request);
 
@@ -345,7 +386,7 @@ public class PropertyManagerController extends BaseController {
      * 一、通过搜索条件分页显示入库申请
      * */
     @RequestMapping("listApplyInRepertory")
-    public String listApplyInRepertory(BaseRequest request){
+    public String listApplyInRepertory(ApplyInRepertoryRequest request){
         logger.info("[POST] /api/propertyManager/listApplyInRepertory");
 
         Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = repertoryServer.listApplyInRepertory(request);
@@ -361,7 +402,7 @@ public class PropertyManagerController extends BaseController {
      * 二、通过搜索条件分页显示出库申请
      * */
     @RequestMapping("listApplyOutRepertory")
-    public String listApplyOutRepertory(BaseRequest request){
+    public String listApplyOutRepertory(ApplyOutRepertoryRequest request){
         logger.info("[POST] /api/propertyManager/listApplyOutRepertory");
         Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = repertoryServer.listApplyOutRepertory(request);
 
@@ -412,8 +453,21 @@ public class PropertyManagerController extends BaseController {
      *一、新增/修改入库申请
      * */
     @RequestMapping("addOrUpdateApplyInRepertory")
-    public String addOrUpdateApplyInRepertory(RepertoryInApplyRequest request){
+    public String addOrUpdateApplyInRepertory(@Valid RepertoryInApplyRequest request, BindingResult bindingResult){
         logger.info("[POST] /api/propertyManager/addOrUpdateApplyInRepertory");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = repertoryServer.addOrUpdateApplyInRepertory(request);
         JsonResult jsonResult = null;
@@ -462,8 +516,22 @@ public class PropertyManagerController extends BaseController {
      *四、新增/修改出库申请
      * */
     @RequestMapping("addOrUpdateApplyOutRepertory")
-    public String addOrUpdateApplyOutRepertory(RepertoryOutApplyRequest request){
+    public String addOrUpdateApplyOutRepertory(@Valid RepertoryOutApplyRequest request, BindingResult bindingResult){
         logger.info("[POST] /api/propertyManager/addOrUpdateApplyOutRepertory");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = repertoryServer.addOrUpdateApplyOutRepertory(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -615,8 +683,21 @@ public class PropertyManagerController extends BaseController {
      *一、供应商的新增和修改
      * */
     @RequestMapping("addOrUpdateSupplier")
-   public String addOrUpdateSupplier(SupplierRequest request){
+   public String addOrUpdateSupplier(@Valid SupplierRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/propertyManager/addOrUpdateSupplier");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret =supplierServer.addOrUpdateRepertory(request);
         JsonResult jsonResult = null;
@@ -650,7 +731,7 @@ public class PropertyManagerController extends BaseController {
      *三、按搜索条件分页显示供应商
      * */
     @RequestMapping("listSupplier")
-    public String listSupplier(BaseRequest request){
+    public String listSupplier(SupplierRequest request){
         logger.info("[POST]  /api/propertyManager/listSupplier");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         Tuple.TwoTuple<List<Supplier>, Integer> tuple = supplierServer.listSupplier(request);
@@ -681,8 +762,22 @@ public class PropertyManagerController extends BaseController {
      *五、新增/修改资产分类目录
      * */
     @RequestMapping("addOrUpdatePropertyClassifyCatalog")
-    public String addOrUpdatePropertyClassifyCatalog(PropertyClassifyCatalogRequest request){
+    public String addOrUpdatePropertyClassifyCatalog(@Valid PropertyClassifyCatalogRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/propertyManager/addOrUpdatePropertyClassifyCatalog");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = propertyClassifyCatalogServer.addOrUpdatePropertyClassifyCatalog(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -739,8 +834,23 @@ public class PropertyManagerController extends BaseController {
      *九、新增/修改入库原因
      * */
     @RequestMapping("addOrUpdateRepertoryInReason")
-    public String addOrUpdateRepertoryInReason(RepertoryInReasonRequest request){
+    public String addOrUpdateRepertoryInReason(@Valid RepertoryInReasonRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/propertyManager/addOrUpdateRepertoryInReason");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
+
         int ret = repertoryInReasonServer.addOrUpdateRepertoryInReason(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -801,8 +911,22 @@ public class PropertyManagerController extends BaseController {
      *十三、新增/修改出库原因
      * */
     @RequestMapping("addOrUpdateRepertoryOutReason")
-    public String addOrUpdateRepertoryOutReason(RepertoryOutReasonRequest request){
+    public String addOrUpdateRepertoryOutReason(@Valid RepertoryOutReasonRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/propertyManager/addOrUpdateRepertoryOutReason");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = repertoryOutReasonServer.addOrUpdateRepertoryOutReason(request);
         JsonResult jsonResult = null;
         if (ret > 0) {

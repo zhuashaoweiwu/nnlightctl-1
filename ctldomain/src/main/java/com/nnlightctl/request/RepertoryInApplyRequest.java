@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class RepertoryInApplyRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-
+    @NotNull(message = "入库记录单号不能为空！")
     private String serialnumber;
 
     private Date inRepertoryDate;
@@ -20,15 +21,15 @@ public class RepertoryInApplyRequest {
     private Long nnlightctlPropertyClassifyCatalogId;
 
     private Long nnlightctlSupplier;
-
+    @NotNull(message = "资产名称不能为空！")
     private String propertyName;
-
+    @NotNull(message = "资产唯一编码不能为空！")
     private String propertyUid;
 
     private Long propertyCount;
 
     private Long nnlightctlRepertoryInReasonId;
-
+    @NotNull(message = "入库仓库id不能为空！")
     private Long nnlightctlRepertoryId;
 
     private Long nnlightctlUserApplyId;

@@ -1,18 +1,19 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-public class SupplierRequest {
+public class SupplierRequest extends BaseRequest{
 
     private Long id;
 
     private Date gmtCreated;
 
     private Date gmtUpdated;
-
+    @NotNull(message = "供应商编码不能为空！")
     private String uid;
-
+    @NotNull(message = "供应商名称不能为空！")
     private String applierName;
 
     private String addr;
@@ -22,7 +23,7 @@ public class SupplierRequest {
     private String telephone1;
 
     private String telephone2;
-
+    @NotNull(message = "类型不能为空！")
     private Byte ctype;
 
    private List<Long> supplierIds;//  -- 要删除的供应商id的集合

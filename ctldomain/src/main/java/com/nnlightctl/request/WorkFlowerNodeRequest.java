@@ -1,12 +1,15 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class WorkFlowerNodeRequest {
     private Long id;    //-- 工作流节点id
-
+    @NotNull(message = "工作流节点编码不能为空！")
+    private String workflowerNodeCode;
+    @NotNull(message = "工作流节点名称不能为空！")
     private String workflowerNodeName; //-- 工作流节点名称
-
+    @NotNull(message = "工作流节点类型不能为空！")
     private Byte ctype;  //-- 工作流节点类型
 
     private Long nnlightctlUserId; // -- 工作流节点审批用户id
@@ -50,5 +53,13 @@ public class WorkFlowerNodeRequest {
 
     public void setNnlightctlUserId(Long nnlightctlUserId) {
         this.nnlightctlUserId = nnlightctlUserId;
+    }
+
+    public String getWorkflowerNodeCode() {
+        return workflowerNodeCode;
+    }
+
+    public void setWorkflowerNodeCode(String workflowerNodeCode) {
+        this.workflowerNodeCode = workflowerNodeCode;
     }
 }

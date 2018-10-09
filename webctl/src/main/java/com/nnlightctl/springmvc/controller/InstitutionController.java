@@ -57,6 +57,18 @@ public class InstitutionController extends BaseController {
 
         return toJson(jsonResult);
     }
+    /*
+    *机构管理
+    *一点一、通过机构名称统计机构数量（用于判断机构名称是否重复）
+    * */
+    @RequestMapping("countInstitutionByName")
+    public String countInstitutionByName(String institutionName){
+        logger.info("[POST] /api/institution/countInstitutionByName");
+        int total = institutionServer.countInstitutionByName(institutionName);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
 
     @RequestMapping("listInsitution")
     public String listInstitution(InstitutionRequest request) {
@@ -116,4 +128,5 @@ public class InstitutionController extends BaseController {
 
         return toJson(jsonResult);
     }
+
 }

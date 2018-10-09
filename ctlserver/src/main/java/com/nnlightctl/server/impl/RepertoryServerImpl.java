@@ -78,7 +78,7 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertory(BaseRequest request){
+    public Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertory(ListRepertoryRequest request){
         return repertoryDao.listRepertoryUser(request);
     }
 
@@ -109,10 +109,25 @@ public class RepertoryServerImpl implements RepertoryServer {
         return 1;
     }
     @Override
-    public Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> listPropertyTransRecord(BaseRequest request){
+    public Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> listPropertyTransRecord(ListPropertyTransRecordRequest request){
         Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryPropertyTranslateRecordExample repertoryPropertyTranslateRecordExample = new RepertoryPropertyTranslateRecordExample();
+
+        RepertoryPropertyTranslateRecordExample.Criteria criteria = repertoryPropertyTranslateRecordExample.createCriteria();
+        if (request.getEndDate() != null){
+            criteria.andTranslateDateLessThanOrEqualTo(request.getEndDate());
+
+        }
+        if (request.getNnlightctlUserIdApply() != null){
+            criteria.andNnlightctlUserIdApplyEqualTo(request.getNnlightctlUserIdApply());
+        }
+        if (request.getSourceRepertyId() != null){
+            criteria.andSourceRepertyIdEqualTo(request.getSourceRepertyId());
+        }
+        if (request.getStartDate() != null){
+            criteria.andTranslateDateGreaterThanOrEqualTo(request.getStartDate());
+        }
         repertoryPropertyTranslateRecordExample.setOrderByClause("id DESC");
 
         int total =repertoryPropertyTranslateRecordMapper.countByExample(repertoryPropertyTranslateRecordExample);
@@ -173,10 +188,24 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(BaseRequest request){
+    public Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(ApplyInRepertoryRequest request){
         Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryInApplyExample repertoryInApplyExample = new RepertoryInApplyExample();
+        RepertoryInApplyExample.Criteria criteria = repertoryInApplyExample.createCriteria();
+        if (request.getEndDate() != null){
+            //criteria.andInRepertoryDateGreaterThanOrEqualTo(request.getEndDate());
+            criteria.andInRepertoryDateLessThanOrEqualTo(request.getEndDate());
+        }
+        if (request.getStartDate() != null){
+            criteria.andInRepertoryDateGreaterThanOrEqualTo(request.getStartDate());
+        }
+        if (request.getNnlightctlPropertyClassifyCatalogId() != null){
+            criteria.andNnlightctlPropertyClassifyCatalogIdEqualTo(request.getNnlightctlPropertyClassifyCatalogId());
+        }
+        if (request.getNnlightctlRepertoryId() != null){
+            criteria.andNnlightctlRepertoryIdEqualTo(request.getNnlightctlRepertoryId());
+        }
         repertoryInApplyExample.setOrderByClause("id DESC");
 
         int total =repertoryInApplyMapper.countByExample(repertoryInApplyExample);
@@ -214,10 +243,26 @@ public class RepertoryServerImpl implements RepertoryServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(BaseRequest request){
+    public Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(ApplyOutRepertoryRequest request){
         Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         RepertoryOutApplyExample repertoryOutApplyExample = new RepertoryOutApplyExample();
+        RepertoryOutApplyExample.Criteria criteria = repertoryOutApplyExample.createCriteria();
+        if (request.getEndDate() != null){
+            criteria.andGmtUpdatedLessThanOrEqualTo(request.getEndDate());
+        }
+        if (request.getStartDate() != null){
+            criteria.andGmtUpdatedGreaterThanOrEqualTo(request.getStartDate());
+        }
+        if (request.getNnlightctlPropertyId() != null){
+            criteria.andNnlightctlPropertyIdEqualTo(request.getNnlightctlPropertyId());
+        }
+        if (request.getOutRepertoryId() != null){
+            criteria.andNnlightctlOutRepertoryIdEqualTo(request.getOutRepertoryId());
+        }
+        if (request.getUserId() != null){
+            criteria.andNnlightctlUserIdEqualTo(request.getUserId());
+        }
         repertoryOutApplyExample.setOrderByClause("id DESC");
 
         int total =repertoryOutApplyMapper.countByExample(repertoryOutApplyExample);

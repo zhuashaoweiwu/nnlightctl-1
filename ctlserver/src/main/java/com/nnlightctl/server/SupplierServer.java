@@ -11,6 +11,6 @@ import java.util.List;
 public interface SupplierServer {
     int addOrUpdateRepertory(SupplierRequest request);
     int deleteSupplier(List<Long> supplierIds);
-    Tuple.TwoTuple<List<Supplier>, Integer> listSupplier(BaseRequest request);
+    Tuple.TwoTuple<List<Supplier>, Integer> listSupplier(SupplierRequest request);
     Supplier getSupplier(Long id);
 }

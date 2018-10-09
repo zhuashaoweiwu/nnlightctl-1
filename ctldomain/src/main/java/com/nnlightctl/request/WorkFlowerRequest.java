@@ -1,20 +1,21 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class WorkFlowerRequest {
+public class WorkFlowerRequest extends BaseRequest{
    private Long id;  //-- 工作流id
-
+    @NotNull(message = "工作流名称不能为空！")
     private String workflowerName;  //-- 工作流名称
 
     private String mem;  //-- 备注
 
     private List<Long> workFlowerNodeIds; // -- 工作流包含节点，节点在工作流中的序号按照节点在该集合中的序号排序
-
+    @NotNull(message = "工作流id不能为空！")
     private List<Long> workFlowerIds;
 
     private Long workFlowerId;//  -- 工作流id
-
+    @NotNull(message = "审批是否启用不能为空！")
     private Integer isEnable;//  -- 是否启用 0 - 不启用  1 - 启用
 
     public Long getWorkFlowerId() {

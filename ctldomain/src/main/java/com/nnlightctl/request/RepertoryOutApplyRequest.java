@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +13,11 @@ public class RepertoryOutApplyRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-
+    @NotNull(message = "出库记录单号不能为空！")
     private String serialnumber;
-
+    @NotNull(message = "出库资产id不能为空！")
     private Long nnlightctlPropertyId;
-
+    @NotNull(message = "出库申请人id不能为空！")
     private Long nnlightctlUserId;
 
     private Byte applyState;

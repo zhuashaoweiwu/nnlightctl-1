@@ -2,17 +2,18 @@ package com.nnlightctl.request;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class WorkOrderRequest extends BaseRequest{
     private Long id;    //-- 工单id
-
+    @NotNull(message = "编号不能为空！")
     private String serialNumber; // -- 编号
 
     private Byte classify; // -- 分类
 
     private Long nnlightctlWorkflowerId; // -- 工作流id
-
+    @NotNull(message = "优先级不能为空！")
     private Byte priority; // -- 优先级
 
     private Long nnlightctlRegionId;  //-- 区域id

@@ -45,10 +45,17 @@ public class SupplierServerImpl implements SupplierServer {
         return 1;
     }
     @Override
-    public Tuple.TwoTuple<List<Supplier>, Integer> listSupplier(BaseRequest request){
+    public Tuple.TwoTuple<List<Supplier>, Integer> listSupplier(SupplierRequest request){
         Tuple.TwoTuple<List<Supplier>, Integer> tuple = new Tuple.TwoTuple<>();
 
         SupplierExample supplierExample = new SupplierExample();
+        SupplierExample.Criteria criteria = supplierExample.createCriteria();
+        if (request.getUid() != null){
+            criteria.andUidEqualTo(request.getUid());
+        }
+        if (request.getApplierName() !=null){
+            criteria.andApplierNameEqualTo(request.getApplierName());
+        }
         supplierExample.setOrderByClause("id DESC");
 
         int total =supplierMapper.countByExample(supplierExample);

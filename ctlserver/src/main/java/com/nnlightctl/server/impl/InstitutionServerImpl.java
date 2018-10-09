@@ -44,6 +44,13 @@ public class InstitutionServerImpl implements InstitutionServer {
 
         return ret;
     }
+    @Override
+    public int countInstitutionByName(String institutionName){
+        InstitutionExample institutionExample = new InstitutionExample();
+        institutionExample.createCriteria().andInstitutionNameEqualTo(institutionName);
+        int total = institutionMapper.countByExample(institutionExample);
+        return total;
+    }
 
     @Override
     public Tuple.TwoTuple<List<Institution>, Integer> listInstitution(InstitutionRequest request) {

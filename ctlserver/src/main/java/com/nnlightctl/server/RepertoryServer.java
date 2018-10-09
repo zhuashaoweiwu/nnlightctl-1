@@ -14,12 +14,12 @@ public interface RepertoryServer {
 
     int addOrUpdateRepertory(RepertoryRequest request);
     int deleteRepairRecord(List<Long> repertoryIds);
-    Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertory(BaseRequest request);
+    Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertory(ListRepertoryRequest request);
     Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> getRepertory(Long id);
     int updateTransferProperty(TransferPropertyRequest request);
-    Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> listPropertyTransRecord(BaseRequest request);
-    Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(BaseRequest request);
-    Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(BaseRequest request);
+    Tuple.TwoTuple<List<RepertoryPropertyTranslateRecordView>, Integer> listPropertyTransRecord(ListPropertyTransRecordRequest request);
+    Tuple.TwoTuple<List<RepertoryInApplyView>, Integer> listApplyInRepertory(ApplyInRepertoryRequest request);
+    Tuple.TwoTuple<List<RepertoryOutApplyView>, Integer> listApplyOutRepertory(ApplyOutRepertoryRequest request);
     Long countApplyInRepertory();
     Long countApplyOutRepertory();
     int addOrUpdateApplyInRepertory(RepertoryInApplyRequest request);

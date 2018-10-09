@@ -48,10 +48,17 @@ public class MaskerServerImpl implements MaskerServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Masker>, Integer> listMasker(BaseRequest request){
+    public Tuple.TwoTuple<List<Masker>, Integer> listMasker(MaskerRequest request){
         Tuple.TwoTuple<List<Masker>, Integer> tuple = new Tuple.TwoTuple<>();
 
         MaskerExample maskerExample = new MaskerExample();
+        MaskerExample.Criteria criteria = maskerExample.createCriteria();
+        if (request.getPhoneNumber() !=null ) {
+            criteria.andPhoneNumberEqualTo(request.getPhoneNumber());
+        }
+        if (request.getDepartment() != null){
+            criteria.andDepartmentEqualTo(request.getDepartment());
+        }
         maskerExample.setOrderByClause("id DESC");
 
         int total =maskerMapper.countByExample(maskerExample);

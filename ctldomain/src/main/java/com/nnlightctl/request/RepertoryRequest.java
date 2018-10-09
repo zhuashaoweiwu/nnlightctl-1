@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class RepertoryRequest {
@@ -9,7 +10,7 @@ public class RepertoryRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-
+    @NotNull(message = "仓库UID不能为空！")
     private String uid;
 
     private String repertoryName;
@@ -19,7 +20,7 @@ public class RepertoryRequest {
     private String repertoryPhone;
 
     private String repertoryZipCode;
-
+    @NotNull(message = "仓库管理员ID不能为空！")
     private Long nnlightctlUserId;
 
     public Long getId() {

@@ -127,10 +127,14 @@ public class WorkFlowerNodeServerImpl implements WorkFlowerNodeServer {
         return ret;
     }
     @Override
-    public Tuple.TwoTuple<List<WorkFlower>, Integer> listWorkFlower(BaseRequest request){
+    public Tuple.TwoTuple<List<WorkFlower>, Integer> listWorkFlower(WorkFlowerRequest request){
         Tuple.TwoTuple<List<WorkFlower>, Integer> tuple = new Tuple.TwoTuple<>();
 
         WorkFlowerExample workFlowerExample = new WorkFlowerExample();
+        WorkFlowerExample.Criteria criteria =workFlowerExample.createCriteria();
+        if (request.getWorkflowerName() != null){
+            criteria.andWorkflowerNameEqualTo(request.getWorkflowerName());
+        }
         workFlowerExample.setOrderByClause("id DESC");
 
         int total =workFlowerMapper.countByExample(workFlowerExample);

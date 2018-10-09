@@ -6,9 +6,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.*;
 import com.nnlightctl.jdbcdao.WorkOrderDao;
 import com.nnlightctl.po.*;
-import com.nnlightctl.request.BaseRequest;
-import com.nnlightctl.request.ListWorkOrderRequest;
-import com.nnlightctl.request.WorkOrderRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.server.WorkFlowerNodeServer;
 import com.nnlightctl.server.WorkOrderServer;
 import com.nnlightctl.vo.CountWorkOrderStateView;
@@ -253,10 +251,21 @@ public class WorkOrderServerImpl implements WorkOrderServer {
         return ret;
     }
     @Override
-    public Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(BaseRequest request){
+    public Tuple.TwoTuple<List<WorkOrderHistory>, Integer> listWorkOrderHistory(WorkOrderHistoryRequest request){
         Tuple.TwoTuple<List<WorkOrderHistory>, Integer> tuple = new Tuple.TwoTuple<>();
 
         WorkOrderHistoryExample workOrderHistoryExample = new WorkOrderHistoryExample();
+        WorkOrderHistoryExample.Criteria criteria = workOrderHistoryExample.createCriteria();
+
+        if (request.getEndTime() != null){
+            criteria.andRecordDateLessThanOrEqualTo(request.getEndTime());
+        }
+        if (request.getStartTime() != null){
+            criteria.andRecordDateGreaterThanOrEqualTo(request.getStartTime());
+        }
+        if (request.getNnlightctlMaskerId() != null){
+
+        }
         workOrderHistoryExample.setOrderByClause("id DESC");
 
         int total =workOrderHistoryMapper.countByExample(workOrderHistoryExample);
@@ -283,11 +292,24 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkFlowerWorkOrder(BaseRequest request){
+    public Tuple.TwoTuple<List<WorkOrder>, Integer> listWorkFlowerWorkOrder(WorkFlowerWorkOrderRequest request){
         Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = new Tuple.TwoTuple<>();
 
         WorkOrderExample workOrderExample = new WorkOrderExample();
-        workOrderExample.createCriteria().andNnlightctlWorkflowerIdIsNotNull();
+        WorkOrderExample.Criteria criteria = workOrderExample.createCriteria();
+        if (request.getEndTime() !=null){
+            criteria.andGmtUpdatedLessThanOrEqualTo(request.getEndTime());
+        }
+        if (request.getStartTime() != null){
+            criteria.andGmtUpdatedGreaterThanOrEqualTo(request.getStartTime());
+        }
+        if (request.getSerialNumber() != null){
+            criteria.andSerialNumberEqualTo(request.getSerialNumber());
+        }
+        if (request.getState() != null){
+            criteria.andStateEqualTo(request.getState().byteValue());
+        }
+        criteria.andNnlightctlWorkflowerIdIsNotNull();
 
         workOrderExample.setOrderByClause("id DESC");
 

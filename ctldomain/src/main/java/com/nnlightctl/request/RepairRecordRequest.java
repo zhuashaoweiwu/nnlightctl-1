@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class RepairRecordRequest {
@@ -11,6 +12,7 @@ public class RepairRecordRequest {
 
     private Long nnlightctlEleboxId;
 
+    @NotNull(message = "资产目录id不能为空！")
     private Long nnlightctlPropertyClassifyCatalogId;
 
     private String propertyName;

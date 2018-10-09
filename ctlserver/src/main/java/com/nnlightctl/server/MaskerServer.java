@@ -12,6 +12,6 @@ public interface MaskerServer {
 
     int addOrUpdateMasker(MaskerRequest request);
     int deleteMasker(DeleteMaskerRequest request);
-    Tuple.TwoTuple<List<Masker>, Integer> listMasker(BaseRequest request);
+    Tuple.TwoTuple<List<Masker>, Integer> listMasker(MaskerRequest request);
     Masker getMasker(Long id);
 }

@@ -12,11 +12,14 @@ import com.nnlightctl.vo.WorkFlowerNodeMapView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,8 +99,22 @@ public class WorkOrderController extends BaseController{
      *四、新增工单
      * */
     @RequestMapping(value = "addWordOrder")
-    public String addWordOrder(WorkOrderRequest request, HttpServletRequest httpRequest){
+    public String addWordOrder(@Valid WorkOrderRequest request, HttpServletRequest httpRequest, BindingResult bindingResult){
         logger.info("[POST]  /api/workOrder/addWordOrder");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         JsonResult jsonResult = JsonResult.getSUCCESS();
         MultipartFile attachFilePath = request.getAttachFilePath();
         if (attachFilePath == null) {
@@ -153,7 +170,7 @@ public class WorkOrderController extends BaseController{
      *五、通过搜索条件分页获取历史工单信息
      * */
     @RequestMapping("listWorkOrderHistory")
-    public String listWorkOrderHistory(BaseRequest request){
+    public String listWorkOrderHistory(WorkOrderHistoryRequest request){
         logger.info("[POST]  /api/workOrder/listWorkOrderHistory");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         Tuple.TwoTuple<List<WorkOrderHistory>, Integer> tuple = workOrderServer.listWorkOrderHistory(request);
@@ -182,7 +199,7 @@ public class WorkOrderController extends BaseController{
      *七、分页获取我所在工作流中的节点中的所有工单
      * */
     @RequestMapping("listWorkFlowerWorkOrder")
-    public String listWorkFlowerWorkOrder(BaseRequest request){
+    public String listWorkFlowerWorkOrder(WorkFlowerWorkOrderRequest request){
         logger.info("[POST]  /api/workOrder/listWorkFlowerWorkOrder");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         Tuple.TwoTuple<List<WorkOrder>, Integer> tuple = workOrderServer.listWorkFlowerWorkOrder(request);
@@ -198,8 +215,22 @@ public class WorkOrderController extends BaseController{
      *一、新增/修改流程节点
      * */
     @RequestMapping("addOrUpdateWorkFlowerNode")
-    public String addOrUpdateWorkFlowerNode(WorkFlowerNodeRequest request){
+    public String addOrUpdateWorkFlowerNode(@Valid WorkFlowerNodeRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/workOrder/addOrUpdateWorkFlowerNode");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = workFlowerNodeServer.addOrUpdateWorkFlowerNode(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -260,8 +291,22 @@ public class WorkOrderController extends BaseController{
      *五、新增/修改工作流信息
      * */
     @RequestMapping("addOrUpdateWorkFlower")
-    public String addOrUpdateWorkFlower(WorkFlowerRequest request){
+    public String addOrUpdateWorkFlower(@Valid WorkFlowerRequest request, BindingResult bindingResult){
         logger.info("[POST]  /api/workOrder/addOrUpdateWorkFlower");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
         int ret = workFlowerNodeServer.addOrUpdateWorkFlower(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
@@ -312,7 +357,7 @@ public class WorkOrderController extends BaseController{
      *八、分页获取工作流信息
      * */
     @RequestMapping("listWorkFlower")
-    public String listWorkFlower(BaseRequest request){
+    public String listWorkFlower(WorkFlowerRequest request){
         logger.info("[POST]  /api/workOrder/listWorkFlower");
         JsonResult jsonResult = JsonResult.getSUCCESS();
         Tuple.TwoTuple<List<WorkFlower>, Integer> tuple = workFlowerNodeServer.listWorkFlower(request);

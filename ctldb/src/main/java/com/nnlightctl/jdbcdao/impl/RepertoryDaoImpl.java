@@ -4,6 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.jdbcdao.RepertoryDao;
 import com.nnlightctl.po.Property;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.ListRepertoryRequest;
 import com.nnlightctl.request.TransferPropertyRequest;
 import com.nnlightctl.vo.LightingView;
 import com.nnlightctl.vo.ListRepertoryUserView;
@@ -38,13 +39,27 @@ public class RepertoryDaoImpl implements RepertoryDao {
         return namedParameterJdbcTemplate.update(sql.toString(), params);
     }
 
-    public Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertoryUser(BaseRequest request){
+    public Tuple.TwoTuple<List<ListRepertoryUserView>, Integer> listRepertoryUser(ListRepertoryRequest request){
         StringBuilder sql = new StringBuilder();
         StringBuilder countSql = new StringBuilder();
         List<Object> params = new ArrayList<>(1);
-        sql.append("SELECT a.id ,a.gmt_created ,a.gmt_updated ,a.uid ,a.repertory_name ,a.repertory_address, a.repertory_phone ,a.repertory_zip_code ,a.nnlightctl_user_id ,b.user_name ,b.phone ,b.email ,b.place  from nnlightctl_repertory a LEFT JOIN nnlightctl_user b on a.nnlightctl_user_id = b.id  ");
-        countSql.append("select count(*) from nnlightctl_repertory a LEFT JOIN nnlightctl_user b on a.nnlightctl_user_id = b.id ");
-
+        sql.append("SELECT a.id ,a.gmt_created ,a.gmt_updated ,a.uid ,a.repertory_name ,a.repertory_address, a.repertory_phone ,a.repertory_zip_code ,a.nnlightctl_user_id ,b.user_name ,b.phone ,b.email ,b.place  from nnlightctl_repertory a LEFT JOIN nnlightctl_user b on a.nnlightctl_user_id = b.id where 1=1 ");
+        countSql.append("select count(*) from nnlightctl_repertory a LEFT JOIN nnlightctl_user b on a.nnlightctl_user_id = b.id where 1=1 ");
+        if (request.getUid() != null){
+            sql.append(" and a.uid = ? ");
+            countSql.append(" and a.uid = ? ");
+            params.add(request.getUid());
+        }
+        if (request.getRepertoryName() != null){
+            sql.append(" and a.repertory_name = ? ");
+            countSql.append(" and a.repertory_name = ? ");
+            params.add(request.getRepertoryName());
+        }
+        if (request.getNnlightctlUserId() != null){
+            sql.append(" and a.nnlightctl_user_id = ? ");
+            countSql.append(" and a.nnlightctl_user_id = ? ");
+            params.add(request.getNnlightctlUserId());
+        }
         int total = jdbcTemplate.queryForObject(countSql.toString(),params.toArray(), Integer.class);
 
         sql.append("order by id DESC ");
@@ -89,7 +104,6 @@ public class RepertoryDaoImpl implements RepertoryDao {
         countSql.append("select count(*) from nnlightctl_repertory a LEFT JOIN nnlightctl_user b on a.nnlightctl_user_id = b.id where 1 =1 ");
         if (id != null){
             sql.append(" and a.id = ? ");
-
             countSql.append(" and a.id = ? ");
             params.add(id);
         }

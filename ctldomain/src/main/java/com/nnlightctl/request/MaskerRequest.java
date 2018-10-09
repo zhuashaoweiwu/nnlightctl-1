@@ -1,21 +1,22 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class MaskerRequest {
+public class MaskerRequest extends BaseRequest{
 
     private Long id;
 
     private Date gmtCreated;
 
     private Date gmtUpdated;
-
+    @NotNull(message = "执行联系人姓名不能为空！")
     private String maskName;
 
     private Byte sex;
 
     private Byte age;
-
+    @NotNull(message = "联系电话号码不为空！")
     private String phoneNumber;
 
     private String email;
@@ -23,7 +24,7 @@ public class MaskerRequest {
     private String place;
 
     private Long nnlightctlMaskerId;
-
+    @NotNull(message = "编号不能为空！")
     private String codeNumber;
 
     private String department;
