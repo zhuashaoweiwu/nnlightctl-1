@@ -54,6 +54,30 @@ public class SceneController extends BaseController {
         return toJson(jsonResult);
     }
 
+    /*
+    *前端接口-GIS地理信息模块
+    *十五点一、通过快捷键名称统计快捷场景映射数量（判断快捷键名称重复）
+    * */
+    @RequestMapping("countSceneShotcutByShotcutName")
+    public String countSceneShotcutByShotcutName(String shotcutName){
+        logger.info("[POST] /api/scene/countSceneShotcutByShotcutName");
+        int total = sceneServer.getCountSceneShotcutByShotcutName(shotcutName);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *前端接口-GIS地理信息模块
+     *十五点二、通过场景ID统计快捷键场景映射数量（判断场景ID是否重复）
+     * */
+    public String countSceneShotcutBySceneId(Long sceneId){
+        logger.info("[POST] /api/scene/countSceneShotcutBySceneId");
+        int total = sceneServer.getCountSceneShotcutBySceneId(sceneId);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("listScene")
     public String listScene(SceneRequest request) {
         logger.info("[POST] /api/scene/listScene");

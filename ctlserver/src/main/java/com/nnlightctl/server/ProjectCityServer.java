@@ -11,4 +11,6 @@ public interface ProjectCityServer {
     List<ProjectCity> listCity(BaseRequest request);
     ProjectCity getCity(ProjectCityConditionRequest request);
     int addOrUpdateCity(ProjectCityRequest request);
+    int getCountCityByCodeNumber(String codeNumber);
+    int getCountCityByCityName(String cityName);
 }

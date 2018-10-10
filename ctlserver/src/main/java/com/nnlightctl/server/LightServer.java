@@ -13,6 +13,9 @@ import java.util.List;
 
 public interface LightServer {
     int addOrUpdateLight(LightRequest request);
+    int getCountLightingByUId(String uid);
+    int getCountLightingByLamppost(String lamppost);
+    int getCountLightingByLampHead(String lamphead);
     int batchAddLight(LightRequest.BatchLightRequest request);
     int deleteLight(LightConditionRequest request);
     Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request);

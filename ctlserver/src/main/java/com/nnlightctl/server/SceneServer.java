@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface SceneServer {
     int addOrUpdateScene(SceneRequest request);
-
+    int getCountSceneShotcutByShotcutName(String shotcutName);
+    int getCountSceneShotcutBySceneId(Long sceneId);
     Tuple.TwoTuple<List<Scene>, Integer> listScene(SceneRequest request);
 
     SceneView getScene(Long id);

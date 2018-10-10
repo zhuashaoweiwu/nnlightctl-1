@@ -14,8 +14,12 @@ import java.util.List;
 
 public interface EleboxServer {
     int insertElebox(EleboxAddModelRequest request);
+    int getCountModelByUid(String uid);
+    int getCountModelLoopByLoopCode(ModelLoopByLoopCodeRequest request);
     Elebox getEleboxById(Long id);
     int updateElebox(EleboxRequest request);
+    int getCountEleboxByUid(String uid);
+    int getCountEleboxByCodeNumber(String codeNumber);
     int updateEleboxDevice(EleboxConditionRequest request);
     int updateModelLoopSplite(EleboxConditionRequest request);
     int deleteElebox(EleboxConditionRequest request);

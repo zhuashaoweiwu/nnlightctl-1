@@ -5,6 +5,7 @@ import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.jdbcdao.EleboxModelDao;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
+import com.nnlightctl.po.EleboxModelLoopExample;
 import com.nnlightctl.request.ModelLoopConditionRequest;
 import com.nnlightctl.request.ModelLoopRequest;
 import com.nnlightctl.server.ModelLoopServer;
@@ -45,7 +46,6 @@ public class ModelLoopServerImpl implements ModelLoopServer {
 
         return ret;
     }
-
     @Override
     public int deleteModelLoop(ModelLoopConditionRequest request) {
         int ret = -1;

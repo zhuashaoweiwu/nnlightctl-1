@@ -67,7 +67,20 @@ public class SceneServerImpl implements SceneServer {
 
         return 1;
     }
-
+    @Override
+    public int getCountSceneShotcutByShotcutName(String shotcutName){
+        SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
+        sceneShotcutExample.createCriteria().andShotcutNameEqualTo(shotcutName);
+        int total =sceneShotcutMapper.countByExample(sceneShotcutExample);
+        return total;
+    }
+    @Override
+    public int getCountSceneShotcutBySceneId(Long sceneId){
+        SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
+        sceneShotcutExample.createCriteria().andNnlightctlSceneIdEqualTo(sceneId.longValue());
+        int total =sceneShotcutMapper.countByExample(sceneShotcutExample);
+        return total;
+    }
     @Override
     public Tuple.TwoTuple<List<Scene>, Integer> listScene(SceneRequest request) {
         Tuple.TwoTuple<List<Scene>, Integer> tuple = new Tuple.TwoTuple<>();

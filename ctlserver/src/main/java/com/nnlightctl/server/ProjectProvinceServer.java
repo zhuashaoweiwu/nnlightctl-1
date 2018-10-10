@@ -11,4 +11,6 @@ public interface ProjectProvinceServer {
     List<ProjectProvince> listProvince(BaseRequest request);
     ProjectProvince getProvince(ProjectProvinceConditionRequest request);
     int addOrUpdateProvince(ProjectProvinceRequest request);
+    int getCountProvinceByCodeNumber(String codeNumber);
+    int getCountProvinceByProvinceName(String provinceName);
 }

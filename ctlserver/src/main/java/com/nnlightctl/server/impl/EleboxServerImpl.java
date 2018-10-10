@@ -69,7 +69,22 @@ public class EleboxServerImpl implements EleboxServer {
         }
         return ret;
     }
-
+    @Override
+    public int getCountModelByUid(String uid){
+        EleboxModelExample eleboxModelExample = new EleboxModelExample();
+        eleboxModelExample.createCriteria().andUidEqualTo(uid);
+        int total = eleboxModelMapper.countByExample(eleboxModelExample);
+        return total;
+    }
+    @Override
+    public int getCountModelLoopByLoopCode(ModelLoopByLoopCodeRequest request){
+        EleboxModelLoopExample eleboxModelExample = new EleboxModelLoopExample();
+        EleboxModelLoopExample.Criteria criteria = eleboxModelExample.createCriteria();
+        criteria.andLoopCodeEqualTo(request.getLoopCode());
+        criteria.andNnlightctlEleboxModelIdEqualTo(request.getModelId());
+        int total = eleboxModelLoopMapper.countByExample(eleboxModelExample);
+        return  total;
+    }
     @Override
     public Elebox getEleboxById(Long id) {
         return eleboxMapper.selectByPrimaryKey(id);
@@ -83,7 +98,20 @@ public class EleboxServerImpl implements EleboxServer {
 
         return eleboxMapper.updateByPrimaryKeySelective(elebox);
     }
-
+    @Override
+    public int getCountEleboxByUid(String uid){
+        EleboxExample eleboxExample = new EleboxExample();
+        eleboxExample.createCriteria().andUidEqualTo(uid);
+        int total = eleboxMapper.countByExample(eleboxExample);
+        return total;
+    }
+    @Override
+    public int getCountEleboxByCodeNumber(String codeNumber){
+        EleboxExample eleboxExample = new EleboxExample();
+        eleboxExample.createCriteria().andCodeNumberEqualTo(codeNumber);
+        int total = eleboxMapper.countByExample(eleboxExample);
+        return total;
+    }
     @Override
     public int updateEleboxDevice(EleboxConditionRequest request) {
         List<Long> deleteDeviceIdList = request.getDeleteModelIdList();

@@ -54,7 +54,27 @@ public class LightServerImpl implements LightServer {
         }
         return ret;
     }
-
+    @Override
+    public int getCountLightingByUId(String uid){
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andUidEqualTo(uid);
+        int total = lightingMapper.countByExample(lightingExample);
+        return total;
+    }
+    @Override
+    public int getCountLightingByLamppost(String lamppost){
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andLamppostEqualTo(lamppost);
+        int total = lightingMapper.countByExample(lightingExample);
+        return total;
+    }
+    @Override
+    public int getCountLightingByLampHead(String lamphead){
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andLampheadEqualTo(lamphead);
+        int total = lightingMapper.countByExample(lightingExample);
+        return total;
+    }
     @Override
     public int batchAddLight(LightRequest.BatchLightRequest request) {
         List<LightRequest> lightRequestList = request.getAddLightings();

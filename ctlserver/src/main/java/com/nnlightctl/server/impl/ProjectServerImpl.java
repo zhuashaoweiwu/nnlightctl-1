@@ -103,7 +103,13 @@ public class ProjectServerImpl implements ProjectServer {
 
         return projectMapper.updateByPrimaryKeySelective(project);
     }
-
+    @Override
+    public int getCountProjectByCode(String projectCode){
+        ProjectExample projectExample = new ProjectExample();
+        projectExample.createCriteria().andCodeNumberEqualTo(projectCode);
+        int total= projectMapper.countByExample(projectExample);
+        return total;
+    }
     @Override
     public int deleteProject(List<Long> idList) {
         int ret = -1;

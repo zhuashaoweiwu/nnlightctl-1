@@ -3,6 +3,7 @@ package com.nnlightctl.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.dao.ProjectCityMapper;
+import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectCity;
 import com.nnlightctl.po.ProjectCityExample;
 import com.nnlightctl.request.BaseRequest;
@@ -55,5 +56,19 @@ public class ProjectCityServerImpl implements ProjectCityServer {
             ret = projectCityMapper.updateByPrimaryKeySelective(projectCity);
         }
         return ret;
+    }
+    @Override
+    public int getCountCityByCodeNumber(String codeNumber){
+        ProjectCityExample projectCityExample = new ProjectCityExample();
+        projectCityExample.createCriteria().andCodeNumberEqualTo(codeNumber);
+        int total = projectCityMapper.countByExample(projectCityExample);
+        return total;
+    }
+    @Override
+    public int getCountCityByCityName(String cityName){
+        ProjectCityExample projectCityExample = new ProjectCityExample();
+        projectCityExample.createCriteria().andCityNameEqualTo(cityName);
+        int total = projectCityMapper.countByExample(projectCityExample);
+        return total;
     }
 }

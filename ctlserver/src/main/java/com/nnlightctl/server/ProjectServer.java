@@ -14,5 +14,6 @@ public interface ProjectServer {
     Project getProject(ProjectConditionRequest request);
     int insertProject(ProjectRequest request);
     int updateProject(ProjectRequest request);
+    int getCountProjectByCode(String projectCode);
     int deleteProject(List<Long> idList);
 }

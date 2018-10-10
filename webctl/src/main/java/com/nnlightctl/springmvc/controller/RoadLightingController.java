@@ -161,6 +161,30 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+    /*
+     *前端接口-道路照明系统模块
+     *一点一、通过UID统计模块的数量（判断模块UID是否重复）
+     * */
+    @RequestMapping("countModelByUid")
+    public String countModelByUid(String uid){
+        logger.info("[POST] /api/roadlighting/countModelByUid");
+        int total = eleboxServer.getCountModelByUid(uid);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *前端接口-道路照明系统模块
+     *一点二、通过模块ID和回路编码统计该回路在该模块中的数量（判断回路编码在所在模块中是否重复）
+     * */
+    @RequestMapping("countModelByUid")
+    public String countModelLoopByLoopCode(ModelLoopByLoopCodeRequest request){
+        logger.info("[POST] /api/roadlighting/countModelByUid");
+        int total = eleboxServer.getCountModelLoopByLoopCode(request);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
 
     @RequestMapping("updateelebox")
     public String updateEleBox(@Valid EleboxRequest request, BindingResult bindingResult) {
@@ -189,7 +213,30 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
-
+    /*
+    *前端接口-道路照明系统模块
+     *二点零一、通过控制柜UID统计控制柜数量（判断控制柜UID是否重复）
+    * */
+    @RequestMapping("countEleboxByUid")
+    public String countEleboxByUid(String uid){
+        logger.info("[POST] /api/roadlighting/countEleboxByUid");
+        int total = eleboxServer.getCountEleboxByUid(uid);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *前端接口-道路照明系统模块
+     *二点零二、通过控制柜编码统计控制柜数量（判断控制柜编码是否重复）
+     * */
+    @RequestMapping("countEleboxByCodeNumber")
+    public String countEleboxByCodeNumber(String codeNumber) {
+        logger.info("[POST] /api/roadlighting/countEleboxByCodeNumber");
+        int total = eleboxServer.getCountEleboxByCodeNumber(codeNumber);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
     @RequestMapping("getElebox")
     public String getElebox(Long id) {
         logger.info("[POST] /api/roadlighting/getElebox");
@@ -374,7 +421,42 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
-
+    /*
+    *前端接口-道路照明系统模块
+    *十四点零一、通过UID统计灯具数量（判断灯具UID是否重复）
+    * */
+    @RequestMapping("countLightingByUId")
+    public String countLightingByUId(String uid){
+        logger.info("[POST] /api/roadlighting/countLightingByUId");
+        int total = lightServer.getCountLightingByUId(uid);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *前端接口-道路照明系统模块
+     *十四点零二、通过灯杆号统计灯具数量（判断灯杆号是否重复）
+     * */
+    @RequestMapping("countLightingByLamppost")
+    public String countLightingByLamppost(String lamppost){
+        logger.info("[POST] /api/roadlighting/countLightingByLamppost");
+        int total = lightServer.getCountLightingByLamppost(lamppost);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *前端接口-道路照明系统模块
+     *十四点零二、通过灯杆号统计灯具数量（判断灯杆号是否重复）
+     * */
+    @RequestMapping("countLightingByLampHead")
+    public String countLightingByLampHead(String lamphead){
+        logger.info("[POST] /api/roadlighting/countLightingByLampHead");
+        int total = lightServer.getCountLightingByLampHead(lamphead);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
     @RequestMapping("batchAddLighting")
     public String batchAddLight(LightRequest.BatchLightRequest request) {
         logger.info("[POST] /api/roadlighting/batchAddLighting");

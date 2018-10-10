@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ProjectCountryServer {
     int addOrUpdateCountry(ProjectCountryRequest request);
+    int getCountCountryByCodeNumber(String codeNumber);
+    int getCountCountryByCountryName(String countryName);
     List<ProjectCountry> listCountry(BaseRequest request);
     ProjectCountry getCountry(ProjectCountryConditionRequest request);
 }

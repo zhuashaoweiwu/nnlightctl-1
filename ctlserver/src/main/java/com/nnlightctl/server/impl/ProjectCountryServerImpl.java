@@ -40,7 +40,20 @@ public class ProjectCountryServerImpl implements ProjectCountryServer {
 
         return ret;
     }
-
+    @Override
+    public int getCountCountryByCodeNumber(String codeNumber){
+        ProjectCountryExample projectCountryExample = new ProjectCountryExample();
+        projectCountryExample.createCriteria().andCodeNumberEqualTo(codeNumber);
+        int total = projectCountryMapper.countByExample(projectCountryExample);
+        return total;
+    }
+    @Override
+    public int getCountCountryByCountryName(String countryName){
+        ProjectCountryExample projectCountryExample = new ProjectCountryExample();
+        projectCountryExample.createCriteria().andCountryNameEqualTo(countryName);
+        int total = projectCountryMapper.countByExample(projectCountryExample);
+        return total;
+    }
     @Override
     public List<ProjectCountry> listCountry(BaseRequest request) {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());

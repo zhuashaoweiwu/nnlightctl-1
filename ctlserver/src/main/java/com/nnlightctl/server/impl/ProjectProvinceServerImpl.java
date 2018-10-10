@@ -59,4 +59,18 @@ public class ProjectProvinceServerImpl implements ProjectProvinceServer {
         }
         return ret;
     }
+    @Override
+    public int getCountProvinceByCodeNumber(String codeNumber){
+        ProjectProvinceExample projectProvinceExample = new ProjectProvinceExample();
+        projectProvinceExample.createCriteria().andCodeNumberEqualTo(codeNumber);
+        int total = projectProvinceMapper.countByExample(projectProvinceExample);
+        return total;
+    }
+    @Override
+    public int getCountProvinceByProvinceName(String provinceName){
+        ProjectProvinceExample projectProvinceExample = new ProjectProvinceExample();
+        projectProvinceExample.createCriteria().andProvinceNameEqualTo(provinceName);
+        int total = projectProvinceMapper.countByExample(projectProvinceExample);
+        return total;
+    }
 }
