@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DepartmentServer {
     int addOrUpdateDepartment(DepartmentRequest request);
-
+    int getCountDepartmentByName(String departmentName);
     Tuple.TwoTuple<List<Department>, Integer> listDepartment(DepartmentRequest request);
 
     Department getDepartment(Long id);

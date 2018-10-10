@@ -57,6 +57,19 @@ public class DepartmentController extends BaseController {
         return toJson(jsonResult);
     }
 
+    /*
+    *部门管理
+    *一点一、通过部门名称统计部门数量（判断部门名称是否唯一用）
+    * */
+    @RequestMapping("countDepartmentByName")
+    public String countDepartmentByName(String departmentName){
+        logger.info("[POST] /api/department/countDepartmentByName");
+        int total = departmentServer.getCountDepartmentByName(departmentName);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("listDepartment")
     public String listDepartment(DepartmentRequest request) {
         logger.info("[POST] /api/department/listDepartment");

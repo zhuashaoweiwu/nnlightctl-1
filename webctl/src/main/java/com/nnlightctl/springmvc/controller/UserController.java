@@ -55,6 +55,30 @@ public class UserController extends BaseController {
 
         return toJson(jsonResult);
     }
+    /*
+    *用户管理
+    *一点一、通过登录名统计用户数量（判断用户登录名是否重复）
+    * */
+    @RequestMapping("countUserByLoginName")
+    public String countUserByLoginName(String loginName){
+        logger.info("[POST] /api/user/countUserByLoginName");
+        int total = userServer.getCountUserByLoginName(loginName);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
+    /*
+     *用户管理
+     *一点二、通过编号统计用户数量（判断编号是否重复）
+     * */
+    @RequestMapping("countUserByLoginName")
+    public String countUserByCodeNumber(String codeNumber){
+        logger.info("[POST] /api/user/countUserByCodeNumber");
+        int total = userServer.getCountUserByCodeNumber(codeNumber);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setTotal(total);
+        return toJson(jsonResult);
+    }
 
     @RequestMapping("listUser")
     public String listUser(UserConditionRequest request) {

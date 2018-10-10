@@ -45,7 +45,7 @@ public class InstitutionServerImpl implements InstitutionServer {
         return ret;
     }
     @Override
-    public int countInstitutionByName(String institutionName){
+    public int getCountInstitutionByName(String institutionName){
         InstitutionExample institutionExample = new InstitutionExample();
         institutionExample.createCriteria().andInstitutionNameEqualTo(institutionName);
         int total = institutionMapper.countByExample(institutionExample);

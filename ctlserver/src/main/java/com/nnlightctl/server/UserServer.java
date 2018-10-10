@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface UserServer {
     int addOrUpdateUser(UserRequest request);
-
+    int getCountUserByLoginName(String loginName);
+    int getCountUserByCodeNumber(String codeNumber);
     Tuple.TwoTuple<List<User>, Integer> listUser(UserConditionRequest request);
 
     User getUser(Long id);

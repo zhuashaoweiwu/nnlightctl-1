@@ -52,6 +52,21 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
+    public int getCountUserByLoginName(String loginName){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(loginName);
+        int total =userMapper.countByExample(userExample);
+        return total;
+    }
+    @Override
+    public int getCountUserByCodeNumber(String codeNumber){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andCodeNumberEqualTo(codeNumber);
+        int total =userMapper.countByExample(userExample);
+        return total;
+    }
+
+    @Override
     public Tuple.TwoTuple<List<User>, Integer> listUser(UserConditionRequest request) {
         Tuple.TwoTuple<List<User>, Integer> tuple = new Tuple.TwoTuple<>();
 

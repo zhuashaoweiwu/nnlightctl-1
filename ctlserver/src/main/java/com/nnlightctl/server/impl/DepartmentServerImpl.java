@@ -38,6 +38,13 @@ public class DepartmentServerImpl implements DepartmentServer {
         }
         return ret;
     }
+    @Override
+    public int getCountDepartmentByName(String departmentName){
+        DepartmentExample departmentExample = new DepartmentExample();
+        departmentExample.createCriteria().andDepartmentNameEqualTo(departmentName);
+        int total = departmentMapper.countByExample(departmentExample);
+        return total;
+    }
 
     @Override
     public Tuple.TwoTuple<List<Department>, Integer> listDepartment(DepartmentRequest request) {

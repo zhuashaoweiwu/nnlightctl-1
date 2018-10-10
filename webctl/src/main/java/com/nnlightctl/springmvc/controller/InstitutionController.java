@@ -64,7 +64,7 @@ public class InstitutionController extends BaseController {
     @RequestMapping("countInstitutionByName")
     public String countInstitutionByName(String institutionName){
         logger.info("[POST] /api/institution/countInstitutionByName");
-        int total = institutionServer.countInstitutionByName(institutionName);
+        int total = institutionServer.getCountInstitutionByName(institutionName);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);

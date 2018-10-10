@@ -12,7 +12,7 @@ public interface InstitutionServer {
 
     int addOrUpdateInstitution(InstitutionRequest request);
 
-    int countInstitutionByName(String institutionName);
+    int getCountInstitutionByName(String institutionName);
 
     Tuple.TwoTuple<List<Institution>, Integer> listInstitution(InstitutionRequest request);
 
