@@ -102,7 +102,7 @@ public class Consumer {
 //                                    redisClientTemplate.set(lightingVolEleRecord.getUid().getBytes(),
 //                                            ObjectTransferUtil.object2ByteArray(lightingVolEleRecord));
                                         //同时写入Hbase
-                                        lightRealtimeDao.addLightRealtimeRecord(lightingVolEleRecord);
+//                                        lightRealtimeDao.addLightRealtimeRecord(lightingVolEleRecord);
                                         break;
                                     default:
                                         throw new IllegalStateException("Shouldn't be possible to get message on topic " + record.topic());

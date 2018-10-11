@@ -72,7 +72,7 @@
     <!-- slave1 -->
     <bean name="dataSourceSlave1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url_slave1}" />
-        <property name="username" value="${jdbc_username}" />
+        <property name="username" value="${jdbc_slaver_username}" />
         <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="5" />
@@ -120,7 +120,7 @@
     <!-- slave2 -->
     <bean name="dataSourceSlave2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url_slave2}" />
-        <property name="username" value="${jdbc_username}" />
+        <property name="username" value="${jdbc_slaver_username}" />
         <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="5" />

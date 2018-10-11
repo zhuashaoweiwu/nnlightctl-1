@@ -50,9 +50,9 @@ public class DataTransferUtil {
         lightingVolEleRecord.setPersist1(new BigDecimal(String.valueOf(unSignalIntensity)));
 
         //时间
-        short unHour = (short)ByteConvert.bytesToUbyte(data, 47);
-        short unMinute = (short)ByteConvert.bytesToUbyte(data, 48);
-        short unSecond = (short)ByteConvert.bytesToUbyte(data, 49);
+        short unHour = (short)(ByteConvert.bytesToUbyte(data, 47) % 24);
+        short unMinute = (short)(ByteConvert.bytesToUbyte(data, 48) % 60);
+        short unSecond = (short)(ByteConvert.bytesToUbyte(data, 49) % 60);
         LocalDateTime dateTime = LocalDateTime.now().withHour(unHour).withMinute(unMinute).withSecond(unSecond);
         lightingVolEleRecord.setRecordDatetime(DateTimeUtil.fromLocalDateTime(dateTime));
 

@@ -1,4 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ehcache>
-    <cache name="loginUserCache" maxElementsInMemory="1000" />
-    <cache name="commandCache" maxElementsInMemory="1000" />
+
+    <diskStore path="java.io.tmpdir/Tmp_Ehcache" />
+
+    <defaultCache
+        eternal="false"
+        maxElementsInMemory="1000"
+        overflowToDisk="false"
+        diskPersistent="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="600"
+        memoryStoreEvictionPolicy="LRU"
+    />
+
+    <cache name="loginUserCache"
+           maxElementsInMemory="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LRU"
+    />
+
+    <cache name="commandCache"
+           maxElementsInMemory="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LRU"
+    />
+
 </ehcache>
