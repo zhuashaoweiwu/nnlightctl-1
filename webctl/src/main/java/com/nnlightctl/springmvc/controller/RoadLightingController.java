@@ -177,9 +177,9 @@ public class RoadLightingController extends BaseController {
      *前端接口-道路照明系统模块
      *一点二、通过模块ID和回路编码统计该回路在该模块中的数量（判断回路编码在所在模块中是否重复）
      * */
-    @RequestMapping("countModelByUid")
+    @RequestMapping("countModelLoopByLoopCode")
     public String countModelLoopByLoopCode(ModelLoopByLoopCodeRequest request){
-        logger.info("[POST] /api/roadlighting/countModelByUid");
+        logger.info("[POST] /api/roadlighting/countModelLoopByLoopCode");
         int total = eleboxServer.getCountModelLoopByLoopCode(request);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);

@@ -87,7 +87,7 @@ public class ProjectController extends BaseController {
      *国家信息管理
      *5、通过国家名称统计国家数量（判断国家名称是否重复）
      * */
-    @RequestMapping("countCountryByCodeNumber")
+    @RequestMapping("countCountryByCountryName")
     public String countCountryByCountryName(String countryName){
         logger.info("[POST] /api/project/countCountryByCountryName");
         int total = projectCountryServer.getCountCountryByCountryName(countryName);

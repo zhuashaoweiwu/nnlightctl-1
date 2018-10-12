@@ -71,7 +71,7 @@ public class UserController extends BaseController {
      *用户管理
      *一点二、通过编号统计用户数量（判断编号是否重复）
      * */
-    @RequestMapping("countUserByLoginName")
+    @RequestMapping("countUserByCodeNumber")
     public String countUserByCodeNumber(String codeNumber){
         logger.info("[POST] /api/user/countUserByCodeNumber");
         int total = userServer.getCountUserByCodeNumber(codeNumber);
