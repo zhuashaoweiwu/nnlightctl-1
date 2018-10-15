@@ -33,6 +33,8 @@ public class InstitutionServerImpl implements InstitutionServer {
         institution.setGmtUpdated(new Date());
         if (institution.getNnlightctlInstitutionIdParent() == 0) {
             institution.setInstitutionLevel((byte)0);
+        } else {
+            institution.setInstitutionLevel((byte)1);
         }
 
         int ret = -1;

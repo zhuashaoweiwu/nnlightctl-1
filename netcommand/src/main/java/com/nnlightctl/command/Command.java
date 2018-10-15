@@ -16,6 +16,8 @@ public interface Command {
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
     void configTerminalAutoMode(int mode);
+    //模块命令
+
     void close();
     void reConnect();
 }
