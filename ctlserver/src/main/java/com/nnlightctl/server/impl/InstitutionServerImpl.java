@@ -31,11 +31,15 @@ public class InstitutionServerImpl implements InstitutionServer {
         Institution institution = new Institution();
         ReflectCopyUtil.beanSameFieldCopy(request, institution);
         institution.setGmtUpdated(new Date());
+        if (institution.getNnlightctlInstitutionIdParent() == 0) {
+            institution.setInstitutionLevel((byte)0);
+        }
 
         int ret = -1;
         if (request.getId() == null) {
             //新增
             institution.setGmtCreated(new Date());
+            institution.setCreateTime(new Date());
             ret = institutionMapper.insertSelective(institution);
         } else {
             //更新
