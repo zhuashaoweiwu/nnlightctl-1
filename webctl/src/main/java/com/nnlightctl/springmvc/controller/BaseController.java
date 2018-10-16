@@ -4,9 +4,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.nnlightctl.po.ProjectCountry;
 import com.nnlightctl.result.JsonResult;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,12 +50,19 @@ public class BaseController {
         return jsonObject.toJSONString();
     }
 
-    @ExceptionHandler
-    @ResponseBody
-    public String caughtException(RuntimeException exception) {
+    @ExceptionHandler(RuntimeException.class)
+    public void caughtException(RuntimeException exception, HttpServletResponse response) {
         JsonResult jsonResult = JsonResult.getFAILURE();
         jsonResult.setMsg(exception.getMessage());
-        return toJson(jsonResult);
+
+        response.setContentType("application/json;charset=UTF-8");
+
+        try (PrintWriter printWriter = response.getWriter()) {
+            printWriter.write(toJson(jsonResult));
+            printWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
