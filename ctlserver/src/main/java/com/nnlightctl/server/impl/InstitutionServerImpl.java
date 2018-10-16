@@ -14,6 +14,7 @@ import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nnlightctl.jdbcdao.*;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -64,11 +65,12 @@ public class InstitutionServerImpl implements InstitutionServer {
 
         InstitutionExample institutionExample = new InstitutionExample();
         InstitutionExample.Criteria criteria = institutionExample.createCriteria();
-        if (request.getAddr()!=null){
-            criteria.andAddrEqualTo(request.getAddr());
+        if (!StringUtils.isEmpty(request.getAddr())) {
+            criteria.andAddrLike("%" + request.getAddr() + "%");
         }
-        if(request.getInstitutionName()!=null){
-            criteria.andInstitutionNameEqualTo(request.getInstitutionName());
+
+        if (!StringUtils.isEmpty(request.getInstitutionName())) {
+            criteria.andInstitutionNameLike("%" + request.getInstitutionName() + "%");
         }
 
         institutionExample.setOrderByClause("id DESC");
