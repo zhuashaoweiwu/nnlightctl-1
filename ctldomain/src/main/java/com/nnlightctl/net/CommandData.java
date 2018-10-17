@@ -298,6 +298,15 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
+    public CommandData(String realtime_uid ,byte control){
+        byte[] realtime_uid_bytes = BytesHexStrTranslate.toBytes(realtime_uid);
+        this.control = control;
+        this.dataLength = (byte) (1 + realtime_uid_bytes.length);
+        int uByteDataLength = ByteConvert.byteToUbyte(dataLength);
+        this.data = new byte[uByteDataLength];
+        System.arraycopy(realtime_uid_bytes, 0, this.data, 1, realtime_uid_bytes.length);
+        this.check = createCheck();
+    }
     /**
      * 命令层C4重启复位命令
      * @return
@@ -435,7 +444,22 @@ public class CommandData implements Serializable {
 
         return commandData;
     }
-
+    /*
+    *命令层0xD0应答指令
+    *@return
+    * */
+    public static CommandData getA0CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa0);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    public static CommandData getA1CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa1);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
     /***************************************************命令客户端指令********************************************/
 
     private byte start0 = 0x68;

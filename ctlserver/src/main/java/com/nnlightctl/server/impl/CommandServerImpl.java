@@ -106,4 +106,31 @@ public class CommandServerImpl implements CommandServer {
     public void configTerminalAutoModel(int model) {
         command.configTerminalAutoMode(model);
     }
+
+    @Override
+    public void configerviceFixedInfo(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.serviceFixedInfo(realtime_ids);
+    }
+    @Override
+    public void configServiceOpenClose(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.serviceOpenClose(realtime_ids);
+    }
 }

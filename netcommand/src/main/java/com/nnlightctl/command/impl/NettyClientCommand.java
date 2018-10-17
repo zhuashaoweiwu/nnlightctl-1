@@ -120,6 +120,16 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void serviceFixedInfo(List<String> realtime_ids){
+        System.out.println(realtime_ids.size()+"***************************");
+        context.serviceFixedInfo(realtime_ids);
+    }
+    @Override
+    public void serviceOpenClose(List<String> realtime_ids){
+        context.serviceOpenClose(realtime_ids);
+    }
+
+    @Override
     public void close() {
         context.close();
     }

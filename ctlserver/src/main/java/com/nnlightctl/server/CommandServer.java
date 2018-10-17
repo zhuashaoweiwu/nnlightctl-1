@@ -15,4 +15,6 @@ public interface CommandServer {
     void commandReadTerminalInfo();
     void configTerminalSwitchPolicy(List<SwitchTask> switchTasks);
     void configTerminalAutoModel(int model);
+    void configerviceFixedInfo(List<Long> lightIds);
+    void configServiceOpenClose(List<Long> lightIds);
 }

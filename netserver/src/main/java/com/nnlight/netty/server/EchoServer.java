@@ -289,4 +289,25 @@ public class EchoServer {
         }).start();
 
     }
+    /**
+     * 服务器获取固定信息0xD0
+     */
+    public void allserviceFixedInfo(String realtime_id) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA0CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /**
+     * 服务器获取固定信息0xD0
+     */
+    public void allOpenClose(String realtime_id) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA1CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+
 }
