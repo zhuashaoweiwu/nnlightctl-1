@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -70,7 +72,7 @@ public class SwitchTaskRequest {
 
     private Long id;
 
-    @NotNull(message = "名称不能为空！")
+    @NotBlank(message = "名称不能为空！")
     private String switchName;
 
     private Date startTime;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 
 public class SceneShotcutRequest {
@@ -29,7 +31,7 @@ public class SceneShotcutRequest {
 
     private Long id;
 
-    @NotNull(message = "快捷键名称不能为空！")
+    @NotBlank(message = "快捷键名称不能为空！")
     private String shotcutName;
 
     private Long nnlightctlSceneId;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,7 @@ public class PropertyClassifyCatalogRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-    @NotNull(message = "资产分类目录名称不能为空！")
+    @NotBlank(message = "资产分类目录名称不能为空！")
     private String myCatalogName;
 
     private Byte catalogLevel;

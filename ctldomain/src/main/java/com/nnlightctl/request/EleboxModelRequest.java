@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -117,9 +119,9 @@ public class EleboxModelRequest {
     }
 
     private Long id;
-    @NotNull(message = "唯一编码不能为空！")
+    @NotBlank(message = "唯一编码不能为空！")
     private String uid;
-    @NotNull(message = "模块名称不能为空！")
+    @NotBlank(message = "模块名称不能为空！")
     private String modelName;
     private Double powerRating;
     private Double electricRating;

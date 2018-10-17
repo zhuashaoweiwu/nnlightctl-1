@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
@@ -63,7 +64,7 @@ public class InstitutionRequest extends BaseRequest{
 
     private Long id;
 
-    @NotEmpty(message = "机构名称不可为空")
+    @NotBlank(message = "机构名称不可为空!")
     private String institutionName;
 
     private Date createTime;

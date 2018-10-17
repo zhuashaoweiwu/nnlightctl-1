@@ -1,11 +1,13 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class WorkFlowerRequest extends BaseRequest{
    private Long id;  //-- 工作流id
-    @NotNull(message = "工作流名称不能为空！")
+    @NotBlank(message = "工作流名称不能为空！")
     private String workflowerName;  //-- 工作流名称
 
     private String mem;  //-- 备注

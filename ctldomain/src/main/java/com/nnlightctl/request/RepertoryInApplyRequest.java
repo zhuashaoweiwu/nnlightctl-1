@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +15,7 @@ public class RepertoryInApplyRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-    @NotNull(message = "入库记录单号不能为空！")
+    @NotBlank(message = "入库记录单号不能为空！")
     private String serialnumber;
 
     private Date inRepertoryDate;

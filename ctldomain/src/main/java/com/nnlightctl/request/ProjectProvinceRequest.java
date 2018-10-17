@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 
 public class ProjectProvinceRequest {
@@ -36,9 +38,9 @@ public class ProjectProvinceRequest {
     }
 
     private Long id;
-    @NotNull(message = "省份编码不能为空！")
+    @NotBlank(message = "省份编码不能为空！")
     private String codeNumber;
-    @NotNull(message = "省份名称不能为空！")
+    @NotBlank(message = "省份名称不能为空！")
     private String provinceName;
     private String mem;
 }

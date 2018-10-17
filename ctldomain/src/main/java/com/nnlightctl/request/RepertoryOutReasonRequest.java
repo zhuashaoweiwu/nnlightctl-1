@@ -1,13 +1,15 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class RepertoryOutReasonRequest {
     private Long id;  //-- 出库原因id
-    @NotNull(message = "出库原因编码不能为空！")
+    @NotBlank(message = "出库原因编码不能为空！")
     private String codeNumber; // -- 出库原因编码
-    @NotNull(message = "出库原因描述不能为空！")
+    @NotBlank(message = "出库原因描述不能为空！")
     private String reason;  //-- 出库原因描述
 
     private List<Long> repertoryOutReasonIds;

@@ -2,6 +2,7 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -113,15 +114,15 @@ public class UserRequest {
 
     private Long id;
 
-    @NotNull(message = "登录名不能为空！")
+    @NotBlank(message = "登录名不能为空！")
     private String loginName;
 
-    @NotNull(message = "登录密码不能为空！")
+    @NotBlank(message = "登录密码不能为空！")
     private String loginPwd;
 
     private Byte isRemenberPwd;
 
-    @NotNull(message = "用户名不能为空！")
+    @NotBlank(message = "用户名不能为空！")
     private String userName;
 
     private Byte sex;
@@ -135,7 +136,7 @@ public class UserRequest {
 
     private String place;
 
-    @NotNull(message = "编号不能为空！")
+    @NotBlank(message = "编号不能为空！")
     private String codeNumber;
 
     private Byte userType;

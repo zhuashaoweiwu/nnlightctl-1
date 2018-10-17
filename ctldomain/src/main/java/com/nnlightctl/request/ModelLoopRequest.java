@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 
 public class ModelLoopRequest {
@@ -60,7 +62,7 @@ public class ModelLoopRequest {
     }
 
     private Long id;
-    @NotNull(message = "回路编码不能为空！")
+    @NotBlank(message = "回路编码不能为空！")
     private String loopCode;
     private Double voltage;
     private Double electricity;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +13,9 @@ public class SupplierRequest extends BaseRequest{
     private Date gmtCreated;
 
     private Date gmtUpdated;
-    @NotNull(message = "供应商编码不能为空！")
+    @NotBlank(message = "供应商编码不能为空！")
     private String uid;
-    @NotNull(message = "供应商名称不能为空！")
+    @NotBlank(message = "供应商名称不能为空！")
     private String applierName;
 
     private String addr;

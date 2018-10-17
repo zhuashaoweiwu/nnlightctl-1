@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class SceneRequest extends BaseRequest{
     }
 
     private Long id;
-    @NotNull(message = "场景模式名称不能为空！")
+    @NotBlank(message = "场景模式名称不能为空！")
     private String sceneName;
 
     private String sceneDesc;

@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -10,7 +12,7 @@ public class RepertoryRequest {
     private Date gmtCreated;
 
     private Date gmtUpdated;
-    @NotNull(message = "仓库UID不能为空！")
+    @NotBlank(message = "仓库UID不能为空！")
     private String uid;
 
     private String repertoryName;

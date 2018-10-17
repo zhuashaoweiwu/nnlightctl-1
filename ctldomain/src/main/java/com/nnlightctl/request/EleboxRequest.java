@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -143,9 +145,9 @@ public class EleboxRequest extends BaseRequest{
     }
     private Long projectId;
     private Long id;
-    @NotNull(message = "控制柜uid不能为空！")
+    @NotBlank(message = "控制柜uid不能为空！")
     private String uid;
-    @NotNull(message = "控制柜唯一编码不能为空！")
+    @NotBlank(message = "控制柜唯一编码不能为空！")
     private String codeNumber;
     private Date manufacture;
     private String longitude;

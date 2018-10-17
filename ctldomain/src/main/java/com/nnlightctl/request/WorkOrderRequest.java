@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -7,7 +8,7 @@ import java.util.Date;
 
 public class WorkOrderRequest extends BaseRequest{
     private Long id;    //-- 工单id
-    @NotNull(message = "编号不能为空！")
+    @NotBlank(message = "编号不能为空！")
     private String serialNumber; // -- 编号
 
     private Byte classify; // -- 分类

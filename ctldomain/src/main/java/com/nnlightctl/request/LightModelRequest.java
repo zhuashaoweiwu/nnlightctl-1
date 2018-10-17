@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -61,7 +63,7 @@ public class LightModelRequest {
     }
 
     private Long id;
-    @NotNull(message = "型号名称不能为空！")
+    @NotBlank(message = "型号名称不能为空！")
     private String modelName;
 
     private BigDecimal ratedVoltage;
