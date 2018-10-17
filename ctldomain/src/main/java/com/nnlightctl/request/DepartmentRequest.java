@@ -2,6 +2,7 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class DepartmentRequest extends BaseRequest{
@@ -78,7 +79,7 @@ public class DepartmentRequest extends BaseRequest{
 
     private String addr;
 
-    @NotEmpty
+    @NotNull
     private Long nnlightctlInstitutionIdBelong;
 
     private String mem;

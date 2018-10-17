@@ -41,6 +41,7 @@ public class UserServerImpl implements UserServer {
         if (request.getId() == null) {
             //新增
             user.setGmtCreated(new Date());
+            user.setUserState((byte)1);
 
             ret = userMapper.insertSelective(user);
         } else {

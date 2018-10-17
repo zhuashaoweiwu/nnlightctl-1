@@ -11,6 +11,7 @@ import com.nnlightctl.request.DepartmentRequest;
 import com.nnlightctl.server.DepartmentServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,9 @@ public class DepartmentServerImpl implements DepartmentServer {
         if (request.getId() == null) {
             //新增
             department.setGmtCreated(new Date());
+            department.setCreateTime(new Date());
+            department.setDepartmentLevel((byte)0);
+
             ret = departmentMapper.insertSelective(department);
         } else {
             //更新
@@ -52,11 +56,11 @@ public class DepartmentServerImpl implements DepartmentServer {
 
         DepartmentExample departmentExample = new DepartmentExample();
         DepartmentExample.Criteria criteria = departmentExample.createCriteria();
-        if(request.getAddr()!=null){
-            criteria.andAddrEqualTo(request.getAddr());
+        if(!StringUtils.isEmpty(request.getAddr())){
+            criteria.andAddrLike("%" + request.getAddr() + "%");
         }
-        if(request.getDepartmentName()!=null){
-            criteria.andDepartmentNameEqualTo(request.getDepartmentName());
+        if(!StringUtils.isEmpty(request.getDepartmentName())){
+            criteria.andDepartmentNameLike("%" + request.getDepartmentName() + "%");
         }
         departmentExample.setOrderByClause("id DESC");
 
