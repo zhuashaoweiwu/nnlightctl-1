@@ -16,7 +16,7 @@ public class D1Process implements Process {
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
         logger.info(LocalDate.now() + " " + LocalTime.now() + " 控制继电器开闭状态 0xD1[" + msg.getData()[0] + "]");
-
+        System.out.println();
         /*byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);
 
