@@ -182,17 +182,83 @@ public class CommandController extends BaseController {
 
         //todo
     }
-    @RequestMapping("configerviceFixedInfo")
-    public String  configerviceFixedInfo(CommandRequest request) {
-        logger.info("[POST] /api/command/configerviceFixedInfo");
-        commandServer.configerviceFixedInfo(request.getLightIds());
+    /*
+    *服务器获取固定信息0xD0
+    * */
+    @RequestMapping("batchCommandReadServiceFixedInfo")
+    public String  batchCommandReadServiceFixedInfo(CommandRequest request) {
+        logger.info("[POST] /api/command/batchCommandReadServiceFixedInfo");
+        commandServer.commandReadServiceFixedInfo(request.getLightIds());
         //todo
         return toJson(JsonResult.getSUCCESS());
     }
-    @RequestMapping("configerviceOpenClose")
-    public String  configerviceOpenClose(CommandRequest request) {
-        logger.info("[POST] /api/command/configerviceOpenClose");
+    /*
+    * 控制继电器开闭状态 0xD1
+    * */
+    @RequestMapping("batchConfigerviceOpenClose")
+    public String  batchConfigerviceOpenClose(CommandRequest request) {
+        logger.info("[POST] /api/command/batchConfigerviceOpenClose");
         commandServer.configServiceOpenClose(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+    *重启/复位 0xD2
+    * */
+    @RequestMapping("batchConfigRestart")
+    public String batchConfigRestart(CommandRequest request){
+        logger.info("[POST] /api/command/batchConfigRestart");
+        commandServer.batchConfigRestart(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+     *设置定时发送参数 0xD3
+     * */
+    @RequestMapping("batchCommandReadTimeParameter")
+    public String batchCommandReadTimeParameter(CommandRequest request){
+        logger.info("[POST] /api/command/batchCommandReadTimeParameter");
+        commandServer.batchCommandReadTimeParameter(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+    *读取/发送信息 0xD4
+     */
+    @RequestMapping("batchCommandReadSending")
+    public String batchCommandReadSending(CommandRequest request){
+        logger.info("[POST] /api/command/batchCommandReadSending");
+        commandServer.batchCommandReadSending(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+    * 服务器对设备广播对时 0xD5
+    * */
+    @RequestMapping("batchConfigSetTime")
+    public String batchConfigSetTime(CommandRequest request){
+        logger.info("[POST] /api/command/batchConfigSetTime");
+        commandServer.batchConfigSetTime(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+    *设置亮/灭灯定时策略 0xD6
+     */
+    @RequestMapping("batchConfigOpenCloseStrategy")
+    public String batchConfigOpenCloseStrategy(CommandRequest request){
+        logger.info("[POST] /api/command/batchConfigOpenCloseStrategy");
+        commandServer.batchConfigOpenCloseStrategy(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    /*
+     * 设置终端设备的工作模式（手动or自动）D7
+     */
+    @RequestMapping("batchConfigWorkModel")
+    public String batchConfigWorkModel(CommandRequest request){
+        logger.info("[POST] /api/command/batchConfigWorkModel");
+        commandServer.batchConfigWorkModel(request.getLightIds());
         //todo
         return toJson(JsonResult.getSUCCESS());
     }

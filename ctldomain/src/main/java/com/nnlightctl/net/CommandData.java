@@ -298,13 +298,18 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
+    /**
+    *继电器模块与服务器通讯协议A
+    *@param realtime_uid
+    * @param control
+    */
     public CommandData(String realtime_uid ,byte control){
         byte[] realtime_uid_bytes = BytesHexStrTranslate.toBytes(realtime_uid);
         this.control = control;
-        this.dataLength = (byte) (1 + realtime_uid_bytes.length);
+        this.dataLength = (byte) ( realtime_uid_bytes.length);
         int uByteDataLength = ByteConvert.byteToUbyte(dataLength);
         this.data = new byte[uByteDataLength];
-        System.arraycopy(realtime_uid_bytes, 0, this.data, 1, realtime_uid_bytes.length);
+        System.arraycopy(realtime_uid_bytes, 0, this.data, 0, realtime_uid_bytes.length);
         this.check = createCheck();
     }
     /**
@@ -445,7 +450,7 @@ public class CommandData implements Serializable {
         return commandData;
     }
     /*
-    *命令层0xD0应答指令
+    *命令层设置0xA0应答指令
     *@return
     * */
     public static CommandData getA0CommandData(String realtime_id) {
@@ -454,9 +459,73 @@ public class CommandData implements Serializable {
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+    /*
+     *命令层设置0xA1应答指令
+     *@return
+     * */
     public static CommandData getA1CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
         commandData.setControl((byte)0xa1);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA2应答指令
+     *@return
+     * */
+    public static CommandData getA2CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa2);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA3应答指令
+     *@return
+     * */
+    public static CommandData getA3CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa3);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA4应答指令
+     *@return
+     * */
+    public static CommandData getA4CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa4);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA5应答指令
+     *@return
+     * */
+    public static CommandData getA5CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa5);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA6应答指令
+     *@return
+     * */
+    public static CommandData getA6CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa6);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+    /*
+     *命令层设置0xA7应答指令
+     *@return
+     * */
+    public static CommandData getA7CommandData(String realtime_id) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xa7);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }

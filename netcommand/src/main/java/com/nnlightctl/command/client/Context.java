@@ -103,7 +103,7 @@ public class Context {
         this.command = command;
     }
 
-    public void serviceFixedInfo(List<String> realtime_ids){
+    public void commandReadServiceFixedInfo(List<String> realtime_ids){
         for (String realtime_id : realtime_ids) {
             channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa0) );
         }
@@ -111,6 +111,37 @@ public class Context {
     public void serviceOpenClose(List<String> realtime_ids){
         for (String realtime_id : realtime_ids) {
             channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa1) );
+        }
+    }
+    public void batchConfigRestart(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa2) );
+        }
+    }
+
+    public void batchCommandReadTimeParameter(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa3) );
+        }
+    }
+    public void batchCommandReadSending(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa4) );
+        }
+    }
+    public void batchConfigSetTime(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa5) );
+        }
+    }
+    public void batchConfigOpenCloseStrategy(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa6) );
+        }
+    }
+    public void batchConfigWorkModel(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa7) );
         }
     }
 

@@ -21,9 +21,10 @@ public class A1Process implements Process {
         logger.info(LocalDate.now() + " " + LocalTime.now() + " 发送控制继电器开闭状态 0xA1指令[" + msg.getData()[0] + "]");
 
         byte[] id = new byte[4];
-        System.arraycopy(msg.getData(), 1, id, 0, 4);
+
+        System.arraycopy(msg.getData(), 0, id, 0, msg.getDataLength());
 
         String realtimeId = BytesHexStrTranslate.bytesToHexFun(id);
-        EchoServer.getGlobalApplicationContext().allOpenClose(realtimeId);
+        EchoServer.getGlobalApplicationContext().batchConfigOpenClose(realtimeId);
     }
 }

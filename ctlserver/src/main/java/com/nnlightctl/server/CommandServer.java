@@ -15,6 +15,12 @@ public interface CommandServer {
     void commandReadTerminalInfo();
     void configTerminalSwitchPolicy(List<SwitchTask> switchTasks);
     void configTerminalAutoModel(int model);
-    void configerviceFixedInfo(List<Long> lightIds);
+    void commandReadServiceFixedInfo(List<Long> lightIds);
     void configServiceOpenClose(List<Long> lightIds);
+    void batchConfigRestart(List<Long> lightIds);
+    void batchCommandReadTimeParameter(List<Long> lightIds);
+    void batchCommandReadSending(List<Long> lightIds);
+    void batchConfigSetTime(List<Long> lightIds);
+    void batchConfigOpenCloseStrategy(List<Long> lightIds);
+    void batchConfigWorkModel(List<Long> lightIds);
 }

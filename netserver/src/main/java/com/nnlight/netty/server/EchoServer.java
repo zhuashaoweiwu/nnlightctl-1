@@ -290,9 +290,9 @@ public class EchoServer {
 
     }
     /**
-     * 服务器获取固定信息0xD0
+     * 服务器获取固定信息0xA0
      */
-    public void allserviceFixedInfo(String realtime_id) {
+    public void batchCommandReadserviceFixedInfo(String realtime_id) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
             CommandData commandData = CommandData.getA0CommandData(realtime_id);
@@ -300,12 +300,72 @@ public class EchoServer {
         }
     }
     /**
-     * 服务器获取固定信息0xD0
+     * 控制继电器开闭状态0xA1
      */
-    public void allOpenClose(String realtime_id) {
+    public void batchConfigOpenClose(String realtime_id) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
             CommandData commandData = CommandData.getA1CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /**
+     * 重启/复位0xA2
+     */
+    public void batchConfigRestart(String realtime_id) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA2CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /*
+    * 设置定时发送参数 0xA3
+    * */
+    public void batchCommandReadTimeParamter(String realtime_id){
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA3CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /*
+     *  读取/发送信息 0xA4
+     * */
+    public void batchCommandReadSending(String realtime_id){
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA4CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /*
+    * 读取/发送信息 0xA5
+    * */
+    public void batchConfigSetTime(String realtime_id){
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA5CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /*
+    *设置亮/灭灯定时策略 0xA6
+    */
+    public void batchConfigOpenCloseStrategy(String realtime_id){
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA6CommandData(realtime_id);
+            context.writeAndFlush(commandData);
+        }
+    }
+    /*
+     * 设置终端设备的工作模式（手动or自动）A7
+     */
+    public void batchConfigWorkModel(String realtime_id){
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            ChannelHandlerContext context = entry.getValue().getContext();
+            CommandData commandData = CommandData.getA7CommandData(realtime_id);
             context.writeAndFlush(commandData);
         }
     }

@@ -120,15 +120,37 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
-    public void serviceFixedInfo(List<String> realtime_ids){
-        System.out.println(realtime_ids.size()+"***************************");
-        context.serviceFixedInfo(realtime_ids);
+    public void commandReadServiceFixedInfo(List<String> realtime_ids){
+        context.commandReadServiceFixedInfo(realtime_ids);
     }
     @Override
     public void serviceOpenClose(List<String> realtime_ids){
         context.serviceOpenClose(realtime_ids);
     }
-
+    @Override
+    public void batchConfigRestart(List<String> realtime_ids){
+        context.batchConfigRestart(realtime_ids);
+    }
+    @Override
+    public void batchCommandReadTimeParameter(List<String> realtime_ids){
+        context.batchCommandReadTimeParameter(realtime_ids);
+    }
+    @Override
+    public void batchCommandReadSending(List<String> realtime_ids){
+        context.batchCommandReadSending(realtime_ids);
+    }
+    @Override
+    public void batchConfigSetTime(List<String> realtime_ids){
+        context.batchConfigSetTime(realtime_ids);
+    }
+    @Override
+    public void batchConfigOpenCloseStrategy(List<String> realtime_ids){
+        context.batchConfigOpenCloseStrategy(realtime_ids);
+    }
+    @Override
+    public void batchConfigWorkModel(List<String> realtime_ids){
+        context.batchConfigWorkModel(realtime_ids);
+    }
     @Override
     public void close() {
         context.close();

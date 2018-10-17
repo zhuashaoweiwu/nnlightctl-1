@@ -11,19 +11,18 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class A0Process implements Process {
-    private static final Logger logger = LoggerFactory.getLogger(A0Process.class);
+public class A6Process implements Process {
+    private static final Logger logger = LoggerFactory.getLogger(A6Process.class);
 
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 发送服务器获取固定信息0xA0指令[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置亮/灭灯定时策略 0xA6[" + msg.getData()[0] + "]");
 
         byte[] id = new byte[4];
-        msg.getDataLength();
         System.arraycopy(msg.getData(), 0, id, 0, msg.getDataLength());
 
         String realtimeId = BytesHexStrTranslate.bytesToHexFun(id);
-        EchoServer.getGlobalApplicationContext().batchCommandReadserviceFixedInfo(realtimeId);
+        EchoServer.getGlobalApplicationContext().batchConfigOpenCloseStrategy(realtimeId);
     }
 }

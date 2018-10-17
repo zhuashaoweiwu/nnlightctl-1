@@ -60,12 +60,48 @@ public class ProcessFactory {
             // 终端D0指令
             case (byte) 0xd0:
                 return d0;
-            // 命令层A0指令
+            // 命令层A1指令
             case (byte) 0xa1:
                 return a1;
             // 终端D1指令
             case (byte) 0xd1:
                 return d1;
+            // 命令层A2指令
+            case (byte) 0xa2:
+                return a2;
+            // 终端D2指令
+            case (byte) 0xd2:
+                return d2;
+            // 命令层A3指令
+            case (byte) 0xa3:
+                return a3;
+            //终端D3指令
+            case (byte) 0xd3:
+                return d3;
+            // 命令层A4指令
+            case (byte) 0xa4:
+                return a4;
+            //终端D4指令
+            case (byte) 0xd4:
+                return d4;
+            // 命令层A5指令
+            case (byte) 0xa5:
+                return a5;
+            //终端D5指令
+            case (byte) 0xd5:
+                return d5;
+            // 命令层A6指令
+            case (byte) 0xa6:
+                return a6;
+            //终端D6指令
+            case (byte) 0xd6:
+                return d6;
+            // 命令层A6指令
+            case (byte) 0xa7:
+                return a7;
+            //终端D6指令
+            case (byte) 0xd7:
+                return d7;
                 //无控制码默认返回消息到上层命令客户端
                 default:
                 return commonProcess;
@@ -88,5 +124,17 @@ public class ProcessFactory {
     private static final Process d0 = new D0Process();
     private static final Process a1 = new A1Process();
     private static final Process d1 = new D1Process();
+    private static final Process a2 = new A2Process();
+    private static final Process d2 = new D2Process();
+    private static final Process a3 = new A3Process();
+    private static final Process d3 = new D3Process();
+    private static final Process a4 = new A4Process();
+    private static final Process d4 = new D4Process();
+    private static final Process a5 = new A5Process();
+    private static final Process d5 = new D5Process();
+    private static final Process a6 = new A6Process();
+    private static final Process d6 = new D6Process();
+    private static final Process a7 = new A7Process();
+    private static final Process d7 = new D7Process();
     private static final Process commonProcess = new CommonProcess();
 }

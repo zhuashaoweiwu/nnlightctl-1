@@ -108,7 +108,7 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
-    public void configerviceFixedInfo(List<Long> lightIds){
+    public void commandReadServiceFixedInfo(List<Long> lightIds){
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -118,7 +118,7 @@ public class CommandServerImpl implements CommandServer {
             Lighting lighting = lightServer.getLighting(lightId);
             realtime_ids.add(lighting.getRealtimeUid());
         }
-        command.serviceFixedInfo(realtime_ids);
+        command.commandReadServiceFixedInfo(realtime_ids);
     }
     @Override
     public void configServiceOpenClose(List<Long> lightIds){
@@ -132,5 +132,83 @@ public class CommandServerImpl implements CommandServer {
             realtime_ids.add(lighting.getRealtimeUid());
         }
         command.serviceOpenClose(realtime_ids);
+    }
+    @Override
+    public void batchConfigRestart(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchConfigRestart(realtime_ids);
+    }
+    @Override
+    public void batchCommandReadTimeParameter(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchCommandReadTimeParameter(realtime_ids);
+    }
+    @Override
+    public void batchCommandReadSending(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchCommandReadSending(realtime_ids);
+    }
+    @Override
+    public void batchConfigSetTime(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchConfigSetTime(realtime_ids);
+    }
+    @Override
+    public void batchConfigOpenCloseStrategy(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchConfigOpenCloseStrategy(realtime_ids);
+    }
+    @Override
+    public void batchConfigWorkModel(List<Long> lightIds){
+        if (lightIds == null || lightIds.size() < 1) {
+            throw new RuntimeException("批量操作的灯具数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (Long lightId : lightIds) {
+            Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+        command.batchConfigWorkModel(realtime_ids);
     }
 }

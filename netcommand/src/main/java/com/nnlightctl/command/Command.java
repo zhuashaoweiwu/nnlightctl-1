@@ -17,8 +17,14 @@ public interface Command {
     void receiveMsg(CommandData in);
     void configTerminalAutoMode(int mode);
     //模块命令
-    void serviceFixedInfo(List<String> realtime_ids);
+    void commandReadServiceFixedInfo(List<String> realtime_ids);
     void serviceOpenClose(List<String> realtime_ids);
+    void batchConfigRestart(List<String> realtime_ids);
+    void batchCommandReadTimeParameter(List<String> realtime_ids);
+    void batchCommandReadSending(List<String> realtime_ids);
+    void batchConfigSetTime(List<String> realtime_ids);
+    void batchConfigOpenCloseStrategy(List<String> realtime_ids);
+    void batchConfigWorkModel(List<String> realtime_ids);
     void close();
     void reConnect();
 }
