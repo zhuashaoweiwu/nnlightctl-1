@@ -182,4 +182,18 @@ public class CommandController extends BaseController {
 
         //todo
     }
+    @RequestMapping("configerviceFixedInfo")
+    public String  configerviceFixedInfo(CommandRequest request) {
+        logger.info("[POST] /api/command/configerviceFixedInfo");
+        commandServer.configerviceFixedInfo(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
+    @RequestMapping("configerviceOpenClose")
+    public String  configerviceOpenClose(CommandRequest request) {
+        logger.info("[POST] /api/command/configerviceOpenClose");
+        commandServer.configServiceOpenClose(request.getLightIds());
+        //todo
+        return toJson(JsonResult.getSUCCESS());
+    }
 }

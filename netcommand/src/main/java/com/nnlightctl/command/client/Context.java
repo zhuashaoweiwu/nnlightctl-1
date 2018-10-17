@@ -103,6 +103,17 @@ public class Context {
         this.command = command;
     }
 
+    public void serviceFixedInfo(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa0) );
+        }
+    }
+    public void serviceOpenClose(List<String> realtime_ids){
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa1) );
+        }
+    }
+
     public void close() {
         if (channelHandlerContext != null) {
             channelHandlerContext.close();

@@ -17,7 +17,8 @@ public interface Command {
     void receiveMsg(CommandData in);
     void configTerminalAutoMode(int mode);
     //模块命令
-
+    void serviceFixedInfo(List<String> realtime_ids);
+    void serviceOpenClose(List<String> realtime_ids);
     void close();
     void reConnect();
 }
