@@ -7,6 +7,7 @@ import com.nnlightctl.request.InstitutionConditionRequest;
 import com.nnlightctl.request.InstitutionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.InstitutionServer;
+import com.nnlightctl.vo.InstitutionView;
 import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +75,7 @@ public class InstitutionController extends BaseController {
     public String listInstitution(InstitutionRequest request) {
         logger.info("[POST] /api/institution/listInsitution");
 
-        Tuple.TwoTuple<List<Institution>, Integer> tuple = institutionServer.listInstitution(request);
+        Tuple.TwoTuple<List<InstitutionView>, Integer> tuple = institutionServer.listInstitution(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

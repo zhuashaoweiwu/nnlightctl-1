@@ -7,6 +7,7 @@ import com.nnlightctl.request.DepartmentConditionRequest;
 import com.nnlightctl.request.DepartmentRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.DepartmentServer;
+import com.nnlightctl.vo.DepartmentView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,7 @@ public class DepartmentController extends BaseController {
     public String listDepartment(DepartmentRequest request) {
         logger.info("[POST] /api/department/listDepartment");
 
-        Tuple.TwoTuple<List<Department>, Integer> tuple = departmentServer.listDepartment(request);
+        Tuple.TwoTuple<List<DepartmentView>, Integer> tuple = departmentServer.listDepartment(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

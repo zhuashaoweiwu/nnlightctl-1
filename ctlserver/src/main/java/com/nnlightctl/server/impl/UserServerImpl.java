@@ -6,13 +6,16 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.DigesterUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.DepartmentMapper;
 import com.nnlightctl.dao.UserMapper;
+import com.nnlightctl.po.Department;
 import com.nnlightctl.po.User;
 import com.nnlightctl.po.UserExample;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.UserConditionRequest;
 import com.nnlightctl.request.UserRequest;
 import com.nnlightctl.server.UserServer;
+import com.nnlightctl.vo.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,7 +29,8 @@ public class UserServerImpl implements UserServer {
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private DepartmentMapper departmentMapper;
     @Override
     public int addOrUpdateUser(UserRequest request) {
         User user = new User();
@@ -68,8 +72,8 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<User>, Integer> listUser(UserConditionRequest request) {
-        Tuple.TwoTuple<List<User>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<UserView>, Integer> listUser(UserConditionRequest request) {
+        Tuple.TwoTuple<List<UserView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -101,7 +105,34 @@ public class UserServerImpl implements UserServer {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         List<User> users = userMapper.selectByExample(userExample);
-        tuple.setFirst(users);
+        List<UserView> userViewList = new ArrayList<>();
+        if (!users.isEmpty()){
+            for (int i = 0 ; i < users.size() ; i++){
+                Department department = departmentMapper.selectByPrimaryKey(users.get(i).getNnlightctlDepartmentId());
+                UserView userView = new UserView();
+                userView.setAge(users.get(i).getAge());
+                userView.setCodeNumber(users.get(i).getCodeNumber());
+                userView.setEmail(users.get(i).getEmail());
+                userView.setGmtCreated(users.get(i).getGmtCreated());
+                userView.setGmtUpdated(users.get(i).getGmtUpdated());
+                userView.setId(users.get(i).getId());
+                userView.setIsRemenberPwd(users.get(i).getIsRemenberPwd());
+                userView.setLoginName(users.get(i).getLoginName());
+                userView.setLoginPwd(users.get(i).getLoginPwd());
+                userView.setNnlightctlDepartmentId(users.get(i).getNnlightctlDepartmentId());
+                userView.setPhone(users.get(i).getPhone());
+                userView.setPlace(users.get(i).getPlace());
+                userView.setSex(users.get(i).getSex());
+                userView.setUserName(users.get(i).getUserName());
+                userView.setUserState(users.get(i).getUserState());
+                userView.setUserType(users.get(i).getUserType());
+                if (null != department){
+                    userView.setDepartmentName(department.getDepartmentName());
+                }
+                userViewList.add(userView);
+            }
+        }
+        tuple.setFirst(userViewList);
 
         return tuple;
     }

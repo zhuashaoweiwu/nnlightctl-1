@@ -7,6 +7,7 @@ import com.nnlightctl.request.UserConditionRequest;
 import com.nnlightctl.request.UserRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.UserServer;
+import com.nnlightctl.vo.UserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class UserController extends BaseController {
     public String listUser(UserConditionRequest request) {
         logger.info("[POST] /api/user/listUser");
 
-        Tuple.TwoTuple<List<User>, Integer> tuple = userServer.listUser(request);
+        Tuple.TwoTuple<List<UserView>, Integer> tuple = userServer.listUser(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

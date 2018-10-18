@@ -4,15 +4,19 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.DepartmentMapper;
+import com.nnlightctl.dao.InstitutionMapper;
 import com.nnlightctl.po.Department;
 import com.nnlightctl.po.DepartmentExample;
+import com.nnlightctl.po.Institution;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.DepartmentRequest;
 import com.nnlightctl.server.DepartmentServer;
+import com.nnlightctl.vo.DepartmentView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +25,8 @@ public class DepartmentServerImpl implements DepartmentServer {
 
     @Autowired
     private DepartmentMapper departmentMapper;
-
+    @Autowired
+    private InstitutionMapper institutionMapper;
     @Override
     public int addOrUpdateDepartment(DepartmentRequest request) {
         Department department = new Department();
@@ -51,8 +56,8 @@ public class DepartmentServerImpl implements DepartmentServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Department>, Integer> listDepartment(DepartmentRequest request) {
-        Tuple.TwoTuple<List<Department>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<DepartmentView>, Integer> listDepartment(DepartmentRequest request) {
+        Tuple.TwoTuple<List<DepartmentView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         DepartmentExample departmentExample = new DepartmentExample();
         DepartmentExample.Criteria criteria = departmentExample.createCriteria();
@@ -70,7 +75,29 @@ public class DepartmentServerImpl implements DepartmentServer {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         List<Department> departmentList = departmentMapper.selectByExample(departmentExample);
-        tuple.setFirst(departmentList);
+        List<DepartmentView> departmentViewList = new ArrayList<>();
+        if (!departmentList.isEmpty()){
+            for (int i = 0 ; i < departmentList.size() ; i++){
+                DepartmentView departmentView = new DepartmentView();
+                Institution institution = institutionMapper.selectByPrimaryKey(departmentList.get(i).getNnlightctlInstitutionIdBelong());
+                departmentView.setAddr(departmentList.get(i).getAddr());
+                departmentView.setCreateTime(departmentList.get(i).getCreateTime());
+                departmentView.setDepartmentLevel(departmentList.get(i).getDepartmentLevel());
+                departmentView.setDepartmentName(departmentList.get(i).getDepartmentName());
+                departmentView.setGmtCreated(departmentList.get(i).getGmtCreated());
+                departmentView.setGmtUpdated(departmentList.get(i).getGmtUpdated());
+                departmentView.setId(departmentList.get(i).getId());
+                departmentView.setMem(departmentList.get(i).getMem());
+                departmentView.setNnlightctlDepartmentIdParent(departmentList.get(i).getNnlightctlDepartmentIdParent());
+                departmentView.setNnlightctlInstitutionIdBelong(departmentList.get(i).getNnlightctlInstitutionIdBelong());
+                if (null != institution ){
+                    departmentView.setInstitutionName(institution.getInstitutionName());
+                }
+                departmentViewList.add(departmentView);
+            }
+        }
+
+        tuple.setFirst(departmentViewList);
 
         return tuple;
     }

@@ -14,7 +14,7 @@ public interface InstitutionServer {
 
     int getCountInstitutionByName(String institutionName);
 
-    Tuple.TwoTuple<List<Institution>, Integer> listInstitution(InstitutionRequest request);
+    Tuple.TwoTuple<List<InstitutionView>, Integer> listInstitution(InstitutionRequest request);
 
     Institution getInstitutionById(Long id);
 

@@ -10,12 +10,14 @@ import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.InstitutionRequest;
 import com.nnlightctl.request.MapProjectsToInstitutionRequest;
 import com.nnlightctl.server.InstitutionServer;
+import com.nnlightctl.vo.InstitutionView;
 import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nnlightctl.jdbcdao.*;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,8 +62,8 @@ public class InstitutionServerImpl implements InstitutionServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Institution>, Integer> listInstitution(InstitutionRequest request) {
-        Tuple.TwoTuple<List<Institution>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<InstitutionView>, Integer> listInstitution(InstitutionRequest request) {
+        Tuple.TwoTuple<List<InstitutionView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         InstitutionExample institutionExample = new InstitutionExample();
         InstitutionExample.Criteria criteria = institutionExample.createCriteria();
@@ -80,7 +82,28 @@ public class InstitutionServerImpl implements InstitutionServer {
 
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         List<Institution> institutionList = institutionMapper.selectByExample(institutionExample);
-        tuple.setFirst(institutionList);
+        List<InstitutionView> institutionViewList = new ArrayList<>();
+        if (!institutionList.isEmpty()){
+            for (int i = 0 ; i<institutionList.size() ; i++){
+                    Institution  institution = institutionMapper.selectByPrimaryKey(institutionList.get(i).getNnlightctlInstitutionIdParent());
+                    InstitutionView institutionView = new InstitutionView();
+                    institutionView.setAddr(institutionList.get(i).getAddr());
+                    institutionView.setCreateTime(institutionList.get(i).getCreateTime());
+                    institutionView.setGmtCreated(institutionList.get(i).getGmtCreated());
+                    institutionView.setGmtUpdated(institutionList.get(i).getGmtUpdated());
+                    institutionView.setId(institutionList.get(i).getId());
+                    institutionView.setInstitutionLevel(institutionList.get(i).getInstitutionLevel());
+                    institutionView.setInstitutionName(institutionList.get(i).getInstitutionName());
+                    institutionView.setMem(institutionList.get(i).getMem());
+                    institutionView.setNnlightctlInstitutionIdParent(institutionList.get(i).getNnlightctlInstitutionIdParent());
+                    if (null != institution){
+                        institutionView.setParentName(institution.getInstitutionName());
+                    }
+                    institutionViewList.add(institutionView);
+            }
+        }
+
+        tuple.setFirst(institutionViewList);
 
         return tuple;
     }
