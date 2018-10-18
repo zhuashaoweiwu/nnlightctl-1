@@ -7,6 +7,7 @@ import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectCity;
 import com.nnlightctl.po.ProjectCityExample;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.CityConditionRequest;
 import com.nnlightctl.request.ProjectCityConditionRequest;
 import com.nnlightctl.request.ProjectCityRequest;
 import com.nnlightctl.server.ProjectCityServer;
@@ -23,10 +24,15 @@ public class ProjectCityServerImpl implements ProjectCityServer {
     private ProjectCityMapper projectCityMapper;
 
     @Override
-    public List<ProjectCity> listCity(BaseRequest request) {
+    public List<ProjectCity> listCity(CityConditionRequest request) {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         ProjectCityExample example = new ProjectCityExample();
         example.setOrderByClause("id DESC");
+
+        if (request.getNnlightctlProjectProvinceId() != null) {
+            example.createCriteria().andNnlightctlProjectProvinceIdEqualTo(request.getNnlightctlProjectProvinceId());
+        }
+
         return projectCityMapper.selectByExample(example);
     }
 

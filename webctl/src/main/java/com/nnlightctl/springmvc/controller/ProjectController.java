@@ -120,7 +120,7 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping("listprovince")
-    public String listProvince(BaseRequest request) {
+    public String listProvince(ProvinceConditionRequest request) {
         logger.info("[POST] /api/project/listprovince");
 
         List<ProjectProvince> projectProvinceList = projectProvinceServer.listProvince(request);
@@ -192,7 +192,7 @@ public class ProjectController extends BaseController {
         return toJson(jsonResult);
     }
     @RequestMapping("listcity")
-    public String listCity(BaseRequest request) {
+    public String listCity(CityConditionRequest request) {
         logger.info("[POST] /api/project/listcity");
 
         List<ProjectCity> projectCityList = projectCityServer.listCity(request);

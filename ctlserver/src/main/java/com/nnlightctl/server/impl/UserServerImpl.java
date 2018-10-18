@@ -50,6 +50,8 @@ public class UserServerImpl implements UserServer {
             ret = userMapper.insertSelective(user);
         } else {
             //修改
+            //不通过此服务修改密码
+            user.setLoginPwd(null);
             ret = userMapper.updateByPrimaryKeySelective(user);
         }
 
@@ -83,19 +85,19 @@ public class UserServerImpl implements UserServer {
         UserConditionRequest userConditionRequest =
                 request instanceof UserConditionRequest ? (UserConditionRequest)request : null;
 
-        if (userConditionRequest != null && userConditionRequest.getUserType() != null) {
+        if (userConditionRequest != null && userConditionRequest.getUserType() != null && userConditionRequest.getUserType() != -1) {
             criteria.andUserTypeEqualTo(userConditionRequest.getUserType().byteValue());
         }
-        if(userConditionRequest != null && userConditionRequest.getCodeNumber() != null){
+        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getCodeNumber())){
             criteria.andCodeNumberLike("%" + userConditionRequest.getCodeNumber() + "%");
         }
-        if(userConditionRequest != null && userConditionRequest.getUserName() != null){
+        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getUserName())){
             criteria.andUserNameLike("%" + userConditionRequest.getUserName() + "%");
         }
-        if(userConditionRequest != null && userConditionRequest.getPhone() != null){
+        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getPhone())){
             criteria.andPhoneLike("%" + userConditionRequest.getPhone() + "%");
         }
-        if (userConditionRequest != null && userConditionRequest.getLoginName() != null){
+        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getLoginName())){
             criteria.andLoginNameLike("%" + userConditionRequest.getLoginName() + "%");
         }
 
@@ -181,6 +183,7 @@ public class UserServerImpl implements UserServer {
 
         User user = new User();
         user.setLoginName("loginUser1");
+        user.setUserName("张三");
         user.setCodeNumber("001");
         user.setPlace("测试人员");
         user.setSex((byte)0);
@@ -188,6 +191,7 @@ public class UserServerImpl implements UserServer {
 
         User user2 = new User();
         user2.setLoginName("loginUser2");
+        user2.setUserName("李四");
         user2.setCodeNumber("002");
         user2.setPlace("测试人员2");
         user2.setSex((byte)1);

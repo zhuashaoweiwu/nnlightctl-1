@@ -1,8 +1,6 @@
 package com.nnlightctl.request;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class ProjectRequest extends BaseRequest{
 
@@ -102,9 +100,9 @@ public class ProjectRequest extends BaseRequest{
     private String latitude;
     private int state;
     private int type;
-    @NotBlank(message = "项目名称不能为空！")
+    @NotEmpty(message = "项目名称不能为空！")
     private String projectName;
-    @NotBlank(message = "项目编号不能为空！")
+    @NotEmpty(message = "项目编号不能为空！")
     private String projectCode;
     private String mem;
 }

@@ -8,6 +8,7 @@ import com.nnlightctl.po.ProjectProvinceExample;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.ProjectProvinceConditionRequest;
 import com.nnlightctl.request.ProjectProvinceRequest;
+import com.nnlightctl.request.ProvinceConditionRequest;
 import com.nnlightctl.server.ProjectProvinceServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,13 @@ public class ProjectProvinceServerImpl implements ProjectProvinceServer {
     private ProjectProvinceMapper projectProvinceMapper;
 
     @Override
-    public List<ProjectProvince> listProvince(BaseRequest request) {
+    public List<ProjectProvince> listProvince(ProvinceConditionRequest request) {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         ProjectProvinceExample example = new ProjectProvinceExample();
         example.setOrderByClause("id DESC");
+        if (request.getNnlightctlProjectCountryId() != null) {
+            example.createCriteria().andNnlightctlProjectCountryIdEqualTo(request.getNnlightctlProjectCountryId());
+        }
         return projectProvinceMapper.selectByExample(example);
     }
 
