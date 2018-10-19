@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,13 +34,13 @@ public class ProjectDaoImpl implements ProjectDao {
         stringBuilder.append("left join nnlightctl_project_province pp on p.nnlightctl_project_province_id  = pp.id ");
         stringBuilder.append("left join nnlightctl_project_city cc on p.nnlightctl_project_city_id = cc.id where 1=1 ");
 
-        if (request.getProjectCode() !=null ){
-            stringBuilder.append(" and p.code_number = ? ");
-            param.add(request.getProjectCode());
+        if (!StringUtils.isEmpty(request.getProjectCode())){
+            stringBuilder.append(" and p.code_number like ? ");
+            param.add("%" + request.getProjectCode() + "%");
         }
-        if (request.getProjectName() !=null ){
-            stringBuilder.append(" and p.project_name =? ");
-            param.add(request.getProjectName());
+        if (!StringUtils.isEmpty(request.getProjectName())){
+            stringBuilder.append(" and p.project_name like ? ");
+            param.add("%" + request.getProjectName() + "%");
         }
         stringBuilder.append("order by id DESC ");
         if (request.getPageSize() > 0 && request.getPageNumber() > 0) {

@@ -282,7 +282,7 @@ public class ProjectController extends BaseController {
         logger.info("[POST] /api/project/getproject");
 
         Project project = projectServer.getProject(request);
-        JsonResult jsonResult = JsonResult.SUCCESS;
+        JsonResult jsonResult = JsonResult.getSUCCESS();
         List<Project> projectList = new ArrayList<>(1);
         projectList.add(project);
         jsonResult.setData(projectList);

@@ -19,6 +19,15 @@ public class ProjectConditionRequest extends BaseRequest {
         this.idList = idList;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
     private List<Long> idList;
     private String codeNumber;
 }

@@ -67,11 +67,9 @@ public class ProjectServerImpl implements ProjectServer {
 
     @Override
     public Project getProject(ProjectConditionRequest request) {
-        ProjectExample example = new ProjectExample();
-        example.createCriteria().andCodeNumberEqualTo(request.getCodeNumber());
-        List<Project> projectList = projectMapper.selectByExample(example);
-        if (projectList != null && projectList.size() > 0) {
-            return projectList.get(0);
+        Project project = projectMapper.selectByPrimaryKey(request.getId());
+        if (project != null) {
+            return project;
         } else {
             throw new RuntimeException("查无结果");
         }
@@ -100,6 +98,7 @@ public class ProjectServerImpl implements ProjectServer {
         ReflectCopyUtil.beanSameFieldCopy(request, project);
         project.setGmtUpdated(new Date());
         project.setState((byte)request.getState());
+        project.setCodeNumber(request.getProjectCode());
 
         return projectMapper.updateByPrimaryKeySelective(project);
     }

@@ -52,9 +52,14 @@ public class Index extends BaseController {
         return "redirect:/html/pages/indexForDevice.html";
     }
 
+    @RequestMapping("/original")
+    public String startOriginalPage() {
+        return "redirect:/html/pages/index.html";
+    }
+
     @RequestMapping("/")
     public String startPage() {
-        return "redirect:/html/pages/index.html";
+        return "redirect:/html/pages/nnlightctlweb/Login.html";
     }
 
 
