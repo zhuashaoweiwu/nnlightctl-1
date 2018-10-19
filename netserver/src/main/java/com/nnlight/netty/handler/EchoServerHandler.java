@@ -78,7 +78,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         ChannelWrap wrap = applicationContext.getClientChannelMap().get(ctx.channel().id().asShortText());
-
+        logger.error(cause.getMessage());
         logger.error(LocalDate.now() + " " + LocalTime.now() + " " + wrap.getChannel().remoteAddress().toString() + " 客户端关闭！");
         applicationContext.getClientChannelMap().remove(ctx.channel().id().asShortText());
         ctx.close();
