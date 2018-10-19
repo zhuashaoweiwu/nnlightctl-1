@@ -15,7 +15,7 @@ public class D5Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 服务器对设备广播对时 0xD5[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 服务器对设备广播对时 0xD5[" + msg.getControl() + "]");
         System.out.println();
         /*byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);

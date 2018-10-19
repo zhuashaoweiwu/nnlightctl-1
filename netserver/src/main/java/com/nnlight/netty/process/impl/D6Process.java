@@ -15,7 +15,7 @@ public class D6Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置亮/灭灯定时策略 0xD6[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置亮/灭灯定时策略 0xD6[" + msg.getControl() + "]");
         System.out.println();
         /*byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);

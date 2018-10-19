@@ -15,7 +15,7 @@ public class D4Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 读取/发送信息 0xD4[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 读取/发送信息 0xD4[" + msg.getControl() + "]");
         System.out.println();
         /*byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);

@@ -51,18 +51,30 @@
             <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide" />
         </div>
 
+        <div class="col-sm-1">
+            <label for="lightId" class="form-control">单灯id值：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="lightId" class="form-control" size="16" type="text" value="" >
+        </div>
+
         <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
+        </div>
+
+        <!--<div class="col-sm-2">
             <div class="form-group">
                 <label for="lightId" class="col-md-3 control-label">单灯id值：</label>
                 <div class="input-group col-md-8">
                     <input id="lightId" class="form-control" size="16" type="text" value="" >
                 </div>
             </div>
-        </div>
+        </div>-->
 
-        <div class="col-sm-2">
+       <!-- <div class="col-sm-2">
             <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
-        </div>
+        </div>-->
     </div>
 
     <br/>
@@ -263,6 +275,140 @@
     <br/>
     <hr/>
     <br/>
+    <div class="row">
+    <div class="col-sm-1">
+        <label for="lightId" class="col-md-3 control-label">指令D0：</label>
+    </div>
+
+    <div class="col-sm-1">
+        <input id="lightIdD0" class="form-control" size="16" type="text" value="" >
+    </div>
+
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令A0</button>
+    </div>
+    </div>
+    <!--<div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D0：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD0" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令A0</button>
+    </div>-->
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D1：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD1" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigerviceOpenClose">发送指令A1</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D2：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD2" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigRestart">发送指令A2</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D3：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD3" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadTimeParameter">发送指令A3</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D4：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD4" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadSending">发送指令A4</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D5：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD5" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigSetTime">发送指令A5</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D6：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD6" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigOpenCloseStrategy">发送指令A6</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D7：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD7" class="form-control" size="16" type="text" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigWorkModel">发送指令A7</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+</div>
 </div>
 
 <!-- Optional JavaScript -->
@@ -287,6 +433,56 @@
         $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
             {"lightPercent" : $("#lightPercent").val().trim(), "lightIds[0]" : $("#lightId").val().trim()}, function (result) {
         });
+    });
+
+    //指令AO
+    $("#batchCommandReadServiceFixedInfo").click(function() {
+        $.post("/nnlightctl/api/command/batchCommandReadServiceFixedInfo",
+            {"lightIds[0]" : $("#lightIdD0").val().trim()}, function (result) {
+            });
+    });
+    //指令A1
+    $("#batchConfigerviceOpenClose").click(function() {
+        $.post("/nnlightctl/api/command/batchConfigerviceOpenClose",
+            {"lightIds[0]" : $("#lightIdD1").val().trim()}, function (result) {
+            });
+    });
+    //指令A2
+    $("#batchConfigRestart").click(function() {
+        $.post("/nnlightctl/api/command/batchConfigRestart",
+            {"lightIds[0]" : $("#lightIdD2").val().trim()}, function (result) {
+            });
+    });
+    //指令A3
+    $("#batchCommandReadTimeParameter").click(function() {
+        $.post("/nnlightctl/api/command/batchCommandReadTimeParameter",
+            {"lightIds[0]" : $("#lightIdD3").val().trim()}, function (result) {
+            });
+    });
+    //指令A4
+    $("#batchCommandReadSending").click(function() {
+        $.post("/nnlightctl/api/command/batchCommandReadSending",
+            {"lightIds[0]" : $("#lightIdD4").val().trim()}, function (result) {
+            });
+    });
+
+    //指令A5
+    $("#batchConfigSetTime").click(function() {
+        $.post("/nnlightctl/api/command/batchConfigSetTime",
+            {"lightIds[0]" : $("#lightIdD5").val().trim()}, function (result) {
+            });
+    });
+    //指令A6
+    $("#batchConfigOpenCloseStrategy").click(function() {
+        $.post("/nnlightctl/api/command/batchConfigOpenCloseStrategy",
+            {"lightIds[0]" : $("#lightIdD6").val().trim()}, function (result) {
+            });
+    });
+    //指令A7
+    $("#batchConfigWorkModel").click(function() {
+        $.post("/nnlightctl/api/command/batchConfigWorkModel",
+            {"lightIds[0]" : $("#lightIdD7").val().trim()}, function (result) {
+            });
     });
 
     $("#lightPercentSlide").change(function () {

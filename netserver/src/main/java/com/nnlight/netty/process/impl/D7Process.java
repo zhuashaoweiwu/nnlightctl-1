@@ -15,7 +15,7 @@ public class D7Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置终端设备的工作模式（手动or自动） 0xD7[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置终端设备的工作模式（手动or自动） 0xD7[" + msg.getControl() + "]");
         System.out.println();
         /*byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);
