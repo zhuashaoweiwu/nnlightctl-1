@@ -11,6 +11,7 @@ import com.nnlightctl.request.LightModelRequest;
 import com.nnlightctl.server.LightModelServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,11 @@ public class LightModelServerImpl implements LightModelServer {
     @Override
     public Tuple.TwoTuple<List<LightingModel>, Integer> listLightModel(LightModelConditionRequest request) {
         LightingModelExample lightingModelExample = new LightingModelExample();
+
+        if (!StringUtils.isEmpty(request.getModelName())) {
+            lightingModelExample.createCriteria().andModelNameLike("%" + request.getModelName() + "%");
+        }
+
         int total = this.lightingModelMapper.countByExample(lightingModelExample);
 
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());

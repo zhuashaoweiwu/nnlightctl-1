@@ -11,5 +11,15 @@ public class LightModelConditionRequest extends BaseRequest {
         this.deleteLightModelList = deleteLightModelList;
     }
 
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    private String modelName;
     private List<Long> deleteLightModelList;
 }

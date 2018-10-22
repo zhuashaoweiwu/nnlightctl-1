@@ -36,11 +36,11 @@ public class ProjectRequest extends BaseRequest{
         this.mem = mem;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -92,7 +92,7 @@ public class ProjectRequest extends BaseRequest{
         this.nnlightctlProjectCityId = nnlightctrlProjectCityId;
     }
 
-    private long id;
+    private Long id;
     private Long nnlightctlProjectCountryId;
     private Long nnlightctlProjectProvinceId;
     private Long nnlightctlProjectCityId;

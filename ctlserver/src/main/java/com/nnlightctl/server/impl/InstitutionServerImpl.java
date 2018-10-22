@@ -4,9 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.InstitutionMapper;
+import com.nnlightctl.dao.ProjectMapper;
 import com.nnlightctl.po.Institution;
 import com.nnlightctl.po.InstitutionExample;
+import com.nnlightctl.po.Project;
+import com.nnlightctl.po.ProjectExample;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.InstitutionConditionRequest;
 import com.nnlightctl.request.InstitutionRequest;
 import com.nnlightctl.request.MapProjectsToInstitutionRequest;
 import com.nnlightctl.server.InstitutionServer;
@@ -26,8 +30,12 @@ public class InstitutionServerImpl implements InstitutionServer {
 
     @Autowired
     private InstitutionMapper institutionMapper;
+
     @Autowired
     private ProjectDao projectDao;
+
+    @Autowired
+    private ProjectMapper projectMapper;
 
     @Override
     public int addOrUpdateInstitution(InstitutionRequest request) {
@@ -125,5 +133,30 @@ public class InstitutionServerImpl implements InstitutionServer {
     public List<ProjectsToInstitutionView> mapProjectsToInstitution(MapProjectsToInstitutionRequest mapProjectsToInstitutionRequest){
         List<ProjectsToInstitutionView> projectsToInstitutionViewList = projectDao.mapProjectsToInstitution(mapProjectsToInstitutionRequest);
         return projectsToInstitutionViewList;
+    }
+
+    @Override
+    public List<Project> listProjectByInsitutionId(Long insitutionId) {
+        ProjectExample projectExample = new ProjectExample();
+        projectExample.createCriteria().andNnlightctlInstitutionIdEqualTo(insitutionId);
+
+        return projectMapper.selectByExample(projectExample);
+    }
+
+    @Override
+    public int updateMapProjects2Institution(InstitutionConditionRequest request) {
+        if (request.getInstitutionId() == null) {
+            throw new RuntimeException("请选择一个机构");
+        }
+
+        return projectDao.mapProject2Insitution2(request);
+    }
+
+    @Override
+    public List<Project> listNotBeProjects() {
+        ProjectExample projectExample = new ProjectExample();
+        projectExample.createCriteria().andNnlightctlInstitutionIdIsNull();
+
+        return projectMapper.selectByExample(projectExample);
     }
 }

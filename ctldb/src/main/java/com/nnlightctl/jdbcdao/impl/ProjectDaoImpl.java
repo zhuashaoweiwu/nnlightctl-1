@@ -2,6 +2,7 @@ package com.nnlightctl.jdbcdao.impl;
 
 import com.nnlightctl.jdbcdao.ProjectDao;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.InstitutionConditionRequest;
 import com.nnlightctl.request.MapProjectsToInstitutionRequest;
 import com.nnlightctl.request.ProjectRequest;
 import com.nnlightctl.vo.ProjectView;
@@ -9,19 +10,25 @@ import com.nnlightctl.vo.ProjectsToInstitutionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProjectDaoImpl implements ProjectDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public List<ProjectView> listProject(ProjectRequest request) {
@@ -120,5 +127,31 @@ public class ProjectDaoImpl implements ProjectDao {
         });
 
         return projectsToInstitutionViewList;
+    }
+
+    @Override
+    public int mapProject2Insitution2(InstitutionConditionRequest request) {
+        //清除旧的机构项目映射状态
+        if (request.getOldProjectIds() != null && request.getOldProjectIds().size() > 0) {
+            StringBuilder sql = new StringBuilder();
+            sql.append("update nnlightctl_project set nnlightctl_institution_id = null where id in (:idArray)");
+            Map<String, Object> params = new HashMap<>(1);
+            params.put("idArray", request.getOldProjectIds());
+
+            namedParameterJdbcTemplate.update(sql.toString(), params);
+        }
+
+        //映射新项目
+        if (request.getNewProjectIds() != null && request.getNewProjectIds().size() > 0) {
+            StringBuilder mapSql = new StringBuilder();
+            mapSql.append("update nnlightctl_project set nnlightctl_institution_id = :institutionId where id in (:newIdArray)");
+            Map<String, Object> params = new HashMap<>(2);
+            params.put("institutionId", request.getInstitutionId());
+            params.put("newIdArray", request.getNewProjectIds());
+
+            namedParameterJdbcTemplate.update(mapSql.toString(), params);
+        }
+
+        return 1;
     }
 }

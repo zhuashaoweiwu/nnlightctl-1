@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Institution;
+import com.nnlightctl.po.Project;
 import com.nnlightctl.request.BaseRequest;
 import com.nnlightctl.request.InstitutionConditionRequest;
 import com.nnlightctl.request.InstitutionRequest;
@@ -126,6 +127,57 @@ public class InstitutionController extends BaseController {
         List<ProjectsToInstitutionView> projectsToInstitutionViewList = institutionServer.mapProjectsToInstitution(mapProjectsToInstitutionRequest);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(projectsToInstitutionViewList);
+
+        return toJson(jsonResult);
+    }
+
+    /**
+     * 通过机构id获取机构下全部项目
+     * @param request
+     * @return
+     */
+    @RequestMapping("getProjectsByInstitutionId")
+    public String getProjectsByInstitutionId(InstitutionConditionRequest request) {
+        logger.info("[POST] /api/institution/getProjectsByInstitutionId");
+
+        List<Project> projectList = institutionServer.listProjectByInsitutionId(request.getInstitutionId());
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(projectList);
+
+        return toJson(jsonResult);
+    }
+
+    /**
+     * 映射机构包含项目2
+     * @param request
+     * @return
+     */
+    @RequestMapping("institutionMapProjects2")
+    public String mapProjects2Institution(InstitutionConditionRequest request) {
+        logger.info("[POST] /api/institution/institutionMapProjects2");
+
+        int ret = institutionServer.updateMapProjects2Institution(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    /**
+     * 获取不属于任何机构的项目集合
+     * @return
+     */
+    @RequestMapping("listNotBeProjects")
+    public String listNotBeProjects() {
+        logger.info("[POST] /api/institution/listNotBeProjects");
+
+        List<Project> projectList = institutionServer.listNotBeProjects();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(projectList);
 
         return toJson(jsonResult);
     }
