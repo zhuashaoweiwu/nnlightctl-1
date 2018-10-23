@@ -591,6 +591,20 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getLightTypeById")
+    public String getLightTypeById(Long id) {
+        logger.info("[POST] /api/roadlighting/getLightTypeById");
+
+        LightingModel lightingModel = lightModelServer.getLightModelById(id);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<LightingModel> lightingModels = new ArrayList<>(1);
+        lightingModels.add(lightingModel);
+        jsonResult.setData(lightingModels);
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("addOrUpdateGIS")
     public String addOrUpdateGIS(GISRequest request) {
         logger.info("[POST] /api/roadlighting/addOrUpdateGIS");

@@ -11,4 +11,5 @@ public interface LightModelServer {
     int addOrUpdateLightModel(LightModelRequest request);
     int deleteLightModel(LightModelConditionRequest request);
     Tuple.TwoTuple<List<LightingModel>, Integer> listLightModel(LightModelConditionRequest request);
+    LightingModel getLightModelById(Long id);
 }

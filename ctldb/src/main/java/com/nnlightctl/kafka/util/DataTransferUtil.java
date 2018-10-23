@@ -35,7 +35,7 @@ public class DataTransferUtil {
         lightingVolEleRecord.setBeam(new BigDecimal(String.valueOf(beam)));
 
         //电流
-        short unsignedEletric = (short)(ByteConvert.bytesToUshort(data, 42) % 1000);
+        short unsignedEletric = (short)(ByteConvert.bytesToUshort(data, 42) % 1050);
         lightingVolEleRecord.setElectricty(new BigDecimal(String.valueOf(unsignedEletric / 1000)));
 
         //电压
@@ -43,7 +43,7 @@ public class DataTransferUtil {
         lightingVolEleRecord.setVoltage(new BigDecimal(String.valueOf(unsignedVoltage)));
 
         //计算能耗
-        lightingVolEleRecord.setEnergy(new BigDecimal(String.valueOf(unsignedEletric * unsignedVoltage * 10)));
+        lightingVolEleRecord.setEnergy(new BigDecimal(String.valueOf(unsignedEletric * unsignedVoltage * 10 / 1000)));
 
         //信号强度
         short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, 46);

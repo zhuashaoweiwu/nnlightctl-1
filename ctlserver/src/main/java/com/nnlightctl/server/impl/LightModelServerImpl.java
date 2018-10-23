@@ -68,4 +68,9 @@ public class LightModelServerImpl implements LightModelServer {
         tuple.setSecond(total);
         return tuple;
     }
+
+    @Override
+    public LightingModel getLightModelById(Long id) {
+        return lightingModelMapper.selectByPrimaryKey(id);
+    }
 }
