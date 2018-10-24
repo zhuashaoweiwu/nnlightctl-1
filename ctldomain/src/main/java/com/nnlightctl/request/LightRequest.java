@@ -1,5 +1,7 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,14 @@ public class LightRequest {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getLightingCode() {
+        return lightingCode;
+    }
+
+    public void setLightingCode(String lightingCode) {
+        this.lightingCode = lightingCode;
     }
 
     public Date getManufacture() {
@@ -109,14 +119,32 @@ public class LightRequest {
         this.nnlightctlProjectId = nnlightctlProjectId;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
     private Long id;
-    @NotNull(message = "灯具唯一编码不能为空！")
+    @NotEmpty(message = "灯具UUID不能为空！")
     private String uid;
+    @NotEmpty(message = "灯具唯一编码不能为空！")
+    private String lightingCode;
     private Date manufacture;
     private Date useDate;
-    @NotNull(message = "灯杆不能为空！")
+    @NotEmpty(message = "灯杆不能为空！")
     private String lamppost;
-    @NotNull(message = "灯头号不能为空！")
+    @NotEmpty(message = "灯头号不能为空！")
     private String lamphead;
     private Long nnlightctlLightingModelId;
     private Long nnlightctlLightingGisId;
@@ -124,7 +152,10 @@ public class LightRequest {
     private String decay;
     private Long maxUseTime;
     private String mem;
+    @NotNull(message = "灯具必须选择所属项目")
     private Long nnlightctlProjectId;
+    private String longitude;
+    private String latitude;
 
     public static class BatchLightRequest {
         public List<LightRequest> getAddLightings() {

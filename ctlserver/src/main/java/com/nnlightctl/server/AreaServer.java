@@ -16,4 +16,6 @@ public interface AreaServer {
     List<Region> listLevel1Area();
 
     List<Region> listSubArea(Long parentAreaId);
+
+    Region getAreaById(Long id);
 }

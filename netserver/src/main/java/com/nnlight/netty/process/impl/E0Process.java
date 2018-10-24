@@ -13,7 +13,7 @@ public class E0Process implements Process {
 
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
-        logger.info("接收E0固定消息");
+        logger.info("接收E0固定消息[" + msg.toHexString() + "]");
 
         EchoServer.getGlobalApplicationContext().allClientSendCommand(msg);
         //发送E0消息到Kafka

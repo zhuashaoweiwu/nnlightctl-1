@@ -81,4 +81,9 @@ public class AreaServerImpl implements AreaServer {
 
         return regionMapper.selectByExample(regionExample);
     }
+
+    @Override
+    public Region getAreaById(Long id) {
+        return regionMapper.selectByPrimaryKey(id);
+    }
 }

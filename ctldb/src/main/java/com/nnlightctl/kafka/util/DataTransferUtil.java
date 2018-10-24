@@ -16,50 +16,60 @@ public class DataTransferUtil {
 
         byte[] data = e0CommandData.getData();
 
+        int k = 0;
+
         //uuid
         byte[] uuidBytes = new byte[36];
-        System.arraycopy(data, 0, uuidBytes, 0, 36);
+        System.arraycopy(data, k, uuidBytes, 0, 36);
         String uuid = new String(uuidBytes, Charset.forName("UTF-8"));
         lightingVolEleRecord.setUid(uuid);
 
+        k += 36;
+
         //温度
-        short temperature = (short) ByteConvert.bytesToUshort(data, 36);
-        lightingVolEleRecord.setTemperature(new BigDecimal(String.valueOf(Arithmetic.divide(temperature, "10"))));
+//        short temperature = (short) ByteConvert.bytesToUshort(data, 36);
+//        lightingVolEleRecord.setTemperature(new BigDecimal(String.valueOf(Arithmetic.divide(temperature, "10"))));
 
         //湿度
-        short dampness = (short) ByteConvert.bytesToUshort(data, 38);
-        lightingVolEleRecord.setDampness(new BigDecimal(String.valueOf(Arithmetic.divide(dampness, "10"))));
+//        short dampness = (short) ByteConvert.bytesToUshort(data, 38);
+//        lightingVolEleRecord.setDampness(new BigDecimal(String.valueOf(Arithmetic.divide(dampness, "10"))));
 
         //光照
-        short beam = (short) ByteConvert.bytesToUshort(data, 40);
-        lightingVolEleRecord.setBeam(new BigDecimal(String.valueOf(beam)));
+//        short beam = (short) ByteConvert.bytesToUshort(data, 40);
+//        lightingVolEleRecord.setBeam(new BigDecimal(String.valueOf(beam)));
 
         //电流
-        short unsignedEletric = (short)(ByteConvert.bytesToUshort(data, 42) % 1050);
+        int unsignedEletric = ByteConvert.bytesToUshort(data, k) % 1050;
         lightingVolEleRecord.setElectricty(new BigDecimal(String.valueOf(unsignedEletric / 1000)));
 
+        k += 2;
+
         //电压
-        short unsignedVoltage = (short)(ByteConvert.bytesToUshort(data, 44) % 1000);
+        int unsignedVoltage = ByteConvert.bytesToUshort(data, k) % 1000;
         lightingVolEleRecord.setVoltage(new BigDecimal(String.valueOf(unsignedVoltage)));
+
+        k += 2;
 
         //计算能耗
         lightingVolEleRecord.setEnergy(lightingVolEleRecord.getElectricty().multiply(lightingVolEleRecord.getVoltage()));
 
         //信号强度
-        short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, 46);
+        short unSignalIntensity = (short)ByteConvert.bytesToUbyte(data, k);
         lightingVolEleRecord.setPersist1(new BigDecimal(String.valueOf(unSignalIntensity)));
 
+        k += 1;
+
         //时间
-        short unHour = (short)(ByteConvert.bytesToUbyte(data, 47) % 24);
-        short unMinute = (short)(ByteConvert.bytesToUbyte(data, 48) % 60);
-        short unSecond = (short)(ByteConvert.bytesToUbyte(data, 49) % 60);
+        short unHour = (short)(ByteConvert.bytesToUbyte(data, k++) % 24);
+        short unMinute = (short)(ByteConvert.bytesToUbyte(data, k++) % 60);
+        short unSecond = (short)(ByteConvert.bytesToUbyte(data, k++) % 60);
         LocalDateTime dateTime = LocalDateTime.now().withHour(unHour).withMinute(unMinute).withSecond(unSecond);
         lightingVolEleRecord.setRecordDatetime(DateTimeUtil.fromLocalDateTime(dateTime));
 
         //GPS
-        int gpsByteLength = data.length - 1 - 49;
+        int gpsByteLength = data.length - k;
         byte[] gpsByte = new byte[gpsByteLength];
-        System.arraycopy(data, 50, gpsByte, 0, gpsByteLength);
+        System.arraycopy(data, k, gpsByte, 0, gpsByteLength);
         String gpsStr = new String(gpsByte, Charset.forName("UTF-8"));
         String strLongititude = gpsStr.substring(0, gpsStr.indexOf("N"));
         lightingVolEleRecord.setPersist2(new BigDecimal(Arithmetic.divide(strLongititude, "100")));

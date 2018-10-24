@@ -732,6 +732,21 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getAreaById")
+    public String getAreaById(Long id) {
+        logger.info("[POST] /api/roadlighting/getAreaById");
+
+        Region region = areaServer.getAreaById(id);
+
+        List<Region> regionList = new ArrayList<>(1);
+        regionList.add(region);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(regionList);
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("importElebox")
     public String importElebox(MultipartFile batchEleboxFile) {
         logger.info("[POST] /api/roadlighting/importElebox");
