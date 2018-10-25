@@ -119,6 +119,14 @@ public class LightServerImpl implements LightServer {
             criteria.andNnlightctlProjectIdEqualTo(request.getProjectId());
         }
 
+        if (!StringUtils.isEmpty(request.getUuid())) {
+            criteria.andUidLike("%" + request.getUuid() + "%");
+        }
+
+        if (!StringUtils.isEmpty(request.getLightingCode())) {
+            criteria.andLightingCodeLike("%" + request.getLightingCode() + "%");
+        }
+
         int total = this.lightingMapper.countByExample(lightingExample);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         lightingExample.setOrderByClause("id DESC");

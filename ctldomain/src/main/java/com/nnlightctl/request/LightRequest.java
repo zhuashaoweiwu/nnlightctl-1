@@ -136,7 +136,6 @@ public class LightRequest {
     }
 
     private Long id;
-    @NotEmpty(message = "灯具UUID不能为空！")
     private String uid;
     @NotEmpty(message = "灯具唯一编码不能为空！")
     private String lightingCode;

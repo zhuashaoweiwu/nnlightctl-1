@@ -115,6 +115,25 @@ public class LightConditionRequest extends BaseRequest {
         this.priority = priority;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getLightingCode() {
+        return lightingCode;
+    }
+
+    public void setLightingCode(String lightingCode) {
+        this.lightingCode = lightingCode;
+    }
+
+    private String uuid;
+    private String lightingCode;
+
     private Long id;
     private Integer priority;
 
