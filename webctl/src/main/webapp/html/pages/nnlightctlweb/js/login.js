@@ -1,5 +1,5 @@
 $(function(){
-	$('#login').click(function(){
+    $('#login').click(function(){
         var loginName = $('input[name=loginName]');
         var pwd = $('input[name=pwd]');
         var remember = $('#remmberpwd').is(':checked') ? 1 : 0;
@@ -15,7 +15,7 @@ $(function(){
                         $('#errormsg').show();
                         $("#errormsg").text(data.header.msg);
                     }
-            });
+                });
         }
 
     });
