@@ -4,6 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Region;
 import com.nnlightctl.request.AreaConditionRequest;
 import com.nnlightctl.request.AreaRequest;
+import com.nnlightctl.vo.RegionView;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface AreaServer {
     List<Region> listSubArea(Long parentAreaId);
 
     Region getAreaById(Long id);
+
+    List<RegionView> getLevelRegion();
 }

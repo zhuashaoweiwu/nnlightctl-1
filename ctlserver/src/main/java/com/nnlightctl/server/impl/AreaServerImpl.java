@@ -9,9 +9,11 @@ import com.nnlightctl.po.RegionExample;
 import com.nnlightctl.request.AreaConditionRequest;
 import com.nnlightctl.request.AreaRequest;
 import com.nnlightctl.server.AreaServer;
+import com.nnlightctl.vo.RegionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,5 +87,43 @@ public class AreaServerImpl implements AreaServer {
     @Override
     public Region getAreaById(Long id) {
         return regionMapper.selectByPrimaryKey(id);
+    }
+
+    private List<RegionView> doMergeRegion(Region parentRegion, List<Region> regionList) {
+        List<RegionView> regionViews = new ArrayList<>(8);
+
+        for (Region region : regionList) {
+            if (region.getNnlightctlParentRegion() != null && region.getNnlightctlParentRegion().equals(parentRegion.getId())) {
+                RegionView regionView = new RegionView();
+                ReflectCopyUtil.beanSameFieldCopy(region, regionView);
+                regionView.setSubRegionViewList(doMergeRegion(region, regionList));
+                regionViews.add(regionView);
+            }
+        }
+
+        return regionViews;
+    }
+
+    private List<RegionView> mergeRegion(List<Region> regions) {
+        List<RegionView> regionViews = new ArrayList<>(8);
+
+        for (Region region : regions) {
+            if (region.getRegionLevel() == 0) {
+                RegionView regionView = new RegionView();
+                ReflectCopyUtil.beanSameFieldCopy(region, regionView);
+                regionView.setSubRegionViewList(doMergeRegion(region, regions));
+                regionViews.add(regionView);
+            }
+        }
+
+        return regionViews;
+    }
+
+    @Override
+    public List<RegionView> getLevelRegion() {
+        //1、获取全部区域信息
+        List<Region> regionList = regionMapper.selectByExample(new RegionExample());
+        //2、递归构造层级区域信息集合
+        return mergeRegion(regionList);
     }
 }
