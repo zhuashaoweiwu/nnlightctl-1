@@ -51,9 +51,9 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
                 eleboxVolEleRecord.setId(resultSet.getLong("id"));
                 eleboxVolEleRecord.setEleboxPower(resultSet.getBigDecimal("elebox_power"));
                 eleboxVolEleRecord.setElectricity(resultSet.getBigDecimal("electricity"));
-                eleboxVolEleRecord.setGmtCreated(resultSet.getDate("gmt_created"));
-                eleboxVolEleRecord.setGmtUpdated(resultSet.getDate("gmt_updated"));
-                eleboxVolEleRecord.setRealtimeDate(resultSet.getDate("realtime_date"));
+                eleboxVolEleRecord.setGmtCreated(resultSet.getTimestamp("gmt_created"));
+                eleboxVolEleRecord.setGmtUpdated(resultSet.getTimestamp("gmt_updated"));
+                eleboxVolEleRecord.setRealtimeDate(resultSet.getTimestamp("realtime_date"));
                 eleboxVolEleRecord.setUid(resultSet.getString("uid"));
                 eleboxVolEleRecord.setVoltage(resultSet.getBigDecimal("voltage"));
                 return eleboxVolEleRecord;
