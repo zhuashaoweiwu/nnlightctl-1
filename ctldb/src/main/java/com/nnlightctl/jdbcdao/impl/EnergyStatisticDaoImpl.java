@@ -259,7 +259,7 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
             public ListEleboxEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 ListEleboxEnergyStatisticView listEleboxEnergyStatisticView = new ListEleboxEnergyStatisticView();
                 listEleboxEnergyStatisticView.setUid(resultSet.getString("uid"));
-                listEleboxEnergyStatisticView.setTotal(resultSet.getLong("total"));
+                listEleboxEnergyStatisticView.setTotal(resultSet.getBigDecimal("total"));
                 return listEleboxEnergyStatisticView;
             }
         });

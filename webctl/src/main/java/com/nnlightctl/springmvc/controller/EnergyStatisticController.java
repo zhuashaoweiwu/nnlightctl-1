@@ -4,6 +4,7 @@ import com.nnlightctl.po.EleboxVolEleRecord;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.request.EleboxPowerRequest;
 import com.nnlightctl.request.LightingVolEleRecordRequest;
+import com.nnlightctl.request.StatisticLightEnergyRequest;
 import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EnergyStatisticServer;
@@ -167,6 +168,19 @@ public class EnergyStatisticController extends BaseController{
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(lightingVolEleRecordList);
 
+        return toJson(jsonResult);
+    }
+
+    /*
+    *十一、根据灯具唯一编码统计单个灯具的电压、能耗信息
+    * */
+    @RequestMapping("statisticLightEnergy")
+    public String statisticLightEnergy(StatisticLightEnergyRequest request){
+
+        logger.info("[POST] /api/energyStatistic/statisticLightEnergy");
+        List<LightingVolEleRecord> lightingVolEleRecordList = energyStatisticServer.listStatisticLightEnergy(request);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(lightingVolEleRecordList);
         return toJson(jsonResult);
     }
 }

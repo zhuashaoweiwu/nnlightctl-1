@@ -2,17 +2,19 @@ package com.nnlightctl.vo;
 
 import com.nnlightctl.request.BaseRequest;
 
+import java.math.BigDecimal;
+
 public class ListEleboxEnergyStatisticView{
 
-    private Long total;
+    private BigDecimal total;
 
     private String uid;
 
-    public Long getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 

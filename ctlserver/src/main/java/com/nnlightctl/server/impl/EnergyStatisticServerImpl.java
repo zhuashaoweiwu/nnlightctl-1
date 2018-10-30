@@ -1,12 +1,12 @@
 package com.nnlightctl.server.impl;
 
 import com.nnlightctl.dao.EleboxMapper;
+import com.nnlightctl.dao.LightingMapper;
+import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.EnergyStatisticDao;
-import com.nnlightctl.po.Elebox;
-import com.nnlightctl.po.EleboxModel;
-import com.nnlightctl.po.EleboxVolEleRecord;
-import com.nnlightctl.po.LightingVolEleRecord;
+import com.nnlightctl.po.*;
 import com.nnlightctl.request.EleboxPowerRequest;
+import com.nnlightctl.request.StatisticLightEnergyRequest;
 import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
 import com.nnlightctl.server.EnergyStatisticServer;
 import com.nnlightctl.vo.CommonEnergyStatisticView;
@@ -26,6 +26,10 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     private EnergyStatisticDao energyStatisticDao;
     @Autowired
     private EleboxMapper eleboxMapper;
+    @Autowired
+    private LightingMapper lightingMapper;
+    @Autowired
+    private LightingVolEleRecordMapper lightingVolEleRecordMapper;
 
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest){
@@ -63,5 +67,26 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     @Override
     public List<GetEleboxEnergyStatisticView> getEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request){
         return energyStatisticDao.getEleboxEnergyStatistic(request);
+    }
+    @Override
+    public List<LightingVolEleRecord> listStatisticLightEnergy(StatisticLightEnergyRequest request){
+        LightingVolEleRecordExample lightingVolEleRecordExample = new LightingVolEleRecordExample();
+        List<LightingVolEleRecord> lightingVolEleRecordList = new ArrayList<>();
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andLightingCodeEqualTo(request.getLightingCode());
+        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
+        if (!lightingList.isEmpty()){
+            LightingVolEleRecordExample.Criteria criteria=lightingVolEleRecordExample.createCriteria();
+            criteria.andUidEqualTo(lightingList.get(0).getUid());
+            if (request.getEndDate() !=null){
+                criteria.andRecordDatetimeLessThanOrEqualTo(request.getEndDate());
+            }
+            if (request.getStartDate() != null){
+                criteria.andRecordDatetimeGreaterThanOrEqualTo(request.getStartDate());
+            }
+            lightingVolEleRecordList = lightingVolEleRecordMapper.selectByExample(lightingVolEleRecordExample);
+        }
+
+        return lightingVolEleRecordList;
     }
 }
