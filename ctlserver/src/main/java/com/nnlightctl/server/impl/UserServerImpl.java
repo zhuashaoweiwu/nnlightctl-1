@@ -4,6 +4,7 @@ import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.DigesterUtil;
+import com.nnlight.common.PingYingUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.DepartmentMapper;
@@ -161,7 +162,9 @@ public class UserServerImpl implements UserServer {
     public int deleteUser(List<Long> userIds) {
 
         for (Long id : userIds) {
-            userMapper.deleteByPrimaryKey(id);
+            User user = userMapper.selectByPrimaryKey(id);
+            user.setUserState((byte)0);
+            userMapper.updateByPrimaryKeySelective(user);
         }
         return 1;
     }
@@ -171,7 +174,9 @@ public class UserServerImpl implements UserServer {
         User user = new User();
         user.setId(request.getId());
 
-        user.setLoginPwd(DigesterUtil.digestSHA256(request.getNewPwd()));
+        String loginName = this.userMapper.selectByPrimaryKey(request.getId()).getLoginName();
+
+        user.setLoginPwd(DigesterUtil.digestSHA256(request.getNewPwd() + loginName));
 
         return userMapper.updateByPrimaryKeySelective(user);
     }
@@ -206,4 +211,26 @@ public class UserServerImpl implements UserServer {
         return tuple;
     }
 
+    @Override
+    public int updateInitUserPwd(Long userId) {
+        User user = this.userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            throw new RuntimeException("初始化密码用户不存在");
+        }
+
+        user.setLoginPwd(DigesterUtil.digestSHA256(PingYingUtil.cn2FirstSpell(user.getUserName()) + "12345678" + user.getLoginName()));
+
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public int updateUserLockState(Long userId, Integer state) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在");
+        }
+
+        user.setUserState(state.byteValue());
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

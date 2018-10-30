@@ -39,5 +39,6 @@
     <orderEntry type="library" name="Maven: com.lmax:disruptor:3.3.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: com.belerweb:pinyin4j:2.5.0" level="project" />
   </component>
 </module>

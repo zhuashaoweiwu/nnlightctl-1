@@ -37,7 +37,9 @@ public class MyRealm extends AuthorizingRealm {
         User user = userServer.getUserByLoginName(upToken.getUsername());
 
         if (user == null) {
-            return null;
+            throw new UnknownAccountException();
+        } else if (user.getUserState() != 1) {
+            throw new AuthenticationException();
         } else {
             AuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getLoginPwd(), getName());
             return info;

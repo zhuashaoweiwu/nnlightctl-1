@@ -1,5 +1,6 @@
 package com.nnlightctl.shiro;
 
+import com.nnlight.common.DigesterUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -13,6 +14,6 @@ public class CustomerCredentMatcher extends SimpleCredentialsMatcher {
         UsernamePasswordToken usertoken = (UsernamePasswordToken) token;
 
         return getCredentials(info).toString()
-                .equalsIgnoreCase(new Sha256Hash(String.valueOf(usertoken.getPassword()), usertoken.getUsername()).toString());
+                .equalsIgnoreCase(DigesterUtil.digestSHA256(String.valueOf(usertoken.getPassword()) + usertoken.getUsername()).toString());
     }
 }

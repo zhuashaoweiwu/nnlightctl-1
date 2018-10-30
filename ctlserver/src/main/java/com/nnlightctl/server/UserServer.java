@@ -24,4 +24,8 @@ public interface UserServer {
     int updateUserPwd(UserConditionRequest request);
 
     Tuple.TwoTuple<List<User>, Integer> listOnlineUser();
+
+    int updateInitUserPwd(Long userId);
+
+    int updateUserLockState(Long userId, Integer state);
 }

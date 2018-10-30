@@ -153,4 +153,34 @@ public class UserController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("initUserPassword")
+    public String initUserPassword(Long id) {
+        logger.info("[POST] /api/user/initUserPassword");
+
+        int ret = userServer.updateInitUserPwd(id);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("lockUser")
+    public String lockUser(UserConditionRequest request) {
+        logger.info("[POST] /api/user/lockUser");
+
+        int ret = userServer.updateUserLockState(request.getId(), request.getState());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }

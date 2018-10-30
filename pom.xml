@@ -50,6 +50,7 @@
         <shiro.version>1.2.3</shiro.version>
         <hibernate.validate.version>4.2.0.Final</hibernate.validate.version>
         <validate.api.version>1.1.0.Final</validate.api.version>
+        <pingying4j.version>2.5.0</pingying4j.version>
     </properties>
 
     <repositories>
@@ -349,6 +350,14 @@
                 <artifactId>validation-api</artifactId>
                 <version>${validate.api.version}</version>
             </dependency>
+
+            <!-- 拼音工具 -->
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pingying4j.version}</version>
+            </dependency>
+
 
 
 
