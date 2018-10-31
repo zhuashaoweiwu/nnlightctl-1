@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -187,11 +188,13 @@ public class EleboxServerImpl implements EleboxServer {
                 criteria.andNnlightctlProjectIdEqualTo(projectId);
             }
         }
-        if (request.getUid() !=null ){
-            criteria.andUidEqualTo(request.getUid());
+
+        if (!StringUtils.isEmpty(request.getUid())) {
+            criteria.andUidLike("%" + request.getUid() + "%");
         }
-        if (request.getCodeNumber() !=null ){
-            criteria.andCodeNumberEqualTo(request.getCodeNumber());
+
+        if (!StringUtils.isEmpty(request.getCodeNumber())) {
+            criteria.andCodeNumberLike("%" + request.getCodeNumber() + "%");
         }
 
         int total = eleboxMapper.countByExample(eleboxExample);

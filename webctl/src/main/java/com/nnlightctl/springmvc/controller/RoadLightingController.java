@@ -9,6 +9,7 @@ import com.nnlightctl.server.*;
 import com.nnlightctl.util.DownloadUtil;
 import com.nnlightctl.vo.GISView;
 import com.nnlightctl.vo.RegionView;
+import org.apache.avro.generic.GenericData;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -756,6 +757,20 @@ public class RoadLightingController extends BaseController {
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(regionList);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("getAreaDescById")
+    public String getAreaDescById(Long id) {
+        logger.info("[POST] /api/roadlighting/getAreaDescById");
+
+        String areaDesc = areaServer.getLevelRegionDesc(id);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<String> dataList = new ArrayList<>(1);
+        dataList.add(areaDesc);
+        jsonResult.setData(dataList);
 
         return toJson(jsonResult);
     }

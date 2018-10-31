@@ -1,5 +1,6 @@
 package com.nnlightctl.request;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 public class EleboxAddModelRequest {

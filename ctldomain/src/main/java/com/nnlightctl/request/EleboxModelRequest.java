@@ -1,6 +1,7 @@
 package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -20,6 +21,14 @@ public class EleboxModelRequest {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
     }
 
     public String getModelName() {
@@ -94,11 +103,11 @@ public class EleboxModelRequest {
         this.loopElectricity = loopElectricity;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
@@ -119,9 +128,11 @@ public class EleboxModelRequest {
     }
 
     private Long id;
-    @NotBlank(message = "唯一编码不能为空！")
+    @NotEmpty(message = "唯一编码不能为空！")
     private String uid;
-    @NotBlank(message = "模块名称不能为空！")
+    @NotEmpty(message = "模块编码不可为空！")
+    private String modelCode;
+    @NotEmpty(message = "模块名称不能为空！")
     private String modelName;
     private Double powerRating;
     private Double electricRating;
@@ -135,5 +146,5 @@ public class EleboxModelRequest {
     private List<ModelLoopRequest> modelLoopList;
     private Long nnlightctlEleboxId;
     @NotNull(message = "数量不能为空！")
-    private int count;
+    private Integer count;
 }

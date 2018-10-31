@@ -126,4 +126,13 @@ public class AreaServerImpl implements AreaServer {
         //2、递归构造层级区域信息集合
         return mergeRegion(regionList);
     }
+
+    @Override
+    public String getLevelRegionDesc(Long id) {
+        Region region = regionMapper.selectByPrimaryKey(id);
+        if (region.getNnlightctlParentRegion() != null) {
+            return getLevelRegionDesc(region.getNnlightctlParentRegion()) + "-" + region.getAreaName();
+        }
+        return region.getAreaName();
+    }
 }

@@ -21,4 +21,6 @@ public interface AreaServer {
     Region getAreaById(Long id);
 
     List<RegionView> getLevelRegion();
+
+    String getLevelRegionDesc(Long id);
 }
