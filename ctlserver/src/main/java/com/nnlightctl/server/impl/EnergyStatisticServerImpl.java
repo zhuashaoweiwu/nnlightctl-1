@@ -84,6 +84,7 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
             if (request.getStartDate() != null){
                 criteria.andRecordDatetimeGreaterThanOrEqualTo(request.getStartDate());
             }
+            lightingVolEleRecordExample.setOrderByClause(" id Desc");
             lightingVolEleRecordList = lightingVolEleRecordMapper.selectByExample(lightingVolEleRecordExample);
         }
 

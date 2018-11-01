@@ -24,7 +24,7 @@ public class MenuServerImpl implements MenuServer {
     @Override
     public List<Righter> listMenuLevel1(){
         RighterExample righterExample = new RighterExample();
-        Byte level = 1;
+        Byte level = 0;
         righterExample.createCriteria().andRighterLevelEqualTo(level);
         righterExample.setOrderByClause("id DESC");
         return  righterMapper.selectByExample(righterExample);
