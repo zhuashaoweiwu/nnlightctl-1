@@ -7,7 +7,9 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.*;
 import com.nnlightctl.util.DownloadUtil;
+import com.nnlightctl.vo.EleboxView;
 import com.nnlightctl.vo.GISView;
+import com.nnlightctl.vo.LightingView;
 import com.nnlightctl.vo.RegionView;
 import org.apache.avro.generic.GenericData;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -360,7 +362,7 @@ public class RoadLightingController extends BaseController {
     public String listElebox(EleboxRequest request) {
         logger.info("[POST] /api/roadlighting/listelebox");
 
-        Tuple.TwoTuple<List<Elebox>, Integer> tuple = eleboxServer.listElebox(request);
+        Tuple.TwoTuple<List<EleboxView>, Integer> tuple = eleboxServer.listElebox(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
@@ -495,7 +497,7 @@ public class RoadLightingController extends BaseController {
     public String listLighting(LightConditionRequest request) {
         logger.info("[POST] /api/roadlighting/listLighting");
 
-        Tuple.TwoTuple<List<Lighting>, Integer> tuple = this.lightServer.listLighting(request);
+        Tuple.TwoTuple<List<LightingView>, Integer> tuple = this.lightServer.listLighting(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

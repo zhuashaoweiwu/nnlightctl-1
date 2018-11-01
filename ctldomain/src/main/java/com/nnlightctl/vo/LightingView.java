@@ -4,35 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class LightingView extends BaseView {
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public Date getGmtCreated() {
-        return gmtCreated;
-    }
-
-    @Override
-    public void setGmtCreated(Date gmtCreated) {
-        this.gmtCreated = gmtCreated;
-    }
-
-    @Override
-    public Date getGmtUpdated() {
-        return gmtUpdated;
-    }
-
-    @Override
-    public void setGmtUpdated(Date gmtUpdated) {
-        this.gmtUpdated = gmtUpdated;
-    }
 
     public String getUid() {
         return uid;
@@ -138,11 +109,25 @@ public class LightingView extends BaseView {
         this.faultTag = faultTag;
     }
 
-    private Long id;
+    public String getRegionLevelDesc() {
+        return regionLevelDesc;
+    }
 
-    private Date gmtCreated;
+    public void setRegionLevelDesc(String regionLevelDesc) {
+        this.regionLevelDesc = regionLevelDesc;
+    }
 
-    private Date gmtUpdated;
+    public String getLightingCode() {
+        return lightingCode;
+    }
+
+    public void setLightingCode(String lightingCode) {
+        this.lightingCode = lightingCode;
+    }
+
+
+
+    private String lightingCode;
 
     private String uid;
 
@@ -169,5 +154,7 @@ public class LightingView extends BaseView {
     private Byte loopPriority;
 
     private Byte faultTag;
+
+    private String regionLevelDesc;
 
 }

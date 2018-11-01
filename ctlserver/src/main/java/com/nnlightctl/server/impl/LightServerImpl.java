@@ -10,6 +10,7 @@ import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
+import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.vo.LightingView;
 import org.apache.poi.hssf.usermodel.*;
@@ -36,6 +37,9 @@ public class LightServerImpl implements LightServer {
 
     @Autowired
     private LightDao lightDao;
+
+    @Autowired
+    private AreaServer areaServer;
 
     @Override
     public int addOrUpdateLight(LightRequest request) {
@@ -102,8 +106,9 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request) {
-        Tuple.TwoTuple<List<Lighting>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<LightingView>, Integer> listLighting(LightConditionRequest request) {
+        Tuple.TwoTuple<List<LightingView>, Integer> tuple = new Tuple.TwoTuple<>();
+
         LightingExample lightingExample = new LightingExample();
         LightingExample.Criteria criteria = lightingExample.createCriteria();
 
@@ -131,8 +136,15 @@ public class LightServerImpl implements LightServer {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         lightingExample.setOrderByClause("id DESC");
         List<Lighting> lightings = this.lightingMapper.selectByExample(lightingExample);
+        List<LightingView> lightingViewList = new ArrayList<>(8);
+        for (Lighting lighting : lightings) {
+            LightingView lightingView = new LightingView();
+            ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+            lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+            lightingViewList.add(lightingView);
+        }
 
-        tuple.setFirst(lightings);
+        tuple.setFirst(lightingViewList);
         tuple.setSecond(total);
         return tuple;
     }

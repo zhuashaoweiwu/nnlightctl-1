@@ -18,7 +18,7 @@ public interface LightServer {
     int getCountLightingByLampHead(String lamphead);
     int batchAddLight(LightRequest.BatchLightRequest request);
     int deleteLight(LightConditionRequest request);
-    Tuple.TwoTuple<List<Lighting>, Integer> listLighting(LightConditionRequest request);
+    Tuple.TwoTuple<List<LightingView>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);
     Lighting getLighting(Long id);
     List<Lighting> getLightByLoopId(Long id);
