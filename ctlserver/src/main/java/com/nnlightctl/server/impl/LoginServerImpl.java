@@ -1,7 +1,9 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlightctl.dao.RighterMapper;
 import com.nnlightctl.jdbcdao.LoginDao;
 import com.nnlightctl.po.Righter;
+import com.nnlightctl.po.RighterExample;
 import com.nnlightctl.po.User;
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.server.LoginServer;
@@ -27,6 +29,9 @@ public class LoginServerImpl implements LoginServer {
 
     @Autowired
     private LoginDao loginDao;
+
+    @Autowired
+    private RighterMapper righterMapper;
 
     @Override
     public int login(LoginRequest request) {
@@ -81,16 +86,47 @@ public class LoginServerImpl implements LoginServer {
         return menuViews;
     }
 
+    @Override
+    public List<MenuView> getStaticMenu() {
+        List<Righter> allRighter = righterMapper.selectByExample(new RighterExample());
+        List<MenuView> menuViews = new ArrayList<>(8);
+
+        for (Righter righter : allRighter) {
+            //判断是否为一级菜单
+            if (righter.getRighterLevel() == 0) {
+                menuViews.add(getMenuView(righter, allRighter));
+            }
+        }
+
+        return menuViews;
+    }
+
+    @Override
+    public List<MenuView> getMenuByUserId(Long userId) {
+        List<Righter> righterList = loginDao.getRightersByUserId(userId);
+        List<MenuView> menuViews = new ArrayList<>(8);
+
+        for (Righter righter : righterList) {
+            //判断是否为一级菜单
+            if (righter.getRighterLevel() == 0) {
+                menuViews.add(getMenuView(righter, righterList));
+            }
+        }
+
+        return menuViews;
+    }
+
     private MenuView getMenuView(Righter righter, List<Righter> righterList) {
         MenuView menuView = new MenuView();
 
+        menuView.setId(righter.getId());
         menuView.setName(righter.getRighterName());
         menuView.setUrl(righter.getUrl());
 
         List<MenuView> menuViews = new ArrayList<>(8);
 
         for (Righter righter1 : righterList) {
-            if (righter1.getParentRighterId().equals(righter.getId())) {
+            if (righter1.getParentRighterId() != null && righter1.getParentRighterId().equals(righter.getId())) {
                 menuViews.add(getMenuView(righter1, righterList));
             }
         }

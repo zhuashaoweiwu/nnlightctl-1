@@ -66,6 +66,30 @@ public class LoginController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getStaticMenu")
+    @ResponseBody
+    public String getStaticMenu() {
+        log.info("[POST] /api/login/getStaticMenu");
+
+        List<MenuView> menuViewList = loginServer.getStaticMenu();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(menuViewList);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("getMenuById")
+    @ResponseBody
+    public String getMenuById(Long id) {
+        log.info("[POST] /api/login/getMenuById");
+
+        List<MenuView> menuViewList = loginServer.getMenuByUserId(id);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(menuViewList);
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("loginUrl")
     public String loginUrl() {
         log.info("[POST] /api/login/loginUrl");

@@ -2,7 +2,7 @@ package com.nnlightctl.vo;
 
 import java.util.List;
 
-public class MenuView {
+public class MenuView extends BaseView {
     public String getName() {
         return name;
     }

@@ -9,9 +9,11 @@ import com.nnlightctl.dao.EleboxModelMapper;
 import com.nnlightctl.jdbcdao.EleboxDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
+import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
+import com.nnlightctl.vo.EleboxView;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -50,6 +52,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private EleboxDao eleboxDao;
+
+    @Autowired
+    private AreaServer areaServer;
 
     @Override
     public int insertElebox(EleboxAddModelRequest request) {
@@ -178,8 +183,9 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Elebox>, Integer> listElebox(EleboxRequest request) {
-        Tuple.TwoTuple<List<Elebox>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<EleboxView>, Integer> listElebox(EleboxRequest request) {
+        Tuple.TwoTuple<List<EleboxView>, Integer> tuple = new Tuple.TwoTuple<>();
+
         EleboxExample eleboxExample = new EleboxExample();
         EleboxExample.Criteria criteria = eleboxExample.createCriteria();
         if (request instanceof EleboxRequest) {
@@ -204,7 +210,15 @@ public class EleboxServerImpl implements EleboxServer {
 
         eleboxExample.setOrderByClause("id DESC");
         List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
-        tuple.setFirst(eleboxList);
+        List<EleboxView> eleboxViewList = new ArrayList<>(8);
+        for (Elebox elebox : eleboxList) {
+            EleboxView eleboxView = new EleboxView();
+            ReflectCopyUtil.beanSameFieldCopy(elebox, eleboxView);
+            eleboxView.setRegionLevelDesc(areaServer.getLevelRegionDesc(elebox.getNnlightctlRegionId()));
+            eleboxViewList.add(eleboxView);
+        }
+
+        tuple.setFirst(eleboxViewList);
         return tuple;
     }
 

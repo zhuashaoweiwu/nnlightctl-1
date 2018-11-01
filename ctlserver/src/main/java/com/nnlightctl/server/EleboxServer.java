@@ -5,6 +5,7 @@ import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.request.*;
+import com.nnlightctl.vo.EleboxView;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ public interface EleboxServer {
     int updateEleboxDevice(EleboxConditionRequest request);
     int updateModelLoopSplite(EleboxConditionRequest request);
     int deleteElebox(EleboxConditionRequest request);
-    Tuple.TwoTuple<List<Elebox>, Integer> listElebox(EleboxRequest request);
+    Tuple.TwoTuple<List<EleboxView>, Integer> listElebox(EleboxRequest request);
     Tuple.TwoTuple<List<EleboxModel>, Integer> listEleboxModel(EleboxConditionRequest request);
     Tuple.TwoTuple<List<EleboxModelLoop>, Integer> listModelLoop(Long modelId);
     int importElebox(InputStream in, String fileName) throws IOException;

@@ -9,4 +9,6 @@ public interface LoginServer {
     int login(LoginRequest request);
     int logout();
     List<MenuView> listMenu();
+    List<MenuView> getStaticMenu();
+    List<MenuView> getMenuByUserId(Long userId);
 }

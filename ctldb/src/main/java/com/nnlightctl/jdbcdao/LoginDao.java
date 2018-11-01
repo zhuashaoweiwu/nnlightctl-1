@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface LoginDao {
     List<Righter> getRightersByLoginName(String loginName);
+    List<Righter> getRightersByUserId(Long userId);
 }
