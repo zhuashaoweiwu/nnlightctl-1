@@ -140,7 +140,9 @@ public class LightServerImpl implements LightServer {
         for (Lighting lighting : lightings) {
             LightingView lightingView = new LightingView();
             ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
-            lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+            if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+                lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+            }
             lightingViewList.add(lightingView);
         }
 
