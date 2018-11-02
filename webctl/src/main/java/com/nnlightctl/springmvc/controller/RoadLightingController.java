@@ -260,7 +260,7 @@ public class RoadLightingController extends BaseController {
     public String getLoopLight(Long id) {
         logger.info("[POST] /api/roadlighting/getLoopLight");
 
-        List<Lighting> lightingList = lightServer.getLightByLoopId(id);
+        List<LightingView> lightingList = lightServer.getLightByLoopId(id);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(lightingList);

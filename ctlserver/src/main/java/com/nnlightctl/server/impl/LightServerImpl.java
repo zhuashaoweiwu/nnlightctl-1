@@ -169,12 +169,25 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
-    public List<Lighting> getLightByLoopId(Long id) {
+    public List<LightingView> getLightByLoopId(Long id) {
         LightingExample lightingExample = new LightingExample();
         lightingExample.createCriteria().andNnlightctlEleboxModelLoopIdEqualTo(id);
         lightingExample.setOrderByClause("id DESC");
 
-        return lightingMapper.selectByExample(lightingExample);
+        List<LightingView> lightingViewList = new ArrayList<>(8);
+
+        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
+        for (Lighting lighting : lightingList) {
+            LightingView lightingView = new LightingView();
+            ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+            if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+                lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+            }
+
+            lightingViewList.add(lightingView);
+        }
+
+        return lightingViewList;
     }
 
     @Override

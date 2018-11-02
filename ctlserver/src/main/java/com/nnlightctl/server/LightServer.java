@@ -21,7 +21,7 @@ public interface LightServer {
     Tuple.TwoTuple<List<LightingView>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);
     Lighting getLighting(Long id);
-    List<Lighting> getLightByLoopId(Long id);
+    List<LightingView> getLightByLoopId(Long id);
     int updateLightBeEleboxBeLoop(LightConditionRequest request);
     int updateLightBeEleboxBeLoop2(LightConditionRequest request);
     int importLighting(InputStream is, String fileName) throws IOException;
