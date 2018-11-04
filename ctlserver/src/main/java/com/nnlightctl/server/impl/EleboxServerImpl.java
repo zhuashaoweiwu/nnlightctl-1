@@ -214,7 +214,9 @@ public class EleboxServerImpl implements EleboxServer {
         for (Elebox elebox : eleboxList) {
             EleboxView eleboxView = new EleboxView();
             ReflectCopyUtil.beanSameFieldCopy(elebox, eleboxView);
-            eleboxView.setRegionLevelDesc(areaServer.getLevelRegionDesc(elebox.getNnlightctlRegionId()));
+            if (elebox.getNnlightctlRegionId() != null && elebox.getNnlightctlRegionId() > 0) {
+                eleboxView.setRegionLevelDesc(areaServer.getLevelRegionDesc(elebox.getNnlightctlRegionId()));
+            }
             eleboxViewList.add(eleboxView);
         }
 

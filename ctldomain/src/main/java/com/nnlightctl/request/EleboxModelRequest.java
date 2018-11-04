@@ -145,6 +145,5 @@ public class EleboxModelRequest {
     private Double loopElectricity;
     private List<ModelLoopRequest> modelLoopList;
     private Long nnlightctlEleboxId;
-    @NotNull(message = "数量不能为空！")
     private Integer count;
 }

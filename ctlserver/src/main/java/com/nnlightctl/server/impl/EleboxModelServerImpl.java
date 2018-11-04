@@ -29,45 +29,42 @@ public class EleboxModelServerImpl implements EleboxModelServer {
     @Override
     public int addEleboxModel(EleboxModelRequest request) {
         int ret = -1;
-        int duplicate = request.getCount() > 0 ? request.getCount() : 1;
-        for (int i = 0; i < duplicate; ++i) {
-            EleboxModel eleboxModel = new EleboxModel();
-            ReflectCopyUtil.beanSameFieldCopy(request, eleboxModel);
-            eleboxModel.setGmtCreated(new Date());
-            eleboxModel.setGmtUpdated(new Date());
-            if (request.getPowerRating() != null) {
-                eleboxModel.setPowerRating(new BigDecimal(Double.toString(request.getPowerRating())));
-            }
+        EleboxModel eleboxModel = new EleboxModel();
+        ReflectCopyUtil.beanSameFieldCopy(request, eleboxModel);
+        eleboxModel.setGmtCreated(new Date());
+        eleboxModel.setGmtUpdated(new Date());
+        if (request.getPowerRating() != null) {
+            eleboxModel.setPowerRating(new BigDecimal(Double.toString(request.getPowerRating())));
+        }
 
-            if (request.getElectricRating() != null) {
-                eleboxModel.setElectricRating(new BigDecimal(Double.toString(request.getElectricRating())));
-            }
+        if (request.getElectricRating() != null) {
+            eleboxModel.setElectricRating(new BigDecimal(Double.toString(request.getElectricRating())));
+        }
 
-            if (request.getVoltageRating() != null) {
-                eleboxModel.setVoltageRating(new BigDecimal(Double.toString(request.getVoltageRating())));
-            }
+        if (request.getVoltageRating() != null) {
+            eleboxModel.setVoltageRating(new BigDecimal(Double.toString(request.getVoltageRating())));
+        }
 
-            if (request.getLoopElectricity() != null) {
-                eleboxModel.setLoopElectricity(new BigDecimal(Double.toString(request.getLoopElectricity())));
-            }
-            ret = eleboxModelMapper.insertSelective(eleboxModel);
-            if (ret > 0) {
-                List<ModelLoopRequest> modleLoopList = request.getModelLoopList();
-                for (ModelLoopRequest modelLoopRequest : modleLoopList) {
-                    modelLoopRequest.setNnlightctlEleboxModelId(eleboxModel.getId());
-                    EleboxModelLoop eleboxModelLoop = new EleboxModelLoop();
-                    ReflectCopyUtil.beanSameFieldCopy(modelLoopRequest, eleboxModelLoop);
-                    eleboxModelLoop.setGmtCreated(new Date());
-                    eleboxModelLoop.setGmtUpdated(new Date());
-                    if (modelLoopRequest.getElectricity() != null) {
-                        eleboxModelLoop.setElectricity(new BigDecimal(Double.toString(modelLoopRequest.getElectricity())));
-                    }
-
-                    if (modelLoopRequest.getVoltage() != null) {
-                        eleboxModelLoop.setVoltage(new BigDecimal(Double.toString(modelLoopRequest.getVoltage())));
-                    }
-                    eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
+        if (request.getLoopElectricity() != null) {
+            eleboxModel.setLoopElectricity(new BigDecimal(Double.toString(request.getLoopElectricity())));
+        }
+        ret = eleboxModelMapper.insertSelective(eleboxModel);
+        if (ret > 0) {
+            List<ModelLoopRequest> modleLoopList = request.getModelLoopList();
+            for (ModelLoopRequest modelLoopRequest : modleLoopList) {
+                modelLoopRequest.setNnlightctlEleboxModelId(eleboxModel.getId());
+                EleboxModelLoop eleboxModelLoop = new EleboxModelLoop();
+                ReflectCopyUtil.beanSameFieldCopy(modelLoopRequest, eleboxModelLoop);
+                eleboxModelLoop.setGmtCreated(new Date());
+                eleboxModelLoop.setGmtUpdated(new Date());
+                if (modelLoopRequest.getElectricity() != null) {
+                    eleboxModelLoop.setElectricity(new BigDecimal(Double.toString(modelLoopRequest.getElectricity())));
                 }
+
+                if (modelLoopRequest.getVoltage() != null) {
+                    eleboxModelLoop.setVoltage(new BigDecimal(Double.toString(modelLoopRequest.getVoltage())));
+                }
+                eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
             }
         }
 

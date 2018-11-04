@@ -23,9 +23,9 @@
         <property name="username" value="${jdbc_username}" />
         <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
-        <property name="initialSize" value="5" />
+        <property name="initialSize" value="100" />
         <!-- 连接池最大使用连接数量 -->
-        <property name="maxActive" value="20" />
+        <property name="maxActive" value="2000" />
         <!-- 连接池最小空闲 -->
         <property name="minIdle" value="0" />
         <!-- 获取连接最大等待时间 -->
@@ -75,9 +75,9 @@
         <property name="username" value="${jdbc_slaver_username}" />
         <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
-        <property name="initialSize" value="5" />
+        <property name="initialSize" value="100" />
         <!-- 连接池最大使用连接数量 -->
-        <property name="maxActive" value="20" />
+        <property name="maxActive" value="2000" />
         <!-- 连接池最小空闲 -->
         <property name="minIdle" value="0" />
         <!-- 获取连接最大等待时间 -->
@@ -123,9 +123,9 @@
         <property name="username" value="${jdbc_slaver_username}" />
         <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
-        <property name="initialSize" value="5" />
+        <property name="initialSize" value="100" />
         <!-- 连接池最大使用连接数量 -->
-        <property name="maxActive" value="20" />
+        <property name="maxActive" value="2000" />
         <!-- 连接池最小空闲 -->
         <property name="minIdle" value="0" />
         <!-- 获取连接最大等待时间 -->

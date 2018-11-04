@@ -87,17 +87,20 @@ public class Consumer {
                                         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                                             @Override
                                             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                                                //映射终端与数据库灯具
                                                 lightMapNetDao.mapLightingNet(lighting);
+                                                //写入灯具终端电流电压信息
+                                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
                                             }
                                         });
 
                                         //写入Mysql
-                                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                                            @Override
-                                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
-                                            }
-                                        });
+//                                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+//                                            @Override
+//                                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+//                                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+//                                            }
+//                                        });
                                         //同时写入redis
 //                                    redisClientTemplate.set(lightingVolEleRecord.getUid().getBytes(),
 //                                            ObjectTransferUtil.object2ByteArray(lightingVolEleRecord));
