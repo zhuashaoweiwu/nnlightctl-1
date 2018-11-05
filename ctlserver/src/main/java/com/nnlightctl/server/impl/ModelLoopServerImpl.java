@@ -28,12 +28,6 @@ public class ModelLoopServerImpl implements ModelLoopServer {
         EleboxModelLoop modelLoop = new EleboxModelLoop();
         ReflectCopyUtil.beanSameFieldCopy(request, modelLoop);
         modelLoop.setGmtUpdated(new Date());
-        if (request.getVoltage() != null) {
-            modelLoop.setVoltage(new BigDecimal(Double.toString(request.getVoltage())));
-        }
-        if (request.getElectricity() != null) {
-            modelLoop.setElectricity(new BigDecimal(Double.toString(request.getElectricity())));
-        }
 
         int ret = -1;
         if (request.getId() == null) {  //新增

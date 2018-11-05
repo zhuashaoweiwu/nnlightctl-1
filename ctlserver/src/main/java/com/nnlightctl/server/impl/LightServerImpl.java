@@ -320,7 +320,41 @@ public class LightServerImpl implements LightServer {
 
     @Override
     public Tuple.TwoTuple<List<LightingView>, Integer> listLightingView(LightConditionRequest request) {
-        return lightDao.listLightingView(request);
+//        return lightDao.listLightingView(request);
+
+        Tuple.TwoTuple<List<LightingView>, Integer> result = new Tuple.TwoTuple<>();
+
+        LightingExample lightingExample = new LightingExample();
+        LightingExample.Criteria criteria = lightingExample.createCriteria();
+
+        if (request.getProjectId() != null) {
+            criteria.andNnlightctlProjectIdEqualTo(request.getProjectId());
+        }
+
+        lightingExample.setOrderByClause("id DESC");
+
+        result.setSecond(lightingMapper.countByExample(lightingExample));
+
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+
+        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
+
+        List<LightingView> lightingViewList = new ArrayList<>(8);
+
+        for (Lighting lighting : lightingList) {
+            LightingView lightingView = new LightingView();
+            ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+
+            if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+                lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+            }
+
+            lightingViewList.add(lightingView);
+        }
+
+        result.setFirst(lightingViewList);
+
+        return result;
     }
 
     @Override

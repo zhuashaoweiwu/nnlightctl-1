@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class EleboxModelRequest {
@@ -39,27 +40,27 @@ public class EleboxModelRequest {
         this.modelName = modelName;
     }
 
-    public Double getPowerRating() {
+    public BigDecimal getPowerRating() {
         return powerRating;
     }
 
-    public void setPowerRating(Double powerRating) {
+    public void setPowerRating(BigDecimal powerRating) {
         this.powerRating = powerRating;
     }
 
-    public Double getElectricRating() {
+    public BigDecimal getElectricRating() {
         return electricRating;
     }
 
-    public void setElectricRating(Double electricRating) {
+    public void setElectricRating(BigDecimal electricRating) {
         this.electricRating = electricRating;
     }
 
-    public Double getVoltageRating() {
+    public BigDecimal getVoltageRating() {
         return voltageRating;
     }
 
-    public void setVoltageRating(Double voltageRating) {
+    public void setVoltageRating(BigDecimal voltageRating) {
         this.voltageRating = voltageRating;
     }
 
@@ -95,11 +96,11 @@ public class EleboxModelRequest {
         this.ac = ac;
     }
 
-    public Double getLoopElectricity() {
+    public BigDecimal getLoopElectricity() {
         return loopElectricity;
     }
 
-    public void setLoopElectricity(Double loopElectricity) {
+    public void setLoopElectricity(BigDecimal loopElectricity) {
         this.loopElectricity = loopElectricity;
     }
 
@@ -134,15 +135,15 @@ public class EleboxModelRequest {
     private String modelCode;
     @NotEmpty(message = "模块名称不能为空！")
     private String modelName;
-    private Double powerRating;
-    private Double electricRating;
-    private Double voltageRating;
+    private BigDecimal powerRating;
+    private BigDecimal electricRating;
+    private BigDecimal voltageRating;
     private String airSwitchType;
     private String contactorType;
     @NotNull(message = "回路数量不能为空！")
     private Byte loopCount;
     private String ac;
-    private Double loopElectricity;
+    private BigDecimal loopElectricity;
     private List<ModelLoopRequest> modelLoopList;
     private Long nnlightctlEleboxId;
     private Integer count;

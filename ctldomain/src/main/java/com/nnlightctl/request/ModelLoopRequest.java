@@ -3,6 +3,7 @@ package com.nnlightctl.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 public class ModelLoopRequest {
     public Long getId() {
@@ -21,19 +22,19 @@ public class ModelLoopRequest {
         this.loopCode = loopCode;
     }
 
-    public Double getVoltage() {
+    public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(Double voltage) {
+    public void setVoltage(BigDecimal voltage) {
         this.voltage = voltage;
     }
 
-    public Double getElectricity() {
+    public BigDecimal getElectricity() {
         return electricity;
     }
 
-    public void setElectricity(Double electricity) {
+    public void setElectricity(BigDecimal electricity) {
         this.electricity = electricity;
     }
 
@@ -64,8 +65,8 @@ public class ModelLoopRequest {
     private Long id;
     @NotBlank(message = "回路编码不能为空！")
     private String loopCode;
-    private Double voltage;
-    private Double electricity;
+    private BigDecimal voltage;
+    private BigDecimal electricity;
     private Byte lightCount;
     private Byte state;
     private Long nnlightctlEleboxModelId;
