@@ -94,7 +94,10 @@ public class LightGroupServerImpl implements LightGroupServer {
         List<LightGroupView> lightGroupViews = new ArrayList<>(8);
 
         LightingGroupExample lightingGroupExample = new LightingGroupExample();
-        lightingGroupExample.createCriteria().andCGroupNameEqualTo(request.getcGroupName());
+        if (request.getcGroupName()!=null){
+            lightingGroupExample.createCriteria().andCGroupNameEqualTo(request.getcGroupName());
+        }
+
         int total = this.lightingGroupMapper.countByExample(lightingGroupExample);
         tuple.setSecond(total);
 
