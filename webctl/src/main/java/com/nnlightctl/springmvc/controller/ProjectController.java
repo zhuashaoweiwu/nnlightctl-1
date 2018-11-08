@@ -215,6 +215,19 @@ public class ProjectController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("getCityById")
+    public String getCityById(ProjectCityConditionRequest request) {
+        logger.info("[POST] /api/project/getCityById");
+
+        ProjectCity projectCity = projectCityServer.getCityById(request.getId());
+        List<ProjectCity> projectCityList = new ArrayList<>(1);
+        projectCityList.add(projectCity);
+        JsonResult jsonResult = JsonResult.SUCCESS;
+        jsonResult.setData(projectCityList);
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("addorupdatecity")
     public String addOrUpdatedCity(@Valid ProjectCityRequest request, BindingResult bindingResult) {
         logger.info("[POST] /api/project/addorupdatecity");

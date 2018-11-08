@@ -75,22 +75,25 @@ public class EleboxServerImpl implements EleboxServer {
         }
         return ret;
     }
+
     @Override
-    public int getCountModelByUid(String uid){
+    public int getCountModelByUid(String uid) {
         EleboxModelExample eleboxModelExample = new EleboxModelExample();
         eleboxModelExample.createCriteria().andUidEqualTo(uid);
         int total = eleboxModelMapper.countByExample(eleboxModelExample);
         return total;
     }
+
     @Override
-    public int getCountModelLoopByLoopCode(ModelLoopByLoopCodeRequest request){
+    public int getCountModelLoopByLoopCode(ModelLoopByLoopCodeRequest request) {
         EleboxModelLoopExample eleboxModelExample = new EleboxModelLoopExample();
         EleboxModelLoopExample.Criteria criteria = eleboxModelExample.createCriteria();
         criteria.andLoopCodeEqualTo(request.getLoopCode());
         criteria.andNnlightctlEleboxModelIdEqualTo(request.getModelId());
         int total = eleboxModelLoopMapper.countByExample(eleboxModelExample);
-        return  total;
+        return total;
     }
+
     @Override
     public Elebox getEleboxById(Long id) {
         return eleboxMapper.selectByPrimaryKey(id);
@@ -104,20 +107,23 @@ public class EleboxServerImpl implements EleboxServer {
 
         return eleboxMapper.updateByPrimaryKeySelective(elebox);
     }
+
     @Override
-    public int getCountEleboxByUid(String uid){
+    public int getCountEleboxByUid(String uid) {
         EleboxExample eleboxExample = new EleboxExample();
         eleboxExample.createCriteria().andUidEqualTo(uid);
         int total = eleboxMapper.countByExample(eleboxExample);
         return total;
     }
+
     @Override
-    public int getCountEleboxByCodeNumber(String codeNumber){
+    public int getCountEleboxByCodeNumber(String codeNumber) {
         EleboxExample eleboxExample = new EleboxExample();
         eleboxExample.createCriteria().andCodeNumberEqualTo(codeNumber);
         int total = eleboxMapper.countByExample(eleboxExample);
         return total;
     }
+
     @Override
     public int updateEleboxDevice(EleboxConditionRequest request) {
         List<Long> deleteDeviceIdList = request.getDeleteModelIdList();
@@ -183,16 +189,15 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<EleboxView>, Integer> listElebox(EleboxRequest request) {
+    public Tuple.TwoTuple<List<EleboxView>, Integer> listElebox(EleboxConditionRequest request) {
         Tuple.TwoTuple<List<EleboxView>, Integer> tuple = new Tuple.TwoTuple<>();
 
         EleboxExample eleboxExample = new EleboxExample();
         EleboxExample.Criteria criteria = eleboxExample.createCriteria();
-        if (request instanceof EleboxRequest) {
-            Long projectId = ((EleboxRequest)request).getNnlightctlProjectId();
-            if (projectId != null) {
-                criteria.andNnlightctlProjectIdEqualTo(projectId);
-            }
+
+        Long projectId = request.getProjectId();
+        if (projectId != null) {
+            criteria.andNnlightctlProjectIdEqualTo(projectId);
         }
 
         if (!StringUtils.isEmpty(request.getUid())) {
@@ -259,9 +264,9 @@ public class EleboxServerImpl implements EleboxServer {
         }
 
         Workbook hssfWorkbook = null;
-        if (fileName.endsWith("xlsx")){
+        if (fileName.endsWith("xlsx")) {
             hssfWorkbook = new XSSFWorkbook(is);//Excel 2007
-        }else if (fileName.endsWith("xls")){
+        } else if (fileName.endsWith("xls")) {
             hssfWorkbook = new HSSFWorkbook(is);//Excel 2003
 
         }
@@ -319,7 +324,7 @@ public class EleboxServerImpl implements EleboxServer {
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
         HSSFRow row1 = sheet.createRow(0);
 
-        HSSFCellStyle cellStyle= wb.createCellStyle();
+        HSSFCellStyle cellStyle = wb.createCellStyle();
 
         cellStyle.setBottomBorderColor(HSSFColor.BLACK.index);
 
@@ -353,14 +358,14 @@ public class EleboxServerImpl implements EleboxServer {
             row.createCell(0).setCellValue(elebox.getUid());
             row.createCell(1).setCellValue(elebox.getCodeNumber());
             if (elebox.getManufacture() != null) {
-                row.createCell(2).setCellValue(elebox.getManufacture()+"");
+                row.createCell(2).setCellValue(elebox.getManufacture() + "");
             } else {
                 row.createCell(2).setCellValue("");
             }
             row.createCell(3).setCellValue(elebox.getLongitude());
             row.createCell(4).setCellValue(elebox.getLatitude());
             if (elebox.getUseDate() != null) {
-                row.createCell(5).setCellValue(elebox.getUseDate()+"");
+                row.createCell(5).setCellValue(elebox.getUseDate() + "");
             } else {
                 row.createCell(5).setCellValue("");
             }
@@ -374,21 +379,23 @@ public class EleboxServerImpl implements EleboxServer {
 
         return wb;
     }
+
     @Override
-    public int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest){
+    public int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest) {
 
         return eleboxDao.batchSetEleboxArea(batchSetEleboxAreaRequest);
     }
+
     @Override
-    public int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
+    public int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest) {
         return eleboxDao.batchSetLightingArea(batchSetLightingAreaRequest);
     }
 
-    public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest){
+    public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest) {
         return eleboxDao.batchConfigLightsBeElebox(batchConfigLightsBeEleboxRequest);
     }
 
-    public void uploadImageElebox(MultipartFile eleboxGisIcon , String imagePath){
+    public void uploadImageElebox(MultipartFile eleboxGisIcon, String imagePath) {
 
     }
 }

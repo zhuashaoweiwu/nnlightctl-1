@@ -49,6 +49,11 @@ public class ProjectCityServerImpl implements ProjectCityServer {
     }
 
     @Override
+    public ProjectCity getCityById(Long id) {
+        return projectCityMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public int addOrUpdateCity(ProjectCityRequest request) {
         int ret = -1;
         ProjectCity projectCity = new ProjectCity();

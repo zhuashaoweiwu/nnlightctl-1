@@ -11,6 +11,7 @@ import java.util.List;
 public interface ProjectCityServer {
     List<ProjectCity> listCity(CityConditionRequest request);
     ProjectCity getCity(ProjectCityConditionRequest request);
+    ProjectCity getCityById(Long id);
     int addOrUpdateCity(ProjectCityRequest request);
     int getCountCityByCodeNumber(String codeNumber);
     int getCountCityByCityName(String cityName);

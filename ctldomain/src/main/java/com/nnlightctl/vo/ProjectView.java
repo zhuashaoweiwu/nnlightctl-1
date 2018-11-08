@@ -50,6 +50,14 @@ public class ProjectView extends BaseView {
         this.cityName = cityName;
     }
 
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
     public String getLongitude() {
         return longitude;
     }
@@ -106,6 +114,7 @@ public class ProjectView extends BaseView {
     private String contryName;
     private String provinceName;
     private String cityName;
+    private Long cityId;
     private String longitude;
     private String latitude;
     private String mem;

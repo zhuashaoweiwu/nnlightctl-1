@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.LightGroupConditionRequest;
 import com.nnlightctl.request.LightGroupRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.LightGroupServer;
@@ -68,7 +69,7 @@ public class LightGroupController extends BaseController {
     }
 
     @RequestMapping("listLightGroup")
-    public String listLightGroup(LightGroupRequest request) {
+    public String listLightGroup(LightGroupConditionRequest request) {
         logger.info("[POST] /api/lightGroup/listLightGroup");
 
         Tuple.TwoTuple<List<LightGroupView>, Integer> tuple = this.lightGroupServer.listLightGroup(request);
@@ -78,5 +79,12 @@ public class LightGroupController extends BaseController {
         jsonResult.setTotal(tuple.getSecond());
 
         return toJson(jsonResult);
+    }
+
+    @RequestMapping("getLightGroupSubLight")
+    public String getLightGroupSubLight(LightGroupConditionRequest request) {
+        logger.info("[POST] /api/lightGroup/getLightGroupSubLight");
+
+        return listLightGroup(request);
     }
 }

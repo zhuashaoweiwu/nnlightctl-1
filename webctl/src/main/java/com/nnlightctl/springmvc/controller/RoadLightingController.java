@@ -359,7 +359,7 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("listelebox")
-    public String listElebox(EleboxRequest request) {
+    public String listElebox(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/listelebox");
 
         Tuple.TwoTuple<List<EleboxView>, Integer> tuple = eleboxServer.listElebox(request);

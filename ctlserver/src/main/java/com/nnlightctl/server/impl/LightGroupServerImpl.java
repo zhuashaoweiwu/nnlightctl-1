@@ -12,11 +12,13 @@ import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.po.LightingGroup;
 import com.nnlightctl.po.LightingGroupExample;
 import com.nnlightctl.request.BaseRequest;
+import com.nnlightctl.request.LightGroupConditionRequest;
 import com.nnlightctl.request.LightGroupRequest;
 import com.nnlightctl.server.LightGroupServer;
 import com.nnlightctl.vo.LightGroupView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,13 +91,19 @@ public class LightGroupServerImpl implements LightGroupServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupRequest request) {
+    public Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupConditionRequest request) {
         Tuple.TwoTuple<List<LightGroupView>, Integer> tuple = new Tuple.TwoTuple<>();
         List<LightGroupView> lightGroupViews = new ArrayList<>(8);
 
         LightingGroupExample lightingGroupExample = new LightingGroupExample();
-        if (request.getcGroupName()!=null){
-            lightingGroupExample.createCriteria().andCGroupNameEqualTo(request.getcGroupName());
+        LightingGroupExample.Criteria criteria = lightingGroupExample.createCriteria();
+
+        if (!StringUtils.isEmpty(request.getcGroupName())) {
+            criteria.andCGroupNameLike("%" + request.getcGroupName() + "%");
+        }
+
+        if (request.getId() != null && request.getId() > 0) {
+            criteria.andIdEqualTo(request.getId());
         }
 
         int total = this.lightingGroupMapper.countByExample(lightingGroupExample);

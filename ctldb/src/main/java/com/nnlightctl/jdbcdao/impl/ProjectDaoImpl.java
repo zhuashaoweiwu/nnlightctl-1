@@ -35,7 +35,7 @@ public class ProjectDaoImpl implements ProjectDao {
         StringBuilder stringBuilder = new StringBuilder();
         List<Object> param = new ArrayList<>(2);
 
-        stringBuilder.append("select p.id, p.gmt_created, p.gmt_updated, p.code_number, p.project_name, p.ctype, c.country_name, pp.province_name, cc.city_name, p.longitude, p.latitude, p.mem, p.state ");
+        stringBuilder.append("select p.id, p.gmt_created, p.gmt_updated, p.code_number, p.project_name, p.ctype, c.country_name, pp.province_name, cc.city_name, cc.id as cityId, p.longitude, p.latitude, p.mem, p.state ");
         stringBuilder.append("from nnlightctl_project p ");
         stringBuilder.append("left join nnlightctl_project_country c on p.nnlightctl_project_country_id = c.id ");
         stringBuilder.append("left join nnlightctl_project_province pp on p.nnlightctl_project_province_id  = pp.id ");
@@ -68,6 +68,7 @@ public class ProjectDaoImpl implements ProjectDao {
                 projectView.setContryName(resultSet.getString("country_name"));
                 projectView.setProvinceName(resultSet.getString("province_name"));
                 projectView.setCityName(resultSet.getString("city_name"));
+                projectView.setCityId(resultSet.getLong("cityId"));
                 projectView.setLongitude(resultSet.getString("longitude"));
                 projectView.setLatitude(resultSet.getString("latitude"));
                 projectView.setMem(resultSet.getString("mem"));
