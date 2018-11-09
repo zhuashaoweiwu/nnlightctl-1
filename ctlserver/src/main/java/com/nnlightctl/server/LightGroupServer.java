@@ -14,4 +14,7 @@ public interface LightGroupServer {
     int createLightGroupByLightGroup(LightGroupRequest request);
 
     Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupConditionRequest request);
+    int batchDeleteLightGroup(List<Long> lightGroupIds);
+    int updateLightGroupFromLightId(LightGroupRequest request);
+    int updateLightGroupFromLightGroup(LightGroupRequest request);
 }

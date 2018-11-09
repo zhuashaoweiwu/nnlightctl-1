@@ -87,4 +87,43 @@ public class LightGroupController extends BaseController {
 
         return listLightGroup(request);
     }
+
+    @RequestMapping("deleteLightGroup")
+    public String deleteLightGroup(LightGroupConditionRequest request) {
+        logger.info("[POST] /api/lightGroup/deleteLightGroup");
+
+        //todo
+
+        return "";
+    }
+
+    @RequestMapping("updateLightGroupFromLight")
+    public String updateLightGroupFromLight(LightGroupRequest request) {
+        logger.info("[POST] /api/lightGroup/updateLightGroupFromLight");
+
+        int ret = lightGroupServer.updateLightGroupFromLightId(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("updateLightGroupFromLightGroup")
+    public String updateLightGroupFromLightGroup(LightGroupRequest request) {
+        logger.info("[POST] /api/lightGroup/updateLightGroupFromLightGroup");
+
+        int ret = lightGroupServer.updateLightGroupFromLightGroup(request);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }

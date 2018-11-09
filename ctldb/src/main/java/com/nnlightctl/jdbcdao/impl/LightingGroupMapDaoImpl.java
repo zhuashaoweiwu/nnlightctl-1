@@ -46,4 +46,13 @@ public class LightingGroupMapDaoImpl implements LightingGroupMapDao {
 
         return jdbcTemplate.queryForList(sql.toString(), new Object[] {lightingGroupId}, Long.class);
     }
+
+    @Override
+    public int batchDeleteLightingGroupMap(Long lightingGroupId) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("delete from nnlightctl_lighting_group_map where nnlightctl_lighting_group_id = ?");
+
+        return jdbcTemplate.update(sql.toString(), lightingGroupId);
+    }
 }

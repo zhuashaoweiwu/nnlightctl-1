@@ -148,4 +148,48 @@ public class LightGroupServerImpl implements LightGroupServer {
 
         return tuple;
     }
+
+    @Override
+    public int batchDeleteLightGroup(List<Long> lightGroupIds) {
+        for (Long lightGroupId : lightGroupIds) {
+            lightingGroupMapDao.batchDeleteLightingGroupMap(lightGroupId);
+            lightingGroupMapGroupDao.batchDeleteLightingGroup(lightGroupId);
+        }
+
+        return 1;
+    }
+
+    @Override
+    public int updateLightGroupFromLightId(LightGroupRequest request) {
+        //更新灯具分组
+        LightingGroup lightingGroup = new LightingGroup();
+        ReflectCopyUtil.beanSameFieldCopy(request, lightingGroup);
+        lightingGroup.setGmtUpdated(new Date());
+        lightingGroupMapper.updateByPrimaryKeySelective(lightingGroup);
+
+        //删除旧的灯具与分组映射
+        lightingGroupMapDao.batchDeleteLightingGroupMap(request.getId());
+
+        //建立新的灯具与分组的映射
+        lightingGroupMapDao.batchAddLightingGroupMap(request.getId(), request.getLightIds());
+
+        return 1;
+    }
+
+    @Override
+    public int updateLightGroupFromLightGroup(LightGroupRequest request) {
+        //更新灯具分组
+        LightingGroup lightingGroup = new LightingGroup();
+        ReflectCopyUtil.beanSameFieldCopy(request, lightingGroup);
+        lightingGroup.setGmtUpdated(new Date());
+        lightingGroupMapper.updateByPrimaryKeySelective(lightingGroup);
+
+        //删除旧的灯具与分组映射
+        lightingGroupMapGroupDao.batchDeleteLightingGroup(request.getId());
+
+        //建立新的灯具与分组的映射
+        lightingGroupMapGroupDao.batchAddLightingGroupMapGroupMap(request.getId(), request.getLightGroupIds());
+
+        return 1;
+    }
 }

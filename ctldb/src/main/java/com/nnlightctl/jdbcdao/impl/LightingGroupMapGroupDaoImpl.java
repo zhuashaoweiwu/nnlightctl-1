@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,5 +47,17 @@ public class LightingGroupMapGroupDaoImpl implements LightingGroupMapGroupDao {
         sql.append("select nnlightctl_lighting_group_sub_id from nnlightctl_lighting_group_group_map where nnlightctl_lighting_group_parent_id = ?");
 
         return jdbcTemplate.queryForList(sql.toString(), new Object[] {parentGroupId}, Long.class);
+    }
+
+    @Override
+    public int batchDeleteLightingGroup(Long deleteLightingGroupId) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("delete from nnlightctl_lighting_group_group_map where nnlightctl_lighting_group_parent_id = ? or nnlightctl_lighting_group_sub_id = ?");
+        List<Object> paramList = new ArrayList<>(2);
+        paramList.add(deleteLightingGroupId);
+        paramList.add(deleteLightingGroupId);
+
+        return jdbcTemplate.update(sql.toString(), paramList.toArray());
     }
 }

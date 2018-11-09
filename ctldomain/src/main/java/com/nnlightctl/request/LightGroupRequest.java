@@ -44,6 +44,16 @@ public class LightGroupRequest extends BaseRequest{
         this.lightGroupIds = lightGroupIds;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    private Long id;
     private String cGroupName;
     private String mem;
     private List<Long> lightIds;
