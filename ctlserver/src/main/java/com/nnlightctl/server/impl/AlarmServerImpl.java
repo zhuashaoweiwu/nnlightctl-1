@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nnlightctl.jdbcdao.AlarmAndAlarmConfigDao;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -35,12 +36,33 @@ public class AlarmServerImpl implements ALarmServer{
     private AlarmConfigMapper alarmConfigMapper;
 
     @Override
-    public Tuple.TwoTuple<List<Alarm>, Integer> listAlarm(BaseRequest request) {
+    public Tuple.TwoTuple<List<Alarm>, Integer> listAlarm(AlarmRequest request) {
         Tuple.TwoTuple<List<Alarm>, Integer> tuple = new Tuple.TwoTuple<>();
 
         AlarmExample alarmExample = new AlarmExample();
         alarmExample.setOrderByClause("id DESC");
-
+        AlarmExample.Criteria criteria = alarmExample.createCriteria();
+        if(!StringUtils.isEmpty(request.getAlarmSource())){
+            criteria.andAlarmSourceEqualTo(request.getAlarmSource());
+        }
+        if (!StringUtils.isEmpty(request.getCtype())){
+            criteria.andCtypeEqualTo(request.getCtype());
+        }
+        if(!StringUtils.isEmpty(request.getState())){
+            criteria.andStateEqualTo(request.getState().byteValue());
+        }
+        if (!StringUtils.isEmpty(request.getAlarmTimeEnd())){
+            criteria.andAlarmTimeLessThanOrEqualTo(request.getAlarmTimeEnd());
+        }
+        if(!StringUtils.isEmpty(request.getAlarmTimeStart())){
+            criteria.andAlarmTimeGreaterThanOrEqualTo(request.getAlarmTimeStart());
+        }
+        if(!StringUtils.isEmpty(request.getRemoveAlarmTimeEnd())){
+            criteria.andRemoveAlarmTimeLessThanOrEqualTo(request.getRemoveAlarmTimeEnd());
+        }
+        if(!StringUtils.isEmpty(request.getRemoveAlarmTimeStart())){
+            criteria.andRemoveAlarmTimeGreaterThanOrEqualTo(request.getRemoveAlarmTimeStart());
+        }
         int total =alarmMapper.countByExample(alarmExample);
         tuple.setSecond(total);
 

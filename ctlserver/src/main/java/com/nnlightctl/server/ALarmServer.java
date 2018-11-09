@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ALarmServer {
 
-    Tuple.TwoTuple<List<Alarm>, Integer> listAlarm(BaseRequest request);
+    Tuple.TwoTuple<List<Alarm>, Integer> listAlarm(AlarmRequest request);
 
     List<AlarmAndAlarmConfigView> getAlarm(Long id);
 
