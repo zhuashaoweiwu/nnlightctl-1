@@ -92,9 +92,15 @@ public class LightGroupController extends BaseController {
     public String deleteLightGroup(LightGroupConditionRequest request) {
         logger.info("[POST] /api/lightGroup/deleteLightGroup");
 
-        //todo
+        int ret = lightGroupServer.batchDeleteLightGroup(request.getLightGroupIdArray());
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
 
-        return "";
+        return toJson(jsonResult);
     }
 
     @RequestMapping("updateLightGroupFromLight")
