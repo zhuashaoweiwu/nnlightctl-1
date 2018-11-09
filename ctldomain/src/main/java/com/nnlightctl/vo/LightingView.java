@@ -125,7 +125,17 @@ public class LightingView extends BaseView {
         this.lightingCode = lightingCode;
     }
 
+    public Long getNnlightctlEleboxId() {
+        return nnlightctlEleboxId;
+    }
 
+    public void setNnlightctlEleboxId(Long nnlightctlEleboxId) {
+        this.nnlightctlEleboxId = nnlightctlEleboxId;
+    }
+
+
+
+    private Long nnlightctlEleboxId;
 
     private String lightingCode;
 
