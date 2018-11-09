@@ -1,6 +1,9 @@
 //设置ajax全局默认参数
 $.ajaxSetup({
+    contentType : "application/x-www-form-urlencoded",
+    timeout : 60000,
     dataType : "json",
+    async: false,
     error : function (xmlRequest, errorInfo, exception) {
         console.log("XmlHttpRequest:" + xmlRequest + ", errorInfo:" + errorInfo + ", exception:" + exception);
     }
@@ -53,6 +56,7 @@ function str2Date(dateStr) {
     }
     return new Date(dateStr.replace(/-/g,"/"));
 }
+
 
 //数组转换成后台可识别模式
 function transArray(data) {
@@ -143,4 +147,12 @@ function object2UrlParamStr(object) {
     urlParam = urlParam.substring(0, urlParam.lastIndexOf(","));
 
     return urlParam;
+}
+
+//百度地图API功能
+function loadJScript() {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "http://api.map.baidu.com/api?v=2.0&ak=ow29ANFSyXM6nf6cYl14GdDI&callback=init";
+    document.body.appendChild(script);
 }
