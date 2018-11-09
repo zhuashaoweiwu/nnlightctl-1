@@ -154,6 +154,7 @@ public class LightGroupServerImpl implements LightGroupServer {
         for (Long lightGroupId : lightGroupIds) {
             lightingGroupMapDao.batchDeleteLightingGroupMap(lightGroupId);
             lightingGroupMapGroupDao.batchDeleteLightingGroup(lightGroupId);
+            lightingGroupMapper.deleteByPrimaryKey(lightGroupId);
         }
 
         return 1;
