@@ -30,7 +30,7 @@ public class AlarmController extends BaseController{
     private ALarmServer aLarmServer;
 
     @RequestMapping("listAlarm")
-    public String listAlarm(BaseRequest request){
+    public String listAlarm(AlarmRequest request){
         logger.info("[POST] /api/alarm/listAlarm");
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
