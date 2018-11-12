@@ -70,6 +70,7 @@ public class SceneController extends BaseController {
      *前端接口-GIS地理信息模块
      *十五点二、通过场景ID统计快捷键场景映射数量（判断场景ID是否重复）
      * */
+    @RequestMapping("countSceneShotcutBySceneId")
     public String countSceneShotcutBySceneId(Long sceneId){
         logger.info("[POST] /api/scene/countSceneShotcutBySceneId");
         int total = sceneServer.getCountSceneShotcutBySceneId(sceneId);
