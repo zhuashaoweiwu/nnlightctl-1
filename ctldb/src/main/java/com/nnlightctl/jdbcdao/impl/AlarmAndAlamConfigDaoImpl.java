@@ -20,12 +20,12 @@ public class AlarmAndAlamConfigDaoImpl implements AlarmAndAlarmConfigDao{
     public List<AlarmAndAlarmConfigView> getAlarm(Long id) {
         StringBuilder stringBuilder = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        stringBuilder.append("SELECT a.alarm_count,a.alarm_level,a.alarm_source,a.alarm_time,a.code_number,a.ctype,a.gmt_created,a.gmt_updated,a.id,a.msg,a.nnlightctl_alarm_config_id,a.remove_alarm_time,a.state ,");
+        stringBuilder.append("SELECT a.alarm_count,a.alarm_level,a.alarm_source,a.alarm_time,a.code_number,a.ctype,a.gmt_created,a.gmt_updated,a.id,a.msg,a.nnlightctl_alarm_config_id,a.remove_alarm_time,a.state , ");
         stringBuilder.append(" b.is_notice_map,b.is_notice_sms ");
         stringBuilder.append("from nnlightctl_alarm a LEFT JOIN nnlightctl_alarm_config b ON a.nnlightctl_alarm_config_id= b.id ");
 
         if (id != null) {
-            stringBuilder.append("and a.id = ?");
+            stringBuilder.append("where a.id = ?");
             param.add(id);
         }
         List<AlarmAndAlarmConfigView> lightingViewList = jdbcTemplate.query(stringBuilder.toString(), param.toArray(), new RowMapper<AlarmAndAlarmConfigView>() {
