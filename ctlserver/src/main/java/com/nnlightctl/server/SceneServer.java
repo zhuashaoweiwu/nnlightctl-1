@@ -2,6 +2,7 @@ package com.nnlightctl.server;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Scene;
+import com.nnlightctl.po.SceneShotcut;
 import com.nnlightctl.request.*;
 import com.nnlightctl.vo.SceneView;
 
@@ -22,4 +23,6 @@ public interface SceneServer {
     int deleteSceneShotcut(SceneShotcutConditionRequest request);
 
     int getInvokeSceneShotcut(String shotcutName);
+
+    List<SceneShotcut> listSceneShotcut();
 }

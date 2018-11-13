@@ -193,4 +193,9 @@ public class SceneServerImpl implements SceneServer {
 
         return 1;
     }
+
+    @Override
+    public List<SceneShotcut> listSceneShotcut() {
+        return sceneShotcutMapper.selectByExample(new SceneShotcutExample());
+    }
 }

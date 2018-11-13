@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Scene;
+import com.nnlightctl.po.SceneShotcut;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.SceneServer;
@@ -180,6 +181,18 @@ public class SceneController extends BaseController {
         } else {
             jsonResult = JsonResult.getFAILURE();
         }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listSceneShotCut")
+    public String listSceneShotCut() {
+        logger.info("[POST] /api/scene/listSceneShotCut");
+
+        List<SceneShotcut> sceneShotcutList = sceneServer.listSceneShotcut();
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(sceneShotcutList);
 
         return toJson(jsonResult);
     }
