@@ -4,8 +4,8 @@ $.ajaxSetup({
     timeout : 60000,
     dataType : "json",
     async: false,
-    beforeSend: function(xhr) {
-        xhr.withCredentials = true;
+    xhrFields: {
+        withCredentials: true    // 要在这里设置 跨域设置cookie
     },
     error : function (xmlRequest, errorInfo, exception) {
         console.log("XmlHttpRequest:" + xmlRequest + ", errorInfo:" + errorInfo + ", exception:" + exception);

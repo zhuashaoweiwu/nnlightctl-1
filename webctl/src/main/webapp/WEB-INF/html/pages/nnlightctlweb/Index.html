@@ -24,7 +24,7 @@
 </header>
 
 <aside class="Hui-aside">
-    <div class="menu_dropdown bk_2">
+    <div id="menuContain" class="menu_dropdown bk_2">
         <dl id="menu-article">
             <dt><i class="Hui-iconfont">&#xe60d;</i><span class="pl10">用户管理</span><i
                     class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
@@ -124,13 +124,99 @@
 <script type="text/javascript" src="js/api/ajaxScript.js"></script>
 
 <script type="text/javascript">
+
+    //获取菜单图标
+    function getIconByMenuName(name) {
+        var icon = "";
+        switch (name) {
+            case "用户管理":
+                icon = "&#xe60d;";
+                break;
+
+            case "项目管理":
+                icon = "&#xe636;";
+                break;
+
+            case "道路照明系统":
+                icon = "&#xe62e;";
+                break;
+
+            case "Gis地理信息系统":
+                icon = "&#xe671;";
+                break;
+
+            case "能耗分析":
+                icon = "&#xe635;";
+                break;
+        }
+        return icon;
+    }
+
+    //添加一个菜单
+    function addMenu(menu) {
+        //首页不添加
+        if (menu.name == "首页") {
+            return;
+        }
+
+        var $menu = $("#menuContain");
+
+        var menuHtml = '<dl>\n' +
+            '<dt><i class="Hui-iconfont">'+getIconByMenuName(menu.name)+'</i><span class="pl10">'+menu.name+'</span><i\n' +
+            'class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>\n';
+
+        var subMenuList = menu.subMenuViewList;
+        if (subMenuList && subMenuList.length > 0) {
+            menuHtml += '<dd class="pl15">\n' +
+                '                <ul>';
+
+            for (var i = 0; i < subMenuList.length; ++i) {
+                var subMenu = subMenuList[i];
+
+                menuHtml += '<li><a data-href="'+subMenu.url+'" data-title="'+subMenu.name+'" href="javascript:void(0)">'+subMenu.name+'</a></li>';
+            }
+
+            menuHtml += '</ul>\n' +
+                '            </dd>';
+        }
+
+        menuHtml += '</dl>';
+
+        $(menuHtml).appendTo($menu);
+    }
+
     //刷新菜单
     function flushMenu() {
+        $("#menuContain").empty();
         ajaxRequest("post", "/api/login/getMenu", {}, function (data) {
             if (data) {
                 if (data.header.code == 1000) {
                     var menuArray = data.body.data;
                     console.log(menuArray);
+                    for (var i = 0; i < menuArray.length; ++i) {
+                        var menu = menuArray[i];
+                        addMenu(menu);
+                    }
+
+                    //注册菜单事件
+                    $(".nav-toggle").click(function(){
+                        $(".Hui-aside").slideToggle();
+                    });
+                    $(".Hui-aside").on("click",".menu_dropdown dd li a",function(){
+                        if($(window).width()<768){
+                            $(".Hui-aside").slideToggle();
+                        }
+                    });
+                    /*左侧菜单*/
+                    $(".Hui-aside").Huifold({
+                        titCell:'.menu_dropdown dl dt',
+                        mainCell:'.menu_dropdown dl dd',
+                    });
+
+                    /*选项卡导航*/
+                    $(".Hui-aside").on("click",".menu_dropdown a",function(){
+                        Hui_admin_tab(this);
+                    });
                 }
             }
         });
