@@ -87,7 +87,7 @@ public class ProjectServerImpl implements ProjectServer {
         project.setGmtUpdated(new Date());
         project.setCodeNumber(request.getProjectCode());
         project.setCtype((byte)request.getType());
-        project.setState((byte)request.getState());
+        project.setState((byte)1);
 
         return projectMapper.insertSelective(project);
     }

@@ -59,11 +59,15 @@ public class SceneServerImpl implements SceneServer {
 
         //编辑场景与灯组分组的映射关系
         sceneMapLightingGroupDao.deleteSceneMap(scene.getId());
-        sceneMapLightingGroupDao.batchAddSceneLightingGroupMap(scene.getId(), request.getLightingGroupIds());
+        if (request.getLightingGroupIds() != null && request.getLightingGroupIds().size() > 0) {
+            sceneMapLightingGroupDao.batchAddSceneLightingGroupMap(scene.getId(), request.getLightingGroupIds());
+        }
 
         //编辑场景与任务开关的映射关系
         sceneMapSwitchTaskDao.deleteSceneMap(scene.getId());
-        sceneMapSwitchTaskDao.batchAddSceneSwitchTaskMap(scene.getId(), request.getSwitchTaskIds());
+        if (request.getSwitchTaskIds() != null && request.getSwitchTaskIds().size() > 0) {
+            sceneMapSwitchTaskDao.batchAddSceneSwitchTaskMap(scene.getId(), request.getSwitchTaskIds());
+        }
 
         return 1;
     }

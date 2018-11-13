@@ -4,6 +4,9 @@ $.ajaxSetup({
     timeout : 60000,
     dataType : "json",
     async: false,
+    beforeSend: function(xhr) {
+        xhr.withCredentials = true;
+    },
     error : function (xmlRequest, errorInfo, exception) {
         console.log("XmlHttpRequest:" + xmlRequest + ", errorInfo:" + errorInfo + ", exception:" + exception);
     }
