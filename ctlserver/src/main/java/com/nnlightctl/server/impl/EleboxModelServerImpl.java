@@ -44,6 +44,8 @@ public class EleboxModelServerImpl implements EleboxModelServer {
                     ReflectCopyUtil.beanSameFieldCopy(modelLoopRequest, eleboxModelLoop);
                     eleboxModelLoop.setGmtCreated(new Date());
                     eleboxModelLoop.setGmtUpdated(new Date());
+                    //默认新增回路处于断电状态
+                    eleboxModelLoop.setState((byte)1);
                     eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
                 }
             }

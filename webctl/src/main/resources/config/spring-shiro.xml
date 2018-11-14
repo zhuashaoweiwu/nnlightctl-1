@@ -35,11 +35,13 @@
          -->
         <property name="filterChainDefinitions">
             <value>
-                /html/** = anon
                 /api/login/loginUrl = anon
                 /api/login/Login = anon
                 /device = anon
                 /api/command/** = anon
+                /html/pages/nnlightctlweb/Index.html = user
+                /html/** = anon
+                /api/** = anon
                 /** = user
             </value>
         </property>

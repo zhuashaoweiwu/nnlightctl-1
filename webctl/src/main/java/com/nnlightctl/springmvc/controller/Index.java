@@ -59,7 +59,7 @@ public class Index extends BaseController {
 
     @RequestMapping("/")
     public String startPage() {
-        return "redirect:/html/pages/nnlightctlweb/Login.html";
+        return "redirect:/html/pages/nnlightctlweb/Index.html";
     }
 
 
