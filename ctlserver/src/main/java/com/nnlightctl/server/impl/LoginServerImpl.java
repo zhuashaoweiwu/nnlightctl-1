@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.dao.RighterMapper;
 import com.nnlightctl.jdbcdao.LoginDao;
 import com.nnlightctl.po.Righter;
@@ -7,7 +8,9 @@ import com.nnlightctl.po.RighterExample;
 import com.nnlightctl.po.User;
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.server.LoginServer;
+import com.nnlightctl.server.UserServer;
 import com.nnlightctl.vo.MenuView;
+import com.nnlightctl.vo.UserView;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -32,6 +35,9 @@ public class LoginServerImpl implements LoginServer {
 
     @Autowired
     private RighterMapper righterMapper;
+
+    @Autowired
+    private UserServer userServer;
 
     @Override
     public int login(LoginRequest request) {
@@ -133,5 +139,17 @@ public class LoginServerImpl implements LoginServer {
 
         menuView.setSubMenuViewList(menuViews);
         return menuView;
+    }
+
+    @Override
+    public UserView getLoginUser() {
+        Object loginObject = SecurityUtils.getSubject().getPrincipal();
+        String loginName = loginObject instanceof User ? ((User)loginObject).getLoginName() : (String)loginObject;
+        User user = userServer.getUserByLoginName(loginName);
+
+        UserView userView = new UserView();
+        ReflectCopyUtil.beanSameFieldCopy(user, userView);
+
+        return userView;
     }
 }

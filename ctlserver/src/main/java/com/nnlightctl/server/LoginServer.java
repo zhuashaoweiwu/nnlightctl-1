@@ -2,6 +2,7 @@ package com.nnlightctl.server;
 
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.vo.MenuView;
+import com.nnlightctl.vo.UserView;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface LoginServer {
     List<MenuView> listMenu();
     List<MenuView> getStaticMenu();
     List<MenuView> getMenuByUserId(Long userId);
+    UserView getLoginUser();
 }

@@ -5,6 +5,7 @@ import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.LoginServer;
 import com.nnlightctl.vo.MenuView;
+import com.nnlightctl.vo.UserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -102,5 +104,20 @@ public class LoginController extends BaseController {
         log.info("[POST] /api/login/sucessUrl");
 
         return "redirect:/html/pages/nnlightctlweb/Index.html";
+    }
+
+    @RequestMapping("getLoginUser")
+    @ResponseBody
+    public String getLoginUser() {
+        log.info("[POST] /api/login/getLoginUser");
+
+        UserView userView = loginServer.getLoginUser();
+        List<UserView> userViewList = new ArrayList<>(1);
+        userViewList.add(userView);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(userViewList);
+
+        return toJson(jsonResult);
     }
 }
