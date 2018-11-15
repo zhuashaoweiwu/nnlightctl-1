@@ -180,7 +180,7 @@ public class LightDaoImpl implements LightDao {
         return tuple;
     }
 
-    @Cacheable("commandCache")
+//    @Cacheable("commandCache")
     @Override
     public List<Lighting> getLightingByUUID(String uuid) {
         log.info("通过uuid从数据库中查询灯具");
