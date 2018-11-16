@@ -1,11 +1,11 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlight.common.Tuple;
+import com.nnlightctl.po.Alarm;
 import com.nnlightctl.po.EleboxVolEleRecord;
+import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightingVolEleRecord;
-import com.nnlightctl.request.EleboxPowerRequest;
-import com.nnlightctl.request.LightingVolEleRecordRequest;
-import com.nnlightctl.request.StatisticLightEnergyRequest;
-import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EnergyStatisticServer;
 import com.nnlightctl.vo.CommonEnergyStatisticView;
@@ -181,6 +181,19 @@ public class EnergyStatisticController extends BaseController{
         List<LightingVolEleRecord> lightingVolEleRecordList = energyStatisticServer.listStatisticLightEnergy(request);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(lightingVolEleRecordList);
+        return toJson(jsonResult);
+    }
+    /*
+     *十二、通过uuid和时间搜索终端信息日志
+     * */
+    @RequestMapping("listLightSignalLog")
+    public String listLightSignalLog(SignalLogRequest request){
+        logger.info("[POST] /api/energyStatistic/listLightSignalLog");
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        Tuple.TwoTuple<List<LightSignalLog>, Integer> tuple = energyStatisticServer.listLightSignalLog(request);
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
         return toJson(jsonResult);
     }
 }

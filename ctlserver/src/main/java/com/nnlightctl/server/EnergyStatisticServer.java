@@ -3,11 +3,9 @@ package com.nnlightctl.server;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxVolEleRecord;
+import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightingVolEleRecord;
-import com.nnlightctl.request.EleboxPowerRequest;
-import com.nnlightctl.request.LightingVolEleRecordRequest;
-import com.nnlightctl.request.StatisticLightEnergyRequest;
-import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.vo.CommonEnergyStatisticView;
 import com.nnlightctl.vo.GetEleboxEnergyStatisticView;
 import com.nnlightctl.vo.ListEleboxEnergyStatisticView;
@@ -23,4 +21,5 @@ public interface EnergyStatisticServer {
     List<ListEleboxEnergyStatisticView> listEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request);
     List<GetEleboxEnergyStatisticView> getEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request);
     List<LightingVolEleRecord> listStatisticLightEnergy(StatisticLightEnergyRequest request);
+    Tuple.TwoTuple<List<LightSignalLog>, Integer> listLightSignalLog(SignalLogRequest request);
 }

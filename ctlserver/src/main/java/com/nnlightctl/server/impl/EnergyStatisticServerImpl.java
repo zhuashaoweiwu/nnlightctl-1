@@ -1,20 +1,21 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
+import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.EnergyStatisticDao;
 import com.nnlightctl.po.*;
-import com.nnlightctl.request.EleboxPowerRequest;
-import com.nnlightctl.request.StatisticLightEnergyRequest;
-import com.nnlightctl.request.listEleboxEnergyStatisticRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.server.EnergyStatisticServer;
 import com.nnlightctl.vo.CommonEnergyStatisticView;
 import com.nnlightctl.vo.GetEleboxEnergyStatisticView;
 import com.nnlightctl.vo.ListEleboxEnergyStatisticView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.nnlightctl.request.LightingVolEleRecordRequest;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     private LightingMapper lightingMapper;
     @Autowired
     private LightingVolEleRecordMapper lightingVolEleRecordMapper;
+    @Autowired
+    private LightSignalLogMapper lightSignalLogMapper;
 
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest){
@@ -89,5 +92,30 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
         }
 
         return lightingVolEleRecordList;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<LightSignalLog>, Integer> listLightSignalLog(SignalLogRequest request){
+        Tuple.TwoTuple<List<LightSignalLog>, Integer> tuple = new Tuple.TwoTuple<>();
+        LightSignalLogExample lightSignalLogExample = new LightSignalLogExample();
+        lightSignalLogExample.setOrderByClause("id DESC");
+        LightSignalLogExample.Criteria criteria = lightSignalLogExample.createCriteria();
+        if (!StringUtils.isEmpty(request.getUuid())){
+            criteria.andUidLike("%"+request.getUuid()+"%");
+        }
+        if (!StringUtils.isEmpty(request.getEndDate())){
+            criteria.andSignalLogDateLessThanOrEqualTo(request.getEndDate());
+        }
+        if (!StringUtils.isEmpty(request.getStartDate())){
+            criteria.andSignalLogDateGreaterThanOrEqualTo(request.getStartDate());
+        }
+        int total =lightSignalLogMapper.countByExample(lightSignalLogExample);
+        tuple.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+        List<LightSignalLog> list = lightSignalLogMapper.selectByExample(lightSignalLogExample);
+        tuple.setFirst(list);
+
+        return tuple;
     }
 }
