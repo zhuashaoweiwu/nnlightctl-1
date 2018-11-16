@@ -25,7 +25,7 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
     private LightDao lightDao;
 
     @Override
-    public int mapLightingNet(Lighting lighting) {
+    public synchronized int mapLightingNet(Lighting lighting) {
         List<Object> params = new ArrayList<>(1);
 
         log.info("------------------------UUID[" + lighting.getUid() + "]判断开始--------------------------");

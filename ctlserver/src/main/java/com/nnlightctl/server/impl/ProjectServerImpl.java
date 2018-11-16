@@ -99,6 +99,7 @@ public class ProjectServerImpl implements ProjectServer {
         project.setGmtUpdated(new Date());
         project.setState((byte)request.getState());
         project.setCodeNumber(request.getProjectCode());
+        project.setState((byte)1);
 
         return projectMapper.updateByPrimaryKeySelective(project);
     }
