@@ -14,6 +14,8 @@ public class LightingGroup implements Serializable {
 
     private String mem;
 
+    private Long beProjectId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -56,6 +58,14 @@ public class LightingGroup implements Serializable {
         this.mem = mem == null ? null : mem.trim();
     }
 
+    public Long getBeProjectId() {
+        return beProjectId;
+    }
+
+    public void setBeProjectId(Long beProjectId) {
+        this.beProjectId = beProjectId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -72,7 +82,8 @@ public class LightingGroup implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getcGroupName() == null ? other.getcGroupName() == null : this.getcGroupName().equals(other.getcGroupName()))
-            && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
+            && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()))
+            && (this.getBeProjectId() == null ? other.getBeProjectId() == null : this.getBeProjectId().equals(other.getBeProjectId()));
     }
 
     @Override
@@ -84,6 +95,7 @@ public class LightingGroup implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getcGroupName() == null) ? 0 : getcGroupName().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
+        result = prime * result + ((getBeProjectId() == null) ? 0 : getBeProjectId().hashCode());
         return result;
     }
 
@@ -98,6 +110,7 @@ public class LightingGroup implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", cGroupName=").append(cGroupName);
         sb.append(", mem=").append(mem);
+        sb.append(", beProjectId=").append(beProjectId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

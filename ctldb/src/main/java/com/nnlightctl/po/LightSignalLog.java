@@ -15,6 +15,10 @@ public class LightSignalLog implements Serializable {
 
     private Date signalLogDate;
 
+    private String longitude;
+
+    private String latitude;
+
     private BigDecimal signalIntensity;
 
     private String unit;
@@ -63,6 +67,22 @@ public class LightSignalLog implements Serializable {
         this.signalLogDate = signalLogDate;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
     public BigDecimal getSignalIntensity() {
         return signalIntensity;
     }
@@ -104,6 +124,8 @@ public class LightSignalLog implements Serializable {
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
             && (this.getSignalLogDate() == null ? other.getSignalLogDate() == null : this.getSignalLogDate().equals(other.getSignalLogDate()))
+            && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
+            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
             && (this.getSignalIntensity() == null ? other.getSignalIntensity() == null : this.getSignalIntensity().equals(other.getSignalIntensity()))
             && (this.getUnit() == null ? other.getUnit() == null : this.getUnit().equals(other.getUnit()))
             && (this.getSignalLevel() == null ? other.getSignalLevel() == null : this.getSignalLevel().equals(other.getSignalLevel()));
@@ -118,6 +140,8 @@ public class LightSignalLog implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
         result = prime * result + ((getSignalLogDate() == null) ? 0 : getSignalLogDate().hashCode());
+        result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
+        result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getSignalIntensity() == null) ? 0 : getSignalIntensity().hashCode());
         result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
         result = prime * result + ((getSignalLevel() == null) ? 0 : getSignalLevel().hashCode());
@@ -135,6 +159,8 @@ public class LightSignalLog implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
         sb.append(", signalLogDate=").append(signalLogDate);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", latitude=").append(latitude);
         sb.append(", signalIntensity=").append(signalIntensity);
         sb.append(", unit=").append(unit);
         sb.append(", signalLevel=").append(signalLevel);

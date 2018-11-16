@@ -424,6 +424,66 @@ public class LightingGroupExample {
             addCriterion("mem not between", value1, value2, "mem");
             return (Criteria) this;
         }
+
+        public Criteria andBeProjectIdIsNull() {
+            addCriterion("be_project_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdIsNotNull() {
+            addCriterion("be_project_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdEqualTo(Long value) {
+            addCriterion("be_project_id =", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdNotEqualTo(Long value) {
+            addCriterion("be_project_id <>", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdGreaterThan(Long value) {
+            addCriterion("be_project_id >", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("be_project_id >=", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdLessThan(Long value) {
+            addCriterion("be_project_id <", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdLessThanOrEqualTo(Long value) {
+            addCriterion("be_project_id <=", value, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdIn(List<Long> values) {
+            addCriterion("be_project_id in", values, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdNotIn(List<Long> values) {
+            addCriterion("be_project_id not in", values, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdBetween(Long value1, Long value2) {
+            addCriterion("be_project_id between", value1, value2, "beProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeProjectIdNotBetween(Long value1, Long value2) {
+            addCriterion("be_project_id not between", value1, value2, "beProjectId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
