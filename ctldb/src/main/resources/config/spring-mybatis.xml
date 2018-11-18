@@ -20,8 +20,8 @@
         <property name="master" ref="dataSourceMaster"></property>
         <property name="slaves">
             <list>
-                <ref bean="dataSourceSlave1"></ref>
-                <ref bean="dataSourceSlave2"></ref>
+                <ref bean="dataSourceMaster"></ref>
+                <ref bean="dataSourceMaster"></ref>
             </list>
         </property>
     </bean>

@@ -38,8 +38,8 @@ public class Index extends BaseController {
     @Autowired
     private IndexServer indexServer;
 
-    @Autowired
-    private RedisClientTemplate redisClientTemplate;
+//    @Autowired
+//    private RedisClientTemplate redisClientTemplate;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -106,13 +106,13 @@ public class Index extends BaseController {
         return "success";
     }
 
-    @RequestMapping("/test_redis")
-    @ResponseBody
-    public String test_redis() {
-        redisClientTemplate.set("a", "abc");
-        logger.info(redisClientTemplate.get("a"));
-        return "success";
-    }
+//    @RequestMapping("/test_redis")
+//    @ResponseBody
+//    public String test_redis() {
+//        redisClientTemplate.set("a", "abc");
+//        logger.info(redisClientTemplate.get("a"));
+//        return "success";
+//    }
 
     @RequestMapping("/test_hbase")
     @ResponseBody

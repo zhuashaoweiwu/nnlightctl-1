@@ -69,7 +69,7 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         List<Object> param = new ArrayList<>(3);
         Map<String, Object> params = new HashMap<>(1);
         String lightIds = "";
-        sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,record_datetime ,voltage ,electricty ,dampness ,temperature ,beam ,persist1 ,persist2 ,voltage*electricty as persist3 from nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,record_datetime ,voltage ,electricty ,dampness ,temperature ,beam ,signal_intensity ,longitude ,voltage*electricty as persist3 from nnlightctl_lighting_vol_ele_record where 1=1 ");
 
         if(lightingVolEleRecordRequest.getLightIds().isEmpty()){
             sql.append("and 1=1 ");
@@ -104,9 +104,9 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
                 lightingVolEleRecord.setElectricty(resultSet.getBigDecimal("electricty"));
                 lightingVolEleRecord.setDampness(resultSet.getBigDecimal("dampness"));
                 lightingVolEleRecord.setBeam(resultSet.getBigDecimal("beam"));
-                lightingVolEleRecord.setPersist1(resultSet.getBigDecimal("persist1"));
-                lightingVolEleRecord.setPersist2(resultSet.getBigDecimal("persist2"));
-                lightingVolEleRecord.setPersist3(resultSet.getBigDecimal("persist3"));
+                lightingVolEleRecord.setSignalIntensity(resultSet.getBigDecimal("persist1"));
+                lightingVolEleRecord.setLongitude(resultSet.getString("persist2"));
+                lightingVolEleRecord.setLatitude(resultSet.getString("persist3"));
                 lightingVolEleRecord.setTemperature(resultSet.getBigDecimal("temperature"));
                 return lightingVolEleRecord;
             }

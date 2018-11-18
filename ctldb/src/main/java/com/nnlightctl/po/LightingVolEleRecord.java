@@ -27,11 +27,29 @@ public class LightingVolEleRecord implements Serializable {
 
     private BigDecimal beam;
 
-    private BigDecimal persist1;
+    private BigDecimal signalIntensity;
 
-    private BigDecimal persist2;
+    private String longitude;
 
-    private BigDecimal persist3;
+    private String latitude;
+
+    private String inElectricity;
+
+    private String inVoltage;
+
+    private String elecFrequency;
+
+    private String inActivePower;
+
+    private String inReactivePower;
+
+    private String inSeenPower;
+
+    private String inActiveEnergy;
+
+    private String inReactiveEnergy;
+
+    private String inSeenEnergy;
 
     private static final long serialVersionUID = 1L;
 
@@ -123,28 +141,100 @@ public class LightingVolEleRecord implements Serializable {
         this.beam = beam;
     }
 
-    public BigDecimal getPersist1() {
-        return persist1;
+    public BigDecimal getSignalIntensity() {
+        return signalIntensity;
     }
 
-    public void setPersist1(BigDecimal persist1) {
-        this.persist1 = persist1;
+    public void setSignalIntensity(BigDecimal signalIntensity) {
+        this.signalIntensity = signalIntensity;
     }
 
-    public BigDecimal getPersist2() {
-        return persist2;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setPersist2(BigDecimal persist2) {
-        this.persist2 = persist2;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
     }
 
-    public BigDecimal getPersist3() {
-        return persist3;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setPersist3(BigDecimal persist3) {
-        this.persist3 = persist3;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    public String getInElectricity() {
+        return inElectricity;
+    }
+
+    public void setInElectricity(String inElectricity) {
+        this.inElectricity = inElectricity == null ? null : inElectricity.trim();
+    }
+
+    public String getInVoltage() {
+        return inVoltage;
+    }
+
+    public void setInVoltage(String inVoltage) {
+        this.inVoltage = inVoltage == null ? null : inVoltage.trim();
+    }
+
+    public String getElecFrequency() {
+        return elecFrequency;
+    }
+
+    public void setElecFrequency(String elecFrequency) {
+        this.elecFrequency = elecFrequency == null ? null : elecFrequency.trim();
+    }
+
+    public String getInActivePower() {
+        return inActivePower;
+    }
+
+    public void setInActivePower(String inActivePower) {
+        this.inActivePower = inActivePower == null ? null : inActivePower.trim();
+    }
+
+    public String getInReactivePower() {
+        return inReactivePower;
+    }
+
+    public void setInReactivePower(String inReactivePower) {
+        this.inReactivePower = inReactivePower == null ? null : inReactivePower.trim();
+    }
+
+    public String getInSeenPower() {
+        return inSeenPower;
+    }
+
+    public void setInSeenPower(String inSeenPower) {
+        this.inSeenPower = inSeenPower == null ? null : inSeenPower.trim();
+    }
+
+    public String getInActiveEnergy() {
+        return inActiveEnergy;
+    }
+
+    public void setInActiveEnergy(String inActiveEnergy) {
+        this.inActiveEnergy = inActiveEnergy == null ? null : inActiveEnergy.trim();
+    }
+
+    public String getInReactiveEnergy() {
+        return inReactiveEnergy;
+    }
+
+    public void setInReactiveEnergy(String inReactiveEnergy) {
+        this.inReactiveEnergy = inReactiveEnergy == null ? null : inReactiveEnergy.trim();
+    }
+
+    public String getInSeenEnergy() {
+        return inSeenEnergy;
+    }
+
+    public void setInSeenEnergy(String inSeenEnergy) {
+        this.inSeenEnergy = inSeenEnergy == null ? null : inSeenEnergy.trim();
     }
 
     @Override
@@ -170,9 +260,18 @@ public class LightingVolEleRecord implements Serializable {
             && (this.getDampness() == null ? other.getDampness() == null : this.getDampness().equals(other.getDampness()))
             && (this.getTemperature() == null ? other.getTemperature() == null : this.getTemperature().equals(other.getTemperature()))
             && (this.getBeam() == null ? other.getBeam() == null : this.getBeam().equals(other.getBeam()))
-            && (this.getPersist1() == null ? other.getPersist1() == null : this.getPersist1().equals(other.getPersist1()))
-            && (this.getPersist2() == null ? other.getPersist2() == null : this.getPersist2().equals(other.getPersist2()))
-            && (this.getPersist3() == null ? other.getPersist3() == null : this.getPersist3().equals(other.getPersist3()));
+            && (this.getSignalIntensity() == null ? other.getSignalIntensity() == null : this.getSignalIntensity().equals(other.getSignalIntensity()))
+            && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
+            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
+            && (this.getInElectricity() == null ? other.getInElectricity() == null : this.getInElectricity().equals(other.getInElectricity()))
+            && (this.getInVoltage() == null ? other.getInVoltage() == null : this.getInVoltage().equals(other.getInVoltage()))
+            && (this.getElecFrequency() == null ? other.getElecFrequency() == null : this.getElecFrequency().equals(other.getElecFrequency()))
+            && (this.getInActivePower() == null ? other.getInActivePower() == null : this.getInActivePower().equals(other.getInActivePower()))
+            && (this.getInReactivePower() == null ? other.getInReactivePower() == null : this.getInReactivePower().equals(other.getInReactivePower()))
+            && (this.getInSeenPower() == null ? other.getInSeenPower() == null : this.getInSeenPower().equals(other.getInSeenPower()))
+            && (this.getInActiveEnergy() == null ? other.getInActiveEnergy() == null : this.getInActiveEnergy().equals(other.getInActiveEnergy()))
+            && (this.getInReactiveEnergy() == null ? other.getInReactiveEnergy() == null : this.getInReactiveEnergy().equals(other.getInReactiveEnergy()))
+            && (this.getInSeenEnergy() == null ? other.getInSeenEnergy() == null : this.getInSeenEnergy().equals(other.getInSeenEnergy()));
     }
 
     @Override
@@ -190,9 +289,18 @@ public class LightingVolEleRecord implements Serializable {
         result = prime * result + ((getDampness() == null) ? 0 : getDampness().hashCode());
         result = prime * result + ((getTemperature() == null) ? 0 : getTemperature().hashCode());
         result = prime * result + ((getBeam() == null) ? 0 : getBeam().hashCode());
-        result = prime * result + ((getPersist1() == null) ? 0 : getPersist1().hashCode());
-        result = prime * result + ((getPersist2() == null) ? 0 : getPersist2().hashCode());
-        result = prime * result + ((getPersist3() == null) ? 0 : getPersist3().hashCode());
+        result = prime * result + ((getSignalIntensity() == null) ? 0 : getSignalIntensity().hashCode());
+        result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
+        result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
+        result = prime * result + ((getInElectricity() == null) ? 0 : getInElectricity().hashCode());
+        result = prime * result + ((getInVoltage() == null) ? 0 : getInVoltage().hashCode());
+        result = prime * result + ((getElecFrequency() == null) ? 0 : getElecFrequency().hashCode());
+        result = prime * result + ((getInActivePower() == null) ? 0 : getInActivePower().hashCode());
+        result = prime * result + ((getInReactivePower() == null) ? 0 : getInReactivePower().hashCode());
+        result = prime * result + ((getInSeenPower() == null) ? 0 : getInSeenPower().hashCode());
+        result = prime * result + ((getInActiveEnergy() == null) ? 0 : getInActiveEnergy().hashCode());
+        result = prime * result + ((getInReactiveEnergy() == null) ? 0 : getInReactiveEnergy().hashCode());
+        result = prime * result + ((getInSeenEnergy() == null) ? 0 : getInSeenEnergy().hashCode());
         return result;
     }
 
@@ -213,9 +321,18 @@ public class LightingVolEleRecord implements Serializable {
         sb.append(", dampness=").append(dampness);
         sb.append(", temperature=").append(temperature);
         sb.append(", beam=").append(beam);
-        sb.append(", persist1=").append(persist1);
-        sb.append(", persist2=").append(persist2);
-        sb.append(", persist3=").append(persist3);
+        sb.append(", signalIntensity=").append(signalIntensity);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", latitude=").append(latitude);
+        sb.append(", inElectricity=").append(inElectricity);
+        sb.append(", inVoltage=").append(inVoltage);
+        sb.append(", elecFrequency=").append(elecFrequency);
+        sb.append(", inActivePower=").append(inActivePower);
+        sb.append(", inReactivePower=").append(inReactivePower);
+        sb.append(", inSeenPower=").append(inSeenPower);
+        sb.append(", inActiveEnergy=").append(inActiveEnergy);
+        sb.append(", inReactiveEnergy=").append(inReactiveEnergy);
+        sb.append(", inSeenEnergy=").append(inSeenEnergy);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

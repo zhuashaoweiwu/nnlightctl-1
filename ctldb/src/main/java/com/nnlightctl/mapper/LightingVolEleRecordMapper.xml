@@ -13,9 +13,18 @@
     <result column="dampness" property="dampness" jdbcType="DECIMAL" />
     <result column="temperature" property="temperature" jdbcType="DECIMAL" />
     <result column="beam" property="beam" jdbcType="DECIMAL" />
-    <result column="persist1" property="persist1" jdbcType="DECIMAL" />
-    <result column="persist2" property="persist2" jdbcType="DECIMAL" />
-    <result column="persist3" property="persist3" jdbcType="DECIMAL" />
+    <result column="signal_intensity" property="signalIntensity" jdbcType="DECIMAL" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="in_electricity" property="inElectricity" jdbcType="VARCHAR" />
+    <result column="in_voltage" property="inVoltage" jdbcType="VARCHAR" />
+    <result column="elec_frequency" property="elecFrequency" jdbcType="VARCHAR" />
+    <result column="in_active_power" property="inActivePower" jdbcType="VARCHAR" />
+    <result column="in_reactive_power" property="inReactivePower" jdbcType="VARCHAR" />
+    <result column="in_seen_power" property="inSeenPower" jdbcType="VARCHAR" />
+    <result column="in_active_energy" property="inActiveEnergy" jdbcType="VARCHAR" />
+    <result column="in_reactive_energy" property="inReactiveEnergy" jdbcType="VARCHAR" />
+    <result column="in_seen_energy" property="inSeenEnergy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,7 +86,9 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, record_datetime, voltage, electricty, energy, 
-    dampness, temperature, beam, persist1, persist2, persist3
+    dampness, temperature, beam, signal_intensity, longitude, latitude, in_electricity, 
+    in_voltage, elec_frequency, in_active_power, in_reactive_power, in_seen_power, in_active_energy, 
+    in_reactive_energy, in_seen_energy
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingVolEleRecordExample" >
     select
@@ -117,13 +128,19 @@
     insert into nnlightctl_lighting_vol_ele_record (gmt_created, gmt_updated, uid, 
       record_datetime, voltage, electricty, 
       energy, dampness, temperature, 
-      beam, persist1, persist2, 
-      persist3)
+      beam, signal_intensity, longitude, 
+      latitude, in_electricity, in_voltage, 
+      elec_frequency, in_active_power, in_reactive_power, 
+      in_seen_power, in_active_energy, in_reactive_energy, 
+      in_seen_energy)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{recordDatetime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricty,jdbcType=DECIMAL}, 
       #{energy,jdbcType=DECIMAL}, #{dampness,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, 
-      #{beam,jdbcType=DECIMAL}, #{persist1,jdbcType=DECIMAL}, #{persist2,jdbcType=DECIMAL}, 
-      #{persist3,jdbcType=DECIMAL})
+      #{beam,jdbcType=DECIMAL}, #{signalIntensity,jdbcType=DECIMAL}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{inElectricity,jdbcType=VARCHAR}, #{inVoltage,jdbcType=VARCHAR}, 
+      #{elecFrequency,jdbcType=VARCHAR}, #{inActivePower,jdbcType=VARCHAR}, #{inReactivePower,jdbcType=VARCHAR}, 
+      #{inSeenPower,jdbcType=VARCHAR}, #{inActiveEnergy,jdbcType=VARCHAR}, #{inReactiveEnergy,jdbcType=VARCHAR}, 
+      #{inSeenEnergy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -161,14 +178,41 @@
       <if test="beam != null" >
         beam,
       </if>
-      <if test="persist1 != null" >
-        persist1,
+      <if test="signalIntensity != null" >
+        signal_intensity,
       </if>
-      <if test="persist2 != null" >
-        persist2,
+      <if test="longitude != null" >
+        longitude,
       </if>
-      <if test="persist3 != null" >
-        persist3,
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="inElectricity != null" >
+        in_electricity,
+      </if>
+      <if test="inVoltage != null" >
+        in_voltage,
+      </if>
+      <if test="elecFrequency != null" >
+        elec_frequency,
+      </if>
+      <if test="inActivePower != null" >
+        in_active_power,
+      </if>
+      <if test="inReactivePower != null" >
+        in_reactive_power,
+      </if>
+      <if test="inSeenPower != null" >
+        in_seen_power,
+      </if>
+      <if test="inActiveEnergy != null" >
+        in_active_energy,
+      </if>
+      <if test="inReactiveEnergy != null" >
+        in_reactive_energy,
+      </if>
+      <if test="inSeenEnergy != null" >
+        in_seen_energy,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -202,14 +246,41 @@
       <if test="beam != null" >
         #{beam,jdbcType=DECIMAL},
       </if>
-      <if test="persist1 != null" >
-        #{persist1,jdbcType=DECIMAL},
+      <if test="signalIntensity != null" >
+        #{signalIntensity,jdbcType=DECIMAL},
       </if>
-      <if test="persist2 != null" >
-        #{persist2,jdbcType=DECIMAL},
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
       </if>
-      <if test="persist3 != null" >
-        #{persist3,jdbcType=DECIMAL},
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="inElectricity != null" >
+        #{inElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="inVoltage != null" >
+        #{inVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="elecFrequency != null" >
+        #{elecFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="inActivePower != null" >
+        #{inActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="inReactivePower != null" >
+        #{inReactivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="inSeenPower != null" >
+        #{inSeenPower,jdbcType=VARCHAR},
+      </if>
+      <if test="inActiveEnergy != null" >
+        #{inActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="inReactiveEnergy != null" >
+        #{inReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="inSeenEnergy != null" >
+        #{inSeenEnergy,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -255,14 +326,41 @@
       <if test="record.beam != null" >
         beam = #{record.beam,jdbcType=DECIMAL},
       </if>
-      <if test="record.persist1 != null" >
-        persist1 = #{record.persist1,jdbcType=DECIMAL},
+      <if test="record.signalIntensity != null" >
+        signal_intensity = #{record.signalIntensity,jdbcType=DECIMAL},
       </if>
-      <if test="record.persist2 != null" >
-        persist2 = #{record.persist2,jdbcType=DECIMAL},
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=VARCHAR},
       </if>
-      <if test="record.persist3 != null" >
-        persist3 = #{record.persist3,jdbcType=DECIMAL},
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inElectricity != null" >
+        in_electricity = #{record.inElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inVoltage != null" >
+        in_voltage = #{record.inVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elecFrequency != null" >
+        elec_frequency = #{record.elecFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inActivePower != null" >
+        in_active_power = #{record.inActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inReactivePower != null" >
+        in_reactive_power = #{record.inReactivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inSeenPower != null" >
+        in_seen_power = #{record.inSeenPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inActiveEnergy != null" >
+        in_active_energy = #{record.inActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inReactiveEnergy != null" >
+        in_reactive_energy = #{record.inReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inSeenEnergy != null" >
+        in_seen_energy = #{record.inSeenEnergy,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -282,9 +380,18 @@
       dampness = #{record.dampness,jdbcType=DECIMAL},
       temperature = #{record.temperature,jdbcType=DECIMAL},
       beam = #{record.beam,jdbcType=DECIMAL},
-      persist1 = #{record.persist1,jdbcType=DECIMAL},
-      persist2 = #{record.persist2,jdbcType=DECIMAL},
-      persist3 = #{record.persist3,jdbcType=DECIMAL}
+      signal_intensity = #{record.signalIntensity,jdbcType=DECIMAL},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      in_electricity = #{record.inElectricity,jdbcType=VARCHAR},
+      in_voltage = #{record.inVoltage,jdbcType=VARCHAR},
+      elec_frequency = #{record.elecFrequency,jdbcType=VARCHAR},
+      in_active_power = #{record.inActivePower,jdbcType=VARCHAR},
+      in_reactive_power = #{record.inReactivePower,jdbcType=VARCHAR},
+      in_seen_power = #{record.inSeenPower,jdbcType=VARCHAR},
+      in_active_energy = #{record.inActiveEnergy,jdbcType=VARCHAR},
+      in_reactive_energy = #{record.inReactiveEnergy,jdbcType=VARCHAR},
+      in_seen_energy = #{record.inSeenEnergy,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,14 +429,41 @@
       <if test="beam != null" >
         beam = #{beam,jdbcType=DECIMAL},
       </if>
-      <if test="persist1 != null" >
-        persist1 = #{persist1,jdbcType=DECIMAL},
+      <if test="signalIntensity != null" >
+        signal_intensity = #{signalIntensity,jdbcType=DECIMAL},
       </if>
-      <if test="persist2 != null" >
-        persist2 = #{persist2,jdbcType=DECIMAL},
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
       </if>
-      <if test="persist3 != null" >
-        persist3 = #{persist3,jdbcType=DECIMAL},
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="inElectricity != null" >
+        in_electricity = #{inElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="inVoltage != null" >
+        in_voltage = #{inVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="elecFrequency != null" >
+        elec_frequency = #{elecFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="inActivePower != null" >
+        in_active_power = #{inActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="inReactivePower != null" >
+        in_reactive_power = #{inReactivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="inSeenPower != null" >
+        in_seen_power = #{inSeenPower,jdbcType=VARCHAR},
+      </if>
+      <if test="inActiveEnergy != null" >
+        in_active_energy = #{inActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="inReactiveEnergy != null" >
+        in_reactive_energy = #{inReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="inSeenEnergy != null" >
+        in_seen_energy = #{inSeenEnergy,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -346,9 +480,18 @@
       dampness = #{dampness,jdbcType=DECIMAL},
       temperature = #{temperature,jdbcType=DECIMAL},
       beam = #{beam,jdbcType=DECIMAL},
-      persist1 = #{persist1,jdbcType=DECIMAL},
-      persist2 = #{persist2,jdbcType=DECIMAL},
-      persist3 = #{persist3,jdbcType=DECIMAL}
+      signal_intensity = #{signalIntensity,jdbcType=DECIMAL},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      in_electricity = #{inElectricity,jdbcType=VARCHAR},
+      in_voltage = #{inVoltage,jdbcType=VARCHAR},
+      elec_frequency = #{elecFrequency,jdbcType=VARCHAR},
+      in_active_power = #{inActivePower,jdbcType=VARCHAR},
+      in_reactive_power = #{inReactivePower,jdbcType=VARCHAR},
+      in_seen_power = #{inSeenPower,jdbcType=VARCHAR},
+      in_active_energy = #{inActiveEnergy,jdbcType=VARCHAR},
+      in_reactive_energy = #{inReactiveEnergy,jdbcType=VARCHAR},
+      in_seen_energy = #{inSeenEnergy,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

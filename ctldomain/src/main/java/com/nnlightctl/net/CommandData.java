@@ -5,6 +5,7 @@ import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -222,15 +223,30 @@ public class CommandData implements Serializable {
         stringBuilder.append(" ");
         stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.start1));
         stringBuilder.append(" ");
-        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.control, this.dataLength));
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.control));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.dataLength));
         stringBuilder.append(" ");
         stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.data));
         stringBuilder.append(" ");
-        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.check, this.end0));
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.check));
+        stringBuilder.append(" ");
+        stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.end0));
         stringBuilder.append(" ");
         stringBuilder.append(BytesHexStrTranslate.bytesToHexFun(this.end1));
 
         return stringBuilder.toString();
+    }
+
+    /**
+     * 获取CommandData的UUID
+     * @return
+     */
+    public String getUUID() {
+        byte[] uuidBytes = new byte[36];
+        System.arraycopy(this.data, 0, uuidBytes, 0, 36);
+        String uuid = new String(uuidBytes, Charset.forName("UTF-8"));
+        return uuid;
     }
 
     /**

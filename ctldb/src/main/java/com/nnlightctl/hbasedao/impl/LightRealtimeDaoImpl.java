@@ -21,7 +21,7 @@ public class LightRealtimeDaoImpl implements LightRealtimeDao {
 
         String[] highColumn =
                 { "persist1", "persist2", "persist3" };
-        Object[] value2 = { record.getPersist1(), record.getPersist2(), record.getPersist3() };
+        Object[] value2 = { record.getSignalIntensity(), record.getLongitude(), record.getLatitude() };
 
         try {
             HBaseClient.addData(UUID.randomUUID().toString(), "light", baseColumn, value1, highColumn, value2);

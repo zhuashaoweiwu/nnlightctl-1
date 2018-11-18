@@ -28,34 +28,101 @@ public class E0CommandAnalyze implements CommandAnalyzer {
 
         k += 36;
 
-        //温度
-//        stringBuilder.append("温度：");
-//        short temperature = (short) ByteConvert.bytesToUshort(data, 36);
-//        stringBuilder.append(Arithmetic.divide(temperature, "10"));
-//        stringBuilder.append(",");
+        //版本判断
+        byte version = command.getAddr()[4];
+        if (version == 1) {
+            //输入电流
+            stringBuilder.append("输入电流：");
+            int unsignedEletricIn = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedEletricIn));
+            stringBuilder.append(",");
 
-        //湿度
-//        stringBuilder.append("湿度：");
-//        short dampness = (short) ByteConvert.bytesToUshort(data, 38);
-//        stringBuilder.append(Arithmetic.divide(dampness, "10"));
-//        stringBuilder.append(",");
+            k += 2;
 
-        //光照
-//        stringBuilder.append("光照：");
-//        short beam = (short) ByteConvert.bytesToUshort(data, 40);
-//        stringBuilder.append(String.valueOf(beam));
-//        stringBuilder.append(",");
+            //输入电压
+            stringBuilder.append("输入电压：");
+            int unsignedVoltageIn = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedVoltageIn));
+            stringBuilder.append(",");
 
-        //电流
-        stringBuilder.append("电流：");
+            k += 2;
+
+            //电网频率
+            stringBuilder.append("电网频率：");
+            int unsignedEleFrequency = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedEleFrequency));
+            stringBuilder.append(",");
+
+            k += 2;
+
+            //输入有功功率
+            stringBuilder.append("输入有功功率：");
+            int unsignedActivePowerIn = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedActivePowerIn));
+            stringBuilder.append(",");
+
+            k += 2;
+
+            //输入无功功率
+            stringBuilder.append("输入无功功率：");
+            int unsignedReactivePowerIn = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedReactivePowerIn));
+            stringBuilder.append(",");
+
+            k += 2;
+
+            //输入视在功率
+            stringBuilder.append("输入视在功率：");
+            int unsignedSeenPowerIn = ByteConvert.bytesToUshort(data, k);
+            stringBuilder.append(String.valueOf(unsignedSeenPowerIn));
+            stringBuilder.append(",");
+
+            k += 2;
+
+            //输入有功电能
+            stringBuilder.append("输入有功电能：");
+            byte[] activeEnergyInBytes = new byte[4];
+            System.arraycopy(data, k, activeEnergyInBytes, 1, 3);
+            activeEnergyInBytes[0] = 0x00;
+            int unsignedActiveEnergyIn = ByteConvert.bytesToInt(activeEnergyInBytes);
+            stringBuilder.append(String.valueOf(unsignedActiveEnergyIn));
+            stringBuilder.append(",");
+
+            k += 3;
+
+            //输入无功电能
+            stringBuilder.append("输入无功电能：");
+            byte[] reactiveEnergyInBytes = new byte[4];
+            System.arraycopy(data, k, reactiveEnergyInBytes, 1, 3);
+            reactiveEnergyInBytes[0] = 0x00;
+            int unsignedReactiveEnergyIn = ByteConvert.bytesToInt(reactiveEnergyInBytes);
+            stringBuilder.append(String.valueOf(unsignedReactiveEnergyIn));
+            stringBuilder.append(",");
+
+            k += 3;
+
+            //输入视在电能
+            stringBuilder.append("输入视在电能：");
+            byte[] seenEnergyInBytes = new byte[4];
+            System.arraycopy(data, k, seenEnergyInBytes, 1, 3);
+            seenEnergyInBytes[0] = 0x00;
+            int unsignedSeenEnergyIn = ByteConvert.bytesToInt(seenEnergyInBytes);
+            stringBuilder.append(String.valueOf(unsignedSeenEnergyIn));
+            stringBuilder.append(",");
+
+            k += 3;
+        }
+
+        //输出电流
+        stringBuilder.append("输出电流：");
         short unsignedEletric = (short)ByteConvert.bytesToUshort(data, k);
         stringBuilder.append(String.valueOf(unsignedEletric));
         stringBuilder.append(",");
 
         k += 2;
 
-        //电压
-        stringBuilder.append("电压：");
+        //输出电压
+        stringBuilder.append("输出电压：");
         short unsignedVoltage = (short)ByteConvert.bytesToUshort(data, k);
         stringBuilder.append(String.valueOf(unsignedVoltage));
         stringBuilder.append(",");
@@ -89,7 +156,7 @@ public class E0CommandAnalyze implements CommandAnalyzer {
         stringBuilder.append("]");
 
         //向终端回复ack指令
-        Context.getGlobalContext().commandReplyTerminal((byte)0xe0, true);
+//        Context.getGlobalContext().commandReplyTerminal((byte)0xe0, true);
 
         return stringBuilder.toString();
 

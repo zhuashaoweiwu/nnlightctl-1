@@ -1,6 +1,7 @@
 package com.nnlightctl.command.client;
 
 import com.nnlightctl.command.Command;
+import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.vo.SceneView;
 import io.netty.channel.ChannelHandlerContext;
@@ -46,6 +47,7 @@ public class Context {
     public void receiveMsg(CommandData in) {
         if (command != null) {
             command.receiveMsg(in);
+            command.produce(in);
         }
     }
 

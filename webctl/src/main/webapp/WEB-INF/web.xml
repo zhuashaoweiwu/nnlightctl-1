@@ -65,7 +65,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:config/springContext.xml, classpath*:config/spring-mybatis.xml,
-            classpath*:config/spring-redis.xml, classpath:config/spring-shiro.xml
+            classpath:config/spring-shiro.xml
+            <!--, classpath*:config/spring-redis.xml-->
         </param-value>
     </context-param>
 
@@ -138,5 +139,9 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
     <!-- druid数据源监控结束 -->
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
 </web-app>

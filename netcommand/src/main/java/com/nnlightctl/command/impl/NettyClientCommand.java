@@ -5,6 +5,7 @@ import com.nnlightctl.command.Command;
 import com.nnlightctl.command.client.Context;
 import com.nnlightctl.command.client.EchoClient;
 import com.nnlightctl.command.event.MessageEvent;
+import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.vo.SceneView;
 import org.slf4j.Logger;
@@ -22,9 +23,10 @@ public class NettyClientCommand implements Command {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyClientCommand.class);
 
-    public NettyClientCommand(MessageEvent event) throws IOException {
+    public NettyClientCommand(MessageEvent event, Produce produce) throws IOException {
         this();
         this.messageEvent = event;
+        this.produce = produce;
     }
 
     public NettyClientCommand() throws IOException {
@@ -120,6 +122,16 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void produce(CommandData in) {
+        if (produce != null) {
+            //只处理E0指令
+            if (in.getControl() == (byte)0xe0) {
+                produce.produce(in);
+            }
+        }
+    }
+
+    @Override
     public void commandReadServiceFixedInfo(List<String> realtime_ids){
         context.commandReadServiceFixedInfo(realtime_ids);
     }
@@ -162,5 +174,6 @@ public class NettyClientCommand implements Command {
 
     private Context context;
     private MessageEvent messageEvent;
+    private Produce produce;
     private final Properties properties;
 }

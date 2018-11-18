@@ -1,0 +1,93 @@
+package com.nnlightctl.mymessage.consumer;
+
+import com.nnlight.common.ObjectTransferUtil;
+import com.nnlight.common.PropertiesUtil;
+import com.nnlightctl.dao.LightSignalLogMapper;
+import com.nnlightctl.dao.LightingVolEleRecordMapper;
+import com.nnlightctl.jdbcdao.LightMapNetDao;
+import com.nnlightctl.kafka.topic.TopicConstant;
+import com.nnlightctl.kafka.util.DataTransferUtil;
+import com.nnlightctl.mymessage.MsgQuene;
+import com.nnlightctl.net.CommandData;
+import com.nnlightctl.po.Lighting;
+import com.nnlightctl.po.LightingVolEleRecord;
+import com.nnlightctl.util.BytesHexStrTranslate;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+@Component
+public class Consumer {
+    private Logger logger = LoggerFactory.getLogger(Consumer.class);
+
+    @Autowired
+    private LightingVolEleRecordMapper lightingVolEleRecordMapper;
+
+    @Autowired
+    private LightMapNetDao lightMapNetDao;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    private LightSignalLogMapper lightSignalLogMapper;
+
+    @Autowired
+    private MsgQuene msgQuene;
+
+    @PostConstruct
+    public void consumer() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                logger.info("-------------------------------Message Consumer starting...--------------------------------------");
+                try {
+                    while (true) {
+                        CommandData lightE0Command = msgQuene.take();
+                        LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
+                        lightingVolEleRecord.setGmtCreated(new Date());
+                        lightingVolEleRecord.setGmtUpdated(new Date());
+                        //与数据库灯具配对
+                        Lighting lighting = new Lighting();
+                        lighting.setUid(lightingVolEleRecord.getUid());
+                        //realtimeUid转换成16进制字符串形式
+                        byte[] bytes = new byte[4];
+                        System.arraycopy(lightE0Command.getAddr(), 0, bytes, 0, 4);
+                        lighting.setRealtimeUid(BytesHexStrTranslate.bytesToHexFun(bytes));
+                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                            @Override
+                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                                //映射终端与数据库灯具
+                                lightMapNetDao.mapLightingNet(lighting);
+                                //写入灯具终端电流电压信息
+                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                //写入灯具信号日志
+                                lightSignalLogMapper.insertSelective(DataTransferUtil.transToLightSignalLog(lightingVolEleRecord));
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    logger.error(e.getMessage());
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                }
+            }
+        });
+    }
+}

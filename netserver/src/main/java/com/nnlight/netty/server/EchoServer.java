@@ -33,7 +33,7 @@ public class EchoServer {
 
     private static EchoServer globalApplicationContext;
 
-    private final Produce produce = new Produce();
+//    private final Produce produce = new Produce();
 
     public EchoServer(int port) {
         this.port = port;
@@ -207,7 +207,7 @@ public class EchoServer {
      * @param e0CommandData
      */
     public void sendE02Kafka(CommandData e0CommandData) {
-        produce.send(e0CommandData);
+//        produce.send(e0CommandData);
     }
 
 

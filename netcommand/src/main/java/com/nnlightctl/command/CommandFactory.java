@@ -2,6 +2,7 @@ package com.nnlightctl.command;
 
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.command.impl.NettyClientCommand;
+import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
@@ -16,11 +17,11 @@ public class CommandFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(CommandFactory.class);
 
-    public static Command getNettyClientCommand(MessageEvent event) {
+    public static Command getNettyClientCommand(MessageEvent event, Produce produce) {
         if (nettyClientCommand == null) {
              synchronized (CommandFactory.class) {
                  try {
-                     nettyClientCommand = new NettyClientCommand(event);
+                     nettyClientCommand = new NettyClientCommand(event, produce);
                  } catch (IOException e) {
                      logger.error(e.getMessage());
                      nettyClientCommand = null;
@@ -39,7 +40,7 @@ public class CommandFactory {
             public void receiveMsg(CommandData msg) {
                 System.out.println(LocalDate.now() + " " + LocalTime.now() + " receive message : " + new String(msg.getData()));
             }
-        });
+        }, new Produce());
 
 
         command.sendMsg("Hello, Netty Server, I'm Client!");

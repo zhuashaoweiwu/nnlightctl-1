@@ -5,6 +5,7 @@ import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
+import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
@@ -26,14 +27,20 @@ public class CommandServerImpl implements CommandServer {
     @Autowired
     private LightServer lightServer;
 
-    private final Command command = CommandFactory.getNettyClientCommand(new MessageEvent() {
-        @Override
-        public void receiveMsg(CommandData msg) {
-            globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
-        }
-    });
+    private final Command command;
 
     private String globalMsg;
+
+    @Autowired
+    public CommandServerImpl(Produce produce) {
+        command = CommandFactory.getNettyClientCommand(new MessageEvent() {
+            @Override
+
+            public void receiveMsg(CommandData msg) {
+                globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
+            }
+        }, produce);
+    }
 
     @Override
     public void sendCommand(String msg) {

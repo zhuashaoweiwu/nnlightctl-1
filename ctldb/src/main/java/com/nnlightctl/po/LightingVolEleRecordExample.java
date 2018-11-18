@@ -776,183 +776,833 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersist1IsNull() {
-            addCriterion("persist1 is null");
+        public Criteria andSignalIntensityIsNull() {
+            addCriterion("signal_intensity is null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1IsNotNull() {
-            addCriterion("persist1 is not null");
+        public Criteria andSignalIntensityIsNotNull() {
+            addCriterion("signal_intensity is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1EqualTo(BigDecimal value) {
-            addCriterion("persist1 =", value, "persist1");
+        public Criteria andSignalIntensityEqualTo(BigDecimal value) {
+            addCriterion("signal_intensity =", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotEqualTo(BigDecimal value) {
-            addCriterion("persist1 <>", value, "persist1");
+        public Criteria andSignalIntensityNotEqualTo(BigDecimal value) {
+            addCriterion("signal_intensity <>", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1GreaterThan(BigDecimal value) {
-            addCriterion("persist1 >", value, "persist1");
+        public Criteria andSignalIntensityGreaterThan(BigDecimal value) {
+            addCriterion("signal_intensity >", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1GreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist1 >=", value, "persist1");
+        public Criteria andSignalIntensityGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("signal_intensity >=", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1LessThan(BigDecimal value) {
-            addCriterion("persist1 <", value, "persist1");
+        public Criteria andSignalIntensityLessThan(BigDecimal value) {
+            addCriterion("signal_intensity <", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1LessThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist1 <=", value, "persist1");
+        public Criteria andSignalIntensityLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("signal_intensity <=", value, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1In(List<BigDecimal> values) {
-            addCriterion("persist1 in", values, "persist1");
+        public Criteria andSignalIntensityIn(List<BigDecimal> values) {
+            addCriterion("signal_intensity in", values, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotIn(List<BigDecimal> values) {
-            addCriterion("persist1 not in", values, "persist1");
+        public Criteria andSignalIntensityNotIn(List<BigDecimal> values) {
+            addCriterion("signal_intensity not in", values, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1Between(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist1 between", value1, value2, "persist1");
+        public Criteria andSignalIntensityBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("signal_intensity between", value1, value2, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist1NotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist1 not between", value1, value2, "persist1");
+        public Criteria andSignalIntensityNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("signal_intensity not between", value1, value2, "signalIntensity");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2IsNull() {
-            addCriterion("persist2 is null");
+        public Criteria andLongitudeIsNull() {
+            addCriterion("longitude is null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2IsNotNull() {
-            addCriterion("persist2 is not null");
+        public Criteria andLongitudeIsNotNull() {
+            addCriterion("longitude is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2EqualTo(BigDecimal value) {
-            addCriterion("persist2 =", value, "persist2");
+        public Criteria andLongitudeEqualTo(String value) {
+            addCriterion("longitude =", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotEqualTo(BigDecimal value) {
-            addCriterion("persist2 <>", value, "persist2");
+        public Criteria andLongitudeNotEqualTo(String value) {
+            addCriterion("longitude <>", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2GreaterThan(BigDecimal value) {
-            addCriterion("persist2 >", value, "persist2");
+        public Criteria andLongitudeGreaterThan(String value) {
+            addCriterion("longitude >", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2GreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist2 >=", value, "persist2");
+        public Criteria andLongitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("longitude >=", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2LessThan(BigDecimal value) {
-            addCriterion("persist2 <", value, "persist2");
+        public Criteria andLongitudeLessThan(String value) {
+            addCriterion("longitude <", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2LessThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist2 <=", value, "persist2");
+        public Criteria andLongitudeLessThanOrEqualTo(String value) {
+            addCriterion("longitude <=", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2In(List<BigDecimal> values) {
-            addCriterion("persist2 in", values, "persist2");
+        public Criteria andLongitudeLike(String value) {
+            addCriterion("longitude like", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotIn(List<BigDecimal> values) {
-            addCriterion("persist2 not in", values, "persist2");
+        public Criteria andLongitudeNotLike(String value) {
+            addCriterion("longitude not like", value, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2Between(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist2 between", value1, value2, "persist2");
+        public Criteria andLongitudeIn(List<String> values) {
+            addCriterion("longitude in", values, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist2NotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist2 not between", value1, value2, "persist2");
+        public Criteria andLongitudeNotIn(List<String> values) {
+            addCriterion("longitude not in", values, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3IsNull() {
-            addCriterion("persist3 is null");
+        public Criteria andLongitudeBetween(String value1, String value2) {
+            addCriterion("longitude between", value1, value2, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3IsNotNull() {
-            addCriterion("persist3 is not null");
+        public Criteria andLongitudeNotBetween(String value1, String value2) {
+            addCriterion("longitude not between", value1, value2, "longitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3EqualTo(BigDecimal value) {
-            addCriterion("persist3 =", value, "persist3");
+        public Criteria andLatitudeIsNull() {
+            addCriterion("latitude is null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotEqualTo(BigDecimal value) {
-            addCriterion("persist3 <>", value, "persist3");
+        public Criteria andLatitudeIsNotNull() {
+            addCriterion("latitude is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3GreaterThan(BigDecimal value) {
-            addCriterion("persist3 >", value, "persist3");
+        public Criteria andLatitudeEqualTo(String value) {
+            addCriterion("latitude =", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3GreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist3 >=", value, "persist3");
+        public Criteria andLatitudeNotEqualTo(String value) {
+            addCriterion("latitude <>", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3LessThan(BigDecimal value) {
-            addCriterion("persist3 <", value, "persist3");
+        public Criteria andLatitudeGreaterThan(String value) {
+            addCriterion("latitude >", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3LessThanOrEqualTo(BigDecimal value) {
-            addCriterion("persist3 <=", value, "persist3");
+        public Criteria andLatitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("latitude >=", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3In(List<BigDecimal> values) {
-            addCriterion("persist3 in", values, "persist3");
+        public Criteria andLatitudeLessThan(String value) {
+            addCriterion("latitude <", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotIn(List<BigDecimal> values) {
-            addCriterion("persist3 not in", values, "persist3");
+        public Criteria andLatitudeLessThanOrEqualTo(String value) {
+            addCriterion("latitude <=", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3Between(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist3 between", value1, value2, "persist3");
+        public Criteria andLatitudeLike(String value) {
+            addCriterion("latitude like", value, "latitude");
             return (Criteria) this;
         }
 
-        public Criteria andPersist3NotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("persist3 not between", value1, value2, "persist3");
+        public Criteria andLatitudeNotLike(String value) {
+            addCriterion("latitude not like", value, "latitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andLatitudeIn(List<String> values) {
+            addCriterion("latitude in", values, "latitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andLatitudeNotIn(List<String> values) {
+            addCriterion("latitude not in", values, "latitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andLatitudeBetween(String value1, String value2) {
+            addCriterion("latitude between", value1, value2, "latitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andLatitudeNotBetween(String value1, String value2) {
+            addCriterion("latitude not between", value1, value2, "latitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityIsNull() {
+            addCriterion("in_electricity is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityIsNotNull() {
+            addCriterion("in_electricity is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityEqualTo(String value) {
+            addCriterion("in_electricity =", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityNotEqualTo(String value) {
+            addCriterion("in_electricity <>", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityGreaterThan(String value) {
+            addCriterion("in_electricity >", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityGreaterThanOrEqualTo(String value) {
+            addCriterion("in_electricity >=", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityLessThan(String value) {
+            addCriterion("in_electricity <", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityLessThanOrEqualTo(String value) {
+            addCriterion("in_electricity <=", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityLike(String value) {
+            addCriterion("in_electricity like", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityNotLike(String value) {
+            addCriterion("in_electricity not like", value, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityIn(List<String> values) {
+            addCriterion("in_electricity in", values, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityNotIn(List<String> values) {
+            addCriterion("in_electricity not in", values, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityBetween(String value1, String value2) {
+            addCriterion("in_electricity between", value1, value2, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInElectricityNotBetween(String value1, String value2) {
+            addCriterion("in_electricity not between", value1, value2, "inElectricity");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageIsNull() {
+            addCriterion("in_voltage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageIsNotNull() {
+            addCriterion("in_voltage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageEqualTo(String value) {
+            addCriterion("in_voltage =", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageNotEqualTo(String value) {
+            addCriterion("in_voltage <>", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageGreaterThan(String value) {
+            addCriterion("in_voltage >", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageGreaterThanOrEqualTo(String value) {
+            addCriterion("in_voltage >=", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageLessThan(String value) {
+            addCriterion("in_voltage <", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageLessThanOrEqualTo(String value) {
+            addCriterion("in_voltage <=", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageLike(String value) {
+            addCriterion("in_voltage like", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageNotLike(String value) {
+            addCriterion("in_voltage not like", value, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageIn(List<String> values) {
+            addCriterion("in_voltage in", values, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageNotIn(List<String> values) {
+            addCriterion("in_voltage not in", values, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageBetween(String value1, String value2) {
+            addCriterion("in_voltage between", value1, value2, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andInVoltageNotBetween(String value1, String value2) {
+            addCriterion("in_voltage not between", value1, value2, "inVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyIsNull() {
+            addCriterion("elec_frequency is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyIsNotNull() {
+            addCriterion("elec_frequency is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyEqualTo(String value) {
+            addCriterion("elec_frequency =", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyNotEqualTo(String value) {
+            addCriterion("elec_frequency <>", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyGreaterThan(String value) {
+            addCriterion("elec_frequency >", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyGreaterThanOrEqualTo(String value) {
+            addCriterion("elec_frequency >=", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyLessThan(String value) {
+            addCriterion("elec_frequency <", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyLessThanOrEqualTo(String value) {
+            addCriterion("elec_frequency <=", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyLike(String value) {
+            addCriterion("elec_frequency like", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyNotLike(String value) {
+            addCriterion("elec_frequency not like", value, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyIn(List<String> values) {
+            addCriterion("elec_frequency in", values, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyNotIn(List<String> values) {
+            addCriterion("elec_frequency not in", values, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyBetween(String value1, String value2) {
+            addCriterion("elec_frequency between", value1, value2, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andElecFrequencyNotBetween(String value1, String value2) {
+            addCriterion("elec_frequency not between", value1, value2, "elecFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerIsNull() {
+            addCriterion("in_active_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerIsNotNull() {
+            addCriterion("in_active_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerEqualTo(String value) {
+            addCriterion("in_active_power =", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerNotEqualTo(String value) {
+            addCriterion("in_active_power <>", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerGreaterThan(String value) {
+            addCriterion("in_active_power >", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerGreaterThanOrEqualTo(String value) {
+            addCriterion("in_active_power >=", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerLessThan(String value) {
+            addCriterion("in_active_power <", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerLessThanOrEqualTo(String value) {
+            addCriterion("in_active_power <=", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerLike(String value) {
+            addCriterion("in_active_power like", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerNotLike(String value) {
+            addCriterion("in_active_power not like", value, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerIn(List<String> values) {
+            addCriterion("in_active_power in", values, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerNotIn(List<String> values) {
+            addCriterion("in_active_power not in", values, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerBetween(String value1, String value2) {
+            addCriterion("in_active_power between", value1, value2, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActivePowerNotBetween(String value1, String value2) {
+            addCriterion("in_active_power not between", value1, value2, "inActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerIsNull() {
+            addCriterion("in_reactive_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerIsNotNull() {
+            addCriterion("in_reactive_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerEqualTo(String value) {
+            addCriterion("in_reactive_power =", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerNotEqualTo(String value) {
+            addCriterion("in_reactive_power <>", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerGreaterThan(String value) {
+            addCriterion("in_reactive_power >", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerGreaterThanOrEqualTo(String value) {
+            addCriterion("in_reactive_power >=", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerLessThan(String value) {
+            addCriterion("in_reactive_power <", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerLessThanOrEqualTo(String value) {
+            addCriterion("in_reactive_power <=", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerLike(String value) {
+            addCriterion("in_reactive_power like", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerNotLike(String value) {
+            addCriterion("in_reactive_power not like", value, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerIn(List<String> values) {
+            addCriterion("in_reactive_power in", values, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerNotIn(List<String> values) {
+            addCriterion("in_reactive_power not in", values, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerBetween(String value1, String value2) {
+            addCriterion("in_reactive_power between", value1, value2, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactivePowerNotBetween(String value1, String value2) {
+            addCriterion("in_reactive_power not between", value1, value2, "inReactivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerIsNull() {
+            addCriterion("in_seen_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerIsNotNull() {
+            addCriterion("in_seen_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerEqualTo(String value) {
+            addCriterion("in_seen_power =", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerNotEqualTo(String value) {
+            addCriterion("in_seen_power <>", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerGreaterThan(String value) {
+            addCriterion("in_seen_power >", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerGreaterThanOrEqualTo(String value) {
+            addCriterion("in_seen_power >=", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerLessThan(String value) {
+            addCriterion("in_seen_power <", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerLessThanOrEqualTo(String value) {
+            addCriterion("in_seen_power <=", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerLike(String value) {
+            addCriterion("in_seen_power like", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerNotLike(String value) {
+            addCriterion("in_seen_power not like", value, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerIn(List<String> values) {
+            addCriterion("in_seen_power in", values, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerNotIn(List<String> values) {
+            addCriterion("in_seen_power not in", values, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerBetween(String value1, String value2) {
+            addCriterion("in_seen_power between", value1, value2, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenPowerNotBetween(String value1, String value2) {
+            addCriterion("in_seen_power not between", value1, value2, "inSeenPower");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyIsNull() {
+            addCriterion("in_active_energy is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyIsNotNull() {
+            addCriterion("in_active_energy is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyEqualTo(String value) {
+            addCriterion("in_active_energy =", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyNotEqualTo(String value) {
+            addCriterion("in_active_energy <>", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyGreaterThan(String value) {
+            addCriterion("in_active_energy >", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyGreaterThanOrEqualTo(String value) {
+            addCriterion("in_active_energy >=", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyLessThan(String value) {
+            addCriterion("in_active_energy <", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyLessThanOrEqualTo(String value) {
+            addCriterion("in_active_energy <=", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyLike(String value) {
+            addCriterion("in_active_energy like", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyNotLike(String value) {
+            addCriterion("in_active_energy not like", value, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyIn(List<String> values) {
+            addCriterion("in_active_energy in", values, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyNotIn(List<String> values) {
+            addCriterion("in_active_energy not in", values, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyBetween(String value1, String value2) {
+            addCriterion("in_active_energy between", value1, value2, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInActiveEnergyNotBetween(String value1, String value2) {
+            addCriterion("in_active_energy not between", value1, value2, "inActiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyIsNull() {
+            addCriterion("in_reactive_energy is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyIsNotNull() {
+            addCriterion("in_reactive_energy is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyEqualTo(String value) {
+            addCriterion("in_reactive_energy =", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyNotEqualTo(String value) {
+            addCriterion("in_reactive_energy <>", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyGreaterThan(String value) {
+            addCriterion("in_reactive_energy >", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyGreaterThanOrEqualTo(String value) {
+            addCriterion("in_reactive_energy >=", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyLessThan(String value) {
+            addCriterion("in_reactive_energy <", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyLessThanOrEqualTo(String value) {
+            addCriterion("in_reactive_energy <=", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyLike(String value) {
+            addCriterion("in_reactive_energy like", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyNotLike(String value) {
+            addCriterion("in_reactive_energy not like", value, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyIn(List<String> values) {
+            addCriterion("in_reactive_energy in", values, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyNotIn(List<String> values) {
+            addCriterion("in_reactive_energy not in", values, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyBetween(String value1, String value2) {
+            addCriterion("in_reactive_energy between", value1, value2, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInReactiveEnergyNotBetween(String value1, String value2) {
+            addCriterion("in_reactive_energy not between", value1, value2, "inReactiveEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyIsNull() {
+            addCriterion("in_seen_energy is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyIsNotNull() {
+            addCriterion("in_seen_energy is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyEqualTo(String value) {
+            addCriterion("in_seen_energy =", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyNotEqualTo(String value) {
+            addCriterion("in_seen_energy <>", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyGreaterThan(String value) {
+            addCriterion("in_seen_energy >", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyGreaterThanOrEqualTo(String value) {
+            addCriterion("in_seen_energy >=", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyLessThan(String value) {
+            addCriterion("in_seen_energy <", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyLessThanOrEqualTo(String value) {
+            addCriterion("in_seen_energy <=", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyLike(String value) {
+            addCriterion("in_seen_energy like", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyNotLike(String value) {
+            addCriterion("in_seen_energy not like", value, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyIn(List<String> values) {
+            addCriterion("in_seen_energy in", values, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyNotIn(List<String> values) {
+            addCriterion("in_seen_energy not in", values, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyBetween(String value1, String value2) {
+            addCriterion("in_seen_energy between", value1, value2, "inSeenEnergy");
+            return (Criteria) this;
+        }
+
+        public Criteria andInSeenEnergyNotBetween(String value1, String value2) {
+            addCriterion("in_seen_energy not between", value1, value2, "inSeenEnergy");
             return (Criteria) this;
         }
     }

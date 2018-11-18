@@ -1,7 +1,5 @@
 package com.nnlight.common;
 
-import sun.misc.IOUtils;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Properties;

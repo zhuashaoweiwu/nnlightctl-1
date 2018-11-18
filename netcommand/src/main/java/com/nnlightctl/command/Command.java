@@ -15,6 +15,7 @@ public interface Command {
     void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks);
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
+    void produce(CommandData in);
     void configTerminalAutoMode(int mode);
     //模块命令
     void commandReadServiceFixedInfo(List<String> realtime_ids);

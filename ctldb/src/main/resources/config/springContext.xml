@@ -10,7 +10,8 @@
 
     <context:component-scan base-package="com.nnlightctl.jdbcdao" />
     <context:component-scan base-package="com.nnlightctl.hbasedao" />
+    <context:component-scan base-package="com.nnlightctl.mymessage" />
 
-    <bean id="kafkaConsumer" class="com.nnlightctl.kafka.consume.Consumer" init-method="consume" />
+    <!--<bean id="kafkaConsumer" class="com.nnlightctl.kafka.consume.Consumer" init-method="consume" />-->
 
 </beans>

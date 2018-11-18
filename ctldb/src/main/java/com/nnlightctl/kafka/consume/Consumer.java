@@ -2,6 +2,7 @@ package com.nnlightctl.kafka.consume;
 
 import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.hbasedao.LightRealtimeDao;
 import com.nnlightctl.jdbcdao.LightDao;
@@ -50,6 +51,9 @@ public class Consumer {
     @Autowired
     private LightRealtimeDao lightRealtimeDao;
 
+    @Autowired
+    private LightSignalLogMapper lightSignalLogMapper;
+
     public void consume() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
@@ -65,7 +69,7 @@ public class Consumer {
                             TopicConstant.TOPIC_LIGHT));
 
                     while (true) {
-                        ConsumerRecords<String, byte[]> records = consumer.poll(300);
+                        ConsumerRecords<String, byte[]> records = consumer.poll(Integer.MAX_VALUE);
                         for (ConsumerRecord<String, byte[]> record : records) {
                             try {
                                 switch (record.topic()) {
@@ -91,6 +95,8 @@ public class Consumer {
                                                 lightMapNetDao.mapLightingNet(lighting);
                                                 //写入灯具终端电流电压信息
                                                 lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                                //写入灯具信号日志
+                                                lightSignalLogMapper.insertSelective(DataTransferUtil.transToLightSignalLog(lightingVolEleRecord));
                                             }
                                         });
 
