@@ -432,7 +432,8 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/nnlightctl/html/js/jquery/jquery-3.3.1.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/popper.js" ></script>
-<script src="/nnlightctl/html/js/bootstrap/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/nnlightctl/html/js/bootstrap/tether.min.js" ></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-switch.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -540,7 +541,6 @@
             //终端模块调试开始
             //1.从newMsg中获取UUID
             var uuid = newMsg.substr(newMsg.indexOf("UUID") + 5, 36);
-            debugger;
             if (uuid == "111111111111111111111111111111111111") {
                 clearOpenModelInterval();
             }
