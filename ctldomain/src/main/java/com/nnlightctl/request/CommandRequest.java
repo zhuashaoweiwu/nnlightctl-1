@@ -60,6 +60,16 @@ public class CommandRequest {
         this.autoModel = autoModel;
     }
 
+    public List<String> getLightUUIDs() {
+        return lightUUIDs;
+    }
+
+    public void setLightUUIDs(List<String> lightUUIDs) {
+        this.lightUUIDs = lightUUIDs;
+    }
+
+
+    private List<String> lightUUIDs;
 
     private Integer autoModel;
 

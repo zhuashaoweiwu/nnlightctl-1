@@ -57,7 +57,7 @@ public class E0CommandAnalyze implements CommandAnalyzer {
 
             //输入有功功率
             stringBuilder.append("输入有功功率：");
-            int unsignedActivePowerIn = ByteConvert.bytesToUshort(data, k);
+            short unsignedActivePowerIn = ByteConvert.bytesToShort(data, k);
             stringBuilder.append(String.valueOf(unsignedActivePowerIn));
             stringBuilder.append(",");
 
@@ -65,7 +65,7 @@ public class E0CommandAnalyze implements CommandAnalyzer {
 
             //输入无功功率
             stringBuilder.append("输入无功功率：");
-            int unsignedReactivePowerIn = ByteConvert.bytesToUshort(data, k);
+            short unsignedReactivePowerIn = ByteConvert.bytesToShort(data, k);
             stringBuilder.append(String.valueOf(unsignedReactivePowerIn));
             stringBuilder.append(",");
 

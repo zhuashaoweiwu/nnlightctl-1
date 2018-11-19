@@ -156,6 +156,21 @@ public class EchoServer {
     }
 
     /**
+     * 发送特定终端重置任务开关策略
+     * @param c7Command
+     */
+    public void configTerminalSwitchPolicy(CommandData c7Command) {
+        String realtimeUUID = c7Command.getRealtimeUUIDFromData();
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
+                ChannelHandlerContext context = entry.getValue().getContext();
+                context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command));
+                break;
+            }
+        }
+    }
+
+    /**
      * 发送全部终端读取终端信息
      */
     public void allSendCommandReadTerminalInfo() {
@@ -188,6 +203,22 @@ public class EchoServer {
             ChannelHandlerContext context = entry.getValue().getContext();
 
             context.writeAndFlush(CommandData.getACKCommandData(control, success));
+        }
+    }
+
+    /**
+     * 发送特定终端ack回应信息
+     * @param control
+     * @param success
+     * @param realtimeUUID
+     */
+    public void sendTerminalACK(byte control, Boolean success, String realtimeUUID) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            String name = entry.getKey();
+            if (name.equalsIgnoreCase(realtimeUUID)) {
+                ChannelHandlerContext context = entry.getValue().getContext();
+                context.writeAndFlush(CommandData.getACKCommandData(control, success));
+            }
         }
     }
 

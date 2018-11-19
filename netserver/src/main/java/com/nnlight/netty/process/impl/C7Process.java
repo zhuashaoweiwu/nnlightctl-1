@@ -14,6 +14,6 @@ public class C7Process implements Process {
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
         logger.info("命令层C7指令【设置任务开关策略】");
 
-        EchoServer.getGlobalApplicationContext().allConfigTerminalSwitchPolicy(msg);
+        EchoServer.getGlobalApplicationContext().configTerminalSwitchPolicy(msg);
     }
 }

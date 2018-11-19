@@ -81,6 +81,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks));
     }
 
+    public void configTerminalSwitchPolicyBatch(List<SceneView.SwitchTask> switchTasks, String realtimeUUID) {
+        channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks, realtimeUUID));
+    }
+
     public void commandReadTerminalInfo() {
         channelHandlerContext.writeAndFlush(CommandData.getC8CommandData());
     }
@@ -89,8 +93,16 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC9CommandData(model));
     }
 
+    public void configTerminalAutoModel(int model, String realtimeUUID) {
+        channelHandlerContext.writeAndFlush(CommandData.getC9CommandData(model, realtimeUUID));
+    }
+
     public void commandReplyTerminal(byte control, Boolean success) {
         channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandData(control, success));
+    }
+
+    public void commandReplyTerminal(byte control, Boolean success, String realtimeUUID) {
+        channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandDataRealtimeUUID(control, success, realtimeUUID));
     }
 
     public ChannelHandlerContext getChannelHandlerContext() {

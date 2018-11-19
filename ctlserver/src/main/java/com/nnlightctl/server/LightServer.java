@@ -21,6 +21,7 @@ public interface LightServer {
     Tuple.TwoTuple<List<LightingView>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);
     Lighting getLighting(Long id);
+    Lighting getLightingByUUID(String uuid);
     List<LightingView> getLightByLoopId(Long id);
     int updateLightBeEleboxBeLoop(LightConditionRequest request);
     int updateLightBeEleboxBeLoop2(LightConditionRequest request);

@@ -169,6 +169,14 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
+    public Lighting getLightingByUUID(String uuid) {
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andUidEqualTo(uuid);
+
+        return lightingMapper.selectByExample(lightingExample).get(0);
+    }
+
+    @Override
     public List<LightingView> getLightByLoopId(Long id) {
         LightingExample lightingExample = new LightingExample();
         lightingExample.createCriteria().andNnlightctlEleboxModelLoopIdEqualTo(id);

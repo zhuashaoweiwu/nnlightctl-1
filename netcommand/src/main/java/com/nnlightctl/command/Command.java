@@ -13,10 +13,12 @@ public interface Command {
     void configTerminalSendMsgPeriod(int period);
     void commandTerminalEleboxOn(Boolean eleboxOn);
     void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks);
+    void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID);
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
     void produce(CommandData in);
     void configTerminalAutoMode(int mode);
+    void batchConfigTerminalAutoMode(int model, String realtimeUUID);
     //模块命令
     void commandReadServiceFixedInfo(List<String> realtime_ids);
     void serviceOpenClose(List<String> realtime_ids);

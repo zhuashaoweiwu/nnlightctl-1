@@ -39,7 +39,7 @@
 
     <!-- 灯具调节 -->
     <div class="row">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <label class="form-control">灯具灯光调节：</label>
         </div>
 
@@ -52,11 +52,11 @@
         </div>
 
         <div class="col-sm-1">
-            <label for="lightId" class="form-control">单灯id值：</label>
+            <label for="lightId" class="form-control">单灯UUID值：</label>
         </div>
 
-        <div class="col-sm-1">
-            <input id="lightId" class="form-control" size="16" type="text" value="" >
+        <div class="col-sm-4">
+            <input id="lightUUID" class="form-control" size="36" type="text" value="" >
         </div>
 
         <div class="col-sm-2">
@@ -216,6 +216,14 @@
     <hr />
 
     <div class="row">
+        <div class="col-sm-10">
+            <div class="form-group">
+                <label for="switchPolicyUUID" class="col-md-3 control-label">UUID：</label>
+                <div class="input-group col-md-8">
+                    <input id="switchPolicyUUID" class="form-control" size="36" type="text" value="" >
+                </div>
+            </div>
+        </div>
         <div class="col-sm-2">
             <button id="sendTerminalSwitchBtn" type="button" class="btn btn-primary">发送开关任务策略命令</button>
         </div>
@@ -247,7 +255,16 @@
     <!-- 设置终端自动模式0-自动 1-手动 -->
     <div class="row">
         <div class="col-sm-1">
-            <label class="form-control">终端手动模式：</label>
+            <label class="form-control">终端自动模式：</label>
+        </div>
+
+        <div class="col-sm-10">
+            <div class="form-group">
+                <label for="terminalModelUUID" class="col-md-3 control-label">UUID：</label>
+                <div class="input-group col-md-8">
+                    <input id="terminalModelUUID" class="form-control" size="36" type="text" value="" >
+                </div>
+            </div>
         </div>
 
         <div class="col-sm-1">
@@ -430,8 +447,8 @@
     });
 
     $("#sendCommandLightAdjust").click(function() {
-        $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
-            {"lightPercent" : $("#lightPercent").val().trim(), "lightIds[0]" : $("#lightId").val().trim()}, function (result) {
+        $.post("/nnlightctl/api/command/batchUUIDLightAdjustCommand",
+            {"lightPercent" : $("#lightPercent").val().trim(), "lightUUIDs[0]" : $("#lightUUID").val().trim()}, function (result) {
         });
     });
 
@@ -602,7 +619,7 @@
         var sendData = {"switch1Type" : $("#switch1TypeSelect").val(), "switch1StartDate" : $("#dtp_input1").val(),
             "switch1EndDate" : $("#dtp_input2").val(), "switch1Percent" : $("#percent1").val(),
             "switch2Type" : $("#switch2TypeSelect").val(), "switch2StartDate" : $("#dtp_input3").val(),
-            "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val()};
+            "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val(), "uuid" : $("#switchPolicyUUID").val().trim()};
         $.post("/nnlightctl/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
 
         });
@@ -623,7 +640,7 @@
         if (state) {
             model = 1;
         }
-        $.post("/nnlightctl/api/command/commandConfigTerminalAutModel", {"autoModel" : model}, function () {
+        $.post("/nnlightctl/api/command/batchCommandConfigTerminalAutoModel", {"autoModel" : model, "lightUUIDs[0]" : $("#terminalModelUUID").val().trim()}, function () {
 
         });
     });

@@ -35,7 +35,6 @@ public class CommandServerImpl implements CommandServer {
     public CommandServerImpl(Produce produce) {
         command = CommandFactory.getNettyClientCommand(new MessageEvent() {
             @Override
-
             public void receiveMsg(CommandData msg) {
                 globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
             }
@@ -61,6 +60,21 @@ public class CommandServerImpl implements CommandServer {
         List<String> realtime_ids = new ArrayList<>(1);
         for (Long lightId : lightIds) {
             Lighting lighting = lightServer.getLighting(lightId);
+            realtime_ids.add(lighting.getRealtimeUid());
+        }
+
+        command.batchSendLightAdjustCommand(realtime_ids, percent);
+    }
+
+    @Override
+    public void sendLightAdjustCommandBatchUUID(List<String> lightUUIDs, int percent) {
+        if (lightUUIDs == null || lightUUIDs.size() < 1) {
+            throw new RuntimeException("批量操作的灯具UUID数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(1);
+        for (String uuid : lightUUIDs) {
+            Lighting lighting = lightServer.getLightingByUUID(uuid);
             realtime_ids.add(lighting.getRealtimeUid());
         }
 
@@ -110,8 +124,29 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
+    public void configTerminalSwitchPolicyBatch(List<SwitchTask> switchTasks, List<String> terminalUUIDs) {
+        List<SceneView.SwitchTask> switchViewList = new ArrayList<>(8);
+        for (SwitchTask switchTask : switchTasks) {
+            SceneView.SwitchTask switchTaskView = new SceneView.SwitchTask();
+            ReflectCopyUtil.beanSameFieldCopy(switchTask, switchTaskView);
+            switchViewList.add(switchTaskView);
+        }
+
+        for (String terminalUUID : terminalUUIDs) {
+            command.configTerminalSwitchPolicy(switchViewList, lightServer.getLightingByUUID(terminalUUID).getRealtimeUid());
+        }
+    }
+
+    @Override
     public void configTerminalAutoModel(int model) {
         command.configTerminalAutoMode(model);
+    }
+
+    @Override
+    public void batchConfigTerminalAutoModel(int model, List<String> uuidList) {
+        for (String uuid : uuidList) {
+            command.batchConfigTerminalAutoMode(model, lightServer.getLightingByUUID(uuid).getRealtimeUid());
+        }
     }
 
     @Override

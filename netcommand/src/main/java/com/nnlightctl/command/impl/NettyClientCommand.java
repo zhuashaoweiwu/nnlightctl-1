@@ -105,6 +105,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID) {
+        context.configTerminalSwitchPolicyBatch(switchTasks, terminalRealtimeUUID);
+    }
+
+    @Override
     public void commandReadTerminalInfo() {
         context.commandReadTerminalInfo();
     }
@@ -112,6 +117,11 @@ public class NettyClientCommand implements Command {
     @Override
     public void configTerminalAutoMode(int mode) {
         context.configTerminalAutoModel(mode);
+    }
+
+    @Override
+    public void batchConfigTerminalAutoMode(int model, String realtimeUUID) {
+        context.configTerminalAutoModel(model, realtimeUUID);
     }
 
     @Override
@@ -127,6 +137,8 @@ public class NettyClientCommand implements Command {
             //只处理E0指令
             if (in.getControl() == (byte)0xe0) {
                 produce.produce(in);
+                //返回80回复
+                context.commandReplyTerminal(in.getControl(), true, in.getRealtimeUUID());
             }
         }
     }

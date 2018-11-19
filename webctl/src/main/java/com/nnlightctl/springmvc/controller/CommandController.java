@@ -123,7 +123,12 @@ public class CommandController extends BaseController {
         switchTaskList.add(switchTask1);
         switchTaskList.add(switchTask2);
 
-        commandServer.configTerminalSwitchPolicy(switchTaskList);
+        String uuid = request.getParameter("uuid");
+
+        List<String> uuidList = new ArrayList<>(1);
+        uuidList.add(uuid);
+
+        commandServer.configTerminalSwitchPolicyBatch(switchTaskList, uuidList);
     }
 
     @RequestMapping("commandReadTerminalInfo")
@@ -140,11 +145,27 @@ public class CommandController extends BaseController {
         commandServer.configTerminalAutoModel(request.getAutoModel());
     }
 
+    @RequestMapping("batchCommandConfigTerminalAutoModel")
+    public void batchCommandConfigTerminalAutoModel(CommandRequest request) {
+        logger.info("[POST] /api/command/batchCommandConfigTerminalAutoModel");
+
+        commandServer.batchConfigTerminalAutoModel(request.getAutoModel(), request.getLightUUIDs());
+    }
+
     @RequestMapping("sendLightAdjustCommandBatch")
     public String batchLightAdjustCommand(CommandRequest request) {
         logger.info("[POST] /api/command/sendLightAdjustCommandBatch");
 
         commandServer.sendLightAdjustCommandBatch(request.getLightIds(), request.getLightPercent());
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("batchUUIDLightAdjustCommand")
+    public String batchUUIDLightAdjustCommand(CommandRequest request) {
+        logger.info("[POST] /api/command/batchUUIDLightAdjustCommand");
+
+        commandServer.sendLightAdjustCommandBatchUUID(request.getLightUUIDs(), request.getLightPercent());
 
         return toJson(JsonResult.getSUCCESS());
     }
@@ -189,7 +210,6 @@ public class CommandController extends BaseController {
     public String  batchCommandReadServiceFixedInfo(CommandRequest request) {
         logger.info("[POST] /api/command/batchCommandReadServiceFixedInfo");
         commandServer.commandReadServiceFixedInfo(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -199,7 +219,6 @@ public class CommandController extends BaseController {
     public String  batchConfigerviceOpenClose(CommandRequest request) {
         logger.info("[POST] /api/command/batchConfigerviceOpenClose");
         commandServer.configServiceOpenClose(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -209,7 +228,6 @@ public class CommandController extends BaseController {
     public String batchConfigRestart(CommandRequest request){
         logger.info("[POST] /api/command/batchConfigRestart");
         commandServer.batchConfigRestart(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -219,7 +237,6 @@ public class CommandController extends BaseController {
     public String batchCommandReadTimeParameter(CommandRequest request){
         logger.info("[POST] /api/command/batchCommandReadTimeParameter");
         commandServer.batchCommandReadTimeParameter(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -229,7 +246,6 @@ public class CommandController extends BaseController {
     public String batchCommandReadSending(CommandRequest request){
         logger.info("[POST] /api/command/batchCommandReadSending");
         commandServer.batchCommandReadSending(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -239,7 +255,6 @@ public class CommandController extends BaseController {
     public String batchConfigSetTime(CommandRequest request){
         logger.info("[POST] /api/command/batchConfigSetTime");
         commandServer.batchConfigSetTime(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -249,7 +264,6 @@ public class CommandController extends BaseController {
     public String batchConfigOpenCloseStrategy(CommandRequest request){
         logger.info("[POST] /api/command/batchConfigOpenCloseStrategy");
         commandServer.batchConfigOpenCloseStrategy(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
     /*
@@ -259,7 +273,6 @@ public class CommandController extends BaseController {
     public String batchConfigWorkModel(CommandRequest request){
         logger.info("[POST] /api/command/batchConfigWorkModel");
         commandServer.batchConfigWorkModel(request.getLightIds());
-        //todo
         return toJson(JsonResult.getSUCCESS());
     }
 }

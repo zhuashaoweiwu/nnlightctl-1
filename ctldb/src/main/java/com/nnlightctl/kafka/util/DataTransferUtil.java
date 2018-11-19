@@ -48,12 +48,12 @@ public class DataTransferUtil {
             k += 2;
 
             //输入有功功率
-            int unsignedActivePowerIn = ByteConvert.bytesToUshort(data, k);
+            short unsignedActivePowerIn = ByteConvert.bytesToShort(data, k);
             lightingVolEleRecord.setInActivePower(String.valueOf(unsignedActivePowerIn));
             k += 2;
 
             //输入无功功率
-            int unsignedReactivePowerIn = ByteConvert.bytesToUshort(data, k);
+            short unsignedReactivePowerIn = ByteConvert.bytesToShort(data, k);
             lightingVolEleRecord.setInReactivePower(String.valueOf(unsignedReactivePowerIn));
             k += 2;
 

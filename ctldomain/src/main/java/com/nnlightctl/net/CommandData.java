@@ -192,6 +192,15 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getCheckTimeCommand(byte[] timeBytes) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xf1);
+        commandData.setDataLength((byte)6);
+        commandData.setData(timeBytes);
+        commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+
     public static CommandData getACKCommandData(byte control, Boolean success) {
         CommandData commandData = new CommandData();
 
@@ -247,6 +256,26 @@ public class CommandData implements Serializable {
         System.arraycopy(this.data, 0, uuidBytes, 0, 36);
         String uuid = new String(uuidBytes, Charset.forName("UTF-8"));
         return uuid;
+    }
+
+    /**
+     * 获取CommandData的RealtimeUUID
+     * @return
+     */
+    public String getRealtimeUUID() {
+        byte[] bytes = new byte[4];
+        System.arraycopy(this.getAddr(), 0, bytes, 0, 4);
+        return BytesHexStrTranslate.bytesToHexFun(bytes);
+    }
+
+    /**
+     * 获取CommandData的RealtimeUUID，从数据域中
+     * @return
+     */
+    public String getRealtimeUUIDFromData() {
+        byte[] bytes = new byte[4];
+        System.arraycopy(this.getData(), 0, bytes, 0, 4);
+        return BytesHexStrTranslate.bytesToHexFun(bytes);
     }
 
     /**
@@ -421,6 +450,61 @@ public class CommandData implements Serializable {
     }
 
     /**
+     * 命令层C7设置终端开关灯策略,特定RealtimeUUID
+     * @param switchTaskList
+     * @param realtimeUUID
+     * @return
+     */
+    public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList, String realtimeUUID) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc7);
+
+        int dataLength = 14 * switchTaskList.size() + 4;
+        if (dataLength > 255) {
+            throw new RuntimeException("设置开关任务策略大于15条错误");
+        }
+
+        commandData.setDataLength((byte)dataLength);
+
+        byte[] data = new byte[dataLength];
+        int k = 0;
+
+        //realtimeUUID
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
+        System.arraycopy(realtimeUUIDBytes, 0, data, k, 4);
+        k += 4;
+
+        for (SceneView.SwitchTask switchTask : switchTaskList) {
+            //任务开始
+            data[k++] = switchTask.getPeriod();
+            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd-HH-mm");
+            String[] startDateStrArray = dateFormat.format(switchTask.getStartTime()).split("-");
+            data[k++] = Byte.parseByte(startDateStrArray[0]);
+            data[k++] = Byte.parseByte(startDateStrArray[1]);
+            data[k++] = Byte.parseByte(startDateStrArray[2]);
+            data[k++] = Byte.parseByte(startDateStrArray[3]);
+            data[k++] = Byte.parseByte(startDateStrArray[4]);
+            data[k++] = switchTask.getLightPercent();
+
+            //任务结束
+            data[k++] = switchTask.getPeriod();
+            String[] endDateStrArray = dateFormat.format(switchTask.getEndTime()).split("-");
+            data[k++] = Byte.parseByte(endDateStrArray[0]);
+            data[k++] = Byte.parseByte(endDateStrArray[1]);
+            data[k++] = Byte.parseByte(endDateStrArray[2]);
+            data[k++] = Byte.parseByte(endDateStrArray[3]);
+            data[k++] = Byte.parseByte(endDateStrArray[4]);
+            data[k++] = (byte)0;
+        }
+
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
      * 命令层C8命令获取终端信息
      * @return
      */
@@ -449,6 +533,31 @@ public class CommandData implements Serializable {
     }
 
     /**
+     * 命令层C9设置终端的工作模式（自动-0或者手动-1）,特定realtimeUUID
+     * @param model
+     * @param realtimeUUID
+     * @return
+     */
+    public static CommandData getC9CommandData(int model, String realtimeUUID) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc9);
+        commandData.setDataLength((byte)5);
+
+        byte[] data = new byte[5];
+
+        //realtimeUUID
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
+        System.arraycopy(realtimeUUIDBytes, 0, data, 0, 4);
+        data[4] = (byte)model;
+
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    /**
      * 命令层B80应答指令
      * @return
      */
@@ -465,6 +574,25 @@ public class CommandData implements Serializable {
 
         return commandData;
     }
+
+    public static CommandData getB80ReplyCommandDataRealtimeUUID(byte control, Boolean success, String realtimeUUID) {
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
+
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xb8);
+        commandData.setDataLength((byte)6);
+        byte[] data = new byte[6];
+        data[0] = control;
+        data[1] = success ? (byte)0x00 : (byte)0x01;
+        System.arraycopy(realtimeUUIDBytes, 0, data, 2, 4);
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+
     /*
     *命令层设置0xA0应答指令
     *@return
