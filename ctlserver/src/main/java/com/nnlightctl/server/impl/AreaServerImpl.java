@@ -12,6 +12,7 @@ import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.vo.RegionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +53,9 @@ public class AreaServerImpl implements AreaServer {
     public Tuple.TwoTuple<List<Region>, Integer> listArea(AreaConditionRequest request) {
         Tuple.TwoTuple<List<Region>, Integer> tuple = new Tuple.TwoTuple<>();
         RegionExample regionExample = new RegionExample();
+        if(!StringUtils.isEmpty(request.getAreaName())){
+            regionExample.createCriteria().andAreaNameLike("%"+request.getAreaName()+"%");
+        }
         int total = this.regionMapper.countByExample(regionExample);
 
         regionExample.setOrderByClause("id DESC");

@@ -21,4 +21,13 @@ public class AreaConditionRequest extends BaseRequest {
 
     private Long id;
     private List<Long> areaIdList;
+    private String areaName;
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
 }
