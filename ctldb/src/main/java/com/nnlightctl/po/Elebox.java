@@ -13,6 +13,8 @@ public class Elebox implements Serializable {
 
     private String uid;
 
+    private String networkAddr;
+
     private String realtimeUid;
 
     private String codeNumber;
@@ -75,6 +77,14 @@ public class Elebox implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getNetworkAddr() {
+        return networkAddr;
+    }
+
+    public void setNetworkAddr(String networkAddr) {
+        this.networkAddr = networkAddr == null ? null : networkAddr.trim();
     }
 
     public String getRealtimeUid() {
@@ -213,6 +223,7 @@ public class Elebox implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getNetworkAddr() == null ? other.getNetworkAddr() == null : this.getNetworkAddr().equals(other.getNetworkAddr()))
             && (this.getRealtimeUid() == null ? other.getRealtimeUid() == null : this.getRealtimeUid().equals(other.getRealtimeUid()))
             && (this.getCodeNumber() == null ? other.getCodeNumber() == null : this.getCodeNumber().equals(other.getCodeNumber()))
             && (this.getManufacture() == null ? other.getManufacture() == null : this.getManufacture().equals(other.getManufacture()))
@@ -238,6 +249,7 @@ public class Elebox implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getNetworkAddr() == null) ? 0 : getNetworkAddr().hashCode());
         result = prime * result + ((getRealtimeUid() == null) ? 0 : getRealtimeUid().hashCode());
         result = prime * result + ((getCodeNumber() == null) ? 0 : getCodeNumber().hashCode());
         result = prime * result + ((getManufacture() == null) ? 0 : getManufacture().hashCode());
@@ -266,6 +278,7 @@ public class Elebox implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", networkAddr=").append(networkAddr);
         sb.append(", realtimeUid=").append(realtimeUid);
         sb.append(", codeNumber=").append(codeNumber);
         sb.append(", manufacture=").append(manufacture);

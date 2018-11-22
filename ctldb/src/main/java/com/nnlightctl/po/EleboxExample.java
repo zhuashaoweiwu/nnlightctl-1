@@ -356,6 +356,76 @@ public class EleboxExample {
             return (Criteria) this;
         }
 
+        public Criteria andNetworkAddrIsNull() {
+            addCriterion("network_addr is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrIsNotNull() {
+            addCriterion("network_addr is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrEqualTo(String value) {
+            addCriterion("network_addr =", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrNotEqualTo(String value) {
+            addCriterion("network_addr <>", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrGreaterThan(String value) {
+            addCriterion("network_addr >", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrGreaterThanOrEqualTo(String value) {
+            addCriterion("network_addr >=", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrLessThan(String value) {
+            addCriterion("network_addr <", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrLessThanOrEqualTo(String value) {
+            addCriterion("network_addr <=", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrLike(String value) {
+            addCriterion("network_addr like", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrNotLike(String value) {
+            addCriterion("network_addr not like", value, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrIn(List<String> values) {
+            addCriterion("network_addr in", values, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrNotIn(List<String> values) {
+            addCriterion("network_addr not in", values, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrBetween(String value1, String value2) {
+            addCriterion("network_addr between", value1, value2, "networkAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andNetworkAddrNotBetween(String value1, String value2) {
+            addCriterion("network_addr not between", value1, value2, "networkAddr");
+            return (Criteria) this;
+        }
+
         public Criteria andRealtimeUidIsNull() {
             addCriterion("realtime_uid is null");
             return (Criteria) this;
