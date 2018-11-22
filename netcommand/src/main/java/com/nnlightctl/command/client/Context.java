@@ -1,13 +1,18 @@
 package com.nnlightctl.command.client;
 
 import com.nnlightctl.command.Command;
+import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.vo.SceneView;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Context {
 
@@ -48,6 +53,12 @@ public class Context {
         if (command != null) {
             command.receiveMsg(in);
             command.produce(in);
+        }
+
+        if (in.getControl() == (byte)0xd0) {
+            FutureResult futureResult = uuidMapFutureResult.get(in.getUUID());
+            futureResult.setCommandData(in);
+            futureResult.run();
         }
     }
 
@@ -97,12 +108,35 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC9CommandData(model, realtimeUUID));
     }
 
+    public void batchConfigTerminalPowerType(int powerType, List<String> realtimeUUIDs) {
+        for (String realtimeUUID : realtimeUUIDs) {
+            channelHandlerContext.writeAndFlush(CommandData.getF2CommandData(powerType, realtimeUUID));
+        }
+    }
+
     public void commandReplyTerminal(byte control, Boolean success) {
         channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandData(control, success));
     }
 
     public void commandReplyTerminal(byte control, Boolean success, String realtimeUUID) {
         channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandDataRealtimeUUID(control, success, realtimeUUID));
+    }
+
+    public D0Response getModelState(String gatewayRealtimeUUID, String modelUUID) {
+        channelHandlerContext.writeAndFlush(CommandData.getA0CommandData(gatewayRealtimeUUID, modelUUID));
+        FutureResult futureResult = new FutureResult();
+        uuidMapFutureResult.put(modelUUID, futureResult);
+        futureResult.await(6000);
+
+        CommandData commandData = futureResult.getCommandData();
+        D0Response d0Response = DataTransferUtil.transToD0Response(commandData);
+        uuidMapFutureResult.remove(modelUUID);
+
+        return d0Response;
+    }
+
+    public void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
+        channelHandlerContext.writeAndFlush(CommandData.getA1CommandData(gatewayRealtimeUUID, modelUUID, modelLoop, modelLoopState));
     }
 
     public ChannelHandlerContext getChannelHandlerContext() {
@@ -143,10 +177,8 @@ public class Context {
             channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa4) );
         }
     }
-    public void batchConfigSetTime(List<String> realtime_ids){
-        for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa5) );
-        }
+    public void batchConfigSetTime(){
+        channelHandlerContext.writeAndFlush(CommandData.getA5CommandData());
     }
     public void batchConfigOpenCloseStrategy(List<String> realtime_ids){
         for (String realtime_id : realtime_ids) {
@@ -174,4 +206,42 @@ public class Context {
     private Command command;
     private ChannelHandlerContext channelHandlerContext;
     private CountDownLatch countDownLatch;
+    private Map<String, FutureResult> uuidMapFutureResult = new ConcurrentHashMap<>(8);
+
+    private static class FutureResult {
+        private CountDownLatch futureResultCountDown;
+        private CommandData commandData;
+
+        public FutureResult() {
+            futureResultCountDown = new CountDownLatch(1);
+        }
+
+        public void await() {
+            try {
+                futureResultCountDown.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void await(int millisecond) {
+            try {
+                futureResultCountDown.await(millisecond, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void run() {
+            futureResultCountDown.countDown();
+        }
+
+        public void setCommandData(CommandData commandData) {
+            this.commandData = commandData;
+        }
+
+        public CommandData getCommandData() {
+            return commandData;
+        }
+    }
 }

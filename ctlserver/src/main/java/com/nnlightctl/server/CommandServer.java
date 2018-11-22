@@ -1,5 +1,6 @@
 package com.nnlightctl.server;
 
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.SwitchTask;
 
 import java.util.List;
@@ -19,11 +20,14 @@ public interface CommandServer {
     void configTerminalAutoModel(int model);
     void batchConfigTerminalAutoModel(int model, List<String> uuidList);
     void commandReadServiceFixedInfo(List<Long> lightIds);
+    D0Response getModelState(String modelUUID);
+    void configModelState(String modelUUID, short modelLoop, short modelLoopState);
     void configServiceOpenClose(List<Long> lightIds);
     void batchConfigRestart(List<Long> lightIds);
     void batchCommandReadTimeParameter(List<Long> lightIds);
     void batchCommandReadSending(List<Long> lightIds);
-    void batchConfigSetTime(List<Long> lightIds);
+    void batchConfigSetTime();
     void batchConfigOpenCloseStrategy(List<Long> lightIds);
     void batchConfigWorkModel(List<Long> lightIds);
+    void batchConfigTerminalPowerType(List<String> terminalUUIDs, int powerType);
 }

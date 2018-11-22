@@ -1,9 +1,11 @@
 package com.nnlightctl.server.impl;
 
 import com.nnlight.common.ReflectCopyUtil;
+import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.EleboxModelMapper;
 import com.nnlightctl.po.EleboxModel;
+import com.nnlightctl.po.EleboxModelExample;
 import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.po.EleboxModelLoopExample;
 import com.nnlightctl.request.EleboxModelConditionRequest;
@@ -25,6 +27,9 @@ public class EleboxModelServerImpl implements EleboxModelServer {
 
     @Autowired
     private EleboxModelLoopMapper eleboxModelLoopMapper;
+
+    @Autowired
+    private EleboxMapper eleboxMapper;
 
     @Override
     public int addEleboxModel(EleboxModelRequest request) {
@@ -78,5 +83,14 @@ public class EleboxModelServerImpl implements EleboxModelServer {
             ret = eleboxModelMapper.deleteByPrimaryKey(id);
         }
         return ret;
+    }
+
+    @Override
+    public String getEleboxRealtimeUUIDByModelUUID(String modelUUID) {
+        EleboxModelExample eleboxModelExample = new EleboxModelExample();
+        eleboxModelExample.createCriteria().andUidEqualTo(modelUUID);
+        EleboxModel eleboxModel = eleboxModelMapper.selectByExample(eleboxModelExample).get(0);
+
+        return eleboxMapper.selectByPrimaryKey(eleboxModel.getNnlightctlEleboxId()).getRealtimeUid();
     }
 }

@@ -1,5 +1,6 @@
 package com.nnlightctl.net;
 
+import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
@@ -215,6 +216,74 @@ public class CommandData implements Serializable {
         }
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    public static CommandData getChangePowerTypeCommandData(byte powerType) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xf2);
+        commandData.setDataLength((byte)1);
+
+        byte[] data = new byte[1];
+        data[0] = powerType;
+
+        commandData.setData(data);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
+    public static CommandData commandGetModelStateByGateway(String modelUUID) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xd0);
+        commandData.setDataLength((byte)36);
+
+        byte[] data = modelUUID.getBytes();
+        commandData.setData(data);
+
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
+    public static CommandData commandConfigModelStateByGateway(String modelUUID, short modelLoop, short modelLoopState) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xd1);
+        commandData.setDataLength((byte)40);
+
+        byte[] data = new byte[40];
+
+        int k = 0;
+
+        byte[] modelUUIDBytes = modelUUID.getBytes();
+        System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
+        k += modelUUIDBytes.length;
+
+        byte[] modelLoopBytes = ByteConvert.shortToBytes(modelLoop);
+        System.arraycopy(modelLoopBytes, 0, data, k, modelLoopBytes.length);
+        k += 2;
+
+        byte[] modelLoopStateBytes = ByteConvert.shortToBytes(modelLoopState);
+        System.arraycopy(modelLoopStateBytes, 0, data, k, modelLoopStateBytes.length);
+        k += 2;
+
+        commandData.setData(data);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
+    public static CommandData getConfigSetTimeCommand(byte[] time) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xd5);
+
+        commandData.setDataLength((byte)6);
+        commandData.setData(time);
+        commandData.resetCheck();
 
         return commandData;
     }
@@ -557,6 +626,23 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getF2CommandData(int powerType, String realtimeUUID) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xb2);
+        commandData.setDataLength((byte)5);
+
+        byte[] data = new byte[5];
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
+        System.arraycopy(realtimeUUIDBytes, 0, data, 0, 4);
+        data[4] = (byte)powerType;
+
+        commandData.setData(data);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
     /**
      * 命令层B80应答指令
      * @return
@@ -592,6 +678,30 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getA0CommandData(String gatewayRealtimeUUID, String modelUUID) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xa0);
+        commandData.setDataLength((byte)40);
+
+        byte[] data = new byte[40];
+
+        int k = 0;
+
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(gatewayRealtimeUUID);
+        System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
+
+        k += realtimeUUIDBytes.length;
+
+        byte[] modelUUIDBytes = modelUUID.getBytes();
+        System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
+
+        commandData.setData(data);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
 
     /*
     *命令层设置0xA0应答指令
@@ -603,6 +713,7 @@ public class CommandData implements Serializable {
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
     /*
      *命令层设置0xA1应答指令
      *@return
@@ -613,6 +724,47 @@ public class CommandData implements Serializable {
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
+    /**
+     * 命令层-A1指令，对应D1指令
+     * @param gatewayRealtimeUUID
+     * @param modelUUID
+     * @param modelLoop
+     * @param modelLoopState
+     * @return
+     */
+    public static CommandData getA1CommandData(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xa1);
+        commandData.setDataLength((byte)44);
+
+        byte[] data = new byte[44];
+
+        int k = 0;
+
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(gatewayRealtimeUUID);
+        System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
+        k += realtimeUUIDBytes.length;
+
+        byte[] modelUUIDBytes = modelUUID.getBytes();
+        System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
+        k += modelUUIDBytes.length;
+
+        byte[] modelLoopBytes = ByteConvert.shortToBytes(modelLoop);
+        System.arraycopy(modelLoopBytes, 0, data, k, modelLoopBytes.length);
+        k += modelLoopBytes.length;
+
+        byte[] modelLoopStateBytes = ByteConvert.shortToBytes(modelLoopState);
+        System.arraycopy(modelLoopStateBytes, 0, data, k, modelLoopStateBytes.length);
+        k += modelLoopStateBytes.length;
+
+        commandData.setData(data);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
     /*
      *命令层设置0xA2应答指令
      *@return
@@ -653,6 +805,20 @@ public class CommandData implements Serializable {
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
+    /**
+     * 命令层广播对时指令A5-对应终端D5指令
+     * @return
+     */
+    public static CommandData getA5CommandData() {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xa5);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
     /*
      *命令层设置0xA6应答指令
      *@return

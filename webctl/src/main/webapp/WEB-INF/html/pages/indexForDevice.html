@@ -18,7 +18,9 @@
     <div class="row">
         <div class="col-sm-1"><label class="form-control">命令：</label></div>
         <div class="col-sm-8"><textarea class="form-control" id="comandText" rows="3"></textarea></div>
-        <div class="col-sm-3"><button type="button" class="btn btn-primary" id="sendCommand">发送命令</button></div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendCommand">发送命令</button>
+        </div>
     </div>
 
     <br/>
@@ -37,6 +39,38 @@
     <hr/>
     <br/>
 
+    <!-- 终端电源模式选择 -->
+    <div class="row">
+        <div class="col-sm-2">
+            <label class="form-control">终端电源模式选择：</label>
+        </div>
+
+        <div class="col-sm-2">
+            <select class="form-control" id="powerTypeSelect">
+                <option value="0">0~10V</option>
+                <option value="1">PWM</option>
+                <option value="2">UART</option>
+                <option value="3">DALI</option>
+            </select>
+        </div>
+
+        <div class="col-sm-1">
+            <label class="form-control">UUID:</label>
+        </div>
+
+        <div class="col-sm-4">
+            <input class="form-control" type="text" size="36" value="" id="powerTypeUUID"/>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="sendCommandTerminalPowerType">发送命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
     <!-- 灯具调节 -->
     <div class="row">
         <div class="col-sm-2">
@@ -48,33 +82,20 @@
         </div>
 
         <div class="col-sm-2">
-            <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide" />
-        </div>
-
-        <div class="col-sm-1">
-            <label for="lightId" class="form-control">单灯UUID值：</label>
-        </div>
-
-        <div class="col-sm-4">
-            <input id="lightUUID" class="form-control" size="36" type="text" value="" >
+            <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide"/>
         </div>
 
         <div class="col-sm-2">
-            <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
+            <label for="lightUUID" class="form-control">单灯UUID值：</label>
         </div>
 
-        <!--<div class="col-sm-2">
-            <div class="form-group">
-                <label for="lightId" class="col-md-3 control-label">单灯id值：</label>
-                <div class="input-group col-md-8">
-                    <input id="lightId" class="form-control" size="16" type="text" value="" >
-                </div>
-            </div>
-        </div>-->
+        <div class="col-sm-4">
+            <input id="lightUUID" class="form-control" size="36" type="text" value="">
+        </div>
 
-       <!-- <div class="col-sm-2">
+        <div class="col-sm-1">
             <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
-        </div>-->
+        </div>
     </div>
 
     <br/>
@@ -117,7 +138,7 @@
 
         <div class="col-sm-1">
             <div class="switch switch-large">
-                <input id="eleboxOnBtn" type="checkbox" checked />
+                <input id="eleboxOnBtn" type="checkbox" checked/>
             </div>
         </div>
     </div>
@@ -143,33 +164,35 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="dtp_input1" class="col-md-3 control-label">开始时间：</label>
-                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-                <input type="hidden" id="dtp_input1" value="" /><br/>
+                <input type="hidden" id="dtp_input1" value=""/><br/>
             </div>
         </div>
 
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="dtp_input2" class="col-md-3 control-label">结束时间：</label>
-                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-                <input type="hidden" id="dtp_input2" value="" /><br/>
+                <input type="hidden" id="dtp_input2" value=""/><br/>
             </div>
         </div>
 
         <div class="col-sm-1">
-            <input id="percent1" class="form-control" type="text" />
+            <input id="percent1" class="form-control" type="text"/>
         </div>
     </div>
 
-    <hr />
+    <hr/>
 
     <div class="row">
         <div class="col-sm-1">
@@ -187,40 +210,42 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="dtp_input3" class="col-md-3 control-label">开始时间：</label>
-                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input3">
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input3">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-                <input type="hidden" id="dtp_input3" value="" /><br/>
+                <input type="hidden" id="dtp_input3" value=""/><br/>
             </div>
         </div>
 
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="dtp_input4" class="col-md-3 control-label">结束时间：</label>
-                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input4">
+                <div class="input-group date form_datetime col-md-8" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input4">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-                <input type="hidden" id="dtp_input4" value="" /><br/>
+                <input type="hidden" id="dtp_input4" value=""/><br/>
             </div>
         </div>
 
         <div class="col-sm-1">
-            <input id="percent2" class="form-control" type="text" />
+            <input id="percent2" class="form-control" type="text"/>
         </div>
     </div>
 
-    <hr />
+    <hr/>
 
     <div class="row">
         <div class="col-sm-10">
             <div class="form-group">
                 <label for="switchPolicyUUID" class="col-md-3 control-label">UUID：</label>
                 <div class="input-group col-md-8">
-                    <input id="switchPolicyUUID" class="form-control" size="36" type="text" value="" >
+                    <input id="switchPolicyUUID" class="form-control" size="36" type="text" value="">
                 </div>
             </div>
         </div>
@@ -262,14 +287,14 @@
             <div class="form-group">
                 <label for="terminalModelUUID" class="col-md-3 control-label">UUID：</label>
                 <div class="input-group col-md-8">
-                    <input id="terminalModelUUID" class="form-control" size="36" type="text" value="" >
+                    <input id="terminalModelUUID" class="form-control" size="36" type="text" value="">
                 </div>
             </div>
         </div>
 
         <div class="col-sm-1">
             <div class="switch switch-large">
-                <input id="terminalAutoModel" type="checkbox" checked />
+                <input id="terminalAutoModel" type="checkbox" checked/>
             </div>
         </div>
     </div>
@@ -292,45 +317,55 @@
     <br/>
     <hr/>
     <br/>
+
     <div class="row">
-    <div class="col-sm-1">
-        <label for="lightId" class="col-md-3 control-label">指令D0：</label>
-    </div>
+        <div class="col-sm-2">
+            <label for="lightIdD0" class="form-control">指令D0(模块UUID)：</label>
+        </div>
 
-    <div class="col-sm-1">
-        <input id="lightIdD0" class="form-control" size="16" type="text" value="" >
-    </div>
+        <div class="col-sm-4">
+            <input id="lightIdD0" class="form-control" size="36" type="text" value="">
+        </div>
 
-    <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令A0</button>
-    </div>
-    </div>
-    <!--<div class="col-sm-2">
-        <div class="form-group">
-            <label for="lightId" class="col-md-3 control-label">指令D0：</label>
-            <div class="input-group col-md-8">
-                <input id="lightIdD0" class="form-control" size="16" type="text" value="" >
-            </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令D0</button>
         </div>
     </div>
-    <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令A0</button>
-    </div>-->
+
     <br/>
     <hr/>
     <br/>
 
-    <div class="col-sm-2">
-        <div class="form-group">
-            <label for="lightId" class="col-md-3 control-label">指令D1：</label>
-            <div class="input-group col-md-8">
-                <input id="lightIdD1" class="form-control" size="16" type="text" value="" >
-            </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="lightIdD1" class="form-control">指令D1(模块UUID)：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <input id="lightIdD1" class="form-control" size="36" type="text" value="">
+        </div>
+
+        <div class="col-sm-2">
+            <label for="lightIdD1Loop" class="form-control">要操作的继电器位(2字节)：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="lightIdD1Loop" class="form-control" size="6" type="text" value="">
+        </div>
+
+        <div class="col-sm-2">
+            <label for="lightIdD1LoopState" class="form-control">要操作的继电器位状态(2字节)：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="lightIdD1LoopState" class="form-control" size="6" type="text" value="">
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchCommandConfigModelState">发送指令D1</button>
         </div>
     </div>
-    <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" id="batchConfigerviceOpenClose">发送指令A1</button>
-    </div>
+
     <br/>
     <hr/>
     <br/>
@@ -339,7 +374,7 @@
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D2：</label>
             <div class="input-group col-md-8">
-                <input id="lightIdD2" class="form-control" size="16" type="text" value="" >
+                <input id="lightIdD2" class="form-control" size="16" type="text" value="">
             </div>
         </div>
     </div>
@@ -354,7 +389,7 @@
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D3：</label>
             <div class="input-group col-md-8">
-                <input id="lightIdD3" class="form-control" size="16" type="text" value="" >
+                <input id="lightIdD3" class="form-control" size="16" type="text" value="">
             </div>
         </div>
     </div>
@@ -369,7 +404,7 @@
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D4：</label>
             <div class="input-group col-md-8">
-                <input id="lightIdD4" class="form-control" size="16" type="text" value="" >
+                <input id="lightIdD4" class="form-control" size="16" type="text" value="">
             </div>
         </div>
     </div>
@@ -380,16 +415,14 @@
     <hr/>
     <br/>
 
-    <div class="col-sm-2">
-        <div class="form-group">
-            <label for="lightId" class="col-md-3 control-label">指令D5：</label>
-            <div class="input-group col-md-8">
-                <input id="lightIdD5" class="form-control" size="16" type="text" value="" >
-            </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="batchConfigSetTime" class="form-control">服务器广播定时指令D5：</label>
         </div>
-    </div>
-    <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" id="batchConfigSetTime">发送指令A5</button>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchConfigSetTime">发送指令D5</button>
+        </div>
     </div>
     <br/>
     <hr/>
@@ -399,7 +432,7 @@
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D6：</label>
             <div class="input-group col-md-8">
-                <input id="lightIdD6" class="form-control" size="16" type="text" value="" >
+                <input id="lightIdD6" class="form-control" size="16" type="text" value="">
             </div>
         </div>
     </div>
@@ -414,7 +447,7 @@
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D7：</label>
             <div class="input-group col-md-8">
-                <input id="lightIdD7" class="form-control" size="16" type="text" value="" >
+                <input id="lightIdD7" class="form-control" size="16" type="text" value="">
             </div>
         </div>
     </div>
@@ -431,72 +464,92 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/nnlightctl/html/js/jquery/jquery-3.3.1.min.js"></script>
-<script src="/nnlightctl/html/js/bootstrap/popper.js" ></script>
-<script src="/nnlightctl/html/js/bootstrap/tether.min.js" ></script>
+<script src="/nnlightctl/html/js/bootstrap/popper.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/tether.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-switch.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
 <script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
     $("#sendCommand").click(function () {
-        $.post("/nnlightctl/api/command/sendcommand", {"msg" : $("#comandText").val().trim()}, function (result) {
+        $.post("/nnlightctl/api/command/sendcommand", {"msg": $("#comandText").val().trim()}, function (result) {
             // $("#resultText").val(result);
         }, "text");
     });
 
-    $("#sendCommandLightAdjust").click(function() {
+    $("#sendCommandLightAdjust").click(function () {
         $.post("/nnlightctl/api/command/batchUUIDLightAdjustCommand",
-            {"lightPercent" : $("#lightPercent").val().trim(), "lightUUIDs[0]" : $("#lightUUID").val().trim()}, function (result) {
-        });
+            {
+                "lightPercent": $("#lightPercent").val().trim(),
+                "lightUUIDs[0]": $("#lightUUID").val().trim()
+            }, function (result) {
+            });
     });
 
-    //指令AO
-    $("#batchCommandReadServiceFixedInfo").click(function() {
-        $.post("/nnlightctl/api/command/batchCommandReadServiceFixedInfo",
-            {"lightIds[0]" : $("#lightIdD0").val().trim()}, function (result) {
+    $("#sendCommandTerminalPowerType").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandConfigTerminalPowerType",
+            {"lightUUIDs[0]": $("#powerTypeUUID").val().trim(), "powerType": $("#powerTypeSelect").val()});
+    });
+
+    //指令D0
+    $("#batchCommandReadServiceFixedInfo").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandGetModelInfoUUID",
+            {"modelUUIDs[0]": $("#lightIdD0").val().trim()}, function (result) {
+                if (result) {
+                    if (result.header.code == 1000) {
+                        console.log(result.body.data[0]);
+                    }
+                }
             });
     });
-    //指令A1
-    $("#batchConfigerviceOpenClose").click(function() {
-        $.post("/nnlightctl/api/command/batchConfigerviceOpenClose",
-            {"lightIds[0]" : $("#lightIdD1").val().trim()}, function (result) {
+
+    //指令D1
+    $("#batchCommandConfigModelState").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigModelStateUUID",
+            {
+                "modelUUIDs[0]": $("#lightIdD1").val().trim(),
+                "modelLoop": $("#lightIdD1Loop").val().trim(),
+                "modelLoopState": $("#lightIdD1LoopState").val().trim()
+            }, function (result) {
+
             });
     });
+
     //指令A2
-    $("#batchConfigRestart").click(function() {
+    $("#batchConfigRestart").click(function () {
         $.post("/nnlightctl/api/command/batchConfigRestart",
-            {"lightIds[0]" : $("#lightIdD2").val().trim()}, function (result) {
+            {"lightIds[0]": $("#lightIdD2").val().trim()}, function (result) {
             });
     });
     //指令A3
-    $("#batchCommandReadTimeParameter").click(function() {
+    $("#batchCommandReadTimeParameter").click(function () {
         $.post("/nnlightctl/api/command/batchCommandReadTimeParameter",
-            {"lightIds[0]" : $("#lightIdD3").val().trim()}, function (result) {
+            {"lightIds[0]": $("#lightIdD3").val().trim()}, function (result) {
             });
     });
     //指令A4
-    $("#batchCommandReadSending").click(function() {
+    $("#batchCommandReadSending").click(function () {
         $.post("/nnlightctl/api/command/batchCommandReadSending",
-            {"lightIds[0]" : $("#lightIdD4").val().trim()}, function (result) {
+            {"lightIds[0]": $("#lightIdD4").val().trim()}, function (result) {
             });
     });
 
     //指令A5
-    $("#batchConfigSetTime").click(function() {
+    $("#batchConfigSetTime").click(function () {
         $.post("/nnlightctl/api/command/batchConfigSetTime",
-            {"lightIds[0]" : $("#lightIdD5").val().trim()}, function (result) {
+            {}, function (result) {
             });
     });
     //指令A6
-    $("#batchConfigOpenCloseStrategy").click(function() {
+    $("#batchConfigOpenCloseStrategy").click(function () {
         $.post("/nnlightctl/api/command/batchConfigOpenCloseStrategy",
-            {"lightIds[0]" : $("#lightIdD6").val().trim()}, function (result) {
+            {"lightIds[0]": $("#lightIdD6").val().trim()}, function (result) {
             });
     });
     //指令A7
-    $("#batchConfigWorkModel").click(function() {
+    $("#batchConfigWorkModel").click(function () {
         $.post("/nnlightctl/api/command/batchConfigWorkModel",
-            {"lightIds[0]" : $("#lightIdD7").val().trim()}, function (result) {
+            {"lightIds[0]": $("#lightIdD7").val().trim()}, function (result) {
             });
     });
 
@@ -512,7 +565,7 @@
 
     function doOpenModel() {
         $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
-            {"lightPercent" : 1, "lightIds[0]" : 201}, function (result) {
+            {"lightPercent": 1, "lightIds[0]": 201}, function (result) {
 
             });
     }
@@ -548,7 +601,7 @@
             if (uuid == "222222222222222222222222222222222222") {
                 //3.关闭uuid为36个1对应的终端
                 $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
-                    {"lightPercent" : 0, "lightIds[0]" : 201}, function (result) {
+                    {"lightPercent": 0, "lightIds[0]": 201}, function (result) {
                         if (result) {   //判断关闭成功
                             debugger;
                             //4.20秒之后重新打开uuid为36个1对应的终端
@@ -586,8 +639,8 @@
     //设置定时发送参数
     $("#sendPeriodBtn").click(function () {
         var period = $("#sendPeriod").val().trim();
-        $.post("/nnlightctl/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod" : period}, function () {
-            
+        $.post("/nnlightctl/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod": period}, function () {
+
         });
     });
 
@@ -595,28 +648,35 @@
     $("#eleboxOnBtn").bootstrapSwitch();
     $('#eleboxOnBtn').on('switchChange.bootstrapSwitch', function (event, state) {
         console.log(state);
-        $.post("/nnlightctl/api/command/commandTerminalEleboxOn", {"terminalEleboxOn" : state}, function () {
+        $.post("/nnlightctl/api/command/commandTerminalEleboxOn", {"terminalEleboxOn": state}, function () {
 
         });
     });
 
     //任务开关策略
     $('.form_datetime').datetimepicker({
-        language:  'zh-CN',
+        language: 'zh-CN',
         weekStart: 1,
-        todayBtn:  1,
+        todayBtn: 1,
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
         forceParse: 0,
         showMeridian: 1,
-        minuteStep : 5
+        minuteStep: 5
     });
     $("#sendTerminalSwitchBtn").click(function () {
-        var sendData = {"switch1Type" : $("#switch1TypeSelect").val(), "switch1StartDate" : $("#dtp_input1").val(),
-            "switch1EndDate" : $("#dtp_input2").val(), "switch1Percent" : $("#percent1").val(),
-            "switch2Type" : $("#switch2TypeSelect").val(), "switch2StartDate" : $("#dtp_input3").val(),
-            "switch2EndDate" : $("#dtp_input4").val(), "switch2Percent" : $("#percent2").val(), "uuid" : $("#switchPolicyUUID").val().trim()};
+        var sendData = {
+            "switch1Type": $("#switch1TypeSelect").val(),
+            "switch1StartDate": $("#dtp_input1").val(),
+            "switch1EndDate": $("#dtp_input2").val(),
+            "switch1Percent": $("#percent1").val(),
+            "switch2Type": $("#switch2TypeSelect").val(),
+            "switch2StartDate": $("#dtp_input3").val(),
+            "switch2EndDate": $("#dtp_input4").val(),
+            "switch2Percent": $("#percent2").val(),
+            "uuid": $("#switchPolicyUUID").val().trim()
+        };
         $.post("/nnlightctl/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
 
         });
@@ -637,7 +697,10 @@
         if (state) {
             model = 1;
         }
-        $.post("/nnlightctl/api/command/batchCommandConfigTerminalAutoModel", {"autoModel" : model, "lightUUIDs[0]" : $("#terminalModelUUID").val().trim()}, function () {
+        $.post("/nnlightctl/api/command/batchCommandConfigTerminalAutoModel", {
+            "autoModel": model,
+            "lightUUIDs[0]": $("#terminalModelUUID").val().trim()
+        }, function () {
 
         });
     });

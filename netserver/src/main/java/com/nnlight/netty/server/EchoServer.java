@@ -109,6 +109,20 @@ public class EchoServer {
     }
 
     /**
+     * 发送单个终端更改电源方式命令
+     * @param realtimeUUID
+     * @param powerType
+     */
+    public void sendTerminalPowerType(String realtimeUUID, byte powerType) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
+                entry.getValue().getContext().writeAndFlush(CommandData.getChangePowerTypeCommandData(powerType));
+                break;
+            }
+        }
+    }
+
+    /**
      * 发送全部终端重启/复位指令
      */
     public void allSendCommandReset() {
@@ -330,6 +344,18 @@ public class EchoServer {
             context.writeAndFlush(commandData);
         }
     }
+
+    public void commandGetModelState(String gatewayRealtimeUUID, String modelUUID) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(gatewayRealtimeUUID)) {
+                ChannelHandlerContext context = entry.getValue().getContext();
+                CommandData commandData = CommandData.commandGetModelStateByGateway(modelUUID);
+                context.writeAndFlush(commandData);
+                break;
+            }
+        }
+    }
+
     /**
      * 控制继电器开闭状态0xA1
      */
@@ -340,6 +366,23 @@ public class EchoServer {
             context.writeAndFlush(commandData);
         }
     }
+
+    /**
+     * 设置模块继电器状态
+     * @param gatewayRealtimeUUID
+     * @param modelUUID
+     * @param modelLoop
+     * @param modelLoopState
+     */
+    public void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(gatewayRealtimeUUID)) {
+                entry.getValue().getContext().writeAndFlush(CommandData.commandConfigModelStateByGateway(modelUUID, modelLoop, modelLoopState));
+                break;
+            }
+        }
+    }
+
     /**
      * 重启/复位0xA2
      */
@@ -371,13 +414,12 @@ public class EchoServer {
         }
     }
     /*
-    * 读取/发送信息 0xA5
+    * 广播对时D5
     * */
-    public void batchConfigSetTime(String realtime_id){
+    public void batchConfigSetTime(byte[] time){
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
-            CommandData commandData = CommandData.getA5CommandData(realtime_id);
-            context.writeAndFlush(commandData);
+            context.writeAndFlush(CommandData.getConfigSetTimeCommand(time));
         }
     }
     /*

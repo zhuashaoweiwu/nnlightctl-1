@@ -1,5 +1,6 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.result.JsonResult;
@@ -174,16 +175,12 @@ public class CommandController extends BaseController {
     public String batchResetCommand(CommandRequest request) {
         logger.info("[POST] /api/command/resetCommandBatch");
 
-        //todo
-
         return toJson(JsonResult.getSUCCESS());
     }
 
     @RequestMapping("configTerminalSendMsgPeriodBatch")
     public String batchConfigTerminalSendMsgPeriod(CommandRequest request) {
         logger.info("[POST] /api/command/configTerminalSendMsgPeriodBatch");
-
-        //todo
 
         return toJson(JsonResult.getSUCCESS());
     }
@@ -192,8 +189,6 @@ public class CommandController extends BaseController {
     public String batchCommandTerminalEleboxOn(CommandRequest request) {
         logger.info("[POST] /api/command/commandTerminalEleboxOnBatch");
 
-        //todo
-
         return toJson(JsonResult.getSUCCESS());
     }
 
@@ -201,8 +196,15 @@ public class CommandController extends BaseController {
     public void batchCommandReadTerminalInfo(CommandRequest request) {
         logger.info("[POST] /api/command/commandReadTerminalInfoBatch");
 
-        //todo
     }
+
+    @RequestMapping("batchCommandConfigTerminalPowerType")
+    public void batchCommandConfigTerminalPowerType(CommandRequest request) {
+        logger.info("[POST] /api/command/batchCommandConfigTerminalPowerType");
+
+        commandServer.batchConfigTerminalPowerType(request.getLightUUIDs(), request.getPowerType());
+    }
+
     /*
     *服务器获取固定信息0xD0
     * */
@@ -212,6 +214,26 @@ public class CommandController extends BaseController {
         commandServer.commandReadServiceFixedInfo(request.getLightIds());
         return toJson(JsonResult.getSUCCESS());
     }
+
+    /**
+     * D0 uuid
+     * @param request
+     * @return
+     */
+    @RequestMapping("batchCommandGetModelInfoUUID")
+    public String batchCommandGetModelInfoUUID(CommandRequest request) {
+        logger.info("[POST] /api/command/batchCommandGetModelInfoUUID");
+
+        D0Response d0Response = commandServer.getModelState(request.getModelUUIDs().get(0));
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<D0Response> d0ResponseList = new ArrayList<>(1);
+        d0ResponseList.add(d0Response);
+        jsonResult.setData(d0ResponseList);
+
+        return toJson(jsonResult);
+    }
+
     /*
     * 控制继电器开闭状态 0xD1
     * */
@@ -221,6 +243,21 @@ public class CommandController extends BaseController {
         commandServer.configServiceOpenClose(request.getLightIds());
         return toJson(JsonResult.getSUCCESS());
     }
+
+    /**
+     * D1 uuid
+     * @param request
+     * @return
+     */
+    @RequestMapping("batchConfigModelStateUUID")
+    public String batchConfigModelStateUUID(CommandRequest request) {
+        logger.info("[POST] /api/command/batchConfigModelStateUUID");
+
+        commandServer.configModelState(request.getModelUUIDs().get(0), request.getModelLoop(), request.getModelLoopState());
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
     /*
     *重启/复位 0xD2
     * */
@@ -252,10 +289,9 @@ public class CommandController extends BaseController {
     * 服务器对设备广播对时 0xD5
     * */
     @RequestMapping("batchConfigSetTime")
-    public String batchConfigSetTime(CommandRequest request){
+    public void batchConfigSetTime(){
         logger.info("[POST] /api/command/batchConfigSetTime");
-        commandServer.batchConfigSetTime(request.getLightIds());
-        return toJson(JsonResult.getSUCCESS());
+        commandServer.batchConfigSetTime();
     }
     /*
     *设置亮/灭灯定时策略 0xD6

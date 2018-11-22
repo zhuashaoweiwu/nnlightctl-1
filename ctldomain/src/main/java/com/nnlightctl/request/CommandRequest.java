@@ -68,6 +68,47 @@ public class CommandRequest {
         this.lightUUIDs = lightUUIDs;
     }
 
+    public Integer getPowerType() {
+        return powerType;
+    }
+
+    public void setPowerType(Integer powerType) {
+        this.powerType = powerType;
+    }
+
+    public List<String> getModelUUIDs() {
+        return modelUUIDs;
+    }
+
+    public void setModelUUIDs(List<String> modelUUIDs) {
+        this.modelUUIDs = modelUUIDs;
+    }
+
+    public Short getModelLoopState() {
+        return modelLoopState;
+    }
+
+    public void setModelLoopState(Short modelLoopState) {
+        this.modelLoopState = modelLoopState;
+    }
+
+    public Short getModelLoop() {
+        return modelLoop;
+    }
+
+    public void setModelLoop(Short modelLoop) {
+        this.modelLoop = modelLoop;
+    }
+
+
+
+    private Short modelLoopState;
+
+    private Short modelLoop;
+
+    private List<String> modelUUIDs;
+
+    private Integer powerType;
 
     private List<String> lightUUIDs;
 

@@ -1,5 +1,6 @@
 package com.nnlight.netty.process.impl;
 
+import com.nnlight.common.DateTimeUtil;
 import com.nnlight.netty.process.Process;
 import com.nnlight.netty.server.EchoServer;
 import com.nnlightctl.net.CommandData;
@@ -17,12 +18,9 @@ public class A5Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 服务器对设备广播对时 0xA5[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 服务器对设备广播对时 ");
 
-        byte[] id = new byte[4];
-        System.arraycopy(msg.getData(), 0, id, 0, msg.getDataLength());
 
-        String realtimeId = BytesHexStrTranslate.bytesToHexFun(id);
-        EchoServer.getGlobalApplicationContext().batchConfigSetTime(realtimeId);
+        EchoServer.getGlobalApplicationContext().batchConfigSetTime(DateTimeUtil.nowBytes());
     }
 }

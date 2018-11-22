@@ -3,6 +3,7 @@ package com.nnlight.netty.process.impl;
 import com.nnlight.netty.process.Process;
 import com.nnlight.netty.server.EchoServer;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -18,13 +19,18 @@ public class A1Process implements Process {
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
 
-        logger.info(LocalDate.now() + " " + LocalTime.now() + " 发送控制继电器开闭状态 0xA1指令[" + msg.getData()[0] + "]");
+        logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置模块继电器状态指令D1");
 
-        byte[] id = new byte[4];
+        byte[] modelUUIDBytes = new byte[36];
+        System.arraycopy(msg.getData(), 4, modelUUIDBytes, 0, 36);
 
-        System.arraycopy(msg.getData(), 0, id, 0, msg.getDataLength());
+        byte[] modelLoopBytes = new byte[2];
+        System.arraycopy(msg.getData(), 40, modelLoopBytes, 0, 2);
 
-        String realtimeId = BytesHexStrTranslate.bytesToHexFun(id);
-        EchoServer.getGlobalApplicationContext().batchConfigOpenClose(realtimeId);
+        byte[] modelLoopStateBytes = new byte[2];
+        System.arraycopy(msg.getData(), 42, modelLoopStateBytes, 0, 2);
+
+        EchoServer.getGlobalApplicationContext().configModelState(msg.getRealtimeUUIDFromData(),
+                new String(modelUUIDBytes), ByteConvert.bytesToShort(modelLoopBytes), ByteConvert.bytesToShort(modelLoopStateBytes));
     }
 }

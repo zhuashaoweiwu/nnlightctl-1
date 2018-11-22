@@ -32,6 +32,20 @@ public class DateTimeUtil {
         return dateFormat.format(date);
     }
 
+    public static byte[] nowBytes() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String[] timeSeprater = dateFormat.format(new Date()).split("-");
+        byte[] timeData = new byte[6];
+        timeData[0] = (byte)(Integer.parseInt(timeSeprater[0]) - 2000);
+        timeData[1] = Byte.parseByte(timeSeprater[1]);
+        timeData[2] = Byte.parseByte(timeSeprater[2]);
+        timeData[3] = Byte.parseByte(timeSeprater[3]);
+        timeData[4] = Byte.parseByte(timeSeprater[4]);
+        timeData[5] = Byte.parseByte(timeSeprater[5]);
+
+        return timeData;
+    }
+
     public static void main(String[] args) {
         LocalDateTime localDateTime = LocalDateTime.now().withNano(0).withSecond(0);
         System.out.println(localDateTime);

@@ -7,4 +7,5 @@ public interface EleboxModelServer {
     int addEleboxModel(EleboxModelRequest request);
     int updateEleboxModel(EleboxModelRequest request);
     int deleteEleboxModel(EleboxModelConditionRequest request);
+    String getEleboxRealtimeUUIDByModelUUID(String modelUUID);
 }

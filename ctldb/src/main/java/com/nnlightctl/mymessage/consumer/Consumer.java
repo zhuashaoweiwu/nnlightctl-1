@@ -2,6 +2,7 @@ package com.nnlightctl.mymessage.consumer;
 
 import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
@@ -9,6 +10,8 @@ import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.MsgQuene;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.po.Elebox;
+import com.nnlightctl.po.EleboxExample;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.util.BytesHexStrTranslate;
@@ -25,6 +28,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -48,6 +52,9 @@ public class Consumer {
     private LightSignalLogMapper lightSignalLogMapper;
 
     @Autowired
+    private EleboxMapper eleboxMapper;
+
+    @Autowired
     private MsgQuene msgQuene;
 
     @PostConstruct
@@ -60,27 +67,44 @@ public class Consumer {
                 try {
                     while (true) {
                         CommandData lightE0Command = msgQuene.take();
-                        LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
-                        lightingVolEleRecord.setGmtCreated(new Date());
-                        lightingVolEleRecord.setGmtUpdated(new Date());
-                        //与数据库灯具配对
-                        Lighting lighting = new Lighting();
-                        lighting.setUid(lightingVolEleRecord.getUid());
-                        //realtimeUid转换成16进制字符串形式
-                        byte[] bytes = new byte[4];
-                        System.arraycopy(lightE0Command.getAddr(), 0, bytes, 0, 4);
-                        lighting.setRealtimeUid(BytesHexStrTranslate.bytesToHexFun(bytes));
-                        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                            @Override
-                            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                                //映射终端与数据库灯具
-                                lightMapNetDao.mapLightingNet(lighting);
-                                //写入灯具终端电流电压信息
-                                lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
-                                //写入灯具信号日志
-                                lightSignalLogMapper.insertSelective(DataTransferUtil.transToLightSignalLog(lightingVolEleRecord));
-                            }
-                        });
+
+                        //e0
+                        if (lightE0Command.getControl() == (byte)0xe0) {
+                            LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
+                            lightingVolEleRecord.setGmtCreated(new Date());
+                            lightingVolEleRecord.setGmtUpdated(new Date());
+                            //与数据库灯具配对
+                            Lighting lighting = new Lighting();
+                            lighting.setUid(lightingVolEleRecord.getUid());
+                            //realtimeUid转换成16进制字符串形式
+                            byte[] bytes = new byte[4];
+                            System.arraycopy(lightE0Command.getAddr(), 0, bytes, 0, 4);
+                            lighting.setRealtimeUid(BytesHexStrTranslate.bytesToHexFun(bytes));
+                            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                                @Override
+                                protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                                    //映射终端与数据库灯具
+                                    lightMapNetDao.mapLightingNet(lighting);
+                                    //写入灯具终端电流电压信息
+                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                    //写入灯具信号日志
+                                    lightSignalLogMapper.insertSelective(DataTransferUtil.transToLightSignalLog(lightingVolEleRecord));
+                                }
+                            });
+                        }
+
+                        //e1
+                        if (lightE0Command.getControl() == (byte)0xe1) {
+                            String eleboxUUID = new String(lightE0Command.getData(), Charset.forName("UTF-8"));
+                            String realtimeUUID = lightE0Command.getRealtimeUUID();
+
+                            EleboxExample eleboxExample = new EleboxExample();
+                            eleboxExample.createCriteria().andUidEqualTo(eleboxUUID);
+                            Elebox elebox = new Elebox();
+                            elebox.setRealtimeUid(realtimeUUID);
+                            elebox.setGmtUpdated(new Date());
+                            eleboxMapper.updateByExampleSelective(elebox, eleboxExample);
+                        }
                     }
                 } catch (InterruptedException e) {
                     logger.error(e.getMessage());

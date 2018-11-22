@@ -7,15 +7,18 @@ import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.server.CommandServer;
+import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private LightServer lightServer;
+
+    @Autowired
+    private EleboxModelServer eleboxModelServer;
 
     private final Command command;
 
@@ -162,6 +168,25 @@ public class CommandServerImpl implements CommandServer {
         }
         command.commandReadServiceFixedInfo(realtime_ids);
     }
+
+    @Override
+    public D0Response getModelState(String modelUUID) {
+        if (StringUtils.isEmpty(modelUUID)) {
+            throw new RuntimeException("请求模块信息的模块UUID不可为空");
+        }
+
+        String gatewayRealtimeUUID = eleboxModelServer.getEleboxRealtimeUUIDByModelUUID(modelUUID);
+
+        return command.getModelState(gatewayRealtimeUUID, modelUUID);
+    }
+
+    @Override
+    public void configModelState(String modelUUID, short modelLoop, short modelLoopState) {
+        String gatewayRealtimeUUID = eleboxModelServer.getEleboxRealtimeUUIDByModelUUID(modelUUID);
+
+        command.configModelState(gatewayRealtimeUUID, modelUUID, modelLoop, modelLoopState);
+    }
+
     @Override
     public void configServiceOpenClose(List<Long> lightIds){
         if (lightIds == null || lightIds.size() < 1) {
@@ -215,17 +240,8 @@ public class CommandServerImpl implements CommandServer {
         command.batchCommandReadSending(realtime_ids);
     }
     @Override
-    public void batchConfigSetTime(List<Long> lightIds){
-        if (lightIds == null || lightIds.size() < 1) {
-            throw new RuntimeException("批量操作的灯具数量为0");
-        }
-
-        List<String> realtime_ids = new ArrayList<>(1);
-        for (Long lightId : lightIds) {
-            Lighting lighting = lightServer.getLighting(lightId);
-            realtime_ids.add(lighting.getRealtimeUid());
-        }
-        command.batchConfigSetTime(realtime_ids);
+    public void batchConfigSetTime(){
+        command.batchConfigSetTime();
     }
     @Override
     public void batchConfigOpenCloseStrategy(List<Long> lightIds){
@@ -252,5 +268,19 @@ public class CommandServerImpl implements CommandServer {
             realtime_ids.add(lighting.getRealtimeUid());
         }
         command.batchConfigWorkModel(realtime_ids);
+    }
+
+    @Override
+    public void batchConfigTerminalPowerType(List<String> terminalUUIDs, int powerType) {
+        if (terminalUUIDs == null || terminalUUIDs.size() < 1) {
+            throw new RuntimeException("批量设置终端的电源类型的终端数量为0");
+        }
+
+        List<String> realtime_ids = new ArrayList<>(8);
+        for (String uuid : terminalUUIDs) {
+            realtime_ids.add(lightServer.getLightingByUUID(uuid).getRealtimeUid());
+        }
+
+        command.batchConfigTerminalPowerType(powerType, realtime_ids);
     }
 }

@@ -5,6 +5,7 @@ import com.nnlight.common.ByteConvert;
 import com.nnlight.common.DateTimeUtil;
 import com.nnlight.common.LightTermianlSignalLevelUtil;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightingVolEleRecord;
 
@@ -142,5 +143,30 @@ public class DataTransferUtil {
         lightSignalLog.setSignalLevel((byte) LightTermianlSignalLevelUtil.getSignalLevel(lightingVolEleRecord.getSignalIntensity()));
 
         return lightSignalLog;
+    }
+
+    public static D0Response transToD0Response(CommandData d0CommandData) {
+        D0Response d0Response = new D0Response();
+
+        byte[] data = d0CommandData.getData();
+
+        int k = 0;
+
+        //uuid
+        d0Response.setUuid(d0CommandData.getUUID().getBytes());
+        k += 36;
+
+        //继电器状态
+        System.arraycopy(d0CommandData.getData(), k, d0Response.getModelState(), 0, 2);
+        k += 2;
+
+        //继电器输入电源状态
+        System.arraycopy(d0CommandData.getData(), k, d0Response.getModelPowerState(), 0, 2);
+        k += 2;
+
+        //BCD时间
+        System.arraycopy(d0CommandData.getData(), k, d0Response.getTime(), 0, 3);
+
+        return d0Response;
     }
 }

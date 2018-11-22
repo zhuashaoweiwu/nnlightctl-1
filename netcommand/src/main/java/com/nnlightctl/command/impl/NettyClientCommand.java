@@ -7,6 +7,7 @@ import com.nnlightctl.command.client.EchoClient;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.net.D0Response;
 import com.nnlightctl.vo.SceneView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class NettyClientCommand implements Command {
 
@@ -125,6 +123,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void batchConfigTerminalPowerType(int powerType, List<String> realtimeUUIDs) {
+        context.batchConfigTerminalPowerType(powerType, realtimeUUIDs);
+    }
+
+    @Override
     public void receiveMsg(CommandData in) {
         if (messageEvent != null) {
             messageEvent.receiveMsg(in);
@@ -134,13 +137,35 @@ public class NettyClientCommand implements Command {
     @Override
     public void produce(CommandData in) {
         if (produce != null) {
-            //只处理E0指令
-            if (in.getControl() == (byte)0xe0) {
+            //只处理E0、E1指令
+            if (in.getControl() == (byte)0xe0 || in.getControl() == (byte)0xe1) {
                 produce.produce(in);
                 //返回80回复
                 context.commandReplyTerminal(in.getControl(), true, in.getRealtimeUUID());
             }
         }
+    }
+
+    @Override
+    public D0Response getModelState(String gatewayRealtimeUUID, String modelUUID) {
+        Future<D0Response> future = Executors.newSingleThreadExecutor().submit(() -> {
+            return context.getModelState(gatewayRealtimeUUID, modelUUID);
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        } catch (ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
+    }
+
+    @Override
+    public void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
+        context.configModelState(gatewayRealtimeUUID, modelUUID, modelLoop, modelLoopState);
     }
 
     @Override
@@ -164,8 +189,8 @@ public class NettyClientCommand implements Command {
         context.batchCommandReadSending(realtime_ids);
     }
     @Override
-    public void batchConfigSetTime(List<String> realtime_ids){
-        context.batchConfigSetTime(realtime_ids);
+    public void batchConfigSetTime(){
+        context.batchConfigSetTime();
     }
     @Override
     public void batchConfigOpenCloseStrategy(List<String> realtime_ids){
