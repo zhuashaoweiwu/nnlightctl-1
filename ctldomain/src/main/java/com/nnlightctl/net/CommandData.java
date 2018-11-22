@@ -323,8 +323,19 @@ public class CommandData implements Serializable {
     public String getUUID() {
         byte[] uuidBytes = new byte[36];
         System.arraycopy(this.data, 0, uuidBytes, 0, 36);
-        String uuid = new String(uuidBytes, Charset.forName("UTF-8"));
+        String uuid = new String(uuidBytes);
         return uuid;
+    }
+
+    /**
+     * 从数据域0位置获取网上字符串数据
+     * @return
+     */
+    public String getNetworkAddr() {
+        byte[] networkAddr = new byte[6];
+        System.arraycopy(this.data, 0, networkAddr, 0, 6);
+        String networkAddrStr = BytesHexStrTranslate.bytesToHexFun(networkAddr);
+        return networkAddrStr;
     }
 
     /**

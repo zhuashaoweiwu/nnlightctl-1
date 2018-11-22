@@ -11,7 +11,15 @@ public class E1Process implements Process {
     private Logger logger = LoggerFactory.getLogger(E1Process.class);
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
-        logger.info("收到E1心跳数据包");
+        byte deviceType = msg.getAddr()[5];
+        if (deviceType == (byte)0x03) { //NB透传
+            logger.info("收到E1心跳数据包，来源NB透传，UUID:" + msg.getUUID());
+        }
+
+        if (deviceType == (byte)0x04) { //路由透传
+            logger.info("收到E1心跳数据包，来源路由透传，network:" + msg.getNetworkAddr());
+        }
+
 
         EchoServer.getGlobalApplicationContext().allClientSendCommand(msg);
     }

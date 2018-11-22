@@ -158,10 +158,12 @@ public class DataTransferUtil {
 
         //继电器状态
         System.arraycopy(d0CommandData.getData(), k, d0Response.getModelState(), 0, 2);
+        d0Response.setModelState(d0Response.getModelState());
         k += 2;
 
         //继电器输入电源状态
         System.arraycopy(d0CommandData.getData(), k, d0Response.getModelPowerState(), 0, 2);
+        d0Response.setModelPowerState(d0Response.getModelPowerState());
         k += 2;
 
         //BCD时间
