@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div style="width:100%;height:260px;border:1px solid #dedede;" class="mt-20">
+    <div style="width:100%;height:260px;border:1px solid #dedede; overflow:auto;" class="mt-20">
         <table border="0">
             <tr>
                 <td style="height:260px;width:48%;overflow-y:scroll;border:1px solid #ddd;" valign="top">
@@ -198,13 +198,8 @@
                         layer.msg(data.header.msg, {icon : 2, time : 3000});
                     }
                 }
-
-                //关闭对话框
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.$('.btn-refresh').click();
-                parent.layer.close(index);
-
             });
+            ResetWindow();
         });
 
 
