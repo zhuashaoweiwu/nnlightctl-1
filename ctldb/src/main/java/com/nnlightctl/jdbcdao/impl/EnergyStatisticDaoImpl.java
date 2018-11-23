@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -118,29 +120,38 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticYear(){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) as total  ,SUBSTR(record_datetime ,1,4) as year FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT in_seen_energy as energy  ,SUBSTR(record_datetime ,1,4) as year FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
         Calendar now = Calendar.getInstance();
         String year = now.get(Calendar.YEAR)+"";
         sql.append("and SUBSTR(record_datetime ,1,4) = ? ");
         param.add(year);
-        sql.append(" GROUP BY SUBSTR(record_datetime ,1,4)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
-                commonEnergyStatisticView.setTotal(resultSet.getLong("total"));
+                commonEnergyStatisticView.setEnergy(resultSet.getString("energy"));
                 commonEnergyStatisticView.setYear(resultSet.getString("year"));
                 return commonEnergyStatisticView;
             }
         });
-
-        return commonEnergyStatisticViewList;
+        CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
+        BigDecimal big = new BigDecimal(0);
+        for(CommonEnergyStatisticView en:commonEnergyStatisticViewList){
+            String e = !StringUtils.isEmpty(en.getEnergy())?en.getEnergy():"0";
+            BigDecimal bd=new BigDecimal(e);
+            big=big.add(bd);
+        }
+        commonEnergyStatisticView.setTotalEnergy(big);
+        commonEnergyStatisticView.setYear(year);
+        List<CommonEnergyStatisticView> list = new ArrayList<>();
+        list.add(commonEnergyStatisticView);
+        return list;
     }
 
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticMouth(){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) total ,SUBSTR(record_datetime ,1,7) as mouth   FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT in_seen_energy as energy ,SUBSTR(record_datetime ,1,7) as mouth   FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
         Date date = new Date();
         Calendar now = Calendar.getInstance();
         String year = now.get(Calendar.YEAR)+"";
@@ -153,25 +164,34 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         String  m= year +"-"+ mouth;
         sql.append(" and SUBSTR(record_datetime ,1,7) = ? ");
         param.add(m);
-        sql.append(" GROUP BY SUBSTR(record_datetime ,1,7)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
-                commonEnergyStatisticView.setTotal(resultSet.getLong("total"));
+                commonEnergyStatisticView.setEnergy(resultSet.getString("energy"));
                 commonEnergyStatisticView.setMouth(resultSet.getString("mouth"));
                 return commonEnergyStatisticView;
             }
         });
-
-        return commonEnergyStatisticViewList;
+        CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
+        BigDecimal big = new BigDecimal(0);
+        for(CommonEnergyStatisticView en:commonEnergyStatisticViewList){
+            String e = !StringUtils.isEmpty(en.getEnergy())?en.getEnergy():"0";
+            BigDecimal bd=new BigDecimal(e);
+            big=big.add(bd);
+        }
+        commonEnergyStatisticView.setTotalEnergy(big);
+        commonEnergyStatisticView.setMouth(m);
+        List<CommonEnergyStatisticView> list = new ArrayList<>();
+        list.add(commonEnergyStatisticView);
+        return list;
 
     }
 
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticDate(){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) as total ,SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT in_seen_energy as energy ,SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
         Date date = new Date();
         Calendar now = Calendar.getInstance();
         String year = now.get(Calendar.YEAR)+"";
@@ -193,24 +213,33 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
 
         sql.append("and SUBSTR(record_datetime ,1,10) = ? ");
         param.add(yestoday);
-        sql.append(" GROUP BY SUBSTR(record_datetime ,1,10)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
-                commonEnergyStatisticView.setTotal(resultSet.getLong("total"));
+                commonEnergyStatisticView.setEnergy(resultSet.getString("energy"));
                 commonEnergyStatisticView.setDate(resultSet.getString("date"));
                 return commonEnergyStatisticView;
             }
         });
-
-        return commonEnergyStatisticViewList;
+        CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
+        BigDecimal big = new BigDecimal(0);
+        for(CommonEnergyStatisticView en:commonEnergyStatisticViewList){
+            String e = !StringUtils.isEmpty(en.getEnergy())?en.getEnergy():"0";
+            BigDecimal bd=new BigDecimal(e);
+            big=big.add(bd);
+        }
+        commonEnergyStatisticView.setTotalEnergy(big);
+        commonEnergyStatisticView.setDate(yestoday);
+        List<CommonEnergyStatisticView> list = new ArrayList<>();
+        list.add(commonEnergyStatisticView);
+        return list;
     }
 
     public List<CommonEnergyStatisticView> listEnergyStatisticByDay(int month ){
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        sql.append("SELECT sum(energy) AS total , SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
+        sql.append("SELECT in_seen_energy AS energy , SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
 
         sql.append("and SUBSTR(record_datetime ,1,7) = ? ");
         Calendar now = Calendar.getInstance();
@@ -221,18 +250,55 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
             param.add(year+"-"+month);
         }
 
-        sql.append(" GROUP BY SUBSTR(record_datetime ,1,10)");
         List<CommonEnergyStatisticView> commonEnergyStatisticViewList = jdbcTemplate.query(sql.toString(), param.toArray(), new RowMapper<CommonEnergyStatisticView>() {
             @Override
             public CommonEnergyStatisticView mapRow(ResultSet resultSet, int i) throws SQLException {
                 CommonEnergyStatisticView commonEnergyStatisticView = new CommonEnergyStatisticView();
-                commonEnergyStatisticView.setTotal(resultSet.getLong("total"));
+                commonEnergyStatisticView.setEnergy(resultSet.getString("energy"));
                 commonEnergyStatisticView.setDate(resultSet.getString("date"));
                 return commonEnergyStatisticView;
             }
         });
-
-        return commonEnergyStatisticViewList;
+        Map<String ,BigDecimal> map = new HashMap<>();
+        List<CommonEnergyStatisticView> list = new ArrayList<>();
+        BigDecimal en = new BigDecimal(0);
+        /*for (CommonEnergyStatisticView view: commonEnergyStatisticViewList) {
+            String e = !StringUtils.isEmpty(view.getEnergy())?view.getEnergy():"0";
+            if(map.containsKey(view.getDate())){
+                BigDecimal big = new BigDecimal(e);
+                *//*en = en.add(map.get(view.getDate()).add(big));
+                map.put(view.getDate(),en);*//*
+               // BigDecimal v1 = map.get(view.getDate());
+                en = en.add(big);
+                map.put(view.getDate(),en);
+            }else {
+                map.put(view.getDate(),en);
+            }
+        }*/
+        for(int i = 0 ; i < commonEnergyStatisticViewList.size() ; i++) {
+            String data = commonEnergyStatisticViewList.get(i).getDate();
+            String e = !StringUtils.isEmpty(commonEnergyStatisticViewList.get(i).getEnergy()) ? commonEnergyStatisticViewList.get(i).getEnergy() : "0";
+            int flag = 0;// 0为新增数据，1为增加count
+            for (int j = 0; j < list.size(); j++) {
+                String data_ = list.get(j).getDate();
+                String e_ = !StringUtils.isEmpty(list.get(j).getEnergy()) ? list.get(j).getEnergy() : "0";
+                if(data.equals(data_)){
+                    BigDecimal sum = new BigDecimal(e).add(new BigDecimal(e_));
+                    CommonEnergyStatisticView comm = new CommonEnergyStatisticView();
+                    /*comm.setDate(data);
+                    comm.setTotalEnergy(sum);*/
+                    list.get(j).setEnergy(sum+"");
+                    list.get(j).setDate(data_);
+                    //list.add(comm);
+                    flag = 1;
+                    continue;
+                }
+            }
+            if (flag == 0){
+                list.add(commonEnergyStatisticViewList.get(i));
+            }
+        }
+        return list;
     }
 
     public List<ListEleboxEnergyStatisticView> listEleboxEnergyStatistic(listEleboxEnergyStatisticRequest request){

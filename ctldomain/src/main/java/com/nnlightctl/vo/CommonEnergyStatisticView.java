@@ -1,10 +1,14 @@
 package com.nnlightctl.vo;
 
+import java.math.BigDecimal;
+
 public class CommonEnergyStatisticView {
     private String year;
     private String mouth;
     private String date;
     private Long total;
+    private String energy;
+    private BigDecimal totalEnergy;
 
     public String getYear() {
         return year;
@@ -36,5 +40,21 @@ public class CommonEnergyStatisticView {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    public String getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(String energy) {
+        this.energy = energy;
+    }
+
+    public BigDecimal getTotalEnergy() {
+        return totalEnergy;
+    }
+
+    public void setTotalEnergy(BigDecimal totalEnergy) {
+        this.totalEnergy = totalEnergy;
     }
 }
