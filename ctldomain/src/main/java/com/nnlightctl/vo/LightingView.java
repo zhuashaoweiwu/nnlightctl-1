@@ -133,7 +133,13 @@ public class LightingView extends BaseView {
         this.nnlightctlEleboxId = nnlightctlEleboxId;
     }
 
+    public Long getNnlightctlRegionId() {
+        return nnlightctlRegionId;
+    }
 
+    public void setNnlightctlRegionId(Long nnlightctlRegionId) {
+        this.nnlightctlRegionId = nnlightctlRegionId;
+    }
 
     private Long nnlightctlEleboxId;
 
@@ -166,5 +172,7 @@ public class LightingView extends BaseView {
     private Byte faultTag;
 
     private String regionLevelDesc;
+
+    private Long nnlightctlRegionId;
 
 }

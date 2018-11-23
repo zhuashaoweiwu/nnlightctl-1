@@ -135,6 +135,14 @@ public class LightRequest {
         this.latitude = latitude;
     }
 
+    public Long getNnlightctlRegionId() {
+        return nnlightctlRegionId;
+    }
+
+    public void setNnlightctlRegionId(Long nnlightctlRegionId) {
+        this.nnlightctlRegionId = nnlightctlRegionId;
+    }
+
     private Long id;
     private String uid;
     @NotEmpty(message = "灯具唯一编码不能为空！")
@@ -155,7 +163,7 @@ public class LightRequest {
     private Long nnlightctlProjectId;
     private String longitude;
     private String latitude;
-
+    private Long nnlightctlRegionId;
     public static class BatchLightRequest {
         public List<LightRequest> getAddLightings() {
             return addLightings;
