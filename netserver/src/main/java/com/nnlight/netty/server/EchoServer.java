@@ -196,6 +196,21 @@ public class EchoServer {
     }
 
     /**
+     * 发送特定终端的终端工作模式
+     * @param realtimeUUID
+     * @param model
+     */
+    public void sendCommandTerminalAutoModel(String realtimeUUID, byte model) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
+                ChannelHandlerContext context = entry.getValue().getContext();
+                context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model));
+                break;
+            }
+        }
+    }
+
+    /**
      * 发送全部终端设置终端的工作模式
      * @param model
      */

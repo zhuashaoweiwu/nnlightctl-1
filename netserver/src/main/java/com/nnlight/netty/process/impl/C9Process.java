@@ -15,6 +15,6 @@ public class C9Process implements Process {
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
         log.info("命令客户端C9指令【设置终端的工作模式（自动或者手动）】");
 
-        EchoServer.getGlobalApplicationContext().allSendCommandTerminalAutoModel(msg.getData()[0]);
+        EchoServer.getGlobalApplicationContext().sendCommandTerminalAutoModel(msg.getRealtimeUUIDFromData(), msg.getData()[4]);
     }
 }

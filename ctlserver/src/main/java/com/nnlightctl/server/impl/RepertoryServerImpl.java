@@ -14,7 +14,6 @@ import com.nnlightctl.vo.ListRepertoryUserView;
 import com.nnlightctl.vo.RepertoryInApplyView;
 import com.nnlightctl.vo.RepertoryOutApplyView;
 import com.nnlightctl.vo.RepertoryPropertyTranslateRecordView;
-import com.sun.org.apache.xerces.internal.impl.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -30,6 +30,10 @@ public class ProcessFactory {
             case (byte)0xe0:
                 return e0;
 
+                //e1心跳包
+            case (byte)0xe1:
+                return e1;
+
                 //命令层C8指令（读取终端信息）
             case (byte)0xc8:
                 return c8;
@@ -122,6 +126,7 @@ public class ProcessFactory {
     private static final Process c5 = new C5Process();
     private static final Process c6 = new C6Process();
     private static final Process e0 = new E0Process();
+    private static final Process e1 = new E1Process();
     private static final Process c8 = new C8Process();
     private static final Process e80 = new E80Process();
     private static final Process b80 = new B8Process();

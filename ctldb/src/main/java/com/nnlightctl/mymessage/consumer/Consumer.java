@@ -64,12 +64,12 @@ public class Consumer {
             @Override
             public void run() {
                 logger.info("-------------------------------Message Consumer starting...--------------------------------------");
-                try {
-                    while (true) {
+                while (true) {
+                    try {
                         CommandData lightE0Command = msgQuene.take();
 
                         //e0
-                        if (lightE0Command.getControl() == (byte)0xe0) {
+                        if (lightE0Command.getControl() == (byte) 0xe0) {
                             LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
                             lightingVolEleRecord.setGmtCreated(new Date());
                             lightingVolEleRecord.setGmtUpdated(new Date());
@@ -94,9 +94,9 @@ public class Consumer {
                         }
 
                         //e1
-                        if (lightE0Command.getControl() == (byte)0xe1) {
+                        if (lightE0Command.getControl() == (byte) 0xe1) {
                             byte deviceType = lightE0Command.getAddr()[5];
-                            if (deviceType == (byte)0x03) {
+                            if (deviceType == (byte) 0x03) {
                                 String eleboxUUID = new String(lightE0Command.getData());
                                 String realtimeUUID = lightE0Command.getRealtimeUUID();
 
@@ -108,7 +108,7 @@ public class Consumer {
                                 eleboxMapper.updateByExampleSelective(elebox, eleboxExample);
                             }
 
-                            if (deviceType == (byte)0x04) {
+                            if (deviceType == (byte) 0x04) {
                                 String netWorkAddr = BytesHexStrTranslate.bytesToHexFun(lightE0Command.getData());
                                 String eleboxRealtimeUUID = lightE0Command.getRealtimeUUID();
 
@@ -120,11 +120,11 @@ public class Consumer {
                                 eleboxMapper.updateByExampleSelective(elebox, eleboxExample);
                             }
                         }
+                    } catch (InterruptedException ie) {
+                        logger.error(ie.getMessage());
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
                     }
-                } catch (InterruptedException e) {
-                    logger.error(e.getMessage());
-                } catch (Exception e) {
-                    logger.error(e.getMessage());
                 }
             }
         });

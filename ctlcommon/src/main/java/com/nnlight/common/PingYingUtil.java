@@ -37,6 +37,6 @@ public class PingYingUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(cn2FirstSpell("lina"));
+        System.out.println(cn2FirstSpell("宁12abn"));
     }
 }

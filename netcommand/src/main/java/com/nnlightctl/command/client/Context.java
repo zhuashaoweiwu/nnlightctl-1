@@ -57,8 +57,10 @@ public class Context {
 
         if (in.getControl() == (byte)0xd0) {
             FutureResult futureResult = uuidMapFutureResult.get(in.getUUID());
-            futureResult.setCommandData(in);
-            futureResult.run();
+            if (futureResult != null) {
+                futureResult.setCommandData(in);
+                futureResult.run();
+            }
         }
     }
 
