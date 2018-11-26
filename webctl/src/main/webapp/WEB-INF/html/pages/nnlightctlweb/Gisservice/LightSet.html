@@ -29,6 +29,16 @@
     <div class="linghtbox clearfix mt-20">
         <img src="../bg//lightsbg.jpg" class="imgbox"/>
         <div id="powerange">
+            <div style="font-size: 14px;">
+            <span class="p1-10">电源模式：</span>
+            <select id="powerTypeSelect" onchange="powerTypeChangeEvent()">
+                <option value="0">0~10V</option>
+                <option value="1">PWM</option>
+                <option value="2">UART</option>
+                <option value="3">DALI</option>
+            </select>
+            </div>
+
             <a onclick="addlights(100)" href="javascript:void(0);" rel="100" class="btn btn-danger radius mt-20"
                style="width:90px;"><span>100%</span></a>
             <a onclick="addlights(80)" href="javascript:void(0);" rel="80" class="btn btn-danger radius mt-20"
@@ -82,6 +92,14 @@
         $("p[name='rangeval']").html(obj.value);
 
         doLightAdjust(obj.value);
+    }
+
+    function powerTypeChangeEvent() {
+        console.log("电源模式选择：" + $("#powerTypeSelect").val());
+        ajaxRequest("post", "/api/command/batchCommandConfigTerminalPowerType",
+            {"lightUUIDs[0]" : $("#uuid").text().trim(), "powerType" : $("#powerTypeSelect").val()}, function () {
+
+        });
     }
 
     //获取灯具信息
