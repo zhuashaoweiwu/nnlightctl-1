@@ -164,6 +164,18 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
+    public LightingView getLightingView(Long id) {
+        Lighting lighting = lightingMapper.selectByPrimaryKey(id);
+        LightingView lightingView = new LightingView();
+        ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+        if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+            lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+        }
+
+        return lightingView;
+    }
+
+    @Override
     public Lighting getLighting(Long id) {
         return lightingMapper.selectByPrimaryKey(id);
     }
@@ -216,12 +228,14 @@ public class LightServerImpl implements LightServer {
     public int updateLightBeEleboxBeLoop2(LightConditionRequest request) {
         lightDao.clearLightBeEleboxBeLoop(request.getOriginalLightIds());
         List<Long> lightIdList = request.getLightIdList();
-        for (Long lightId : lightIdList) {
-            Lighting lighting = new Lighting();
-            lighting.setId(lightId);
-            lighting.setNnlightctlEleboxId(request.getBeEleboxId());
-            lighting.setNnlightctlEleboxModelLoopId(request.getModelLoopId());
-            lightingMapper.updateByPrimaryKeySelective(lighting);
+        if (lightIdList != null && lightIdList.size() > 0) {
+            for (Long lightId : lightIdList) {
+                Lighting lighting = new Lighting();
+                lighting.setId(lightId);
+                lighting.setNnlightctlEleboxId(request.getBeEleboxId());
+                lighting.setNnlightctlEleboxModelLoopId(request.getModelLoopId());
+                lightingMapper.updateByPrimaryKeySelective(lighting);
+            }
         }
         return 1;
     }

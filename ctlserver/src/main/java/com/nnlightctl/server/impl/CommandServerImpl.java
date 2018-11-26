@@ -5,6 +5,7 @@ import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
+import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
@@ -32,6 +33,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private EleboxModelServer eleboxModelServer;
+
+    @Autowired
+    private EleboxModelLoopMapper eleboxModelLoopMapper;
 
     private final Command command;
 
@@ -181,10 +185,25 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
+    public D0Response getModelState(Long modelId) {
+        String gatewayRealtimeUUID = eleboxModelServer.getEleboxRealtimeUUIDByModelId(modelId);
+        return command.getModelState(gatewayRealtimeUUID, eleboxModelServer.getEleboxModelById(modelId).getUid());
+    }
+
+    @Override
     public void configModelState(String modelUUID, short modelLoop, short modelLoopState) {
         String gatewayRealtimeUUID = eleboxModelServer.getEleboxRealtimeUUIDByModelUUID(modelUUID);
 
         command.configModelState(gatewayRealtimeUUID, modelUUID, modelLoop, modelLoopState);
+    }
+
+    @Override
+    public void configModelState(Long loopId, short modelLoop, short modelLoopState) {
+        String gatewayRealtimeUUID = eleboxModelServer.getEleboxRealtimeUUIDByLoopId(loopId);
+
+        Long modelId = eleboxModelLoopMapper.selectByPrimaryKey(loopId).getNnlightctlEleboxModelId();
+
+        command.configModelState(gatewayRealtimeUUID, eleboxModelServer.getEleboxModelById(modelId).getUid(), modelLoop, modelLoopState);
     }
 
     @Override

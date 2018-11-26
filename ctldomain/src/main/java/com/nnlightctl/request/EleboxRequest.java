@@ -135,7 +135,6 @@ public class EleboxRequest extends BaseRequest{
         this.nnlightctlProjectId = nnlightctlProjectId;
     }
 
-
     public Long getProjectId() {
         return projectId;
     }
@@ -143,9 +142,18 @@ public class EleboxRequest extends BaseRequest{
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
+
+    public String getNetworkAddr() {
+        return networkAddr;
+    }
+
+    public void setNetworkAddr(String networkAddr) {
+        this.networkAddr = networkAddr;
+    }
+
+    private String networkAddr;
     private Long projectId;
     private Long id;
-    @NotBlank(message = "控制柜uid不能为空！")
     private String uid;
     @NotBlank(message = "控制柜唯一编码不能为空！")
     private String codeNumber;

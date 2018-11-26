@@ -93,4 +93,19 @@ public class EleboxModelServerImpl implements EleboxModelServer {
 
         return eleboxMapper.selectByPrimaryKey(eleboxModel.getNnlightctlEleboxId()).getRealtimeUid();
     }
+
+    @Override
+    public String getEleboxRealtimeUUIDByModelId(Long modelId) {
+        return eleboxMapper.selectByPrimaryKey(eleboxModelMapper.selectByPrimaryKey(modelId).getNnlightctlEleboxId()).getRealtimeUid();
+    }
+
+    @Override
+    public String getEleboxRealtimeUUIDByLoopId(Long loopId) {
+        return getEleboxRealtimeUUIDByModelId(eleboxModelLoopMapper.selectByPrimaryKey(loopId).getNnlightctlEleboxModelId());
+    }
+
+    @Override
+    public EleboxModel getEleboxModelById(Long id) {
+        return eleboxModelMapper.selectByPrimaryKey(id);
+    }
 }

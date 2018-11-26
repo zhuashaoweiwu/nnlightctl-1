@@ -510,10 +510,10 @@ public class RoadLightingController extends BaseController {
     public String getLighting(Long id) {
         logger.info("[POST] /api/roadlighting/getLighting");
 
-        Lighting lighting = this.lightServer.getLighting(id);
+        LightingView lightingView = this.lightServer.getLightingView(id);
 
-        List<Lighting> data = new ArrayList<>(1);
-        data.add(lighting);
+        List<LightingView> data = new ArrayList<>(1);
+        data.add(lightingView);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(data);

@@ -234,6 +234,25 @@ public class CommandController extends BaseController {
         return toJson(jsonResult);
     }
 
+    /**
+     * D0 id
+     * @param request
+     * @return
+     */
+    @RequestMapping("commandGetModelStateInfoId")
+    public String commandGetModelStateInfoId(CommandRequest request) {
+        logger.info("[POST] /api/command/commandGetModelStateInfoId");
+
+        D0Response d0Response = commandServer.getModelState(request.getModelId());
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        List<D0Response> d0ResponseList = new ArrayList<>(1);
+        d0ResponseList.add(d0Response);
+        jsonResult.setData(d0ResponseList);
+
+        return toJson(jsonResult);
+    }
+
     /*
     * 控制继电器开闭状态 0xD1
     * */
@@ -254,6 +273,20 @@ public class CommandController extends BaseController {
         logger.info("[POST] /api/command/batchConfigModelStateUUID");
 
         commandServer.configModelState(request.getModelUUIDs().get(0), request.getModelLoop(), request.getModelLoopState());
+
+        return toJson(JsonResult.getSUCCESS());
+    }
+
+    /**
+     * D1 id
+     * @param request
+     * @return
+     */
+    @RequestMapping("configModelStateId")
+    public String configModelStateId(CommandRequest request) {
+        logger.info("[POST] /api/command/configModelStateId");
+
+        commandServer.configModelState(request.getLoopId(), request.getModelLoop(), request.getModelLoopState());
 
         return toJson(JsonResult.getSUCCESS());
     }

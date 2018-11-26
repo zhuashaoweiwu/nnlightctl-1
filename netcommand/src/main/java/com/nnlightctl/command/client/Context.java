@@ -128,7 +128,7 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getA0CommandData(gatewayRealtimeUUID, modelUUID));
         FutureResult futureResult = new FutureResult();
         uuidMapFutureResult.put(modelUUID, futureResult);
-        futureResult.await(6000);
+        futureResult.await(12000);
 
         CommandData commandData = futureResult.getCommandData();
         D0Response d0Response = DataTransferUtil.transToD0Response(commandData);

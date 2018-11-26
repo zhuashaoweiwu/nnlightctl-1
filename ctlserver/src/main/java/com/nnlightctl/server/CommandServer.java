@@ -21,7 +21,9 @@ public interface CommandServer {
     void batchConfigTerminalAutoModel(int model, List<String> uuidList);
     void commandReadServiceFixedInfo(List<Long> lightIds);
     D0Response getModelState(String modelUUID);
+    D0Response getModelState(Long modelId);
     void configModelState(String modelUUID, short modelLoop, short modelLoopState);
+    void configModelState(Long loopId, short modelLoop, short modelLoopState);
     void configServiceOpenClose(List<Long> lightIds);
     void batchConfigRestart(List<Long> lightIds);
     void batchCommandReadTimeParameter(List<Long> lightIds);

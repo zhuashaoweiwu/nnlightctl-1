@@ -134,6 +134,9 @@ public class AreaServerImpl implements AreaServer {
     @Override
     public String getLevelRegionDesc(Long id) {
         Region region = regionMapper.selectByPrimaryKey(id);
+        if (region == null) {
+            return "";
+        }
         if (region.getNnlightctlParentRegion() != null && region.getNnlightctlParentRegion() > 0) {
             return getLevelRegionDesc(region.getNnlightctlParentRegion()) + "-" + region.getAreaName();
         }

@@ -100,7 +100,26 @@ public class CommandRequest {
         this.modelLoop = modelLoop;
     }
 
+    public Long getModelId() {
+        return modelId;
+    }
 
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
+    }
+
+    public Long getLoopId() {
+        return loopId;
+    }
+
+    public void setLoopId(Long loopId) {
+        this.loopId = loopId;
+    }
+
+
+    private Long loopId;
+
+    private Long modelId;
 
     private Short modelLoopState;
 
