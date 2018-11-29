@@ -426,6 +426,76 @@ public class LightingExample {
             return (Criteria) this;
         }
 
+        public Criteria andLightingImeiIsNull() {
+            addCriterion("lighting_imei is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiIsNotNull() {
+            addCriterion("lighting_imei is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiEqualTo(String value) {
+            addCriterion("lighting_imei =", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiNotEqualTo(String value) {
+            addCriterion("lighting_imei <>", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiGreaterThan(String value) {
+            addCriterion("lighting_imei >", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiGreaterThanOrEqualTo(String value) {
+            addCriterion("lighting_imei >=", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiLessThan(String value) {
+            addCriterion("lighting_imei <", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiLessThanOrEqualTo(String value) {
+            addCriterion("lighting_imei <=", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiLike(String value) {
+            addCriterion("lighting_imei like", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiNotLike(String value) {
+            addCriterion("lighting_imei not like", value, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiIn(List<String> values) {
+            addCriterion("lighting_imei in", values, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiNotIn(List<String> values) {
+            addCriterion("lighting_imei not in", values, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiBetween(String value1, String value2) {
+            addCriterion("lighting_imei between", value1, value2, "lightingImei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightingImeiNotBetween(String value1, String value2) {
+            addCriterion("lighting_imei not between", value1, value2, "lightingImei");
+            return (Criteria) this;
+        }
+
         public Criteria andRealtimeUidIsNull() {
             addCriterion("realtime_uid is null");
             return (Criteria) this;

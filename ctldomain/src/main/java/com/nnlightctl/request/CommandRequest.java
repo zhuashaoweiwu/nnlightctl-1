@@ -116,6 +116,16 @@ public class CommandRequest {
         this.loopId = loopId;
     }
 
+    public List<Long> getSceneIds() {
+        return sceneIds;
+    }
+
+    public void setSceneIds(List<Long> sceneIds) {
+        this.sceneIds = sceneIds;
+    }
+
+
+    private List<Long> sceneIds;
 
     private Long loopId;
 

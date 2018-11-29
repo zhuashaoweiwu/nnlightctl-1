@@ -32,4 +32,5 @@ public interface CommandServer {
     void batchConfigOpenCloseStrategy(List<Long> lightIds);
     void batchConfigWorkModel(List<Long> lightIds);
     void batchConfigTerminalPowerType(List<String> terminalUUIDs, int powerType);
+    void batchExecScene(List<Long> sceneIds);
 }

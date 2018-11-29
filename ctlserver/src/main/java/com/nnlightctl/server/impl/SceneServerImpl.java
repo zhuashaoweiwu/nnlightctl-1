@@ -7,10 +7,13 @@ import com.nnlightctl.dao.LightingGroupMapper;
 import com.nnlightctl.dao.SceneMapper;
 import com.nnlightctl.dao.SceneShotcutMapper;
 import com.nnlightctl.dao.SwitchTaskMapper;
+import com.nnlightctl.jdbcdao.LightingGroupMapDao;
+import com.nnlightctl.jdbcdao.LightingGroupMapGroupDao;
 import com.nnlightctl.jdbcdao.SceneMapLightingGroupDao;
 import com.nnlightctl.jdbcdao.SceneMapSwitchTaskDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
+import com.nnlightctl.server.LightServer;
 import com.nnlightctl.server.SceneServer;
 import com.nnlightctl.vo.SceneView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,15 @@ public class SceneServerImpl implements SceneServer {
 
     @Autowired
     private SceneShotcutMapper sceneShotcutMapper;
+
+    @Autowired
+    private LightingGroupMapDao lightingGroupMapDao;
+
+    @Autowired
+    private LightingGroupMapGroupDao lightingGroupMapGroupDao;
+
+    @Autowired
+    private LightServer lightServer;
 
     @Override
     public int addOrUpdateScene(SceneRequest request) {
@@ -201,5 +213,61 @@ public class SceneServerImpl implements SceneServer {
     @Override
     public List<SceneShotcut> listSceneShotcut() {
         return sceneShotcutMapper.selectByExample(new SceneShotcutExample());
+    }
+
+    private List<Long> getLightingIdsByLightGroupId(Long lightGroupId) {
+        List<Long> lightingIds = new ArrayList<>(8);
+
+        //组映射
+        List<Long> lightIdList = lightingGroupMapDao.getLightingIdsByGroupId(lightGroupId);
+        if (lightIdList != null) {
+            lightingIds.addAll(lightIdList);
+        }
+
+        //组组映射
+        List<Long> lightingGroupIdList = lightingGroupMapGroupDao.getLightGroupIdsByGroupId(lightGroupId);
+        if (lightingGroupIdList != null && lightingGroupIdList.size() > 0) {
+            for (Long subLightingGroupId : lightingGroupIdList) {
+                lightingIds.addAll(getLightingIdsByLightGroupId(subLightingGroupId));
+            }
+        }
+
+        return lightingIds;
+    }
+
+    @Override
+    public List<Lighting> listLightingsOfScene(Long sceneId) {
+        SceneView sceneView = getScene(sceneId);
+        List<SceneView.LightingGroup> lightingGroupList = sceneView.getLightingGroups();
+        List<Long> lightIds = new ArrayList<>(8);
+
+        for (SceneView.LightingGroup lightingGroup : lightingGroupList) {
+            lightIds.addAll(getLightingIdsByLightGroupId(lightingGroup.getId()));
+        }
+
+        List<Lighting> lightingList = new ArrayList<>(8);
+
+        for (Long id : lightIds) {
+            lightingList.add(lightServer.getLighting(id));
+        }
+
+        return lightingList;
+    }
+
+    @Override
+    public List<SwitchTask> listSwitchTaskOfScene(Long scendId) {
+        SceneView sceneView = getScene(scendId);
+
+        List<SceneView.SwitchTask> switchTasks = sceneView.getSwitchTasks();
+
+        List<SwitchTask> switchTaskList = new ArrayList<>(8);
+
+        for (SceneView.SwitchTask switchTask : switchTasks) {
+            SwitchTask switchTask1 = new SwitchTask();
+            ReflectCopyUtil.beanSameFieldCopy(switchTask, switchTask1);
+            switchTaskList.add(switchTask1);
+        }
+
+        return switchTaskList;
     }
 }

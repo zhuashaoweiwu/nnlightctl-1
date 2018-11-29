@@ -344,4 +344,15 @@ public class CommandController extends BaseController {
         commandServer.batchConfigWorkModel(request.getLightIds());
         return toJson(JsonResult.getSUCCESS());
     }
+
+    /**
+     * 批量下发场景策略
+     * @param request
+     */
+    @RequestMapping("batchExecScene")
+    public void batchExecScene(CommandRequest request) {
+        logger.info("[POST] /api/command/batchExecScene");
+
+        commandServer.batchExecScene(request.getSceneIds());
+    }
 }

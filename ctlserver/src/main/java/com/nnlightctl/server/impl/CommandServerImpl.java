@@ -14,6 +14,7 @@ import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.server.CommandServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.LightServer;
+import com.nnlightctl.server.SceneServer;
 import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
@@ -36,6 +37,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private EleboxModelLoopMapper eleboxModelLoopMapper;
+
+    @Autowired
+    private SceneServer sceneServer;
 
     private final Command command;
 
@@ -301,5 +305,28 @@ public class CommandServerImpl implements CommandServer {
         }
 
         command.batchConfigTerminalPowerType(powerType, realtime_ids);
+    }
+
+    @Override
+    public void batchExecScene(List<Long> sceneIds) {
+        if (sceneIds == null || sceneIds.size() < 1) {
+            throw new RuntimeException("下发场景不可为空！");
+        }
+        //分别处理每个场景的下发
+        for (Long scendId : sceneIds) {
+            //获取场景下全部灯具列表
+            List<Lighting> lightingList = sceneServer.listLightingsOfScene(scendId);
+            //获取场景下全部任务策略列表
+            List<SwitchTask> switchTaskList = sceneServer.listSwitchTaskOfScene(scendId);
+
+            //获取灯具uuid
+            List<String> lightingUUIDList = new ArrayList<>(8);
+            for (Lighting lighting : lightingList) {
+                lightingUUIDList.add(lighting.getUid());
+            }
+
+            //下发策略
+            configTerminalSwitchPolicyBatch(switchTaskList, lightingUUIDList);
+        }
     }
 }

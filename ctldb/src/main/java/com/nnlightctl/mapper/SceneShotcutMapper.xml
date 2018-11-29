@@ -7,6 +7,7 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="shotcut_name" property="shotcutName" jdbcType="VARCHAR" />
     <result column="nnlightctl_scene_id" property="nnlightctlSceneId" jdbcType="BIGINT" />
+    <result column="shotcut_scene_state" property="shotcutSceneState" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, shotcut_name, nnlightctl_scene_id
+    id, gmt_created, gmt_updated, shotcut_name, nnlightctl_scene_id, shotcut_scene_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.SceneShotcutExample" >
     select
@@ -105,9 +106,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_scene_shotcut (gmt_created, gmt_updated, shotcut_name, 
-      nnlightctl_scene_id)
+      nnlightctl_scene_id, shotcut_scene_state)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{shotcutName,jdbcType=VARCHAR}, 
-      #{nnlightctlSceneId,jdbcType=BIGINT})
+      #{nnlightctlSceneId,jdbcType=BIGINT}, #{shotcutSceneState,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.SceneShotcut" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -127,6 +128,9 @@
       <if test="nnlightctlSceneId != null" >
         nnlightctl_scene_id,
       </if>
+      <if test="shotcutSceneState != null" >
+        shotcut_scene_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -140,6 +144,9 @@
       </if>
       <if test="nnlightctlSceneId != null" >
         #{nnlightctlSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="shotcutSceneState != null" >
+        #{shotcutSceneState,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -167,6 +174,9 @@
       <if test="record.nnlightctlSceneId != null" >
         nnlightctl_scene_id = #{record.nnlightctlSceneId,jdbcType=BIGINT},
       </if>
+      <if test="record.shotcutSceneState != null" >
+        shotcut_scene_state = #{record.shotcutSceneState,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +188,8 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       shotcut_name = #{record.shotcutName,jdbcType=VARCHAR},
-      nnlightctl_scene_id = #{record.nnlightctlSceneId,jdbcType=BIGINT}
+      nnlightctl_scene_id = #{record.nnlightctlSceneId,jdbcType=BIGINT},
+      shotcut_scene_state = #{record.shotcutSceneState,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +209,9 @@
       <if test="nnlightctlSceneId != null" >
         nnlightctl_scene_id = #{nnlightctlSceneId,jdbcType=BIGINT},
       </if>
+      <if test="shotcutSceneState != null" >
+        shotcut_scene_state = #{shotcutSceneState,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -206,7 +220,8 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       shotcut_name = #{shotcutName,jdbcType=VARCHAR},
-      nnlightctl_scene_id = #{nnlightctlSceneId,jdbcType=BIGINT}
+      nnlightctl_scene_id = #{nnlightctlSceneId,jdbcType=BIGINT},
+      shotcut_scene_state = #{shotcutSceneState,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

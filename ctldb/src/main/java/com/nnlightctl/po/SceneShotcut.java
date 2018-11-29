@@ -14,6 +14,8 @@ public class SceneShotcut implements Serializable {
 
     private Long nnlightctlSceneId;
 
+    private Byte shotcutSceneState;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -56,6 +58,14 @@ public class SceneShotcut implements Serializable {
         this.nnlightctlSceneId = nnlightctlSceneId;
     }
 
+    public Byte getShotcutSceneState() {
+        return shotcutSceneState;
+    }
+
+    public void setShotcutSceneState(Byte shotcutSceneState) {
+        this.shotcutSceneState = shotcutSceneState;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -72,7 +82,8 @@ public class SceneShotcut implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getShotcutName() == null ? other.getShotcutName() == null : this.getShotcutName().equals(other.getShotcutName()))
-            && (this.getNnlightctlSceneId() == null ? other.getNnlightctlSceneId() == null : this.getNnlightctlSceneId().equals(other.getNnlightctlSceneId()));
+            && (this.getNnlightctlSceneId() == null ? other.getNnlightctlSceneId() == null : this.getNnlightctlSceneId().equals(other.getNnlightctlSceneId()))
+            && (this.getShotcutSceneState() == null ? other.getShotcutSceneState() == null : this.getShotcutSceneState().equals(other.getShotcutSceneState()));
     }
 
     @Override
@@ -84,6 +95,7 @@ public class SceneShotcut implements Serializable {
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getShotcutName() == null) ? 0 : getShotcutName().hashCode());
         result = prime * result + ((getNnlightctlSceneId() == null) ? 0 : getNnlightctlSceneId().hashCode());
+        result = prime * result + ((getShotcutSceneState() == null) ? 0 : getShotcutSceneState().hashCode());
         return result;
     }
 
@@ -98,6 +110,7 @@ public class SceneShotcut implements Serializable {
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", shotcutName=").append(shotcutName);
         sb.append(", nnlightctlSceneId=").append(nnlightctlSceneId);
+        sb.append(", shotcutSceneState=").append(shotcutSceneState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

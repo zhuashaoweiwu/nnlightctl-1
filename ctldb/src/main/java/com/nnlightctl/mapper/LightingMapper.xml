@@ -7,6 +7,7 @@
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="lighting_code" property="lightingCode" jdbcType="VARCHAR" />
+    <result column="lighting_imei" property="lightingImei" jdbcType="VARCHAR" />
     <result column="realtime_uid" property="realtimeUid" jdbcType="VARCHAR" />
     <result column="manufacture" property="manufacture" jdbcType="TIMESTAMP" />
     <result column="use_date" property="useDate" jdbcType="TIMESTAMP" />
@@ -86,9 +87,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, lighting_code, realtime_uid, manufacture, use_date, 
-    lamppost, lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, longitude, 
-    latitude, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
+    id, gmt_created, gmt_updated, uid, lighting_code, lighting_imei, realtime_uid, manufacture, 
+    use_date, lamppost, lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
+    longitude, latitude, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
     nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, 
     fault_tag
   </sql>
@@ -128,18 +129,18 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_lighting (gmt_created, gmt_updated, uid, 
-      lighting_code, realtime_uid, manufacture, 
-      use_date, lamppost, lamphead, 
-      nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
+      lighting_code, lighting_imei, realtime_uid, 
+      manufacture, use_date, lamppost, 
+      lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
       longitude, latitude, property_serial_number, 
       decay, max_use_time, mem, 
       nnlightctl_elebox_model_loop_id, nnlightctl_region_id, 
       nnlightctl_project_id, nnlightctl_elebox_id, 
       loop_priority, fault_tag)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{lightingCode,jdbcType=VARCHAR}, #{realtimeUid,jdbcType=VARCHAR}, #{manufacture,jdbcType=TIMESTAMP}, 
-      #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, #{lamphead,jdbcType=VARCHAR}, 
-      #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
+      #{lightingCode,jdbcType=VARCHAR}, #{lightingImei,jdbcType=VARCHAR}, #{realtimeUid,jdbcType=VARCHAR}, 
+      #{manufacture,jdbcType=TIMESTAMP}, #{useDate,jdbcType=TIMESTAMP}, #{lamppost,jdbcType=VARCHAR}, 
+      #{lamphead,jdbcType=VARCHAR}, #{nnlightctlLightingModelId,jdbcType=BIGINT}, #{nnlightctlLightingGisId,jdbcType=BIGINT}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{propertySerialNumber,jdbcType=VARCHAR}, 
       #{decay,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{mem,jdbcType=VARCHAR}, 
       #{nnlightctlEleboxModelLoopId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
@@ -163,6 +164,9 @@
       </if>
       <if test="lightingCode != null" >
         lighting_code,
+      </if>
+      <if test="lightingImei != null" >
+        lighting_imei,
       </if>
       <if test="realtimeUid != null" >
         realtime_uid,
@@ -234,6 +238,9 @@
       </if>
       <if test="lightingCode != null" >
         #{lightingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lightingImei != null" >
+        #{lightingImei,jdbcType=VARCHAR},
       </if>
       <if test="realtimeUid != null" >
         #{realtimeUid,jdbcType=VARCHAR},
@@ -318,6 +325,9 @@
       <if test="record.lightingCode != null" >
         lighting_code = #{record.lightingCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.lightingImei != null" >
+        lighting_imei = #{record.lightingImei,jdbcType=VARCHAR},
+      </if>
       <if test="record.realtimeUid != null" >
         realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
       </if>
@@ -387,6 +397,7 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
       lighting_code = #{record.lightingCode,jdbcType=VARCHAR},
+      lighting_imei = #{record.lightingImei,jdbcType=VARCHAR},
       realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
       manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
       use_date = #{record.useDate,jdbcType=TIMESTAMP},
@@ -424,6 +435,9 @@
       </if>
       <if test="lightingCode != null" >
         lighting_code = #{lightingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lightingImei != null" >
+        lighting_imei = #{lightingImei,jdbcType=VARCHAR},
       </if>
       <if test="realtimeUid != null" >
         realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
@@ -491,6 +505,7 @@
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
       lighting_code = #{lightingCode,jdbcType=VARCHAR},
+      lighting_imei = #{lightingImei,jdbcType=VARCHAR},
       realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
       manufacture = #{manufacture,jdbcType=TIMESTAMP},
       use_date = #{useDate,jdbcType=TIMESTAMP},

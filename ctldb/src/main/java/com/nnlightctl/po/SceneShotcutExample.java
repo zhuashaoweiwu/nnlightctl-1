@@ -414,6 +414,66 @@ public class SceneShotcutExample {
             addCriterion("nnlightctl_scene_id not between", value1, value2, "nnlightctlSceneId");
             return (Criteria) this;
         }
+
+        public Criteria andShotcutSceneStateIsNull() {
+            addCriterion("shotcut_scene_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateIsNotNull() {
+            addCriterion("shotcut_scene_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateEqualTo(Byte value) {
+            addCriterion("shotcut_scene_state =", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateNotEqualTo(Byte value) {
+            addCriterion("shotcut_scene_state <>", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateGreaterThan(Byte value) {
+            addCriterion("shotcut_scene_state >", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateGreaterThanOrEqualTo(Byte value) {
+            addCriterion("shotcut_scene_state >=", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateLessThan(Byte value) {
+            addCriterion("shotcut_scene_state <", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateLessThanOrEqualTo(Byte value) {
+            addCriterion("shotcut_scene_state <=", value, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateIn(List<Byte> values) {
+            addCriterion("shotcut_scene_state in", values, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateNotIn(List<Byte> values) {
+            addCriterion("shotcut_scene_state not in", values, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateBetween(Byte value1, Byte value2) {
+            addCriterion("shotcut_scene_state between", value1, value2, "shotcutSceneState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShotcutSceneStateNotBetween(Byte value1, Byte value2) {
+            addCriterion("shotcut_scene_state not between", value1, value2, "shotcutSceneState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
