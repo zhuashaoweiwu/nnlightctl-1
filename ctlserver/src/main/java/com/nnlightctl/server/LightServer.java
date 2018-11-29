@@ -34,4 +34,5 @@ public interface LightServer {
     Tuple.TwoTuple<List<LightingView>, Integer> listLoopLighting(LightConditionRequest request);
     int updateLightPriority(LightConditionRequest request);
     int updatePairLighting(Lighting lighting);
+    String getLightSignalByUUID(String uuid);
 }

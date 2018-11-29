@@ -114,15 +114,12 @@ public class UserRequest {
 
     private Long id;
 
-    @NotBlank(message = "登录名不能为空！")
     private String loginName;
 
-    @NotBlank(message = "登录密码不能为空！")
     private String loginPwd;
 
     private Byte isRemenberPwd;
 
-    @NotBlank(message = "用户名不能为空！")
     private String userName;
 
     private Byte sex;

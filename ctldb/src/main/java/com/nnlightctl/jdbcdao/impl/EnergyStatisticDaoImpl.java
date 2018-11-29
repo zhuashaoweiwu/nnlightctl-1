@@ -240,7 +240,6 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
         sql.append("SELECT in_seen_energy AS energy , SUBSTR(record_datetime ,1,10) as date FROM nnlightctl_lighting_vol_ele_record where 1=1 ");
-
         sql.append("and SUBSTR(record_datetime ,1,7) = ? ");
         Calendar now = Calendar.getInstance();
         String year = now.get(Calendar.YEAR)+"";
@@ -262,19 +261,6 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         Map<String ,BigDecimal> map = new HashMap<>();
         List<CommonEnergyStatisticView> list = new ArrayList<>();
         BigDecimal en = new BigDecimal(0);
-        /*for (CommonEnergyStatisticView view: commonEnergyStatisticViewList) {
-            String e = !StringUtils.isEmpty(view.getEnergy())?view.getEnergy():"0";
-            if(map.containsKey(view.getDate())){
-                BigDecimal big = new BigDecimal(e);
-                *//*en = en.add(map.get(view.getDate()).add(big));
-                map.put(view.getDate(),en);*//*
-               // BigDecimal v1 = map.get(view.getDate());
-                en = en.add(big);
-                map.put(view.getDate(),en);
-            }else {
-                map.put(view.getDate(),en);
-            }
-        }*/
         for(int i = 0 ; i < commonEnergyStatisticViewList.size() ; i++) {
             String data = commonEnergyStatisticViewList.get(i).getDate();
             String e = !StringUtils.isEmpty(commonEnergyStatisticViewList.get(i).getEnergy()) ? commonEnergyStatisticViewList.get(i).getEnergy() : "0";
@@ -285,11 +271,8 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
                 if(data.equals(data_)){
                     BigDecimal sum = new BigDecimal(e).add(new BigDecimal(e_));
                     CommonEnergyStatisticView comm = new CommonEnergyStatisticView();
-                    /*comm.setDate(data);
-                    comm.setTotalEnergy(sum);*/
                     list.get(j).setEnergy(sum+"");
                     list.get(j).setDate(data_);
-                    //list.add(comm);
                     flag = 1;
                     continue;
                 }

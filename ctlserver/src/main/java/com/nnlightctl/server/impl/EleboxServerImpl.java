@@ -176,7 +176,6 @@ public class EleboxServerImpl implements EleboxServer {
             for (EleboxModel eleboxModel : eleboxModelList) {
                 eleboxModelIdList.add(eleboxModel.getId());
             }
-
             EleboxModelConditionRequest eleboxModelConditionRequest = new EleboxModelConditionRequest();
             eleboxModelConditionRequest.setEleboxModelIdList(eleboxModelIdList);
 

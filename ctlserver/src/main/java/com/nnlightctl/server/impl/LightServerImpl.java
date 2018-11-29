@@ -4,8 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.GisPointUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightDao;
+import com.nnlightctl.po.LightSignalLog;
+import com.nnlightctl.po.LightSignalLogExample;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
@@ -26,7 +29,10 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +46,8 @@ public class LightServerImpl implements LightServer {
 
     @Autowired
     private AreaServer areaServer;
-
+    @Autowired
+    private LightSignalLogMapper lightSignalLogMapper;
     @Override
     public int addOrUpdateLight(LightRequest request) {
         Lighting lighting = new Lighting();
@@ -442,5 +449,28 @@ public class LightServerImpl implements LightServer {
             this.lightingMapper.insertSelective(createLighting);
         }
         return 1;
+    }
+    @Override
+    public String getLightSignalByUUID(String uuid){
+        LightSignalLogExample lightSignalLogExample = new LightSignalLogExample();
+        lightSignalLogExample.setOrderByClause("id DESC");
+        LightSignalLogExample.Criteria criteria = lightSignalLogExample.createCriteria();
+        String signalIntensity=null;
+        try{
+            Date date = new Date();
+            String dayAfter = new SimpleDateFormat("yyyy-MM-dd").format(date);
+            criteria.andSignalLogDateGreaterThanOrEqualTo(new SimpleDateFormat("yy-MM-dd").parse(dayAfter));
+            if (!StringUtils.isEmpty(uuid)){
+                criteria.andUidEqualTo(uuid);
+            }
+            List<LightSignalLog> lightSignalLogList = lightSignalLogMapper.selectByExample(lightSignalLogExample);
+            if (!lightSignalLogList.isEmpty()){
+                signalIntensity = lightSignalLogList.get(0).getSignalIntensity().toString();
+            }
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return signalIntensity;
     }
 }

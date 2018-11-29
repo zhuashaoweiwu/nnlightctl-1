@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -77,6 +79,16 @@ public class GisController extends BaseController {
         jsonResult.setData(tuple.getFirst());
         jsonResult.setTotal(tuple.getSecond());
 
+        return toJson(jsonResult);
+    }
+    @RequestMapping("getLightSignalByUUID")
+    public String getLightSignalByUUID(String uuid){
+        logger.info("[POST] /api/gis/getLightSignalByUUID");
+        String signalIntensity = lightServer.getLightSignalByUUID(uuid);
+        List<String> list= new ArrayList<>();
+        list.add(signalIntensity);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(list);
         return toJson(jsonResult);
     }
 }
