@@ -173,6 +173,7 @@ public class SceneServerImpl implements SceneServer {
         if (request.getId() == null) {
             //新增
             sceneShotcut.setGmtCreated(new Date());
+            sceneShotcut.setShotcutSceneState((byte)0);
 
             ret = sceneShotcutMapper.insertSelective(sceneShotcut);
         } else {
