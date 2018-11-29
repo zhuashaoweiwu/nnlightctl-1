@@ -153,8 +153,11 @@ public class CommandData implements Serializable {
 
         commandData.setControl((byte)0xe7);
 
-        commandData.setDataLength(c7Command.getDataLength());
-        commandData.setData(c7Command.getData());
+        commandData.setDataLength((byte)(c7Command.getDataLength() - 4));
+
+        byte[] data = new byte[ByteConvert.byteToUbyte(commandData.getDataLength())];
+        System.arraycopy(c7Command.getData(), 4, data, 0, data.length);
+        commandData.setData(data);
 
         commandData.setCheck(commandData.createCheck());
 
