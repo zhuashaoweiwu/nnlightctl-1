@@ -3,6 +3,10 @@ package com.nnlightctl.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.command.Command;
+import com.nnlightctl.command.CommandFactory;
+import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
+import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.dao.LightingGroupMapper;
 import com.nnlightctl.dao.SceneMapper;
 import com.nnlightctl.dao.SceneShotcutMapper;
@@ -11,13 +15,17 @@ import com.nnlightctl.jdbcdao.LightingGroupMapDao;
 import com.nnlightctl.jdbcdao.LightingGroupMapGroupDao;
 import com.nnlightctl.jdbcdao.SceneMapLightingGroupDao;
 import com.nnlightctl.jdbcdao.SceneMapSwitchTaskDao;
+import com.nnlightctl.net.CommandData;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
+import com.nnlightctl.server.CommandServer;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.server.SceneServer;
 import com.nnlightctl.vo.SceneView;
+import org.apache.avro.generic.GenericData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +60,10 @@ public class SceneServerImpl implements SceneServer {
 
     @Autowired
     private LightServer lightServer;
+
+    @Autowired
+    private CommandServer commandServer;
+
 
     @Override
     public int addOrUpdateScene(SceneRequest request) {
@@ -196,6 +208,9 @@ public class SceneServerImpl implements SceneServer {
 
     @Override
     public int getInvokeSceneShotcut(String shotcutName) {
+        if (StringUtils.isEmpty(shotcutName)) {
+            throw new RuntimeException("快捷键调用，快捷键不可为空！");
+        }
         SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
         sceneShotcutExample.createCriteria().andShotcutNameEqualTo(shotcutName);
 
@@ -205,7 +220,29 @@ public class SceneServerImpl implements SceneServer {
             Long sceneId = sceneShotcut.getNnlightctlSceneId();
             Scene scene = this.sceneMapper.selectByPrimaryKey(sceneId);
 
+            //获取场景全部灯具
+            List<Lighting> lightingList = listLightingsOfScene(scene.getId());
+            List<String> lightingUUIDList = new ArrayList<>(8);
+            for (Lighting lighting : lightingList) {
+                lightingUUIDList.add(lighting.getUid());
+            }
 
+            byte state = sceneShotcut.getShotcutSceneState();
+            if (state == (byte)0) {     //关灯状态，要开灯
+                //发送调光指令
+                commandServer.sendLightAdjustCommandBatchUUID(lightingUUIDList, 100);
+            }
+
+            if (state == (byte)1) {     //开灯状态，要关灯
+                //切换手动模式
+                commandServer.batchConfigTerminalAutoModel(0, lightingUUIDList);
+            }
+
+            //开灯成功置为开灯状态,关灯成功置为关灯状态
+            SceneShotcut sceneShotcut1 = new SceneShotcut();
+            sceneShotcut1.setId(sceneShotcut.getId());
+            sceneShotcut1.setShotcutSceneState(state == (byte)0 ? (byte)1 : (byte)0);
+            sceneShotcutMapper.updateByPrimaryKeySelective(sceneShotcut1);
         }
 
         return 1;
