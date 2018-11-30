@@ -84,10 +84,7 @@ public class Consumer {
                                         //与数据库灯具配对
                                         Lighting lighting = new Lighting();
                                         lighting.setUid(lightingVolEleRecord.getUid());
-                                        //realtimeUid转换成16进制字符串形式
-                                        byte[] bytes = new byte[4];
-                                        System.arraycopy(lightE0Command.getAddr(), 0, bytes, 0, 4);
-                                        lighting.setRealtimeUid(BytesHexStrTranslate.bytesToHexFun(bytes));
+                                        lighting.setRealtimeUid(lightE0Command.getRealtimeUUID());
                                         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                                             @Override
                                             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
