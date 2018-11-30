@@ -23,10 +23,19 @@ public class E0CommandAnalyze implements CommandAnalyzer {
         stringBuilder.append("UUID：");
         byte[] uuidBytes = new byte[36];
         System.arraycopy(data, k, uuidBytes, 0, 36);
-        stringBuilder.append(new String(uuidBytes, Charset.forName("UTF-8")));
+        stringBuilder.append(new String(uuidBytes));
         stringBuilder.append(",");
 
         k += 36;
+
+        //IMEI
+        stringBuilder.append("IMEI：");
+        byte[] imeiBytes = new byte[15];
+        System.arraycopy(data, k, imeiBytes, 0, 15);
+        stringBuilder.append(new String(imeiBytes));
+        stringBuilder.append(",");
+
+        k += 15;
 
         //版本判断
         byte version = command.getAddr()[4];

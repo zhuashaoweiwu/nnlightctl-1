@@ -13,6 +13,14 @@ public class LightingView extends BaseView {
         this.uid = uid;
     }
 
+    public String getLightingImei() {
+        return lightingImei;
+    }
+
+    public void setLightingImei(String lightingImei) {
+        this.lightingImei = lightingImei;
+    }
+
     public Date getManufacture() {
         return manufacture;
     }
@@ -141,11 +149,14 @@ public class LightingView extends BaseView {
         this.nnlightctlRegionId = nnlightctlRegionId;
     }
 
+
     private Long nnlightctlEleboxId;
 
     private String lightingCode;
 
     private String uid;
+
+    private String lightingImei;
 
     private Date manufacture;
 

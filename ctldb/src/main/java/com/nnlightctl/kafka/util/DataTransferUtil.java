@@ -25,10 +25,18 @@ public class DataTransferUtil {
         //uuid
         byte[] uuidBytes = new byte[36];
         System.arraycopy(data, k, uuidBytes, 0, 36);
-        String uuid = new String(uuidBytes, Charset.forName("UTF-8"));
+        String uuid = new String(uuidBytes);
         lightingVolEleRecord.setUid(uuid);
 
         k += 36;
+
+        //imei
+        byte[] imeiBytes = new byte[15];
+        System.arraycopy(data, k, imeiBytes, 0, 15);
+        String imei = new String(imeiBytes);
+        lightingVolEleRecord.setLightIMEI(imei);
+
+        k += 15;
 
         //判断版本
         byte version = e0CommandData.getAddr()[4];
