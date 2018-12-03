@@ -10,10 +10,7 @@ import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.MsgQuene;
 import com.nnlightctl.net.CommandData;
-import com.nnlightctl.po.Elebox;
-import com.nnlightctl.po.EleboxExample;
-import com.nnlightctl.po.Lighting;
-import com.nnlightctl.po.LightingVolEleRecord;
+import com.nnlightctl.po.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -91,7 +88,9 @@ public class Consumer {
                                     //写入灯具终端电流电压信息
                                     lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
                                     //写入灯具信号日志
-                                    lightSignalLogMapper.insertSelective(DataTransferUtil.transToLightSignalLog(lightingVolEleRecord));
+                                    LightSignalLog lightSignalLog = DataTransferUtil.transToLightSignalLog(lightingVolEleRecord);
+                                    lightSignalLog.setOnlineState((byte)1);
+                                    lightSignalLogMapper.insertSelective(lightSignalLog);
                                 }
                             });
                         }

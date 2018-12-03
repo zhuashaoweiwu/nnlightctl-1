@@ -36,13 +36,14 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
             log.info("-------------------------------从缓存或者数据库是查询1条以上该UUID的灯具记录--------------------------------");
 
             StringBuilder updateSql = new StringBuilder();
-            updateSql.append("update nnlightctl_lighting set gmt_updated = ?, realtime_uid = ?, lighting_imei = ?, longitude = ?, latitude = ? where id = ?");
+            updateSql.append("update nnlightctl_lighting set gmt_updated = ?, realtime_uid = ?, lighting_imei = ?, longitude = ?, latitude = ?, fault_tag = ? where id = ?");
             params.clear();
             params.add(new Date());
             params.add(lighting.getRealtimeUid());
             params.add(lighting.getLightingImei());
             params.add(lighting.getLongitude());
             params.add(lighting.getLatitude());
+            params.add(lighting.getFaultTag());
             params.add(lightingList.get(0).getId());
 
             return this.jdbcTemplate.update(updateSql.toString(), params.toArray());
@@ -50,7 +51,7 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
             log.info("-------------------------------从缓存或者数据库中没有查询到该UUID的灯具记录--------------------------------");
 
             StringBuilder createSql = new StringBuilder();
-            createSql.append("insert into nnlightctl_lighting(gmt_created, gmt_updated, uid, realtime_uid, lighting_imei, longitude, latitude) values(?, ?, ?, ?, ?, ?, ?)");
+            createSql.append("insert into nnlightctl_lighting(gmt_created, gmt_updated, uid, realtime_uid, lighting_imei, longitude, latitude, fault_tag) values(?, ?, ?, ?, ?, ?, ?, ?)");
             params.clear();
             params.add(new Date());
             params.add(new Date());
@@ -59,6 +60,7 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
             params.add(lighting.getLightingImei());
             params.add(lighting.getLongitude());
             params.add(lighting.getLatitude());
+            params.add(lighting.getFaultTag());
 
             return this.jdbcTemplate.update(createSql.toString(), params.toArray());
         }
