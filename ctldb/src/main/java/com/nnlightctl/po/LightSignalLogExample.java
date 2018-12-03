@@ -745,6 +745,66 @@ public class LightSignalLogExample {
             addCriterion("signal_level not between", value1, value2, "signalLevel");
             return (Criteria) this;
         }
+
+        public Criteria andOnlineStateIsNull() {
+            addCriterion("online_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateIsNotNull() {
+            addCriterion("online_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateEqualTo(Byte value) {
+            addCriterion("online_state =", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateNotEqualTo(Byte value) {
+            addCriterion("online_state <>", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateGreaterThan(Byte value) {
+            addCriterion("online_state >", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateGreaterThanOrEqualTo(Byte value) {
+            addCriterion("online_state >=", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateLessThan(Byte value) {
+            addCriterion("online_state <", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateLessThanOrEqualTo(Byte value) {
+            addCriterion("online_state <=", value, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateIn(List<Byte> values) {
+            addCriterion("online_state in", values, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateNotIn(List<Byte> values) {
+            addCriterion("online_state not in", values, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateBetween(Byte value1, Byte value2) {
+            addCriterion("online_state between", value1, value2, "onlineState");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineStateNotBetween(Byte value1, Byte value2) {
+            addCriterion("online_state not between", value1, value2, "onlineState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

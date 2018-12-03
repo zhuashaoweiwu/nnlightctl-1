@@ -13,8 +13,6 @@ public class LightingVolEleRecord implements Serializable {
 
     private String uid;
 
-    private String lightIMEI;
-
     private Date recordDatetime;
 
     private BigDecimal voltage;
@@ -85,14 +83,6 @@ public class LightingVolEleRecord implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
-    }
-
-    public String getLightIMEI() {
-        return lightIMEI;
-    }
-
-    public void setLightIMEI(String lightIMEI) {
-        this.lightIMEI = lightIMEI;
     }
 
     public Date getRecordDatetime() {

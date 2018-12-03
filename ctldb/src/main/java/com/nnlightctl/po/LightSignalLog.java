@@ -25,6 +25,8 @@ public class LightSignalLog implements Serializable {
 
     private Byte signalLevel;
 
+    private Byte onlineState;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -107,6 +109,14 @@ public class LightSignalLog implements Serializable {
         this.signalLevel = signalLevel;
     }
 
+    public Byte getOnlineState() {
+        return onlineState;
+    }
+
+    public void setOnlineState(Byte onlineState) {
+        this.onlineState = onlineState;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -128,7 +138,8 @@ public class LightSignalLog implements Serializable {
             && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
             && (this.getSignalIntensity() == null ? other.getSignalIntensity() == null : this.getSignalIntensity().equals(other.getSignalIntensity()))
             && (this.getUnit() == null ? other.getUnit() == null : this.getUnit().equals(other.getUnit()))
-            && (this.getSignalLevel() == null ? other.getSignalLevel() == null : this.getSignalLevel().equals(other.getSignalLevel()));
+            && (this.getSignalLevel() == null ? other.getSignalLevel() == null : this.getSignalLevel().equals(other.getSignalLevel()))
+            && (this.getOnlineState() == null ? other.getOnlineState() == null : this.getOnlineState().equals(other.getOnlineState()));
     }
 
     @Override
@@ -145,6 +156,7 @@ public class LightSignalLog implements Serializable {
         result = prime * result + ((getSignalIntensity() == null) ? 0 : getSignalIntensity().hashCode());
         result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
         result = prime * result + ((getSignalLevel() == null) ? 0 : getSignalLevel().hashCode());
+        result = prime * result + ((getOnlineState() == null) ? 0 : getOnlineState().hashCode());
         return result;
     }
 
@@ -164,6 +176,7 @@ public class LightSignalLog implements Serializable {
         sb.append(", signalIntensity=").append(signalIntensity);
         sb.append(", unit=").append(unit);
         sb.append(", signalLevel=").append(signalLevel);
+        sb.append(", onlineState=").append(onlineState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

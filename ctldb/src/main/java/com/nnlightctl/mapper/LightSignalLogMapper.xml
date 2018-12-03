@@ -12,6 +12,7 @@
     <result column="signal_intensity" property="signalIntensity" jdbcType="DECIMAL" />
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="signal_level" property="signalLevel" jdbcType="TINYINT" />
+    <result column="online_state" property="onlineState" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, signal_log_date, longitude, latitude, signal_intensity, 
-    unit, signal_level
+    unit, signal_level, online_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightSignalLogExample" >
     select
@@ -112,12 +113,12 @@
     </selectKey>
     insert into nnlightctl_light_signal_log (gmt_created, gmt_updated, uid, 
       signal_log_date, longitude, latitude, 
-      signal_intensity, unit, signal_level
-      )
+      signal_intensity, unit, signal_level, 
+      online_state)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{signalLogDate,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
-      #{signalIntensity,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR}, #{signalLevel,jdbcType=TINYINT}
-      )
+      #{signalIntensity,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR}, #{signalLevel,jdbcType=TINYINT}, 
+      #{onlineState,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.LightSignalLog" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -152,6 +153,9 @@
       <if test="signalLevel != null" >
         signal_level,
       </if>
+      <if test="onlineState != null" >
+        online_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -180,6 +184,9 @@
       </if>
       <if test="signalLevel != null" >
         #{signalLevel,jdbcType=TINYINT},
+      </if>
+      <if test="onlineState != null" >
+        #{onlineState,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -222,6 +229,9 @@
       <if test="record.signalLevel != null" >
         signal_level = #{record.signalLevel,jdbcType=TINYINT},
       </if>
+      <if test="record.onlineState != null" >
+        online_state = #{record.onlineState,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -238,7 +248,8 @@
       latitude = #{record.latitude,jdbcType=VARCHAR},
       signal_intensity = #{record.signalIntensity,jdbcType=DECIMAL},
       unit = #{record.unit,jdbcType=VARCHAR},
-      signal_level = #{record.signalLevel,jdbcType=TINYINT}
+      signal_level = #{record.signalLevel,jdbcType=TINYINT},
+      online_state = #{record.onlineState,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -273,6 +284,9 @@
       <if test="signalLevel != null" >
         signal_level = #{signalLevel,jdbcType=TINYINT},
       </if>
+      <if test="onlineState != null" >
+        online_state = #{onlineState,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -286,7 +300,8 @@
       latitude = #{latitude,jdbcType=VARCHAR},
       signal_intensity = #{signalIntensity,jdbcType=DECIMAL},
       unit = #{unit,jdbcType=VARCHAR},
-      signal_level = #{signalLevel,jdbcType=TINYINT}
+      signal_level = #{signalLevel,jdbcType=TINYINT},
+      online_state = #{onlineState,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
