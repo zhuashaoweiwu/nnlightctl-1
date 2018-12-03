@@ -128,10 +128,10 @@ public class DataTransferUtil {
         int gpsByteLength = data.length - k;
         byte[] gpsByte = new byte[gpsByteLength];
         System.arraycopy(data, k, gpsByte, 0, gpsByteLength);
-        String gpsStr = new String(gpsByte, Charset.forName("UTF-8"));
-        String strLongititude = gpsStr.substring(0, gpsStr.indexOf("N"));
+        String gpsStr = new String(gpsByte);
+        String strLongititude = gpsStr.substring(gpsStr.indexOf("N") + 1, gpsStr.indexOf("E"));
         lightingVolEleRecord.setLongitude(new BigDecimal(Arithmetic.divide(strLongititude, "100")).toString());
-        String strLatitude = gpsStr.substring(gpsStr.indexOf("N") + 1, gpsStr.indexOf("E"));
+        String strLatitude = gpsStr.substring(0, gpsStr.indexOf("N"));
         lightingVolEleRecord.setLatitude(new BigDecimal(Arithmetic.divide(strLatitude, "100")).toString());
 
         return lightingVolEleRecord;
