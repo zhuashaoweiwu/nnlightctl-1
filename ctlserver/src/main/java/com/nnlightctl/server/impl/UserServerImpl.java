@@ -131,7 +131,10 @@ public class UserServerImpl implements UserServer {
                 userView.setUserType(users.get(i).getUserType());
                 if (null != department){
                     userView.setDepartmentName(department.getDepartmentName());
+                }else {
+                    userView.setDepartmentName("");
                 }
+
                 userViewList.add(userView);
             }
         }
