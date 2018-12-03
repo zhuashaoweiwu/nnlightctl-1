@@ -11,9 +11,22 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class QuartzUtil {
+
+    /**
+     *
+     * @param runnable
+     * @param period 单位秒
+     * @param params
+     */
+    public static void addJob(Runnable runnable, long period, Map<String, Object> params) {
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleAtFixedRate(runnable, 0, period, TimeUnit.SECONDS);
+    }
 
     public static void addJob(Class jobClass, Date date, Map<String, Object> params) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");

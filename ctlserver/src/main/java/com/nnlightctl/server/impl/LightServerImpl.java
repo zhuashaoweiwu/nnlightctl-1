@@ -61,6 +61,7 @@ public class LightServerImpl implements LightServer {
             ret = lightingMapper.updateByPrimaryKeySelective(lighting);
         } else {
             lighting.setGmtCreated(new Date());
+            lighting.setFaultTag((byte)2);
             ret = lightingMapper.insertSelective(lighting);
         }
         return ret;
@@ -96,6 +97,7 @@ public class LightServerImpl implements LightServer {
             lighting.setGmtCreated(new Date());
 
             lighting.setGmtUpdated(new Date());
+            lighting.setFaultTag((byte)2);
             lightingMapper.insertSelective(lighting);
         }
 

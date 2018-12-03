@@ -81,6 +81,7 @@ public class Consumer {
                             lighting.setLightingImei(lightingVolEleRecord.getLightIMEI());
                             lighting.setLongitude(lightingVolEleRecord.getLongitude());
                             lighting.setLatitude(lightingVolEleRecord.getLatitude());
+                            lighting.setFaultTag((byte)0);
 
                             transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                                 @Override
