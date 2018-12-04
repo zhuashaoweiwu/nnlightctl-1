@@ -1,9 +1,6 @@
 package com.nnlightctl.kafka.util;
 
-import com.nnlight.common.Arithmetic;
-import com.nnlight.common.ByteConvert;
-import com.nnlight.common.DateTimeUtil;
-import com.nnlight.common.LightTermianlSignalLevelUtil;
+import com.nnlight.common.*;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.LightSignalLog;
@@ -130,9 +127,9 @@ public class DataTransferUtil {
         System.arraycopy(data, k, gpsByte, 0, gpsByteLength);
         String gpsStr = new String(gpsByte);
         String strLongititude = gpsStr.substring(gpsStr.indexOf("N") + 1, gpsStr.indexOf("E"));
-        lightingVolEleRecord.setLongitude(new BigDecimal(Arithmetic.divide(strLongititude, "100")).toString());
+        lightingVolEleRecord.setLongitude(DegreeTrans.dufen2du(Arithmetic.divide(strLongititude, "100")));
         String strLatitude = gpsStr.substring(0, gpsStr.indexOf("N"));
-        lightingVolEleRecord.setLatitude(new BigDecimal(Arithmetic.divide(strLatitude, "100")).toString());
+        lightingVolEleRecord.setLatitude(DegreeTrans.dufen2du(Arithmetic.divide(strLatitude, "100")));
 
         return lightingVolEleRecord;
     }
