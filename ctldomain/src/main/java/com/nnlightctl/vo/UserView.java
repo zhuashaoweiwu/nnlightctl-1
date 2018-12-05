@@ -15,6 +15,8 @@ public class UserView extends BaseView{
 
     private Byte isRemenberPwd;
 
+    private Date loginTime;
+
     private String userName;
 
     private Byte sex;
@@ -89,6 +91,14 @@ public class UserView extends BaseView{
 
     public void setIsRemenberPwd(Byte isRemenberPwd) {
         this.isRemenberPwd = isRemenberPwd;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
     }
 
     public String getUserName() {

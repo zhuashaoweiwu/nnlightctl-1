@@ -8,6 +8,7 @@
     <result column="login_name" property="loginName" jdbcType="VARCHAR" />
     <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
     <result column="is_remenber_pwd" property="isRemenberPwd" jdbcType="TINYINT" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="TINYINT" />
     <result column="age" property="age" jdbcType="TINYINT" />
@@ -78,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, login_name, login_pwd, is_remenber_pwd, user_name, 
-    sex, age, phone, email, place, code_number, user_type, nnlightctl_department_id, 
+    id, gmt_created, gmt_updated, login_name, login_pwd, is_remenber_pwd, login_time, 
+    user_name, sex, age, phone, email, place, code_number, user_type, nnlightctl_department_id, 
     user_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.UserExample" >
@@ -118,15 +119,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_user (gmt_created, gmt_updated, login_name, 
-      login_pwd, is_remenber_pwd, user_name, 
-      sex, age, phone, email, 
-      place, code_number, user_type, 
-      nnlightctl_department_id, user_state)
+      login_pwd, is_remenber_pwd, login_time, 
+      user_name, sex, age, 
+      phone, email, place, 
+      code_number, user_type, nnlightctl_department_id, 
+      user_state)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{loginName,jdbcType=VARCHAR}, 
-      #{loginPwd,jdbcType=VARCHAR}, #{isRemenberPwd,jdbcType=TINYINT}, #{userName,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{age,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{place,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
-      #{nnlightctlDepartmentId,jdbcType=BIGINT}, #{userState,jdbcType=TINYINT})
+      #{loginPwd,jdbcType=VARCHAR}, #{isRemenberPwd,jdbcType=TINYINT}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{age,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
+      #{codeNumber,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, #{nnlightctlDepartmentId,jdbcType=BIGINT}, 
+      #{userState,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.User" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -148,6 +151,9 @@
       </if>
       <if test="isRemenberPwd != null" >
         is_remenber_pwd,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
       </if>
       <if test="userName != null" >
         user_name,
@@ -195,6 +201,9 @@
       </if>
       <if test="isRemenberPwd != null" >
         #{isRemenberPwd,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
@@ -255,6 +264,9 @@
       <if test="record.isRemenberPwd != null" >
         is_remenber_pwd = #{record.isRemenberPwd,jdbcType=TINYINT},
       </if>
+      <if test="record.loginTime != null" >
+        login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.userName != null" >
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
@@ -298,6 +310,7 @@
       login_name = #{record.loginName,jdbcType=VARCHAR},
       login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
       is_remenber_pwd = #{record.isRemenberPwd,jdbcType=TINYINT},
+      login_time = #{record.loginTime,jdbcType=TIMESTAMP},
       user_name = #{record.userName,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=TINYINT},
       age = #{record.age,jdbcType=TINYINT},
@@ -329,6 +342,9 @@
       </if>
       <if test="isRemenberPwd != null" >
         is_remenber_pwd = #{isRemenberPwd,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
@@ -370,6 +386,7 @@
       login_name = #{loginName,jdbcType=VARCHAR},
       login_pwd = #{loginPwd,jdbcType=VARCHAR},
       is_remenber_pwd = #{isRemenberPwd,jdbcType=TINYINT},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
       user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},
       age = #{age,jdbcType=TINYINT},

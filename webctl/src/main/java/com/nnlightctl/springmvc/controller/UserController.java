@@ -145,7 +145,7 @@ public class UserController extends BaseController {
     public String listOnlineUser() {
         logger.info("[POST] /api/user/listOnlineUser");
 
-        Tuple.TwoTuple<List<User>, Integer> tuple = userServer.listOnlineUser();
+        Tuple.TwoTuple<List<UserView>, Integer> tuple = userServer.listOnlineUser();
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

@@ -16,6 +16,8 @@ public class User implements Serializable {
 
     private Byte isRemenberPwd;
 
+    private Date loginTime;
+
     private String userName;
 
     private Byte sex;
@@ -84,6 +86,14 @@ public class User implements Serializable {
 
     public void setIsRemenberPwd(Byte isRemenberPwd) {
         this.isRemenberPwd = isRemenberPwd;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
     }
 
     public String getUserName() {
@@ -184,6 +194,7 @@ public class User implements Serializable {
             && (this.getLoginName() == null ? other.getLoginName() == null : this.getLoginName().equals(other.getLoginName()))
             && (this.getLoginPwd() == null ? other.getLoginPwd() == null : this.getLoginPwd().equals(other.getLoginPwd()))
             && (this.getIsRemenberPwd() == null ? other.getIsRemenberPwd() == null : this.getIsRemenberPwd().equals(other.getIsRemenberPwd()))
+            && (this.getLoginTime() == null ? other.getLoginTime() == null : this.getLoginTime().equals(other.getLoginTime()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
@@ -206,6 +217,7 @@ public class User implements Serializable {
         result = prime * result + ((getLoginName() == null) ? 0 : getLoginName().hashCode());
         result = prime * result + ((getLoginPwd() == null) ? 0 : getLoginPwd().hashCode());
         result = prime * result + ((getIsRemenberPwd() == null) ? 0 : getIsRemenberPwd().hashCode());
+        result = prime * result + ((getLoginTime() == null) ? 0 : getLoginTime().hashCode());
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
@@ -231,6 +243,7 @@ public class User implements Serializable {
         sb.append(", loginName=").append(loginName);
         sb.append(", loginPwd=").append(loginPwd);
         sb.append(", isRemenberPwd=").append(isRemenberPwd);
+        sb.append(", loginTime=").append(loginTime);
         sb.append(", userName=").append(userName);
         sb.append(", sex=").append(sex);
         sb.append(", age=").append(age);

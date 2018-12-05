@@ -23,7 +23,7 @@ public interface UserServer {
 
     int updateUserPwd(UserConditionRequest request);
 
-    Tuple.TwoTuple<List<User>, Integer> listOnlineUser();
+    Tuple.TwoTuple<List<UserView>, Integer> listOnlineUser();
 
     int updateInitUserPwd(Long userId);
 

@@ -2,10 +2,12 @@ package com.nnlightctl.server.impl;
 
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.dao.RighterMapper;
+import com.nnlightctl.dao.UserMapper;
 import com.nnlightctl.jdbcdao.LoginDao;
 import com.nnlightctl.po.Righter;
 import com.nnlightctl.po.RighterExample;
 import com.nnlightctl.po.User;
+import com.nnlightctl.po.UserExample;
 import com.nnlightctl.request.LoginRequest;
 import com.nnlightctl.server.LoginServer;
 import com.nnlightctl.server.UserServer;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +41,9 @@ public class LoginServerImpl implements LoginServer {
 
     @Autowired
     private UserServer userServer;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public int login(LoginRequest request) {
@@ -64,6 +70,14 @@ public class LoginServerImpl implements LoginServer {
         if(error != null) {//出错了
             throw new RuntimeException(error);
         }
+
+        //记录登录时间
+        User user = new User();
+        user.setGmtUpdated(new Date());
+        user.setLoginTime(new Date());
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(username);
+        userMapper.updateByExampleSelective(user, userExample);
 
         return 1;
     }

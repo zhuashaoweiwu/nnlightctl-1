@@ -17,12 +17,15 @@ import com.nnlightctl.request.UserConditionRequest;
 import com.nnlightctl.request.UserRequest;
 import com.nnlightctl.server.UserServer;
 import com.nnlightctl.vo.UserView;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -185,31 +188,29 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<User>, Integer> listOnlineUser() {
-        Tuple.TwoTuple<List<User>, Integer> tuple = new Tuple.TwoTuple<>();
-        List<User> userList = new ArrayList<>(2);
+    public Tuple.TwoTuple<List<UserView>, Integer> listOnlineUser() {
+        Tuple.TwoTuple<List<UserView>, Integer> tuple = new Tuple.TwoTuple<>();
 
-        User user = new User();
-        user.setLoginName("loginUser1");
-        user.setUserName("张三");
-        user.setCodeNumber("001");
-        user.setPlace("测试人员");
-        user.setSex((byte)0);
-        user.setUserType((byte)1);
+        List<UserView> userList = new ArrayList<>(2);
 
-        User user2 = new User();
-        user2.setLoginName("loginUser2");
-        user2.setUserName("李四");
-        user2.setCodeNumber("002");
-        user2.setPlace("测试人员2");
-        user2.setSex((byte)1);
-        user2.setUserType((byte)2);
+        PrincipalCollection principalCollection = SecurityUtils.getSubject().getPrincipals();
+        Iterator iterator = principalCollection.iterator();
+        while (iterator.hasNext()) {
+            Object loginObject = iterator.next();
+            String loginName = loginObject instanceof User ? ((User)loginObject).getLoginName() : (String)loginObject;
+            User user = getUserByLoginName(loginName);
+            UserView userView = new UserView();
+            ReflectCopyUtil.beanSameFieldCopy(user, userView);
+            Department department = departmentMapper.selectByPrimaryKey(user.getNnlightctlDepartmentId());
+            if (department != null) {
+                userView.setDepartmentName(department.getDepartmentName());
+            }
 
-        userList.add(user);
-        userList.add(user2);
+            userList.add(userView);
+        }
 
         tuple.setFirst(userList);
-        tuple.setSecond(2);
+        tuple.setSecond(userList.size());
 
         return tuple;
     }
