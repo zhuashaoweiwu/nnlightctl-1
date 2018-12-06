@@ -44,6 +44,7 @@
         <url-pattern>*.ico</url-pattern>
         <url-pattern>*.jpg</url-pattern>
         <url-pattern>/html/pages/nnlightctlweb/css/iconfont/*</url-pattern>
+        <url-pattern>/html/pages/nnlightctlweb/css/bootstrap/fonts/*</url-pattern>
     </servlet-mapping>
 
     <!-- springMVC拦截分发 -->
