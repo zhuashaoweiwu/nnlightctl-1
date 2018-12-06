@@ -39,6 +39,11 @@
         <url-pattern>*.css</url-pattern>
         <url-pattern>*.png</url-pattern>
         <url-pattern>*.gif</url-pattern>
+        <url-pattern>*.woff</url-pattern>
+        <url-pattern>*.ttf</url-pattern>
+        <url-pattern>*.ico</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>/html/pages/nnlightctlweb/css/iconfont/**</url-pattern>
     </servlet-mapping>
 
     <!-- springMVC拦截分发 -->
