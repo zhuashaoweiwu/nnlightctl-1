@@ -78,9 +78,9 @@
             y = now.getFullYear(), m = ("0" + (now.getMonth() + 1)).slice(-2), d = ("0" + now.getDate()).slice(-2);
             var param = {};
             if(type == 1){
-                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
-                var startDay = y + "-" + m + "-" + d  + " " +"00:00:01"
-                var endDay = y + "-" + m + "-" + d  + " " +now.toTimeString().substr(0, 8)
+                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
+                var startDay = y + "-" + m + "-" + d  + " " +"00:00:01";
+                var endDay = y + "-" + m + "-" + d  + " " +now.toTimeString().substr(0, 8);
                 param["startDate"] = new Date(startDay);
                 param["endDate"] = new Date(endDay);
                 $("#eleBoxListRecord").empty();
@@ -106,8 +106,8 @@
                     });
             }
             else if (type == 2){
-                var startMonth = y + "-" + m + "-" + "01"  + " " +"00:00:01"
-                var endMonth = y + "-" + m + "-" + d + " " +now.toTimeString().substr(0, 8)
+                var startMonth = y + "-" + m + "-" + "01"  + " " +"00:00:01";
+                var endMonth = y + "-" + m + "-" + d + " " +now.toTimeString().substr(0, 8);
                 param["startDate"] = new Date(startMonth);
                 param["endDate"] = new Date(endMonth);
                 $("#eleBoxListRecord").empty();
@@ -133,8 +133,8 @@
                     });
             }
             else if(type==3){
-                var startYear = y + "-" + "01" + "-" + "01"  + " " +"00:00:01"
-                var endYear = y + "-" + m + "-" + d + " " +now.toTimeString().substr(0, 8)
+                var startYear = y + "-" + "01" + "-" + "01"  + " " +"00:00:01";
+                var endYear = y + "-" + m + "-" + d + " " +now.toTimeString().substr(0, 8);
                 param["startDate"] = new Date(startYear);
                 param["endDate"] = new Date(endYear);
                 $("#eleBoxListRecord").empty();

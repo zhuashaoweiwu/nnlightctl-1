@@ -20,7 +20,7 @@ $(function(){
 
     });
 
-})
+});
 function keydown(e){
     var e = e || event;
     if (e.keyCode==13) {

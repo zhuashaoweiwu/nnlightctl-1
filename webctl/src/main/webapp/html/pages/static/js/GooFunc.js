@@ -9,8 +9,9 @@ function getElCoordinate(dom) {
     t += dom.offsetTop;
     l += dom.offsetLeft;
 	dom=dom.offsetParent;
-  }; return {
-    top: t,
+  }
+    return {
+        top: t,
     left: l
   };
 }
@@ -37,14 +38,14 @@ Date.prototype.format = function(format)
 	  //quarter  
       "q+" : Math.floor((this.getMonth()+3)/3), 
       "S" : this.getMilliseconds() //millisecond  
-   }   
+   };   
    if(/(y+)/.test(format)) format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));   
     for(var k in o)if(new RegExp("("+ k +")").test(format))   
       format = format.replace(RegExp.$1,   
         RegExp.$1.length==1 ? o[k] :    
           ("00"+ o[k]).substr((""+ o[k]).length));   
     return format;   
-}
+};
 //JS]根据格式字符串分析日期（MM与自动匹配两位的09和一位的9）
 //alert(getDateFromFormat(sDate,sFormat));
 function getDateFromFormat(dateString,formatString){

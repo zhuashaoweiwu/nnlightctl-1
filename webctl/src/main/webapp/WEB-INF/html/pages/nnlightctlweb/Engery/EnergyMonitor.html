@@ -85,12 +85,12 @@
                 }
                 ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",param,
                     function (data) {
-                        var categories = new Array();
-                        var  ele = new Array();
-                        var vol = new Array();
-                        var power = new Array();//功率
-                        var energy = new Array(); //能耗
-                        var notEnergy = new Array();//无用功
+                        var categories = [];
+                        var  ele = [];
+                        var vol = [];
+                        var power = [];//功率
+                        var energy = []; //能耗
+                        var notEnergy = [];//无用功
                         var series = [];
                         var length;
                         if(data.body.data.length < 100){
@@ -99,31 +99,31 @@
                             length = 100
                         }
                         for (var i = 0 ; i< length ; i++){
-                            var now = new Date(data.body.data[i].realtimeDate)
+                            var now = new Date(data.body.data[i].realtimeDate);
                             y = now.getFullYear(),
                                 m = ("0" + (now.getMonth() + 1)).slice(-2),
                                 d = ("0" + now.getDate()).slice(-2);
-                            var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                            var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
                             ele[i] = data.body.data[i].electricity;
                             vol[i] = data.body.data[i].voltage;
                             power[i] = data.body.data[i].eleboxPower;
-                            energy[i] = data.body.data[i].eleboxPower/10
+                            energy[i] = data.body.data[i].eleboxPower/10;
                             notEnergy[i] = 10 ;
                         }
                         //X抽第一与最后一个显示时间中间显示数
                        if (length != 0){
-                           var now = new Date(data.body.data[0].realtimeDate)
+                           var now = new Date(data.body.data[0].realtimeDate);
                            y = now.getFullYear(),
                                m = ("0" + (now.getMonth() + 1)).slice(-2),
                                d = ("0" + now.getDate()).slice(-2);
-                           var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
-                           categories[0] = timestamp
+                           var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
+                           categories[0] = timestamp;
                            if (length >= 1){
-                               var nowl = new Date(data.body.data[length-1].realtimeDate)
+                               var nowl = new Date(data.body.data[length-1].realtimeDate);
                                yl = now.getFullYear(),
                                    ml = ("0" + (now.getMonth() + 1)).slice(-2),
                                    dl = ("0" + now.getDate()).slice(-2);
-                               var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                               var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8);
                                categories[length-1] = timestampl;
                            }
                        }
@@ -287,19 +287,19 @@
                         });
                     });
 
-            })
+            });
 
             ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",{},
                 function (data) {
                     var eleboxIdFirst = data.body.data[0].id;
                     ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",{"eleboxId":eleboxIdFirst},
                         function (data) {
-                            var categories = new Array();
-                            var  ele = new Array();
-                            var vol  = new Array();
-                            var power = new Array();//功率
-                            var energy = new Array(); //能耗
-                            var notEnergy = new Array();//无用功
+                            var categories = [];
+                            var  ele = [];
+                            var vol  = [];
+                            var power = [];//功率
+                            var energy = []; //能耗
+                            var notEnergy = [];//无用功
                             var length;
                             if(data.body.data.length < 100){
                                 length =  data.body.data.length
@@ -308,11 +308,11 @@
                             }
                             for (var i = 0 ; i< length ; i++){
                                 //categories[i] = data.body.data[i].realtimeDate;
-                                var now = new Date(data.body.data[i].realtimeDate)
+                                var now = new Date(data.body.data[i].realtimeDate);
                                 y = now.getFullYear(),
                                 m = ("0" + (now.getMonth() + 1)).slice(-2),
                                 d = ("0" + now.getDate()).slice(-2);
-                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
 
                                 //categories[i] = timestamp;
                                 ele[i] = data.body.data[i].electricity;
@@ -323,18 +323,18 @@
                             }
                             //X抽第一与最后一个显示时间中间显示数
                             if (length != 0) {
-                                var now = new Date(data.body.data[0].realtimeDate)
+                                var now = new Date(data.body.data[0].realtimeDate);
                                 y = now.getFullYear(),
                                     m = ("0" + (now.getMonth() + 1)).slice(-2),
                                     d = ("0" + now.getDate()).slice(-2);
-                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
-                                categories[0] = timestamp
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8);
+                                categories[0] = timestamp;
                                 if (length >= 1) {
-                                    var nowl = new Date(data.body.data[length - 1].realtimeDate)
+                                    var nowl = new Date(data.body.data[length - 1].realtimeDate);
                                     yl = now.getFullYear(),
                                         ml = ("0" + (now.getMonth() + 1)).slice(-2),
                                         dl = ("0" + now.getDate()).slice(-2);
-                                    var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                                    var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8);
                                     categories[length - 1] = timestampl;
                                 }
                             }

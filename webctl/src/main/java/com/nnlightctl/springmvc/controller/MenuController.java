@@ -2,7 +2,6 @@ package com.nnlightctl.springmvc.controller;
 
 import com.nnlightctl.po.Righter;
 import com.nnlightctl.request.SaveUserMapRightersRequest;
-;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.MenuServer;
 import com.nnlightctl.vo.GetUserWithRighterView;

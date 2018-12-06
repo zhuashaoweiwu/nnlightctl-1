@@ -90,7 +90,7 @@
                 "bStateSave": true,
                 "ajax": function (data, callback, settings) {
                     ajaxRequest("post", "/api/energyStatistic/listLightSignalLog", param, function (data) {
-                        console.log(data)
+                        console.log(data);
                         //封装返回数据
                         var returnData = {};
                         if (data) {

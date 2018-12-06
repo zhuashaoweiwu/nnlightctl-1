@@ -32,7 +32,7 @@
         <div style="width:49%;height:270px;border:1px solid #ddd;overflow:hidden" class="f-l">
             <h3 class="f-20"><span class="pl-10">国家</span>
                 <a class="btn btn-primary radius f-r mr-10" data-title="添加国家" onclick="country_add('添加国家', 'Add-Country.html', '800', '400')" href="javascript:void(0);">
-                <i class="Hui-iconfont" onclick="ajaxRequest(post, /api/project/listcountry, [pageNumber,pageSize], backFuc)">&#xe600;</i> 添加</a>
+                <i class="Hui-iconfont" onclick="ajaxRequest(post, /api/;project/listcountry, [pageNumber,pageSize], backFuc;)">&#xe600;</i> 添加</a>
             </h3>
             <div style="overflow:scroll;height:240px;">
                 <table class="table tabCountry table-border table-bordered table-sort">
@@ -129,7 +129,7 @@
                             var country = countryArray[i];
                             if(country.mem == ''){
                                 country.mem='无';
-                            };
+                            }
                             $('<tr class="text-c">\n' +
                                 '<td class="text-c">' + country.codeNumber + '</td>\n' +
                                 '<td class="text-c">' + country.countryName + '</td>\n' +
@@ -175,7 +175,7 @@
                                 var province = provinceArray[i];
                                 if(province.mem == ''){
                                     province.mem='无';
-                                };
+                                }
                                 // alert(province);
                                 $('<tr class="text-c">\n' +
                                     '<td class="text-c">' + province.codeNumber + '</td>\n' +
@@ -222,10 +222,10 @@
                             var city = cityArray[i];
                             if(city.mem == ''){
                                 city.mem='无';
-                            };
+                            }
                             if(city.mem == null){
                                 city.mem='暂无';
-                            };
+                            }
                             // alert(province);
                             $('<tr class="text-c">\n' +
                                 '<td class="text-c">' + city.codeNumber + '</td>\n' +

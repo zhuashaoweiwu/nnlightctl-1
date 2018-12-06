@@ -102,8 +102,8 @@ function GooFlow(bgDiv,property){
 				case "DIV":return false;
 				case "I":	tar=e.target.parentNode;break;
 				case "A":	tar=e.target;
-			};
-			var type=$(tar).attr("type");
+            }
+            var type=$(tar).attr("type");
 			e.data.inthis.switchToolBtn(type);
 			return false;
 		});
@@ -235,7 +235,7 @@ function GooFlow(bgDiv,property){
 			  This.$lineMove.css({top:Y+"px"});
 		    }
 			isMove=true;
-		  }
+		  };
 		  document.onmouseup=function(e){
 			if(isMove){
 				var p=This.$lineMove.position();
@@ -493,8 +493,8 @@ GooFlow.prototype={
 			This.setName(This.$textArea.data("id"),This.$textArea.val(),"area");
 			This.$textArea.val("").removeData("id").hide();
 			return false;
-		};
-		if(!e)e=window.event;
+        }
+          if(!e)e=window.event;
 		var cursor=$(e.target).css("cursor");
 		var id=e.target.parentNode;
 		switch(cursor){
@@ -559,7 +559,7 @@ GooFlow.prototype={
 				This.$ghost.css({left:X+hack+"px",top:Y+hack+"px"});
 			}
 			isMove=true;
-		}
+		};
 		document.onmouseup=function(e){
 			This.$ghost.empty().hide();
 			document.onmousemove=null;
@@ -774,7 +774,7 @@ GooFlow.prototype={
 					Y=t.top+This.$workArea.height()-This.$workArea[0].parentNode.scrollTop-This.$nodeData[id].height;
 				This.$ghost.css({left:X+hack+"px",top:Y+hack+"px"});
 				isMove=true;
-			}
+			};
 			document.onmouseup=function(e){
 				if(isMove)This.moveNode(id,X+This.$workArea[0].parentNode.scrollLeft-t.left,Y+This.$workArea[0].parentNode.scrollTop-t.top);
 				This.$ghost.empty().hide();
@@ -913,7 +913,7 @@ GooFlow.prototype={
 					case "w-resize":This.$ghost.css({width:X-2+"px"});break;
 					case "n-resize":This.$ghost.css({height:Y-2+"px"});break;
 				}
-			}
+			};
 			document.onmouseup=function(e){
 				This.$ghost.hide();
 				if(!isMove)return;
@@ -1669,7 +1669,7 @@ GooFlow.prototype={
 			if(this.$lineData[i].type=="sl")
 				res=GooFlow.prototype.calcStartEnd(node,other);
 			else
-				res=GooFlow.prototype.calcPolyPoints(node,other,this.$lineData[i].type,this.$lineData[i].M)
+				res=GooFlow.prototype.calcPolyPoints(node,other,this.$lineData[i].type,this.$lineData[i].M);
 			if(!res)	break;
 		  }
 		  else if(this.$lineData[i].to==id){//找开始点
@@ -1990,7 +1990,7 @@ GooFlow.prototype={
 			this.$group.css({height:h*3+"px",width:w*3+"px"});
 		}
 	}
-}
+};
 GooFlow.prototype.color={};
 //将此类的构造函数加入至JQUERY对象中
 jQuery.extend({

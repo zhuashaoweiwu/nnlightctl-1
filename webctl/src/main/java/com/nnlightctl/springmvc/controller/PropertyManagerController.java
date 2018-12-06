@@ -363,7 +363,7 @@ public class PropertyManagerController extends BaseController {
         logger.info("[POST] /api/propertyManager/transferProperty");
 
         int ret = repertoryServer.updateTransferProperty(request);
-        JsonResult jsonResult = JsonResult.getSUCCESS();;
+        JsonResult jsonResult = JsonResult.getSUCCESS();
         return toJson(jsonResult);
     }
     /*

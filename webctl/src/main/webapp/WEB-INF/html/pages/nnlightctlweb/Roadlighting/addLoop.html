@@ -57,7 +57,7 @@
     <script type="text/javascript" src="../lib/layer/2.4/layer.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var doureg = /^[0-9,.]*$/ //^[-\+]?\d+(\.\d+)?$/;
+            var doureg = /^[0-9,.]*$/; //^[-\+]?\d+(\.\d+)?$/;
             var numreg = /^\d+$/;
             $("#voltage").blur(function () {
                 var a = $("#voltage").val();
@@ -65,14 +65,14 @@
                     layer.tips('请输入double类型数字', '#voltage');
                     $("#voltage-error").show();
                 } else { $("#voltage-error").hide(); }
-            })
+            });
             $("#electricity").blur(function () {
                 var a = $("#electricity").val();
                 if (!doureg.test(a) || a == "") {
                     layer.tips('请输入double类型数字', '#electricity');
                     $("#electricity-error").show();
                 } else { $("#electricity-error").hide(); }
-            })
+            });
             $("#lightCount").blur(function () {
                 var a = $("#lightCount").val();
                 if (!numreg.test(a) || a == "") {
