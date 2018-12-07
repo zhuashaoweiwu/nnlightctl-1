@@ -161,7 +161,7 @@
         //刷新场景列表
         function flushsence() {
             ajaxRequest("post", "/api/scene/listScene", {}, function (data) {
-                console.log(data);
+                console.log(data)
                 if (data) {
                     if (data.header.code == 1000) {
                         var sceneArray = data.body.data;
@@ -182,11 +182,11 @@
         //刷新场景映射列表
         function flushshortcut() {
             ajaxRequest("post", "/api/scene/listSceneShotCut", {}, function (data) {
-                console.log(data);
+                console.log(data)
                 if (data) {
                     if (data.header.code == 1000) {
                         var shortcutArray = data.body.data;
-                        console.log(shortcutArray);
+                        console.log(shortcutArray)
                         for (var i = 0; i < shortcutArray.length; ++i) {
                             var shortcut = shortcutArray[i];
                             var $OpSelect;

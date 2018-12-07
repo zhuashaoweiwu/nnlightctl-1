@@ -26,7 +26,7 @@
                 var point = new BMap.Point(result.result[0].x, result.result[0].y);
                 callback && callback(point, param);
             }
-        };
+        }
         var xyUrl = "http://api.map.baidu.com/geoconv/v1/?coords=" + point.lng + "," + point.lat + "&from=" + type + "&to=5&ak=iEWlGKfvfIdgtRo0GYimqcGzhmLvi3cb&callback=o." + callbackName;
         //动态创建script标签
         load_script(xyUrl);

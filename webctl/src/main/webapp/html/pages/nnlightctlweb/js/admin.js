@@ -164,17 +164,18 @@ function layer_show() {
 
     if (title == null || title == '') {
         title=false;
-    }
+    };
     if (url == null || url == '') {
         url="404.html";
-    }
+    };
     if (w == null || w == '') {
         w=800;
-    }
+    };
     if (h == null || h == '') {
         h=($(window).height() - 50);
-    }
-    switch (arguments.length) {
+    };
+
+	switch (arguments.length) {
 		case 4:
             layer.open({
                 type: 2,
@@ -317,7 +318,8 @@ function getHTMLDate(obj) {
     _dd = d.getDate();
     _ww = weekday[d.getDay()];
     obj.html(_yy + "年" + _mm + "月" + _dd + "日 " + _ww);
-}
+};
+
 $(function(){
 	getHTMLDate($("#top_time"));
 	//layer.config({extend: 'extend/layer.ext.js'});

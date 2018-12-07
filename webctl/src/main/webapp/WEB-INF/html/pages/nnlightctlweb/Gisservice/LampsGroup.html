@@ -93,10 +93,10 @@
           if (!idArray) {
               return;
           }
-          console.log(idArray);
+          console.log(idArray)
           ajaxRequest("post", "/api/lightGroup/deleteLightGroup", transArray({lightGroupIdArray : transArray(idArray)}), function (data) {
               if (data) {
-                  console.log(data);
+                  console.log(data)
                   if (data.header.code == 1000) {
                       searchLightGroup(1);
                   } else {
@@ -106,7 +106,7 @@
           });
       }
         var param = {};
-        $(function(){searchLightGroup(param);});
+        $(function(){searchLightGroup(param);})
         $("#btnSearch").click(function () {
             //搜索条件
             var lightGroupName = $("#lightGroupName").val().trim();
@@ -123,7 +123,7 @@
                 "ordering": false, //设置所有不排序
                 "ajax": function (data, callback, settings) {
                     ajaxRequest("post", "/api/lightGroup/listLightGroup", param, function (result) {
-                        console.log(result);
+                        console.log(result)
                         //封装返回数据
                         var returnData = {};
                         if (result) {
