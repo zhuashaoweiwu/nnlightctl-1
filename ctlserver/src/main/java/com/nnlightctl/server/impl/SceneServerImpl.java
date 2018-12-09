@@ -234,6 +234,8 @@ public class SceneServerImpl implements SceneServer {
             }
 
             if (state == (byte)1) {     //开灯状态，要关灯
+                //先关灯
+                commandServer.sendLightAdjustCommandBatchUUID(lightingUUIDList, 0);
                 //切换手动模式
                 commandServer.batchConfigTerminalAutoModel(0, lightingUUIDList);
             }

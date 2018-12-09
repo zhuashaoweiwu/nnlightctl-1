@@ -147,6 +147,7 @@ public class CommandServerImpl implements CommandServer {
         }
 
         for (String terminalUUID : terminalUUIDs) {
+            command.batchConfigTerminalAutoMode(0, lightServer.getLightingByUUID(terminalUUID).getRealtimeUid());
             command.configTerminalSwitchPolicy(switchViewList, lightServer.getLightingByUUID(terminalUUID).getRealtimeUid());
         }
     }
