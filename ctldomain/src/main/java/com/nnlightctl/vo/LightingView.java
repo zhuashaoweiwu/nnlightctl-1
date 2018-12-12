@@ -149,6 +149,16 @@ public class LightingView extends BaseView {
         this.nnlightctlRegionId = nnlightctlRegionId;
     }
 
+    public Long getNnlightctlEleboxModelLoopId() {
+        return nnlightctlEleboxModelLoopId;
+    }
+
+    public void setNnlightctlEleboxModelLoopId(Long nnlightctlEleboxModelLoopId) {
+        this.nnlightctlEleboxModelLoopId = nnlightctlEleboxModelLoopId;
+    }
+
+
+    private Long nnlightctlEleboxModelLoopId;
 
     private Long nnlightctlEleboxId;
 
