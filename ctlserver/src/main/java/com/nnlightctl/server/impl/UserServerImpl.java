@@ -18,23 +18,29 @@ import com.nnlightctl.request.UserRequest;
 import com.nnlightctl.server.UserServer;
 import com.nnlightctl.vo.UserView;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServerImpl implements UserServer {
 
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private DepartmentMapper departmentMapper;
+
+    @Autowired
+    private SessionDAO sessionDAO;
+
     @Override
     public int addOrUpdateUser(UserRequest request) {
         User user = new User();
@@ -49,7 +55,7 @@ public class UserServerImpl implements UserServer {
         if (request.getId() == null) {
             //新增
             user.setGmtCreated(new Date());
-            user.setUserState((byte)1);
+            user.setUserState((byte) 1);
 
             ret = userMapper.insertSelective(user);
         } else {
@@ -63,17 +69,18 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public int getCountUserByLoginName(String loginName){
+    public int getCountUserByLoginName(String loginName) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andLoginNameEqualTo(loginName);
-        int total =userMapper.countByExample(userExample);
+        int total = userMapper.countByExample(userExample);
         return total;
     }
+
     @Override
-    public int getCountUserByCodeNumber(String codeNumber){
+    public int getCountUserByCodeNumber(String codeNumber) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andCodeNumberEqualTo(codeNumber);
-        int total =userMapper.countByExample(userExample);
+        int total = userMapper.countByExample(userExample);
         return total;
     }
 
@@ -87,21 +94,21 @@ public class UserServerImpl implements UserServer {
         userExample.setOrderByClause("id DESC");
 
         UserConditionRequest userConditionRequest =
-                request instanceof UserConditionRequest ? (UserConditionRequest)request : null;
+                request instanceof UserConditionRequest ? (UserConditionRequest) request : null;
 
         if (userConditionRequest != null && userConditionRequest.getUserType() != null && userConditionRequest.getUserType() != -1) {
             criteria.andUserTypeEqualTo(userConditionRequest.getUserType().byteValue());
         }
-        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getCodeNumber())){
+        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getCodeNumber())) {
             criteria.andCodeNumberLike("%" + userConditionRequest.getCodeNumber() + "%");
         }
-        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getUserName())){
+        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getUserName())) {
             criteria.andUserNameLike("%" + userConditionRequest.getUserName() + "%");
         }
-        if(userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getPhone())){
+        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getPhone())) {
             criteria.andPhoneLike("%" + userConditionRequest.getPhone() + "%");
         }
-        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getLoginName())){
+        if (userConditionRequest != null && !StringUtils.isEmpty(userConditionRequest.getLoginName())) {
             criteria.andLoginNameLike("%" + userConditionRequest.getLoginName() + "%");
         }
 
@@ -112,8 +119,8 @@ public class UserServerImpl implements UserServer {
 
         List<User> users = userMapper.selectByExample(userExample);
         List<UserView> userViewList = new ArrayList<>();
-        if (!users.isEmpty()){
-            for (int i = 0 ; i < users.size() ; i++){
+        if (!users.isEmpty()) {
+            for (int i = 0; i < users.size(); i++) {
                 Department department = departmentMapper.selectByPrimaryKey(users.get(i).getNnlightctlDepartmentId());
                 UserView userView = new UserView();
                 userView.setAge(users.get(i).getAge());
@@ -132,9 +139,9 @@ public class UserServerImpl implements UserServer {
                 userView.setUserName(users.get(i).getUserName());
                 userView.setUserState(users.get(i).getUserState());
                 userView.setUserType(users.get(i).getUserType());
-                if (null != department){
+                if (null != department) {
                     userView.setDepartmentName(department.getDepartmentName());
-                }else {
+                } else {
                     userView.setDepartmentName("");
                 }
 
@@ -169,7 +176,7 @@ public class UserServerImpl implements UserServer {
 
         for (Long id : userIds) {
             User user = userMapper.selectByPrimaryKey(id);
-            user.setUserState((byte)0);
+            user.setUserState((byte) 0);
             userMapper.updateByPrimaryKeySelective(user);
         }
         return 1;
@@ -191,13 +198,12 @@ public class UserServerImpl implements UserServer {
     public Tuple.TwoTuple<List<UserView>, Integer> listOnlineUser() {
         Tuple.TwoTuple<List<UserView>, Integer> tuple = new Tuple.TwoTuple<>();
 
-        List<UserView> userList = new ArrayList<>(2);
+        List<UserView> userList = new ArrayList<>(8);
 
-        PrincipalCollection principalCollection = SecurityUtils.getSubject().getPrincipals();
-        Iterator iterator = principalCollection.iterator();
-        while (iterator.hasNext()) {
-            Object loginObject = iterator.next();
-            String loginName = loginObject instanceof User ? ((User)loginObject).getLoginName() : (String)loginObject;
+        Collection<Session> sessions = sessionDAO.getActiveSessions();
+        for (Session session : sessions) {
+            Object o = ((SimplePrincipalCollection)session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY)).getPrimaryPrincipal();
+            String loginName = (o instanceof User ? ((User)o).getLoginName() : String.valueOf(o));
             User user = getUserByLoginName(loginName);
             UserView userView = new UserView();
             ReflectCopyUtil.beanSameFieldCopy(user, userView);

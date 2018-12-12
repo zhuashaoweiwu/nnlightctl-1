@@ -6,11 +6,15 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 public class MyRealm extends AuthorizingRealm {
@@ -19,6 +23,9 @@ public class MyRealm extends AuthorizingRealm {
 
     @Autowired
     private UserServer userServer;
+
+    @Autowired
+    private SessionDAO sessionDAO;
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info("获取授权信息");
@@ -34,7 +41,18 @@ public class MyRealm extends AuthorizingRealm {
 
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 
-        User user = userServer.getUserByLoginName(upToken.getUsername());
+        String loginName = upToken.getUsername();
+
+        //避免重复登录
+//        Collection<Session> sessions = sessionDAO.getActiveSessions();
+//        for (Session session : sessions) {
+//            if (loginName.equals(String.valueOf(session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY)))) {
+//                session.setTimeout(0);
+//                break;
+//            }
+//        }
+
+        User user = userServer.getUserByLoginName(loginName);
 
         if (user == null) {
             throw new UnknownAccountException();

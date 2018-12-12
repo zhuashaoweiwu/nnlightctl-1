@@ -46,13 +46,31 @@
             </value>
         </property>
     </bean>
-    <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+
+    <!-- 会话验证调度器 -->
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <!-- 设置调度时间间隔，单位毫秒，默认就是1小时,  半小时:1800000 -->
+        <property name="interval" value="1800000"/>
+        <!-- 设置会话验证调度器进行会话验证时的会话管理器 -->
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="1800000" />
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <property name="sessionDAO" ref="sessionDAO"/>
     </bean>
 
     <!-- 定义安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- 注入realm -->
         <property name="realm" ref="myRealm"></property>
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <bean id="lifecycleBeanPostProcessor"
