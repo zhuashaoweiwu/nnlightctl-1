@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.*;
@@ -125,6 +126,11 @@ public class NettyClientCommand implements Command {
     @Override
     public void batchConfigTerminalPowerType(int powerType, List<String> realtimeUUIDs) {
         context.batchConfigTerminalPowerType(powerType, realtimeUUIDs);
+    }
+
+    @Override
+    public void batchUpdateFireware(List<String> realtimeUUIDs, String version, int packageNumber, int lastPackageSize) {
+        context.batchUpdateFireware(realtimeUUIDs, version, packageNumber, lastPackageSize);
     }
 
     @Override

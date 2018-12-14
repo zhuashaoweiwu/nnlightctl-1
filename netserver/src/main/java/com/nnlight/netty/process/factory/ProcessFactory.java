@@ -14,6 +14,10 @@ public class ProcessFactory {
             case (byte) 0xc2:
                 return c2;
 
+                //上层客户端发送升级固件指令
+            case (byte)0xc3:
+                return c3;
+
                 //重启复位指令
             case (byte)0xc4:
                 return c4;
@@ -122,6 +126,7 @@ public class ProcessFactory {
 
     private static final Process c1 = new C1Process();
     private static final Process c2 = new C2Process();
+    private static final Process c3 = new C3Process();
     private static final Process c4 = new C4Process();
     private static final Process c5 = new C5Process();
     private static final Process c6 = new C6Process();

@@ -116,6 +116,12 @@ public class Context {
         }
     }
 
+    public void batchUpdateFireware(List<String> realtimeUUIDs, String version, int packageNumber, int lastPackageSize) {
+        for (String realtimeUUID : realtimeUUIDs) {
+            channelHandlerContext.writeAndFlush(CommandData.getC3CommandData(realtimeUUID, version, packageNumber, lastPackageSize));
+        }
+    }
+
     public void commandReplyTerminal(byte control, Boolean success) {
         channelHandlerContext.writeAndFlush(CommandData.getB80ReplyCommandData(control, success));
     }

@@ -1,5 +1,8 @@
 package com.nnlightctl.server.impl;
 
+import com.nnlight.common.ArrayUtil;
+import com.nnlight.common.CRCUtil;
+import com.nnlight.common.Constants;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
@@ -11,23 +14,32 @@ import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
+import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.server.CommandServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.server.SceneServer;
+import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
+import org.apache.avro.generic.GenericData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @Service
 public class CommandServerImpl implements CommandServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommandServerImpl.class);
 
     @Autowired
     private LightServer lightServer;
@@ -331,5 +343,102 @@ public class CommandServerImpl implements CommandServer {
             //下发策略
             configTerminalSwitchPolicyBatch(switchTaskList, lightingUUIDList);
         }
+    }
+
+    private String getSLCFileName(int n) {
+        String numStr = String.valueOf(n);
+        int zeroNumber = 4 - numStr.length();
+        for (int i = 0; i < zeroNumber; ++i) {
+            numStr = "0" + numStr;
+        }
+
+        return "SLC" + numStr + ".bin";
+    }
+
+    @Override
+    public int updateFireware(UpdateFirewareCommandRequest request, HttpServletRequest servletRequest) {
+        String userHomePath = System.getProperty("user.home") + File.separator + Constants.USERHOME_FIREWARE
+                + File.separator + Constants.USERHOME_FIREWARE_FIREWAREBACKUP;
+        File file = new File(userHomePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        String saveFirewareFilePath = userHomePath + File.separator + request.getUpdateFireware().getOriginalFilename();
+        File saveFirewareFile = new File(saveFirewareFilePath);
+
+        try {
+            request.getUpdateFireware().transferTo(saveFirewareFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //切分固件文件
+        String rootAbsolutePath = servletRequest.getSession().getServletContext().getRealPath("/");
+        String versionDir = "V" + request.getVersion() + request.getAspect();
+        String dir = rootAbsolutePath + File.separator + "hardware" + File.separator + "SLC"
+                + File.separator + versionDir + File.separator;
+        File mkDirFile = new File(dir);
+        if (!mkDirFile.exists()) {
+            mkDirFile.mkdirs();
+        }
+
+        long fileSize = saveFirewareFile.length();
+        long number = fileSize / Constants.BATCH_SIZE;
+        long yu = fileSize % Constants.BATCH_SIZE;
+        if (yu > 0) {
+            ++number;
+        }
+
+        int lastPackageSize = 0;
+
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(saveFirewareFile, "r")) {
+            for (int i = 0; i < number; ++i) {
+                byte[] buffer = new byte[Constants.BATCH_SIZE];
+                randomAccessFile.seek(i * Constants.BATCH_SIZE);
+                int n = randomAccessFile.read(buffer);
+                //小文件CRC16验证2字节
+                byte[] crc16bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(CRCUtil.get16CRC(buffer)));
+                byte[] combineBytes = new byte[n + crc16bytes.length];
+                System.arraycopy(buffer, 0, combineBytes, 0, n);
+                System.arraycopy(crc16bytes, 0, combineBytes, n, crc16bytes.length);
+
+                byte[] writeBuffer = combineBytes;
+
+                if (i == number - 1) {
+                    //全部CRC32验证
+                    randomAccessFile.seek(0);
+                    byte[] totalBuffer = new byte[(int)saveFirewareFile.length()];
+                    int k = randomAccessFile.read(totalBuffer);
+                    byte[] crc32Bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(CRCUtil.get32CRC(totalBuffer)));
+                    //扩展最后一个包
+                    byte[] lastCombineBytes = new byte[combineBytes.length + 4];
+                    System.arraycopy(combineBytes, 0, lastCombineBytes, 0, combineBytes.length);
+                    System.arraycopy(crc32Bytes, 0, lastCombineBytes, combineBytes.length, 4);
+
+                    writeBuffer = lastCombineBytes;
+                    lastPackageSize = writeBuffer.length;
+                }
+                //小文件路径
+                String piecePath = dir + File.separator + getSLCFileName(i);
+                OutputStream outputStream = new FileOutputStream(piecePath);
+                outputStream.write(writeBuffer, 0, writeBuffer.length);
+                outputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            logger.error(e.getMessage());
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
+
+        //批量发送E3指令到指定的UUID终端
+        List<String> uuidList = request.getUuids();
+        List<String> realtimeUUIDs = new ArrayList<>(8);
+        for (String uuid : uuidList) {
+            realtimeUUIDs.add(lightServer.getLightingByUUID(uuid).getRealtimeUid());
+        }
+        command.batchUpdateFireware(realtimeUUIDs, request.getVersion(), (int)number, lastPackageSize);
+
+        return 1;
     }
 }

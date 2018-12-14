@@ -2,7 +2,9 @@ package com.nnlightctl.server;
 
 import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.SwitchTask;
+import com.nnlightctl.request.UpdateFirewareCommandRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface CommandServer {
@@ -33,4 +35,5 @@ public interface CommandServer {
     void batchConfigWorkModel(List<Long> lightIds);
     void batchConfigTerminalPowerType(List<String> terminalUUIDs, int powerType);
     void batchExecScene(List<Long> sceneIds);
+    int updateFireware(UpdateFirewareCommandRequest request, HttpServletRequest servletRequest);
 }

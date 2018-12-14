@@ -3,6 +3,7 @@ package com.nnlightctl.springmvc.controller;
 import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
+import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.CommandServer;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -354,5 +356,20 @@ public class CommandController extends BaseController {
         logger.info("[POST] /api/command/batchExecScene");
 
         commandServer.batchExecScene(request.getSceneIds());
+    }
+
+    @RequestMapping("updateFireware")
+    public String updateFireware(UpdateFirewareCommandRequest request, HttpServletRequest servletRequest) {
+        logger.info("[POST] /api/command/updateFireware");
+
+        int ret = commandServer.updateFireware(request, servletRequest);
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
     }
 }

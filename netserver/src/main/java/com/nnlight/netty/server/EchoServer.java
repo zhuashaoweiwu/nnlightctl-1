@@ -458,4 +458,20 @@ public class EchoServer {
         }
     }
 
+    /**
+     * 升级固件指令E3
+     * @param realtime_id
+     * @param version
+     * @param packageNumber
+     * @param lastPackageSize
+     */
+    public void updateFireware(String realtime_id, short version, short packageNumber, byte lastPackageSize) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(realtime_id)) {
+                entry.getValue().getContext().writeAndFlush(CommandData.getUpdateFirewareCommand(version, packageNumber, lastPackageSize));
+                break;
+            }
+        }
+    }
+
 }

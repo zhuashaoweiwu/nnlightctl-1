@@ -370,6 +370,58 @@
     <hr/>
     <br/>
 
+    <form id="updateFirewareForm" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-sm-1">
+                <label class="form-control">固件升级：</label>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="terminalUpWareUUID" class="col-md-12 control-label">升级固件UUID：</label>
+                    <div class="input-group col-md-12">
+                        <input id="terminalUpWareUUID" name="uuids[0]" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="version" class="col-md-12 control-label">版本：</label>
+                    <div class="input-group col-md-12">
+                        <input id="version" name="version" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="aspect" class="col-md-12 control-label">AB面：</label>
+                    <div class="input-group col-md-12">
+                        <input id="aspect" name="aspect" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="fireware" class="col-md-5 control-label">上传固件：</label>
+                    <div class="input-group col-md-12">
+                        <input id="fireware" name="updateFireware" class="form-control" size="36" type="file" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-primary" id="updateFirewareBtn">上传</button>
+            </div>
+        </div>
+    </form>
+
+    <br/>
+    <hr/>
+    <br/>
+
     <div class="col-sm-2">
         <div class="form-group">
             <label for="lightId" class="col-md-3 control-label">指令D2：</label>
@@ -457,6 +509,7 @@
     <br/>
     <hr/>
     <br/>
+
 
 </div>
 </div>
@@ -702,6 +755,25 @@
             "lightUUIDs[0]": $("#terminalModelUUID").val().trim()
         }, function () {
 
+        });
+    });
+
+    //上传升级固件
+    $("#updateFirewareBtn").click(function () {
+        $.ajax({
+            url : "/nnlightctl/api/command/updateFireware",
+            type : "post",
+            data: new FormData($('#updateFirewareForm')[0]),
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success : function(data) {
+                if (data) {
+                    if (data.header.code == 1000) {
+                        console.log("上传固件成功！");
+                    }
+                }
+            }
         });
     });
 

@@ -42,6 +42,7 @@
                 /html/pages/nnlightctlweb/Index.html = user
                 /html/** = anon
                 /api/** = anon
+                /hardware/** = anon
                 /** = user
             </value>
         </property>

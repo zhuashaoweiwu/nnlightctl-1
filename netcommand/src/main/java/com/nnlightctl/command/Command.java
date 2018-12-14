@@ -21,6 +21,7 @@ public interface Command {
     void configTerminalAutoMode(int mode);
     void batchConfigTerminalAutoMode(int model, String realtimeUUID);
     void batchConfigTerminalPowerType(int powerType, List<String> realtimeUUIDs);
+    void batchUpdateFireware(List<String> realtimeUUIDs, String version, int packageNumber, int lastPackageSize);
     //模块命令
     D0Response getModelState(String gatewayRealtimeUUID, String modelUUID);
     void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState);

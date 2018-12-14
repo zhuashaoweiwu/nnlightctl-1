@@ -29,11 +29,11 @@
     <div id="map" style="position:relative;"></div>
     <ul class="leftmaptab ml-40 mt-40">
         <li class="tab1"><a href="javascript:void(0);"
-                            onclick="LampsGroup('灯具分组', 'LampsGroup.html', '1200', '700')"><span>灯具分组</span></a></li>
+                            onclick="LampsGroup('灯具分组', 'LampsGroup.html', '800', '550')"><span>灯具分组</span></a></li>
         <li class="tab2"><a href="javascript:void(0);"
-                            onclick="TaskSwitch('任务开关', 'TaskSwitch.html', '1200', '700')"><span>任务开关</span></a></li>
+                            onclick="TaskSwitch('任务开关', 'TaskSwitch.html', '800', '550')"><span>任务开关</span></a></li>
         <li class="tab3"><a href="javascript:void(0);"
-                            onclick="Scene('场景', 'Scene.html', '1200', '700')"><span>场景</span></a></li>
+                            onclick="Scene('场景', 'Scene.html', '800', '550')"><span>场景</span></a></li>
         <!--<li class="tab4"><a href="javascript:void(0);"
                             onclick="Control('控制柜', 'Control.html', '1200', '600')"><span>控制</span></a></li>
         <li class="tab5"><a href="javascript:void(0);"
@@ -44,7 +44,7 @@
            onclick="ShortcutKey('快捷键', 'ShortcutKey.html', '700', '320')"><i class="Hui-iconfont">&#xe632;</i><span
                 class="pl-10">快捷键</span></a>
         <a href="javascript:void(0);" class="btn btn-warning"
-           onclick="AlertInfo('警报信息', 'AlertInfo.html', '1060', '600')"><i class="Hui-iconfont">&#xe600;</i><span
+           onclick="AlertInfo('警报信息', 'AlertInfo.html', '800', '550')"><i class="Hui-iconfont">&#xe600;</i><span
                 class="pl-10">警报信息</span></a>
 
     </div>
@@ -65,17 +65,35 @@
 
     //灯具分组
     function LampsGroup(title, url, w, h) {
-        layer_show(title, url, w, h);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url 
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
     }
 
     //任务开关
     function TaskSwitch(title, url, w, h) {
-        layer_show(title, url, w, h);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
     }
 
     //场景
     function Scene(title, url, w, h) {
-        layer_show(title, url, w, h);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
     }
 
     //控制
@@ -96,7 +114,13 @@
 
     //警报信息
     function AlertInfo(title, url, w, h) {
-        layer_show(title, url, w, h);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
     }
 
     var eleboxArray = null;
@@ -244,6 +268,7 @@
 
                     for (var i = 0; i < lightArray.length; ++i) {
                         var light = lightArray[i];
+                        console.log("添加回路id[" + light.nnlightctlEleboxModelLoopId + "]下的灯具id[" + light.id + "]到地图");
                         addMarker(new BMap.Point(light.longitude, light.latitude), true, light.id, light.faultTag);
                     }
 
@@ -301,7 +326,7 @@
 
                     for (var i = 0; i < modelLoopArray.length; ++i) {
                         var modelLoop = modelLoopArray[i];
-
+                        console.log("获取模块回路id为[" + modelLoop.id + "]的灯具信息");
                         flushModelLoopLight(modelLoop.id);
                     }
                 }
@@ -331,7 +356,12 @@
     /**
      * 获取项目下全部控制柜集合
      */
-    function flushElebox() {
+    function flushElebox(isInit) {
+        //消除地图上全部覆盖物
+        if (map) {
+            map.clearOverlays();
+        }
+
         var projectId = editModel(window.location.href);
 
         ajaxRequest("post", "/api/gis/listElebox", {"projectId": projectId}, function (data) {
@@ -344,7 +374,7 @@
                         var point = new BMap.Point(eleboxArray[i].longitude, eleboxArray[i].latitude);
                         addMarker(point, false, eleboxArray[i].id);
 
-                        if (i == 0) {
+                        if (i == 0 && isInit) {
                             map.centerAndZoom(point, 15);
                         }
 
@@ -368,7 +398,11 @@
         map.addControl(mapType1);
         map.enableScrollWheelZoom(true);
 
-        flushElebox();
+        var timer = setInterval(function () {
+            flushElebox(false);
+        }, 1000 * 60);
+
+        flushElebox(true);
     }
 
     $(function () {

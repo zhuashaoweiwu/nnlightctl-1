@@ -291,6 +291,29 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getUpdateFirewareCommand(short version, short packageNumber, byte lastPackageSize) {
+        CommandData commandData = new CommandData();
+        commandData.setControl((byte)0xe3);
+        commandData.setDataLength((byte)5);
+
+        byte[] data = new byte[5];
+
+        int k = 0;
+
+        System.arraycopy(ByteConvert.shortToBytes(version), 0, data, k, 2);
+        k += 2;
+
+        System.arraycopy(ByteConvert.shortToBytes(packageNumber), 0, data, k, 2);
+        k += 2;
+
+        data[k++] = lastPackageSize;
+
+        commandData.setData(data);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -653,6 +676,50 @@ public class CommandData implements Serializable {
 
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    public static CommandData getC3CommandData(String realtimeUUID, String version, int packageNumber, int lastPackageSize) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0xc3);
+
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
+
+        String[] versionArray = version.split("\\.");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String v : versionArray) {
+            stringBuilder.append(v);
+        }
+
+        byte[] versionBytes = ByteConvert.shortToBytes(Short.parseShort(stringBuilder.toString()));
+
+        byte[] packageNumberBytes = ByteConvert.shortToBytes((short)packageNumber);
+        byte[] lastPackageSizeBytes = new byte[] {(byte)lastPackageSize};
+
+        int dataLength = realtimeUUIDBytes.length + versionBytes.length + packageNumberBytes.length + lastPackageSizeBytes.length;
+
+        commandData.setDataLength((byte)dataLength);
+
+        byte[] data = new byte[dataLength];
+
+        int k = 0;
+
+        System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
+        k += realtimeUUIDBytes.length;
+
+        System.arraycopy(versionBytes, 0, data, k, versionBytes.length);
+        k += versionBytes.length;
+
+        System.arraycopy(packageNumberBytes, 0, data, k, packageNumberBytes.length);
+        k += packageNumberBytes.length;
+
+        System.arraycopy(lastPackageSizeBytes, 0, data, k, lastPackageSizeBytes.length);
+        k += lastPackageSizeBytes.length;
+
+        commandData.setData(data);
+        commandData.resetCheck();
 
         return commandData;
     }
