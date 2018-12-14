@@ -22,13 +22,24 @@ public class CRCUtil {
             }
         }
 
-        return Integer.toHexString(CRC);
+        String hexStr = Integer.toHexString(CRC);
+        int zeroCount = 4 - hexStr.length();
+        for (int k = 0; k < zeroCount; ++k) {
+            hexStr = "0" + hexStr;
+        }
+
+        return hexStr;
     }
 
     public static String get32CRC(byte[] bytes) {
         CRC32 crc32 = new CRC32();
         crc32.update(bytes);
-        return Long.toHexString(crc32.getValue());
+        String crc32HexStr = Long.toHexString(crc32.getValue());
+        int zeroCount = 8 - crc32HexStr.length();
+        for (int k = 0; k < zeroCount; ++k) {
+            crc32HexStr = "0" + crc32HexStr;
+        }
+        return crc32HexStr;
     }
 
     public static void main(String[] args) {

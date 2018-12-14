@@ -397,8 +397,12 @@ public class CommandServerImpl implements CommandServer {
                 byte[] buffer = new byte[Constants.BATCH_SIZE];
                 randomAccessFile.seek(i * Constants.BATCH_SIZE);
                 int n = randomAccessFile.read(buffer);
+                logger.info("拆分固件读取字节数：[" + i + "=" + n + "]");
                 //小文件CRC16验证2字节
-                byte[] crc16bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(CRCUtil.get16CRC(buffer)));
+                String crc16Str = CRCUtil.get16CRC(buffer);
+                logger.info("拆分固件CRC16验证字符串：[" + i + "=" + crc16Str + "]");
+                byte[] crc16bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(crc16Str));
+                logger.info("拆分固件CRC16验证字节数：[" + i + "=" + crc16bytes.length + "]");
                 byte[] combineBytes = new byte[n + crc16bytes.length];
                 System.arraycopy(buffer, 0, combineBytes, 0, n);
                 System.arraycopy(crc16bytes, 0, combineBytes, n, crc16bytes.length);
@@ -422,6 +426,7 @@ public class CommandServerImpl implements CommandServer {
                 //小文件路径
                 String piecePath = dir + File.separator + getSLCFileName(i);
                 OutputStream outputStream = new FileOutputStream(piecePath);
+                logger.info("拆分固件加验证要写入总字节数：[" + i + "=" + writeBuffer.length + "]");
                 outputStream.write(writeBuffer, 0, writeBuffer.length);
                 outputStream.close();
             }
