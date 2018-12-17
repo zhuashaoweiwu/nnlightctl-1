@@ -6,6 +6,8 @@ import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
+import com.nnlightctl.jdbcdao.LightSignalRecordDao;
+import com.nnlightctl.jdbcdao.LightingVolEleRecordDao;
 import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.MsgQuene;
@@ -54,6 +56,12 @@ public class Consumer {
     @Autowired
     private MsgQuene msgQuene;
 
+    @Autowired
+    private LightingVolEleRecordDao lightingVolEleRecordDao;
+
+    @Autowired
+    private LightSignalRecordDao lightSignalRecordDao;
+
     @PostConstruct
     public void consumer() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -86,11 +94,13 @@ public class Consumer {
                                     //映射终端与数据库灯具
                                     lightMapNetDao.mapLightingNet(lighting);
                                     //写入灯具终端电流电压信息
-                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+                                    lightingVolEleRecordDao.addLightingVolEleRecord(lightingVolEleRecord);
+//                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
                                     //写入灯具信号日志
                                     LightSignalLog lightSignalLog = DataTransferUtil.transToLightSignalLog(lightingVolEleRecord);
                                     lightSignalLog.setOnlineState((byte)1);
-                                    lightSignalLogMapper.insertSelective(lightSignalLog);
+//                                    lightSignalLogMapper.insertSelective(lightSignalLog);
+                                    lightSignalRecordDao.addLightSignalRecord(lightSignalLog);
                                 }
                             });
                         }

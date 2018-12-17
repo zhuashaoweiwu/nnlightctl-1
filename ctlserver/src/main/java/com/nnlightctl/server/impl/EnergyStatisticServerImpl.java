@@ -9,6 +9,7 @@ import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.EnergyStatisticDao;
+import com.nnlightctl.jdbcdao.LightSignalRecordDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.server.EnergyStatisticServer;
@@ -42,6 +43,8 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     private LightingVolEleRecordMapper lightingVolEleRecordMapper;
     @Autowired
     private LightSignalLogMapper lightSignalLogMapper;
+    @Autowired
+    private LightSignalRecordDao lightSignalRecordDao;
 
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest) {
@@ -153,7 +156,8 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
                             lightSignalLog.setUnit("db");
                             lightSignalLog.setOnlineState((byte) 0);
 
-                            lightSignalLogMapper.insertSelective(lightSignalLog);
+//                            lightSignalLogMapper.insertSelective(lightSignalLog);
+                            lightSignalRecordDao.addLightSignalRecord(lightSignalLog);
                         }
                     } catch (Exception e) {
                         log.error(e.getMessage());
