@@ -329,5 +329,11 @@
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="MySql" identity="true" />
         </table>
+        <table tableName="nnlightctl_fireware_upload_record" domainObjectName="FirewareUploadRecord"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
     </context>
 </generatorConfiguration>

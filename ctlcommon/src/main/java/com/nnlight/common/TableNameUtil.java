@@ -20,14 +20,14 @@ public class TableNameUtil {
         ResultSet tabs = null;
         try {
             DatabaseMetaData dbMetaData = conn.getMetaData();
-            String[]   types   =   { "TABLE" };
+            String[] types = {"TABLE"};
             tabs = dbMetaData.getTables(null, null, tableName, types);
             if (tabs.next()) {
                 return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             tabs.close();
             conn.close();
         }
