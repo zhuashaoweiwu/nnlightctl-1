@@ -373,17 +373,17 @@
     <form id="updateFirewareForm" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm-1">
-                <label class="form-control">固件升级：</label>
+                <label class="form-control">固件文件上传：</label>
             </div>
 
-            <div class="col-sm-3">
+            <!--<div class="col-sm-3">
                 <div class="form-group">
                     <label for="terminalUpWareUUID" class="col-md-12 control-label">升级固件UUID：</label>
                     <div class="input-group col-md-12">
                         <input id="terminalUpWareUUID" name="uuids[0]" class="form-control" size="36" type="text" value="">
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div class="col-sm-2">
                 <div class="form-group">
@@ -417,6 +417,43 @@
             </div>
         </div>
     </form>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- E3固件升级指令 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">固件升级：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="terminalUpWareUUID" class="col-md-12 control-label">升级固件UUID：</label>
+                <div class="input-group col-md-12">
+                    <input id="terminalUpWareUUID" name="uuids[0]" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="firewareSelect" class="col-md-5 control-label">升级固件：</label>
+                <div class="input-group col-md-12">
+                    <select id="firewareSelect" class="form-control">
+                        <option value="0">选择一个版本的固件</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="invokeUpdateFirewareBtn">升级固件</button>
+        </div>
+
+
+    </div>
 
     <br/>
     <hr/>
@@ -775,6 +812,37 @@
                 }
             }
         });
+    });
+
+    //更新固件上传记录下拉列表
+    function flushFirewareSelect() {
+        $.post("/nnlightctl/api/command/listFirewareUploadRecord", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var firewareUploadRecordArray = data.body.data;
+                    var $uploadFirewareSelect = $("#firewareSelect");
+                    for (var i = 0; i < firewareUploadRecordArray.length; ++i) {
+                        var firewareUploadRecord = firewareUploadRecordArray[i];
+                        $('<option value="'+firewareUploadRecord.id+'">'+firewareUploadRecord.firewareVersion+firewareUploadRecord.persist1+'</option>').appendTo($uploadFirewareSelect);
+                    }
+                }
+            }
+        });
+    }
+
+    flushFirewareSelect();
+    
+    $("#invokeUpdateFirewareBtn").click(function () {
+        $.post("/nnlightctl/api/command/invokeFirewareUpdateUUID",
+            {"lightUUIDs[0]" : $("#terminalUpWareUUID").val().trim(), "uploadFirewareRecordId" : $("#firewareSelect").val()}, function (data) {
+                if (data) {
+                    if (data.header.code == 1000) {
+                        console.log("升级固件成功");
+                    } else {
+                        console.log(data.header.msg);
+                    }
+                }
+            });
     });
 
 </script>

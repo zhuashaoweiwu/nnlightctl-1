@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import cn.hutool.core.io.FileUtil;
 import com.nnlight.common.ArrayUtil;
 import com.nnlight.common.CRCUtil;
 import com.nnlight.common.Constants;
@@ -9,11 +10,15 @@ import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
+import com.nnlightctl.dao.FirewareUploadRecordMapper;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.po.FirewareUploadRecord;
+import com.nnlightctl.po.FirewareUploadRecordExample;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
+import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.server.CommandServer;
 import com.nnlightctl.server.EleboxModelServer;
@@ -21,9 +26,6 @@ import com.nnlightctl.server.LightServer;
 import com.nnlightctl.server.SceneServer;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
-import io.netty.buffer.ByteBuf;
-import io.netty.util.CharsetUtil;
-import org.apache.avro.generic.GenericData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,8 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 @Service
 public class CommandServerImpl implements CommandServer {
@@ -52,6 +54,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private SceneServer sceneServer;
+
+    @Autowired
+    private FirewareUploadRecordMapper firewareUploadRecordMapper;
 
     private final Command command;
 
@@ -382,6 +387,7 @@ public class CommandServerImpl implements CommandServer {
         if (!mkDirFile.exists()) {
             mkDirFile.mkdirs();
         }
+        FileUtil.clean(mkDirFile);
 
         long fileSize = saveFirewareFile.length();
         long number = fileSize / Constants.BATCH_SIZE;
@@ -436,14 +442,39 @@ public class CommandServerImpl implements CommandServer {
             logger.error(e.getMessage());
         }
 
-        //批量发送E3指令到指定的UUID终端
-        List<String> uuidList = request.getUuids();
+        //插入一条固件上传记录
+        FirewareUploadRecord firewareUploadRecord = new FirewareUploadRecord();
+        firewareUploadRecord.setGmtCreated(new Date());
+        firewareUploadRecord.setGmtUpdated(new Date());
+        firewareUploadRecord.setFirewareVersion(request.getVersion());
+        firewareUploadRecord.setPackageNumber((short)number);
+        firewareUploadRecord.setLastPackageSize((byte)lastPackageSize);
+        firewareUploadRecord.setPersist1(request.getAspect());
+        this.firewareUploadRecordMapper.insertSelective(firewareUploadRecord);
+
+        return 1;
+    }
+
+    @Override
+    public List<FirewareUploadRecord> listFirewareUploadRecord() {
+        return firewareUploadRecordMapper.selectByExample(new FirewareUploadRecordExample());
+    }
+
+    @Override
+    public void batchInvokeFirewareUpdateUUID(CommandRequest request) {
+        List<String> uuidList = request.getLightUUIDs();
+        Long uploadFirewareId = request.getUploadFirewareRecordId();
+
+        if (uuidList == null || uuidList.size() < 1 || uploadFirewareId < 1) {
+            throw new RuntimeException("参数错误！");
+        }
+
+        FirewareUploadRecord firewareUploadRecord = this.firewareUploadRecordMapper.selectByPrimaryKey(uploadFirewareId);
         List<String> realtimeUUIDs = new ArrayList<>(8);
         for (String uuid : uuidList) {
             realtimeUUIDs.add(lightServer.getLightingByUUID(uuid).getRealtimeUid());
         }
-        command.batchUpdateFireware(realtimeUUIDs, request.getVersion(), (int)number, lastPackageSize);
-
-        return 1;
+        command.batchUpdateFireware(realtimeUUIDs, firewareUploadRecord.getFirewareVersion(), firewareUploadRecord.getPackageNumber(),
+                firewareUploadRecord.getLastPackageSize());
     }
 }

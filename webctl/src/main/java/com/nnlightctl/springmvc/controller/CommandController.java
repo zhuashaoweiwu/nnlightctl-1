@@ -1,6 +1,7 @@
 package com.nnlightctl.springmvc.controller;
 
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.po.FirewareUploadRecord;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
@@ -371,5 +372,26 @@ public class CommandController extends BaseController {
         }
 
         return toJson(jsonResult);
+    }
+
+    @RequestMapping("listFirewareUploadRecord")
+    public String listFirewareUploadRecord() {
+        logger.info("[POST] /api/command/listFirewareUploadRecord");
+
+        List<FirewareUploadRecord> firewareUploadRecordList = commandServer.listFirewareUploadRecord();
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(firewareUploadRecordList);
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("invokeFirewareUpdateUUID")
+    public String invokeFirewareUpdateUUID(CommandRequest request) {
+        logger.info("[POST] /api/command/invokeFirewareUpdateUUID");
+
+        commandServer.batchInvokeFirewareUpdateUUID(request);
+
+        return toJson(JsonResult.getSUCCESS());
     }
 }

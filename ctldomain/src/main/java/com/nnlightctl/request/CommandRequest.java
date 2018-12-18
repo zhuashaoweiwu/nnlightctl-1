@@ -124,6 +124,16 @@ public class CommandRequest {
         this.sceneIds = sceneIds;
     }
 
+    public Long getUploadFirewareRecordId() {
+        return uploadFirewareRecordId;
+    }
+
+    public void setUploadFirewareRecordId(Long uploadFirewareRecordId) {
+        this.uploadFirewareRecordId = uploadFirewareRecordId;
+    }
+
+
+    private Long uploadFirewareRecordId;
 
     private List<Long> sceneIds;
 
