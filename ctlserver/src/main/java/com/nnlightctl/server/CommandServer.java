@@ -40,4 +40,5 @@ public interface CommandServer {
     int updateFireware(UpdateFirewareCommandRequest request, HttpServletRequest servletRequest);
     List<FirewareUploadRecord> listFirewareUploadRecord();
     void batchInvokeFirewareUpdateUUID(CommandRequest request);
+    void batchInvokeFirewareUpdateId(CommandRequest request);
 }

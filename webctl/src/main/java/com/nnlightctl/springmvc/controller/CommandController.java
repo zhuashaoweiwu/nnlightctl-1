@@ -394,4 +394,13 @@ public class CommandController extends BaseController {
 
         return toJson(JsonResult.getSUCCESS());
     }
+
+    @RequestMapping("invokeFirewareUpdateId")
+    public String invokeFirewareUpdateId(CommandRequest request) {
+        logger.info("[POST] /api/command/invokeFirewareUpdateId");
+
+        commandServer.batchInvokeFirewareUpdateId(request);
+
+        return toJson(JsonResult.getSUCCESS());
+    }
 }

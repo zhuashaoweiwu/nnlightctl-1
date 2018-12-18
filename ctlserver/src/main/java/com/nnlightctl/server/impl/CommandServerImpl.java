@@ -20,10 +20,7 @@ import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
-import com.nnlightctl.server.CommandServer;
-import com.nnlightctl.server.EleboxModelServer;
-import com.nnlightctl.server.LightServer;
-import com.nnlightctl.server.SceneServer;
+import com.nnlightctl.server.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
 import org.slf4j.Logger;
@@ -57,6 +54,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private FirewareUploadRecordMapper firewareUploadRecordMapper;
+
+    @Autowired
+    private FirewareUploadRecordServer firewareUploadRecordServer;
 
     private final Command command;
 
@@ -405,7 +405,9 @@ public class CommandServerImpl implements CommandServer {
                 int n = randomAccessFile.read(buffer);
                 logger.info("拆分固件读取字节数：[" + i + "=" + n + "]");
                 //小文件CRC16验证2字节
-                String crc16Str = CRCUtil.get16CRC(buffer);
+                byte[] crc16CheckBytes = new byte[n];
+                System.arraycopy(buffer, 0, crc16CheckBytes, 0, n);
+                String crc16Str = CRCUtil.get16CRC(crc16CheckBytes);
                 logger.info("拆分固件CRC16验证字符串：[" + i + "=" + crc16Str + "]");
                 byte[] crc16bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(crc16Str));
                 logger.info("拆分固件CRC16验证字节数：[" + i + "=" + crc16bytes.length + "]");
@@ -442,22 +444,20 @@ public class CommandServerImpl implements CommandServer {
             logger.error(e.getMessage());
         }
 
-        //插入一条固件上传记录
+        //插入或者更新一条固件上传记录
         FirewareUploadRecord firewareUploadRecord = new FirewareUploadRecord();
-        firewareUploadRecord.setGmtCreated(new Date());
         firewareUploadRecord.setGmtUpdated(new Date());
         firewareUploadRecord.setFirewareVersion(request.getVersion());
         firewareUploadRecord.setPackageNumber((short)number);
         firewareUploadRecord.setLastPackageSize((byte)lastPackageSize);
         firewareUploadRecord.setPersist1(request.getAspect());
-        this.firewareUploadRecordMapper.insertSelective(firewareUploadRecord);
 
-        return 1;
+        return firewareUploadRecordServer.addOrUpdateFirewareUploadRecord(firewareUploadRecord);
     }
 
     @Override
     public List<FirewareUploadRecord> listFirewareUploadRecord() {
-        return firewareUploadRecordMapper.selectByExample(new FirewareUploadRecordExample());
+        return firewareUploadRecordServer.listFirewareUploadRecord();
     }
 
     @Override
@@ -474,6 +474,25 @@ public class CommandServerImpl implements CommandServer {
         for (String uuid : uuidList) {
             realtimeUUIDs.add(lightServer.getLightingByUUID(uuid).getRealtimeUid());
         }
+        command.batchUpdateFireware(realtimeUUIDs, firewareUploadRecord.getFirewareVersion(), firewareUploadRecord.getPackageNumber(),
+                firewareUploadRecord.getLastPackageSize());
+    }
+
+    @Override
+    public void batchInvokeFirewareUpdateId(CommandRequest request) {
+        List<Long> lightIds = request.getLightIds();
+        Long uploadFirewareId = request.getUploadFirewareRecordId();
+
+        if (lightIds == null || lightIds.size() < 1 || uploadFirewareId < 1) {
+            throw new RuntimeException("参数错误！");
+        }
+
+        FirewareUploadRecord firewareUploadRecord = firewareUploadRecordMapper.selectByPrimaryKey(uploadFirewareId);
+        List<String> realtimeUUIDs = new ArrayList<>(8);
+        for (Long lightId : lightIds) {
+            realtimeUUIDs.add(lightServer.getLighting(lightId).getRealtimeUid());
+        }
+
         command.batchUpdateFireware(realtimeUUIDs, firewareUploadRecord.getFirewareVersion(), firewareUploadRecord.getPackageNumber(),
                 firewareUploadRecord.getLastPackageSize());
     }
