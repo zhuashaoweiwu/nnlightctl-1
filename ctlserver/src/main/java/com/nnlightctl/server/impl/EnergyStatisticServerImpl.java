@@ -10,6 +10,7 @@ import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.EnergyStatisticDao;
 import com.nnlightctl.jdbcdao.LightSignalRecordDao;
+import com.nnlightctl.jdbcdao.LightingVolEleRecordDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.server.EnergyStatisticServer;
@@ -45,6 +46,8 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     private LightSignalLogMapper lightSignalLogMapper;
     @Autowired
     private LightSignalRecordDao lightSignalRecordDao;
+    @Autowired
+    private LightingVolEleRecordDao lightingVolEleRecordDao;
 
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest) {
@@ -63,9 +66,9 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
 
     @Override
     public List<CommonEnergyStatisticView> getCommonEnergyStatistic() {
-        List<CommonEnergyStatisticView> dateTotal = energyStatisticDao.getCommonEnergyStatisticDate();
-        List<CommonEnergyStatisticView> mouthTotal = energyStatisticDao.getCommonEnergyStatisticMouth();
-        List<CommonEnergyStatisticView> yearTotal = energyStatisticDao.getCommonEnergyStatisticYear();
+        List<CommonEnergyStatisticView> dateTotal = lightingVolEleRecordDao.getCommonEnergyStatisticDate();
+        List<CommonEnergyStatisticView> mouthTotal = lightingVolEleRecordDao.getCommonEnergyStatisticMouth();
+        List<CommonEnergyStatisticView> yearTotal = lightingVolEleRecordDao.getCommonEnergyStatisticYear();
         List<CommonEnergyStatisticView> list = new ArrayList<>();
         list.addAll(dateTotal);
         list.addAll(mouthTotal);
@@ -75,7 +78,7 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
 
     @Override
     public List<CommonEnergyStatisticView> listEnergyStatisticByDay(int month) {
-        return energyStatisticDao.listEnergyStatisticByDay(month);
+        return lightingVolEleRecordDao.listEnergyStatisticByDay(month);
     }
 
     @Override
