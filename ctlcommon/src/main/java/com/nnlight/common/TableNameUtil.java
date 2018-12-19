@@ -35,26 +35,15 @@ public class TableNameUtil {
     }
 
     public static void main(String[] args) {
-        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-       // System.out.println("昨天时间："+getTableNameByDateTest("nnlightctl_lighting_vol_ele_record"));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       System.out.println("昨天时间："+getTableNameByDateTest("nnlightctl_lighting_vol_ele_record"));
+        Calendar currentDate = new GregorianCalendar();
 
-        List<String> list = getAllMonthEnd("nnlightctl_lighting_vol_ele_record");
-        for(String date: list){
-            System.out.println("本月时间："+date);
-        }
-        /*Calendar c = Calendar.getInstance();
-        c.add(Calendar.YEAR, 0);
-        c.set(Calendar.DAY_OF_YEAR,1);//设置为1号,当前日期既为本年第一天
+        currentDate.set(Calendar.HOUR_OF_DAY, 0);
+        currentDate.set(Calendar.MINUTE, 0);
+        currentDate.set(Calendar.SECOND, 0);
+        System.out.println(format.format(currentDate.getTime().clone()));
 
-        try{
-            List<String> list1 = findDates(c.getTime(),new Date(),"nnlightctl_lighting_vol_ele_record");
-            for(String date: list1){
-                System.out.println("本年时间："+date);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-*/
     }
     /*
     * 得到昨天能耗时间表明

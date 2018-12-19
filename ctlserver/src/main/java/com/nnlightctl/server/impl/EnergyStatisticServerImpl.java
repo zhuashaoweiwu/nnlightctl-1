@@ -49,6 +49,7 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
     @Autowired
     private LightingVolEleRecordDao lightingVolEleRecordDao;
 
+
     @Override
     public List<EleboxVolEleRecord> listEleboxPower(EleboxPowerRequest eleboxPowerRequest) {
         Long id = eleboxPowerRequest.getEleboxId();
@@ -116,26 +117,7 @@ public class EnergyStatisticServerImpl implements EnergyStatisticServer {
 
     @Override
     public Tuple.TwoTuple<List<LightSignalLog>, Integer> listLightSignalLog(SignalLogRequest request) {
-        Tuple.TwoTuple<List<LightSignalLog>, Integer> tuple = new Tuple.TwoTuple<>();
-        LightSignalLogExample lightSignalLogExample = new LightSignalLogExample();
-        lightSignalLogExample.setOrderByClause("id DESC");
-        LightSignalLogExample.Criteria criteria = lightSignalLogExample.createCriteria();
-        if (!StringUtils.isEmpty(request.getUuid())) {
-            criteria.andUidLike("%" + request.getUuid() + "%");
-        }
-        if (!StringUtils.isEmpty(request.getEndDate())) {
-            criteria.andSignalLogDateLessThanOrEqualTo(request.getEndDate());
-        }
-        if (!StringUtils.isEmpty(request.getStartDate())) {
-            criteria.andSignalLogDateGreaterThanOrEqualTo(request.getStartDate());
-        }
-        int total = lightSignalLogMapper.countByExample(lightSignalLogExample);
-        tuple.setSecond(total);
-
-        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-        List<LightSignalLog> list = lightSignalLogMapper.selectByExample(lightSignalLogExample);
-        tuple.setFirst(list);
-
+        Tuple.TwoTuple<List<LightSignalLog>, Integer> tuple = lightSignalRecordDao.listLightSignalLog(request);
         return tuple;
     }
 
