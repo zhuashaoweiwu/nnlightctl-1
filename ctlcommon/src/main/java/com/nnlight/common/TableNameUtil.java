@@ -36,7 +36,7 @@ public class TableNameUtil {
 
     public static void main(String[] args) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-       System.out.println("昨天时间："+getTableNameByDateTest("nnlightctl_lighting_vol_ele_record"));
+       System.out.println("昨天时间："+getTableNameByDate("nnlightctl_lighting_vol_ele_record"));
         Calendar currentDate = new GregorianCalendar();
 
         currentDate.set(Calendar.HOUR_OF_DAY, 0);
@@ -44,6 +44,20 @@ public class TableNameUtil {
         currentDate.set(Calendar.SECOND, 0);
         System.out.println(format.format(currentDate.getTime().clone()));
 
+    }
+    /*
+     * 得到今天能耗时间表明
+     * */
+    public static String getTableNameByDate(String rootTableName) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+
+        calendar.add(calendar.DATE,0);
+
+        String date2= dateFormat.format(calendar.getTime());
+
+        return rootTableName + "_" + date2;
     }
     /*
     * 得到昨天能耗时间表明

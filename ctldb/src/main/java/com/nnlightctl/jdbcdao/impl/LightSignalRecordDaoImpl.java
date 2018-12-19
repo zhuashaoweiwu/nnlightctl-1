@@ -144,4 +144,29 @@ public class LightSignalRecordDaoImpl implements LightSignalRecordDao {
         tuple.setSecond(sum);
         return tuple;
     }
+    @Override
+    public String getLightSignalByUUID(String uuid){
+        String tableName = TableNameUtil.getTableNameByDate("nnlightctl_light_signal_log");
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Object> param = new ArrayList<>(1);
+        String signalIntensity = "";
+        stringBuilder.append("SELECT  signal_intensity FROM "+tableName+" ");
+        if (!StringUtils.isEmpty(uuid)){
+            stringBuilder.append(" where uid = ? ");
+            param.add(uuid);
+        }
+        stringBuilder.append(" ORDER BY id DESC ");
+        List<LightSignalLog> lightingViewList = jdbcTemplate.query(stringBuilder.toString(), param.toArray(), new RowMapper<LightSignalLog>() {
+            @Override
+            public LightSignalLog mapRow(ResultSet resultSet, int i) throws SQLException {
+                LightSignalLog lightSignalLog = new LightSignalLog();
+                lightSignalLog.setSignalIntensity(resultSet.getBigDecimal("signal_intensity"));
+                return lightSignalLog;
+            }
+        });
+        if (!lightingViewList.isEmpty()){
+            signalIntensity = lightingViewList.get(0).getSignalIntensity().toString();
+        }
+        return signalIntensity;
+    }
 }

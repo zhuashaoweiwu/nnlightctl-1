@@ -7,6 +7,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightDao;
+import com.nnlightctl.jdbcdao.LightSignalRecordDao;
 import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightSignalLogExample;
 import com.nnlightctl.po.Lighting;
@@ -46,6 +47,9 @@ public class LightServerImpl implements LightServer {
 
     @Autowired
     private AreaServer areaServer;
+    @Autowired
+    private LightSignalRecordDao lightSignalRecordDao;
+
     @Autowired
     private LightSignalLogMapper lightSignalLogMapper;
     @Override
@@ -454,25 +458,6 @@ public class LightServerImpl implements LightServer {
     }
     @Override
     public String getLightSignalByUUID(String uuid){
-        LightSignalLogExample lightSignalLogExample = new LightSignalLogExample();
-        lightSignalLogExample.setOrderByClause("id DESC");
-        LightSignalLogExample.Criteria criteria = lightSignalLogExample.createCriteria();
-        String signalIntensity=null;
-        try{
-            Date date = new Date();
-            String dayAfter = new SimpleDateFormat("yyyy-MM-dd").format(date);
-            criteria.andSignalLogDateGreaterThanOrEqualTo(new SimpleDateFormat("yy-MM-dd").parse(dayAfter));
-            if (!StringUtils.isEmpty(uuid)){
-                criteria.andUidEqualTo(uuid);
-            }
-            List<LightSignalLog> lightSignalLogList = lightSignalLogMapper.selectByExample(lightSignalLogExample);
-            if (!lightSignalLogList.isEmpty()){
-                signalIntensity = lightSignalLogList.get(0).getSignalIntensity().toString();
-            }
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return signalIntensity;
+        return lightSignalRecordDao.getLightSignalByUUID(uuid);
     }
 }

@@ -10,4 +10,5 @@ public interface LightSignalRecordDao {
     int addLightSignalRecord(LightSignalLog lightSignalLog);
     //查询信号日志
     Tuple.TwoTuple<List<LightSignalLog>, Integer> listLightSignalLog(SignalLogRequest request);
+    String getLightSignalByUUID(String uuid);
 }
