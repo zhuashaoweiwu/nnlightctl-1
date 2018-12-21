@@ -11,6 +11,7 @@ import com.nnlightctl.request.MaskerRequest;
 import com.nnlightctl.server.MaskerServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -53,11 +54,11 @@ public class MaskerServerImpl implements MaskerServer {
 
         MaskerExample maskerExample = new MaskerExample();
         MaskerExample.Criteria criteria = maskerExample.createCriteria();
-        if (request.getPhoneNumber() !=null ) {
-            criteria.andPhoneNumberEqualTo(request.getPhoneNumber());
+        if (!StringUtils.isEmpty(request.getPhoneNumber())) {
+            criteria.andPhoneNumberLike("%"+request.getPhoneNumber()+"%");
         }
-        if (request.getDepartment() != null){
-            criteria.andDepartmentEqualTo(request.getDepartment());
+        if (!StringUtils.isEmpty(request.getDepartment())){
+            criteria.andDepartmentLike("%"+request.getDepartment()+"%");
         }
         maskerExample.setOrderByClause("id DESC");
 

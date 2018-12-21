@@ -147,6 +147,14 @@ public class LightSignalRecordDaoImpl implements LightSignalRecordDao {
     @Override
     public String getLightSignalByUUID(String uuid){
         String tableName = TableNameUtil.getTableNameByDate("nnlightctl_light_signal_log");
+        try {
+            if (!TableNameUtil.isTableExist(jdbcTemplate, tableName)) {
+                //不存在则动态创建该表
+                createLightSignalLogTable(tableName);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         StringBuilder stringBuilder = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
         String signalIntensity = "";
