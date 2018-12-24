@@ -79,9 +79,11 @@ public class LightSignalRecordDaoImpl implements LightSignalRecordDao {
         if (StringUtils.isEmpty(request.getStartDate())){
             Calendar currentDate = new GregorianCalendar();
 
-            currentDate.set(Calendar.HOUR_OF_DAY, 0);
-            currentDate.set(Calendar.MINUTE, 0);
-            currentDate.set(Calendar.SECOND, 0);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             request.setStartDate((Date)currentDate.getTime().clone());
         }
         if (StringUtils.isEmpty(request.getEndDate())){
@@ -157,8 +159,8 @@ public class LightSignalRecordDaoImpl implements LightSignalRecordDao {
         }
         StringBuilder stringBuilder = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
-        String signalIntensity = "";
-        stringBuilder.append("SELECT  signal_intensity FROM "+tableName+" ");
+        String signalIntensity = "0";
+        stringBuilder.append("SELECT  signal_intensity , online_state FROM "+tableName+" ");
         if (!StringUtils.isEmpty(uuid)){
             stringBuilder.append(" where uid = ? ");
             param.add(uuid);
@@ -169,11 +171,15 @@ public class LightSignalRecordDaoImpl implements LightSignalRecordDao {
             public LightSignalLog mapRow(ResultSet resultSet, int i) throws SQLException {
                 LightSignalLog lightSignalLog = new LightSignalLog();
                 lightSignalLog.setSignalIntensity(resultSet.getBigDecimal("signal_intensity"));
+                lightSignalLog.setOnlineState(resultSet.getByte("online_state"));
                 return lightSignalLog;
             }
         });
         if (!lightingViewList.isEmpty()){
-            signalIntensity = lightingViewList.get(0).getSignalIntensity().toString();
+            byte type =1;
+            if (lightingViewList.get(0).getOnlineState()==type){
+                signalIntensity = lightingViewList.get(0).getSignalIntensity().toString();
+            }
         }
         return signalIntensity;
     }
