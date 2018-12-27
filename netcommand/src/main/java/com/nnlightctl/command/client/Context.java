@@ -5,6 +5,7 @@ import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.vo.SceneView;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -57,6 +58,15 @@ public class Context {
 
         if (in.getControl() == (byte)0xd0) {
             FutureResult futureResult = uuidMapFutureResult.get(in.getUUID());
+            if (futureResult != null) {
+                futureResult.setCommandData(in);
+                futureResult.run();
+            }
+        }
+
+        //modbus回复指令
+        if (in.getControl() == (byte)0x12) {
+            FutureResult futureResult = uuidMapFutureResult.get(MODBUS_UUID);
             if (futureResult != null) {
                 futureResult.setCommandData(in);
                 futureResult.run();
@@ -199,6 +209,16 @@ public class Context {
         }
     }
 
+    public ModBusResponse invokeModbusEM(String realtimeUUID, byte[] modbusDirectiveBytes) {
+        channelHandlerContext.writeAndFlush(CommandData.getC11CommandData(realtimeUUID, modbusDirectiveBytes));
+        FutureResult futureResult = new FutureResult();
+        uuidMapFutureResult.put(MODBUS_UUID, futureResult);
+        futureResult.await(12000);
+
+        CommandData commandData = futureResult.getCommandData();
+        return DataTransferUtil.transToModbusResponse(commandData);
+    }
+
     public void close() {
         if (channelHandlerContext != null) {
             channelHandlerContext.close();
@@ -215,6 +235,7 @@ public class Context {
     private ChannelHandlerContext channelHandlerContext;
     private CountDownLatch countDownLatch;
     private Map<String, FutureResult> uuidMapFutureResult = new ConcurrentHashMap<>(8);
+    private static final String MODBUS_UUID = "modbusuuid";
 
     private static class FutureResult {
         private CountDownLatch futureResultCountDown;

@@ -14,6 +14,7 @@ import com.nnlightctl.dao.FirewareUploadRecordMapper;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.po.FirewareUploadRecord;
 import com.nnlightctl.po.FirewareUploadRecordExample;
 import com.nnlightctl.po.Lighting;
@@ -495,5 +496,10 @@ public class CommandServerImpl implements CommandServer {
 
         command.batchUpdateFireware(realtimeUUIDs, firewareUploadRecord.getFirewareVersion(), firewareUploadRecord.getPackageNumber(),
                 firewareUploadRecord.getLastPackageSize());
+    }
+
+    @Override
+    public ModBusResponse invokeModbusDirective(String realtimeUUID, byte[] directiveBytes) {
+        return command.invokeModbusEM(realtimeUUID, directiveBytes);
     }
 }

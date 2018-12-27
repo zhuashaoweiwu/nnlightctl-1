@@ -10,6 +10,9 @@ import java.util.List;
 public class CommandDataDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
+        if (byteBuf == null || byteBuf.readableBytes() < 1) {
+            return;
+        }
         try {
             byte[] data = new byte[byteBuf.readableBytes()];
             byteBuf.readBytes(data);

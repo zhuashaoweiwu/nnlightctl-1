@@ -1,6 +1,7 @@
 package com.nnlightctl.server;
 
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.po.FirewareUploadRecord;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
@@ -41,4 +42,5 @@ public interface CommandServer {
     List<FirewareUploadRecord> listFirewareUploadRecord();
     void batchInvokeFirewareUpdateUUID(CommandRequest request);
     void batchInvokeFirewareUpdateId(CommandRequest request);
+    ModBusResponse invokeModbusDirective(String realtimeUUID, byte[] directiveBytes);
 }

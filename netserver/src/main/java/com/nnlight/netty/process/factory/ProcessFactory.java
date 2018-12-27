@@ -118,6 +118,9 @@ public class ProcessFactory {
             //终端D6指令
             case (byte) 0xd7:
                 return d7;
+                //modbus
+            case (byte) 0x11:
+                return c11;
                 //无控制码默认返回消息到上层命令客户端
                 default:
                 return commonProcess;
@@ -156,5 +159,6 @@ public class ProcessFactory {
     private static final Process d6 = new D6Process();
     private static final Process a7 = new A7Process();
     private static final Process d7 = new D7Process();
+    private static final Process c11 = new C11Process();
     private static final Process commonProcess = new CommonProcess();
 }

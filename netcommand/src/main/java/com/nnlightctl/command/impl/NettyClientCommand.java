@@ -8,6 +8,7 @@ import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.vo.SceneView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,6 +207,24 @@ public class NettyClientCommand implements Command {
     public void batchConfigWorkModel(List<String> realtime_ids){
         context.batchConfigWorkModel(realtime_ids);
     }
+
+    @Override
+    public ModBusResponse invokeModbusEM(String realtimeUUID, byte[] modBusDirectiveBytes) {
+        Future<ModBusResponse> future = Executors.newSingleThreadExecutor().submit(() -> {
+            return context.invokeModbusEM(realtimeUUID, modBusDirectiveBytes);
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        } catch (ExecutionException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
+    }
+
     @Override
     public void close() {
         context.close();

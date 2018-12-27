@@ -3,8 +3,10 @@ package com.nnlightctl.kafka.util;
 import com.nnlight.common.*;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightingVolEleRecord;
+import com.nnlightctl.util.BytesHexStrTranslate;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -175,5 +177,13 @@ public class DataTransferUtil {
         System.arraycopy(d0CommandData.getData(), k, d0Response.getTime(), 0, 3);
 
         return d0Response;
+    }
+
+    public static ModBusResponse transToModbusResponse(CommandData c12CommandData) {
+        byte[] data = c12CommandData.getData();
+        ModBusResponse modBusResponse = new ModBusResponse();
+        modBusResponse.setOriginalPackageInfoHex(BytesHexStrTranslate.bytesToHexFun(data));
+
+        return modBusResponse;
     }
 }

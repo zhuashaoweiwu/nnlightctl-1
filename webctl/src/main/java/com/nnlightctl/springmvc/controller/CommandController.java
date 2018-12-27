@@ -4,9 +4,11 @@ import com.nnlightctl.net.D0Response;
 import com.nnlightctl.po.FirewareUploadRecord;
 import com.nnlightctl.po.SwitchTask;
 import com.nnlightctl.request.CommandRequest;
+import com.nnlightctl.request.ModbusRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.CommandServer;
+import com.nnlightctl.server.ModbusEMServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CommandController extends BaseController {
 
     @Autowired
     private CommandServer commandServer;
+
+    @Autowired
+    private ModbusEMServer modbusEMServer;
 
     @RequestMapping("sendcommand")
     public void sendCommand(CommandRequest request) {
@@ -402,5 +407,20 @@ public class CommandController extends BaseController {
         commandServer.batchInvokeFirewareUpdateId(request);
 
         return toJson(JsonResult.getSUCCESS());
+    }
+
+    @RequestMapping("invokeModbusEMTest")
+    public String testInvokeModbusEM(ModbusRequest request) {
+        logger.info("[POST] /api/command/invokeModbusEMTest");
+
+        String hexResponse = modbusEMServer.getInvokeModbusEMDirective(request);
+
+        List<String> data = new ArrayList<>(1);
+        data.add(hexResponse);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(data);
+
+        return toJson(jsonResult);
     }
 }

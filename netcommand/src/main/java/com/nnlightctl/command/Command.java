@@ -2,6 +2,7 @@ package com.nnlightctl.command;
 
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
+import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.vo.SceneView;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public interface Command {
     void batchConfigTerminalAutoMode(int model, String realtimeUUID);
     void batchConfigTerminalPowerType(int powerType, List<String> realtimeUUIDs);
     void batchUpdateFireware(List<String> realtimeUUIDs, String version, int packageNumber, int lastPackageSize);
+
     //模块命令
     D0Response getModelState(String gatewayRealtimeUUID, String modelUUID);
     void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState);
@@ -33,6 +35,9 @@ public interface Command {
     void batchConfigSetTime();
     void batchConfigOpenCloseStrategy(List<String> realtime_ids);
     void batchConfigWorkModel(List<String> realtime_ids);
+
+    //modbus配电柜中电表，测量配电柜电能数据
+    ModBusResponse invokeModbusEM(String realtimeUUID, byte[] modBusDirectiveBytes);
 
     void close();
     void reConnect();

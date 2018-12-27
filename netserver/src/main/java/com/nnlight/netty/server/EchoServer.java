@@ -3,6 +3,7 @@ package com.nnlight.netty.server;
 import com.nnlight.netcodec.CodeBaseFrameDecoder;
 import com.nnlight.netcodec.CommandDataDecoder;
 import com.nnlight.netcodec.CommandDataEncoder;
+import com.nnlight.netcodec.ModbusBytesToMessageCodec;
 import com.nnlight.netty.handler.EchoServerHandler;
 import com.nnlight.netty.handler.HeartbeatServerHandler;
 import com.nnlight.netty.server.po.ChannelWrap;
@@ -322,6 +323,7 @@ public class EchoServer {
                             .childHandler(new ChannelInitializer<SocketChannel>() {
                                 @Override
                                 protected void initChannel(SocketChannel socketChannel) throws Exception {
+                                    socketChannel.pipeline().addLast(new ModbusBytesToMessageCodec());
                                     socketChannel.pipeline().addLast(CodeBaseFrameDecoder.getCodeBaseFrameDecoder(CodeBaseFrameDecoder.DELIMITER));
                                     socketChannel.pipeline().addLast(new CommandDataDecoder());
                                     socketChannel.pipeline().addLast(new CommandDataEncoder());
@@ -469,6 +471,20 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(realtime_id)) {
                 entry.getValue().getContext().writeAndFlush(CommandData.getUpdateFirewareCommand(version, packageNumber, lastPackageSize));
+                break;
+            }
+        }
+    }
+
+    /**
+     * 发送指令到modbus电表的透传
+     * @param gateWayRealtimeUUID
+     * @param directiveBytes
+     */
+    public void invokeModbusByGateway(String gateWayRealtimeUUID, byte[] directiveBytes) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(gateWayRealtimeUUID)) {
+                entry.getValue().getContext().writeAndFlush(CommandData.getInvokeModbusEMDirectiveCommandData(directiveBytes));
                 break;
             }
         }

@@ -314,6 +314,17 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
+    public static CommandData getInvokeModbusEMDirectiveCommandData(byte[] directiveBytes) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0x11);
+        commandData.setDataLength((byte)directiveBytes.length);
+        commandData.setData(directiveBytes);
+        commandData.resetCheck();
+
+        return commandData;
+    }
+
     /**
      * 生成命令的16进制字符串形式
      * @return
@@ -918,6 +929,31 @@ public class CommandData implements Serializable {
         CommandData commandData = new CommandData();
         commandData.setControl((byte)0xa7);
         commandData.setCheck(commandData.createCheck());
+        return commandData;
+    }
+
+    public static CommandData getC11CommandData(String realtimeUUId, byte[] modbusDirectiveBytes) {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte)0x11);
+
+        byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUId);
+        int dataLength = realtimeUUIDBytes.length + modbusDirectiveBytes.length;
+        commandData.setDataLength((byte)dataLength);
+
+        byte[] data = new byte[dataLength];
+
+        int k = 0;
+        System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
+        k += realtimeUUIDBytes.length;
+
+        System.arraycopy(modbusDirectiveBytes, 0, data, k, modbusDirectiveBytes.length);
+        k += modbusDirectiveBytes.length;
+
+        commandData.setData(data);
+
+        commandData.resetCheck();
+
         return commandData;
     }
     /***************************************************命令客户端指令********************************************/

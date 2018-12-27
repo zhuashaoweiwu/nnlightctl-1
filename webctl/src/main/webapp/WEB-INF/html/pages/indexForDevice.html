@@ -543,9 +543,51 @@
     <div class="col-sm-2">
         <button type="button" class="btn btn-primary" id="batchConfigWorkModel">发送指令A7</button>
     </div>
+
     <br/>
     <hr/>
     <br/>
+
+    <div class="row">
+        <!-- 透传网卡地址 -->
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="netway" class="col-md-6 control-label">透传Addr：</label>
+                <div class="input-group col-md-12">
+                    <input id="netway" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- 指令 -->
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="modbusDirector" class="col-md-6 control-label">指令：</label>
+                <div class="input-group col-md-8">
+                    <select id="modbusDirector" class="form-control">
+                        <option value="1">读取总有功功率</option>
+                        <option value="2">读取总功率</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回 -->
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="modbusResult" class="col-md-12 control-label">返回结果：</label>
+                <div class="col-md-12">
+                    <textarea id="modbusResult" rows="3" class="form-control">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 按扭 -->
+        <div class="col-sm-2">
+            <button class="form-control btn btn-primary" id="btnModbusDirector">发送</button>
+        </div>
+    </div>
 
 
 </div>
@@ -843,6 +885,26 @@
                     }
                 }
             });
+    });
+
+    //配电柜modbus电表指令
+    $("#btnModbusDirector").click(function () {
+        var param = {};
+        param["netway"] = $("#netway").val().trim();
+        param["directiveType"] = $("#modbusDirector").val();
+        $.post("/nnlightctl/api/command/invokeModbusEMTest", param, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var msg = data.body.data[0];
+                    var oMsg = $("#modbusResult").val();
+                    oMsg += "\r\n";
+                    oMsg += (new Date().toLocaleString() + "  " + msg);
+                    $("#modbusResult").val(oMsg);
+                } else {
+                    console.error(data.header.msg);
+                }
+            }
+        });
     });
 
 </script>
