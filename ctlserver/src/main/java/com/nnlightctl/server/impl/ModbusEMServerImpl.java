@@ -49,7 +49,8 @@ public class ModbusEMServerImpl implements ModbusEMServer {
         String realtimeUUID = eleboxMapper.selectByExample(eleboxExample).get(0).getRealtimeUid();
 
         //获取指令对应的字节码
-        String modbusDirectiveStr = properties.getProperty(String.valueOf(request.getDirectiveType()));
+        String modbusDirectiveStr = StringUtils.isEmpty(request.getHexModbusDirective()) ?
+                properties.getProperty(String.valueOf(request.getDirectiveType())) : request.getHexModbusDirective();
         if (StringUtils.isEmpty(modbusDirectiveStr)) {
             throw new RuntimeException("无法找到对应的Modbus指令");
         }

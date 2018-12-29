@@ -560,7 +560,7 @@
         </div>
 
         <!-- 指令 -->
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="form-group">
                 <label for="modbusDirector" class="col-md-6 control-label">指令：</label>
                 <div class="input-group col-md-8">
@@ -568,6 +568,16 @@
                         <option value="1">读取总有功功率</option>
                         <option value="2">读取总功率</option>
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 手动输入modbus指令 -->
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="manuModbusDirective" class="col-md-6 control-label">Modbus指令(16进制字符串)：</label>
+                <div class="input-group col-md-8">
+                    <input id="manuModbusDirective" class="form-control" size="22" type="text" value="" />
                 </div>
             </div>
         </div>
@@ -584,7 +594,7 @@
         </div>
 
         <!-- 按扭 -->
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <button class="form-control btn btn-primary" id="btnModbusDirector">发送</button>
         </div>
     </div>
@@ -892,6 +902,7 @@
         var param = {};
         param["netway"] = $("#netway").val().trim();
         param["directiveType"] = $("#modbusDirector").val();
+        param["hexModbusDirective"] = $("#manuModbusDirective").val().trim();
         $.post("/nnlightctl/api/command/invokeModbusEMTest", param, function (data) {
             if (data) {
                 if (data.header.code == 1000) {

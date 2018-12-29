@@ -17,6 +17,15 @@ public class ModbusRequest {
         this.directiveType = directiveType;
     }
 
+    public String getHexModbusDirective() {
+        return hexModbusDirective;
+    }
+
+    public void setHexModbusDirective(String hexModbusDirective) {
+        this.hexModbusDirective = hexModbusDirective;
+    }
+
+    private String hexModbusDirective;
     private String netway;
     private Integer directiveType;
 }
