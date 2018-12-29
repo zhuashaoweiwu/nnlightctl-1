@@ -6,6 +6,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="lightIMEI" property="lightimei" jdbcType="VARCHAR" />
     <result column="record_datetime" property="recordDatetime" jdbcType="TIMESTAMP" />
     <result column="voltage" property="voltage" jdbcType="DECIMAL" />
     <result column="electricty" property="electricty" jdbcType="DECIMAL" />
@@ -85,8 +86,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_created, gmt_updated, uid, record_datetime, voltage, electricty, energy, 
-    dampness, temperature, beam, signal_intensity, longitude, latitude, in_electricity, 
+    id, gmt_created, gmt_updated, uid, lightIMEI, record_datetime, voltage, electricty, 
+    energy, dampness, temperature, beam, signal_intensity, longitude, latitude, in_electricity, 
     in_voltage, elec_frequency, in_active_power, in_reactive_power, in_seen_power, in_active_energy, 
     in_reactive_energy, in_seen_energy
   </sql>
@@ -126,21 +127,21 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into nnlightctl_lighting_vol_ele_record (gmt_created, gmt_updated, uid, 
-      record_datetime, voltage, electricty, 
-      energy, dampness, temperature, 
-      beam, signal_intensity, longitude, 
-      latitude, in_electricity, in_voltage, 
-      elec_frequency, in_active_power, in_reactive_power, 
-      in_seen_power, in_active_energy, in_reactive_energy, 
-      in_seen_energy)
+      lightIMEI, record_datetime, voltage, 
+      electricty, energy, dampness, 
+      temperature, beam, signal_intensity, 
+      longitude, latitude, in_electricity, 
+      in_voltage, elec_frequency, in_active_power, 
+      in_reactive_power, in_seen_power, in_active_energy, 
+      in_reactive_energy, in_seen_energy)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{recordDatetime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricty,jdbcType=DECIMAL}, 
-      #{energy,jdbcType=DECIMAL}, #{dampness,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, 
-      #{beam,jdbcType=DECIMAL}, #{signalIntensity,jdbcType=DECIMAL}, #{longitude,jdbcType=VARCHAR}, 
-      #{latitude,jdbcType=VARCHAR}, #{inElectricity,jdbcType=VARCHAR}, #{inVoltage,jdbcType=VARCHAR}, 
-      #{elecFrequency,jdbcType=VARCHAR}, #{inActivePower,jdbcType=VARCHAR}, #{inReactivePower,jdbcType=VARCHAR}, 
-      #{inSeenPower,jdbcType=VARCHAR}, #{inActiveEnergy,jdbcType=VARCHAR}, #{inReactiveEnergy,jdbcType=VARCHAR}, 
-      #{inSeenEnergy,jdbcType=VARCHAR})
+      #{lightimei,jdbcType=VARCHAR}, #{recordDatetime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, 
+      #{electricty,jdbcType=DECIMAL}, #{energy,jdbcType=DECIMAL}, #{dampness,jdbcType=DECIMAL}, 
+      #{temperature,jdbcType=DECIMAL}, #{beam,jdbcType=DECIMAL}, #{signalIntensity,jdbcType=DECIMAL}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{inElectricity,jdbcType=VARCHAR}, 
+      #{inVoltage,jdbcType=VARCHAR}, #{elecFrequency,jdbcType=VARCHAR}, #{inActivePower,jdbcType=VARCHAR}, 
+      #{inReactivePower,jdbcType=VARCHAR}, #{inSeenPower,jdbcType=VARCHAR}, #{inActiveEnergy,jdbcType=VARCHAR}, 
+      #{inReactiveEnergy,jdbcType=VARCHAR}, #{inSeenEnergy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingVolEleRecord" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -156,6 +157,9 @@
       </if>
       <if test="uid != null" >
         uid,
+      </if>
+      <if test="lightimei != null" >
+        lightIMEI,
       </if>
       <if test="recordDatetime != null" >
         record_datetime,
@@ -224,6 +228,9 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="lightimei != null" >
+        #{lightimei,jdbcType=VARCHAR},
       </if>
       <if test="recordDatetime != null" >
         #{recordDatetime,jdbcType=TIMESTAMP},
@@ -305,6 +312,9 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=VARCHAR},
       </if>
+      <if test="record.lightimei != null" >
+        lightIMEI = #{record.lightimei,jdbcType=VARCHAR},
+      </if>
       <if test="record.recordDatetime != null" >
         record_datetime = #{record.recordDatetime,jdbcType=TIMESTAMP},
       </if>
@@ -373,6 +383,7 @@
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
+      lightIMEI = #{record.lightimei,jdbcType=VARCHAR},
       record_datetime = #{record.recordDatetime,jdbcType=TIMESTAMP},
       voltage = #{record.voltage,jdbcType=DECIMAL},
       electricty = #{record.electricty,jdbcType=DECIMAL},
@@ -407,6 +418,9 @@
       </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="lightimei != null" >
+        lightIMEI = #{lightimei,jdbcType=VARCHAR},
       </if>
       <if test="recordDatetime != null" >
         record_datetime = #{recordDatetime,jdbcType=TIMESTAMP},
@@ -473,6 +487,7 @@
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},
+      lightIMEI = #{lightimei,jdbcType=VARCHAR},
       record_datetime = #{recordDatetime,jdbcType=TIMESTAMP},
       voltage = #{voltage,jdbcType=DECIMAL},
       electricty = #{electricty,jdbcType=DECIMAL},

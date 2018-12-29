@@ -356,6 +356,76 @@ public class LightingVolEleRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andLightimeiIsNull() {
+            addCriterion("lightIMEI is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiIsNotNull() {
+            addCriterion("lightIMEI is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiEqualTo(String value) {
+            addCriterion("lightIMEI =", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiNotEqualTo(String value) {
+            addCriterion("lightIMEI <>", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiGreaterThan(String value) {
+            addCriterion("lightIMEI >", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiGreaterThanOrEqualTo(String value) {
+            addCriterion("lightIMEI >=", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiLessThan(String value) {
+            addCriterion("lightIMEI <", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiLessThanOrEqualTo(String value) {
+            addCriterion("lightIMEI <=", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiLike(String value) {
+            addCriterion("lightIMEI like", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiNotLike(String value) {
+            addCriterion("lightIMEI not like", value, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiIn(List<String> values) {
+            addCriterion("lightIMEI in", values, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiNotIn(List<String> values) {
+            addCriterion("lightIMEI not in", values, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiBetween(String value1, String value2) {
+            addCriterion("lightIMEI between", value1, value2, "lightimei");
+            return (Criteria) this;
+        }
+
+        public Criteria andLightimeiNotBetween(String value1, String value2) {
+            addCriterion("lightIMEI not between", value1, value2, "lightimei");
+            return (Criteria) this;
+        }
+
         public Criteria andRecordDatetimeIsNull() {
             addCriterion("record_datetime is null");
             return (Criteria) this;

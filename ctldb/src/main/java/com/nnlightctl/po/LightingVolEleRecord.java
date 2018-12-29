@@ -13,7 +13,7 @@ public class LightingVolEleRecord implements Serializable {
 
     private String uid;
 
-    private String lightIMEI;
+    private String lightimei;
 
     private Date recordDatetime;
 
@@ -87,12 +87,12 @@ public class LightingVolEleRecord implements Serializable {
         this.uid = uid == null ? null : uid.trim();
     }
 
-    public String getLightIMEI() {
-        return lightIMEI;
+    public String getLightimei() {
+        return lightimei;
     }
 
-    public void setLightIMEI(String lightIMEI) {
-        this.lightIMEI = lightIMEI;
+    public void setLightimei(String lightimei) {
+        this.lightimei = lightimei == null ? null : lightimei.trim();
     }
 
     public Date getRecordDatetime() {
@@ -263,6 +263,7 @@ public class LightingVolEleRecord implements Serializable {
             && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
             && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
+            && (this.getLightimei() == null ? other.getLightimei() == null : this.getLightimei().equals(other.getLightimei()))
             && (this.getRecordDatetime() == null ? other.getRecordDatetime() == null : this.getRecordDatetime().equals(other.getRecordDatetime()))
             && (this.getVoltage() == null ? other.getVoltage() == null : this.getVoltage().equals(other.getVoltage()))
             && (this.getElectricty() == null ? other.getElectricty() == null : this.getElectricty().equals(other.getElectricty()))
@@ -292,6 +293,7 @@ public class LightingVolEleRecord implements Serializable {
         result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
         result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
+        result = prime * result + ((getLightimei() == null) ? 0 : getLightimei().hashCode());
         result = prime * result + ((getRecordDatetime() == null) ? 0 : getRecordDatetime().hashCode());
         result = prime * result + ((getVoltage() == null) ? 0 : getVoltage().hashCode());
         result = prime * result + ((getElectricty() == null) ? 0 : getElectricty().hashCode());
@@ -324,6 +326,7 @@ public class LightingVolEleRecord implements Serializable {
         sb.append(", gmtCreated=").append(gmtCreated);
         sb.append(", gmtUpdated=").append(gmtUpdated);
         sb.append(", uid=").append(uid);
+        sb.append(", lightimei=").append(lightimei);
         sb.append(", recordDatetime=").append(recordDatetime);
         sb.append(", voltage=").append(voltage);
         sb.append(", electricty=").append(electricty);

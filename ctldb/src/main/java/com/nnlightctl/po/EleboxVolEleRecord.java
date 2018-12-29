@@ -19,6 +19,32 @@ public class EleboxVolEleRecord implements Serializable {
 
     private BigDecimal electricity;
 
+    private String aVoltage;
+
+    private String bVoltage;
+
+    private String cVoltage;
+
+    private String aElectricity;
+
+    private String bElectricity;
+
+    private String cElectricity;
+
+    private String totalActivePower;
+
+    private String totalActiveEnergy;
+
+    private String totalReactiveEnergy;
+
+    private String aPowerFactor;
+
+    private String bPowerFactor;
+
+    private String cPowerFactor;
+
+    private String totalPowerFactor;
+
     private BigDecimal energy;
 
     private BigDecimal eleboxPower;
@@ -81,6 +107,110 @@ public class EleboxVolEleRecord implements Serializable {
         this.electricity = electricity;
     }
 
+    public String getaVoltage() {
+        return aVoltage;
+    }
+
+    public void setaVoltage(String aVoltage) {
+        this.aVoltage = aVoltage == null ? null : aVoltage.trim();
+    }
+
+    public String getbVoltage() {
+        return bVoltage;
+    }
+
+    public void setbVoltage(String bVoltage) {
+        this.bVoltage = bVoltage == null ? null : bVoltage.trim();
+    }
+
+    public String getcVoltage() {
+        return cVoltage;
+    }
+
+    public void setcVoltage(String cVoltage) {
+        this.cVoltage = cVoltage == null ? null : cVoltage.trim();
+    }
+
+    public String getaElectricity() {
+        return aElectricity;
+    }
+
+    public void setaElectricity(String aElectricity) {
+        this.aElectricity = aElectricity == null ? null : aElectricity.trim();
+    }
+
+    public String getbElectricity() {
+        return bElectricity;
+    }
+
+    public void setbElectricity(String bElectricity) {
+        this.bElectricity = bElectricity == null ? null : bElectricity.trim();
+    }
+
+    public String getcElectricity() {
+        return cElectricity;
+    }
+
+    public void setcElectricity(String cElectricity) {
+        this.cElectricity = cElectricity == null ? null : cElectricity.trim();
+    }
+
+    public String getTotalActivePower() {
+        return totalActivePower;
+    }
+
+    public void setTotalActivePower(String totalActivePower) {
+        this.totalActivePower = totalActivePower == null ? null : totalActivePower.trim();
+    }
+
+    public String getTotalActiveEnergy() {
+        return totalActiveEnergy;
+    }
+
+    public void setTotalActiveEnergy(String totalActiveEnergy) {
+        this.totalActiveEnergy = totalActiveEnergy == null ? null : totalActiveEnergy.trim();
+    }
+
+    public String getTotalReactiveEnergy() {
+        return totalReactiveEnergy;
+    }
+
+    public void setTotalReactiveEnergy(String totalReactiveEnergy) {
+        this.totalReactiveEnergy = totalReactiveEnergy == null ? null : totalReactiveEnergy.trim();
+    }
+
+    public String getaPowerFactor() {
+        return aPowerFactor;
+    }
+
+    public void setaPowerFactor(String aPowerFactor) {
+        this.aPowerFactor = aPowerFactor == null ? null : aPowerFactor.trim();
+    }
+
+    public String getbPowerFactor() {
+        return bPowerFactor;
+    }
+
+    public void setbPowerFactor(String bPowerFactor) {
+        this.bPowerFactor = bPowerFactor == null ? null : bPowerFactor.trim();
+    }
+
+    public String getcPowerFactor() {
+        return cPowerFactor;
+    }
+
+    public void setcPowerFactor(String cPowerFactor) {
+        this.cPowerFactor = cPowerFactor == null ? null : cPowerFactor.trim();
+    }
+
+    public String getTotalPowerFactor() {
+        return totalPowerFactor;
+    }
+
+    public void setTotalPowerFactor(String totalPowerFactor) {
+        this.totalPowerFactor = totalPowerFactor == null ? null : totalPowerFactor.trim();
+    }
+
     public BigDecimal getEnergy() {
         return energy;
     }
@@ -116,6 +246,19 @@ public class EleboxVolEleRecord implements Serializable {
             && (this.getRealtimeDate() == null ? other.getRealtimeDate() == null : this.getRealtimeDate().equals(other.getRealtimeDate()))
             && (this.getVoltage() == null ? other.getVoltage() == null : this.getVoltage().equals(other.getVoltage()))
             && (this.getElectricity() == null ? other.getElectricity() == null : this.getElectricity().equals(other.getElectricity()))
+            && (this.getaVoltage() == null ? other.getaVoltage() == null : this.getaVoltage().equals(other.getaVoltage()))
+            && (this.getbVoltage() == null ? other.getbVoltage() == null : this.getbVoltage().equals(other.getbVoltage()))
+            && (this.getcVoltage() == null ? other.getcVoltage() == null : this.getcVoltage().equals(other.getcVoltage()))
+            && (this.getaElectricity() == null ? other.getaElectricity() == null : this.getaElectricity().equals(other.getaElectricity()))
+            && (this.getbElectricity() == null ? other.getbElectricity() == null : this.getbElectricity().equals(other.getbElectricity()))
+            && (this.getcElectricity() == null ? other.getcElectricity() == null : this.getcElectricity().equals(other.getcElectricity()))
+            && (this.getTotalActivePower() == null ? other.getTotalActivePower() == null : this.getTotalActivePower().equals(other.getTotalActivePower()))
+            && (this.getTotalActiveEnergy() == null ? other.getTotalActiveEnergy() == null : this.getTotalActiveEnergy().equals(other.getTotalActiveEnergy()))
+            && (this.getTotalReactiveEnergy() == null ? other.getTotalReactiveEnergy() == null : this.getTotalReactiveEnergy().equals(other.getTotalReactiveEnergy()))
+            && (this.getaPowerFactor() == null ? other.getaPowerFactor() == null : this.getaPowerFactor().equals(other.getaPowerFactor()))
+            && (this.getbPowerFactor() == null ? other.getbPowerFactor() == null : this.getbPowerFactor().equals(other.getbPowerFactor()))
+            && (this.getcPowerFactor() == null ? other.getcPowerFactor() == null : this.getcPowerFactor().equals(other.getcPowerFactor()))
+            && (this.getTotalPowerFactor() == null ? other.getTotalPowerFactor() == null : this.getTotalPowerFactor().equals(other.getTotalPowerFactor()))
             && (this.getEnergy() == null ? other.getEnergy() == null : this.getEnergy().equals(other.getEnergy()))
             && (this.getEleboxPower() == null ? other.getEleboxPower() == null : this.getEleboxPower().equals(other.getEleboxPower()));
     }
@@ -131,6 +274,19 @@ public class EleboxVolEleRecord implements Serializable {
         result = prime * result + ((getRealtimeDate() == null) ? 0 : getRealtimeDate().hashCode());
         result = prime * result + ((getVoltage() == null) ? 0 : getVoltage().hashCode());
         result = prime * result + ((getElectricity() == null) ? 0 : getElectricity().hashCode());
+        result = prime * result + ((getaVoltage() == null) ? 0 : getaVoltage().hashCode());
+        result = prime * result + ((getbVoltage() == null) ? 0 : getbVoltage().hashCode());
+        result = prime * result + ((getcVoltage() == null) ? 0 : getcVoltage().hashCode());
+        result = prime * result + ((getaElectricity() == null) ? 0 : getaElectricity().hashCode());
+        result = prime * result + ((getbElectricity() == null) ? 0 : getbElectricity().hashCode());
+        result = prime * result + ((getcElectricity() == null) ? 0 : getcElectricity().hashCode());
+        result = prime * result + ((getTotalActivePower() == null) ? 0 : getTotalActivePower().hashCode());
+        result = prime * result + ((getTotalActiveEnergy() == null) ? 0 : getTotalActiveEnergy().hashCode());
+        result = prime * result + ((getTotalReactiveEnergy() == null) ? 0 : getTotalReactiveEnergy().hashCode());
+        result = prime * result + ((getaPowerFactor() == null) ? 0 : getaPowerFactor().hashCode());
+        result = prime * result + ((getbPowerFactor() == null) ? 0 : getbPowerFactor().hashCode());
+        result = prime * result + ((getcPowerFactor() == null) ? 0 : getcPowerFactor().hashCode());
+        result = prime * result + ((getTotalPowerFactor() == null) ? 0 : getTotalPowerFactor().hashCode());
         result = prime * result + ((getEnergy() == null) ? 0 : getEnergy().hashCode());
         result = prime * result + ((getEleboxPower() == null) ? 0 : getEleboxPower().hashCode());
         return result;
@@ -149,6 +305,19 @@ public class EleboxVolEleRecord implements Serializable {
         sb.append(", realtimeDate=").append(realtimeDate);
         sb.append(", voltage=").append(voltage);
         sb.append(", electricity=").append(electricity);
+        sb.append(", aVoltage=").append(aVoltage);
+        sb.append(", bVoltage=").append(bVoltage);
+        sb.append(", cVoltage=").append(cVoltage);
+        sb.append(", aElectricity=").append(aElectricity);
+        sb.append(", bElectricity=").append(bElectricity);
+        sb.append(", cElectricity=").append(cElectricity);
+        sb.append(", totalActivePower=").append(totalActivePower);
+        sb.append(", totalActiveEnergy=").append(totalActiveEnergy);
+        sb.append(", totalReactiveEnergy=").append(totalReactiveEnergy);
+        sb.append(", aPowerFactor=").append(aPowerFactor);
+        sb.append(", bPowerFactor=").append(bPowerFactor);
+        sb.append(", cPowerFactor=").append(cPowerFactor);
+        sb.append(", totalPowerFactor=").append(totalPowerFactor);
         sb.append(", energy=").append(energy);
         sb.append(", eleboxPower=").append(eleboxPower);
         sb.append(", serialVersionUID=").append(serialVersionUID);

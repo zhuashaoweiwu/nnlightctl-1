@@ -35,6 +35,7 @@ public class LightingVolEleRecordDaoImpl implements LightingVolEleRecordDao {
         sql.append("`gmt_created` datetime DEFAULT NULL,");
         sql.append("`gmt_updated` datetime DEFAULT NULL,");
         sql.append("`uid` varchar(64) DEFAULT NULL,");
+        sql.append("`lightIMEI` varchar(15) DEFAULT NULL,");
         sql.append("`record_datetime` datetime DEFAULT NULL,");
         sql.append("`voltage` decimal(10,3) DEFAULT NULL,");
         sql.append("`electricty` decimal(10,3) DEFAULT NULL,");
