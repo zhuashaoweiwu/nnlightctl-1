@@ -83,7 +83,7 @@ public class Consumer {
                             Lighting lighting = new Lighting();
                             lighting.setUid(lightingVolEleRecord.getUid());
                             lighting.setRealtimeUid(lightE0Command.getRealtimeUUID());
-                            lighting.setLightingImei(lightingVolEleRecord.getLightIMEI());
+                            lighting.setLightingImei(lightingVolEleRecord.getLightimei());
                             lighting.setLongitude(lightingVolEleRecord.getLongitude());
                             lighting.setLatitude(lightingVolEleRecord.getLatitude());
                             lighting.setFaultTag((byte)0);

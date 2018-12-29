@@ -33,7 +33,7 @@ public class DataTransferUtil {
         byte[] imeiBytes = new byte[15];
         System.arraycopy(data, k, imeiBytes, 0, 15);
         String imei = new String(imeiBytes);
-        lightingVolEleRecord.setLightIMEI(imei);
+        lightingVolEleRecord.setLightimei(imei);
 
         k += 15;
 
