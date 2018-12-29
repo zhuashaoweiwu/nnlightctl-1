@@ -92,6 +92,14 @@ public class LightingVolEleRecordDaoImpl implements LightingVolEleRecordDao {
     @Override
     public List<CommonEnergyStatisticView> getCommonEnergyStatisticDate(){
         String tableName = TableNameUtil.getTableNameByDateTest(LIGHTING_VOL_ELE_RECORD_TABLENAMEROOT);
+        try {
+            if (!TableNameUtil.isTableExist(jdbcTemplate, tableName)) {
+                //创建该表
+                createLightingVolEleRecordTable(tableName);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         StringBuilder sql = new StringBuilder();
         List<Object> param = new ArrayList<>(1);
         sql.append("SELECT in_seen_energy as energy ,SUBSTR(record_datetime ,1,10) as date FROM "+tableName+" where 1=1 ");

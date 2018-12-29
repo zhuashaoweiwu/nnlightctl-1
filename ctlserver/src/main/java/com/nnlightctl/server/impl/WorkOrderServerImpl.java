@@ -37,7 +37,6 @@ public class WorkOrderServerImpl implements WorkOrderServer {
     @Override
     public List<StatisticWorkOrderView> statisticWorkOrder(WorkOrderRequest request){
         List<StatisticWorkOrderView> statisticWorkOrderViewList = new ArrayList<>();
-        //List<WorkOrder> workOrderList1 = new ArrayList<>();
         if (request.getTimeType()==0){
             SimpleDateFormat df=new SimpleDateFormat("yyyy-MM");
             String  time=  df.format(request.getDate());
@@ -62,39 +61,7 @@ public class WorkOrderServerImpl implements WorkOrderServer {
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList2);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList3);
             statisticWorkOrderViewList.addAll(statisticWorkOrderViewList4);
-            //workOrderList1 = workOrderDao.listWorkOrderYear(time);
         }
-        /*if (!workOrderList1.isEmpty()) {
-            for (int i = 0 ; i < workOrderList1.size() ; i++){
-                Long done =  workOrderList1.get(i).getWorkDone().getTime();
-                Long  created= workOrderList1.get(i).getWorkCreated().getTime();
-               *//* System.out.println(workOrderList1.get(i).getWorkDone()+"%%%%%%%"+workOrderList1.get(i).getWorkCreated());
-                System.out.println(done +"*****"+created);*//*
-                Long time = done -created;
-                workOrderList1.get(i).setNnlightctlRegionId(time);
-            }
-        }
-        List<WorkOrder> workOrderList = new ArrayList<>();*/
- /*       for (int j = 0 ; j<workOrderList1.size() ;j++){
-            int count = 1;
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss");
-
-            Long project = workOrderList1.get(j).getNnlightctlProjectId();
-            Long totalTime = workOrderList1.get(j).getNnlightctlRegionId();
-            for (int k = 0 ; k <workOrderList1.size() ; k++){
-                if (workOrderList1.get(k).getNnlightctlProjectId()== project){
-                    if (j!=k){
-                        count++;
-                        totalTime = totalTime+workOrderList1.get(k).getNnlightctlRegionId();
-                    }
-                    workOrderList1.remove(k);
-                }
-            }
-            Long avg = totalTime/count/60/1000/60;
-            //System.out.println(avg+"&&&&&&&&&&&&&&&");
-            workOrderList1.get(j).setNnlightctlRegionId(avg);
-        }*/
-
         return statisticWorkOrderViewList;
     }
     @Override
