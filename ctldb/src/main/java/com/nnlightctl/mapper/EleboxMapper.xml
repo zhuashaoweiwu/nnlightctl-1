@@ -18,6 +18,7 @@
     <result column="power_rating" property="powerRating" jdbcType="DECIMAL" />
     <result column="max_use_time" property="maxUseTime" jdbcType="BIGINT" />
     <result column="spd" property="spd" jdbcType="VARCHAR" />
+    <result column="modbus_EM" property="modbusEm" jdbcType="VARCHAR" />
     <result column="main_switch" property="mainSwitch" jdbcType="VARCHAR" />
     <result column="nnlightctl_elebox_gis_id" property="nnlightctlEleboxGisId" jdbcType="BIGINT" />
     <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT" />
@@ -84,7 +85,7 @@
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, network_addr, realtime_uid, code_number, manufacture, 
     longitude, latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time, 
-    spd, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
+    spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample" >
     select
@@ -126,15 +127,15 @@
       manufacture, longitude, latitude, 
       use_date, rated_voltage, rated_electricty, 
       power_rating, max_use_time, spd, 
-      main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, 
-      nnlightctl_project_id)
+      modbus_EM, main_switch, nnlightctl_elebox_gis_id, 
+      nnlightctl_region_id, nnlightctl_project_id)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
       #{networkAddr,jdbcType=VARCHAR}, #{realtimeUid,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, 
       #{manufacture,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
       #{useDate,jdbcType=TIMESTAMP}, #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectricty,jdbcType=DECIMAL}, 
       #{powerRating,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{spd,jdbcType=VARCHAR}, 
-      #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT}, #{nnlightctlRegionId,jdbcType=BIGINT}, 
-      #{nnlightctlProjectId,jdbcType=BIGINT})
+      #{modbusEm,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT}, 
+      #{nnlightctlRegionId,jdbcType=BIGINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnlightctl.po.Elebox" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -186,6 +187,9 @@
       </if>
       <if test="spd != null" >
         spd,
+      </if>
+      <if test="modbusEm != null" >
+        modbus_EM,
       </if>
       <if test="mainSwitch != null" >
         main_switch,
@@ -245,6 +249,9 @@
       </if>
       <if test="spd != null" >
         #{spd,jdbcType=VARCHAR},
+      </if>
+      <if test="modbusEm != null" >
+        #{modbusEm,jdbcType=VARCHAR},
       </if>
       <if test="mainSwitch != null" >
         #{mainSwitch,jdbcType=VARCHAR},
@@ -317,6 +324,9 @@
       <if test="record.spd != null" >
         spd = #{record.spd,jdbcType=VARCHAR},
       </if>
+      <if test="record.modbusEm != null" >
+        modbus_EM = #{record.modbusEm,jdbcType=VARCHAR},
+      </if>
       <if test="record.mainSwitch != null" >
         main_switch = #{record.mainSwitch,jdbcType=VARCHAR},
       </if>
@@ -352,6 +362,7 @@
       power_rating = #{record.powerRating,jdbcType=DECIMAL},
       max_use_time = #{record.maxUseTime,jdbcType=BIGINT},
       spd = #{record.spd,jdbcType=VARCHAR},
+      modbus_EM = #{record.modbusEm,jdbcType=VARCHAR},
       main_switch = #{record.mainSwitch,jdbcType=VARCHAR},
       nnlightctl_elebox_gis_id = #{record.nnlightctlEleboxGisId,jdbcType=BIGINT},
       nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
@@ -408,6 +419,9 @@
       <if test="spd != null" >
         spd = #{spd,jdbcType=VARCHAR},
       </if>
+      <if test="modbusEm != null" >
+        modbus_EM = #{modbusEm,jdbcType=VARCHAR},
+      </if>
       <if test="mainSwitch != null" >
         main_switch = #{mainSwitch,jdbcType=VARCHAR},
       </if>
@@ -440,6 +454,7 @@
       power_rating = #{powerRating,jdbcType=DECIMAL},
       max_use_time = #{maxUseTime,jdbcType=BIGINT},
       spd = #{spd,jdbcType=VARCHAR},
+      modbus_EM = #{modbusEm,jdbcType=VARCHAR},
       main_switch = #{mainSwitch,jdbcType=VARCHAR},
       nnlightctl_elebox_gis_id = #{nnlightctlEleboxGisId,jdbcType=BIGINT},
       nnlightctl_region_id = #{nnlightctlRegionId,jdbcType=BIGINT},

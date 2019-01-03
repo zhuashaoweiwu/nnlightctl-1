@@ -43,7 +43,7 @@ public class CRCUtil {
     }
 
     public static void main(String[] args) {
-        byte[] bytes = new byte[] {(byte)0xd2, (byte)0x56};
+        byte[] bytes = new byte[] {(byte)0x01, (byte)0x03, (byte)0x00, (byte)0x60, (byte)0x00, (byte)0x02};
         //crc16
         System.out.println(get16CRC(bytes));
         String hexCRC = get16CRC(bytes);

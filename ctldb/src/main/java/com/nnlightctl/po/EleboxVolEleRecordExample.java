@@ -956,6 +956,216 @@ public class EleboxVolEleRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andAActivePowerIsNull() {
+            addCriterion("a_active_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerIsNotNull() {
+            addCriterion("a_active_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerEqualTo(String value) {
+            addCriterion("a_active_power =", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerNotEqualTo(String value) {
+            addCriterion("a_active_power <>", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerGreaterThan(String value) {
+            addCriterion("a_active_power >", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerGreaterThanOrEqualTo(String value) {
+            addCriterion("a_active_power >=", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerLessThan(String value) {
+            addCriterion("a_active_power <", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerLessThanOrEqualTo(String value) {
+            addCriterion("a_active_power <=", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerLike(String value) {
+            addCriterion("a_active_power like", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerNotLike(String value) {
+            addCriterion("a_active_power not like", value, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerIn(List<String> values) {
+            addCriterion("a_active_power in", values, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerNotIn(List<String> values) {
+            addCriterion("a_active_power not in", values, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerBetween(String value1, String value2) {
+            addCriterion("a_active_power between", value1, value2, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andAActivePowerNotBetween(String value1, String value2) {
+            addCriterion("a_active_power not between", value1, value2, "aActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerIsNull() {
+            addCriterion("b_active_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerIsNotNull() {
+            addCriterion("b_active_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerEqualTo(String value) {
+            addCriterion("b_active_power =", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerNotEqualTo(String value) {
+            addCriterion("b_active_power <>", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerGreaterThan(String value) {
+            addCriterion("b_active_power >", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerGreaterThanOrEqualTo(String value) {
+            addCriterion("b_active_power >=", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerLessThan(String value) {
+            addCriterion("b_active_power <", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerLessThanOrEqualTo(String value) {
+            addCriterion("b_active_power <=", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerLike(String value) {
+            addCriterion("b_active_power like", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerNotLike(String value) {
+            addCriterion("b_active_power not like", value, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerIn(List<String> values) {
+            addCriterion("b_active_power in", values, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerNotIn(List<String> values) {
+            addCriterion("b_active_power not in", values, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerBetween(String value1, String value2) {
+            addCriterion("b_active_power between", value1, value2, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andBActivePowerNotBetween(String value1, String value2) {
+            addCriterion("b_active_power not between", value1, value2, "bActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerIsNull() {
+            addCriterion("c_active_power is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerIsNotNull() {
+            addCriterion("c_active_power is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerEqualTo(String value) {
+            addCriterion("c_active_power =", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerNotEqualTo(String value) {
+            addCriterion("c_active_power <>", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerGreaterThan(String value) {
+            addCriterion("c_active_power >", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerGreaterThanOrEqualTo(String value) {
+            addCriterion("c_active_power >=", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerLessThan(String value) {
+            addCriterion("c_active_power <", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerLessThanOrEqualTo(String value) {
+            addCriterion("c_active_power <=", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerLike(String value) {
+            addCriterion("c_active_power like", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerNotLike(String value) {
+            addCriterion("c_active_power not like", value, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerIn(List<String> values) {
+            addCriterion("c_active_power in", values, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerNotIn(List<String> values) {
+            addCriterion("c_active_power not in", values, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerBetween(String value1, String value2) {
+            addCriterion("c_active_power between", value1, value2, "cActivePower");
+            return (Criteria) this;
+        }
+
+        public Criteria andCActivePowerNotBetween(String value1, String value2) {
+            addCriterion("c_active_power not between", value1, value2, "cActivePower");
+            return (Criteria) this;
+        }
+
         public Criteria andTotalActivePowerIsNull() {
             addCriterion("total_active_power is null");
             return (Criteria) this;

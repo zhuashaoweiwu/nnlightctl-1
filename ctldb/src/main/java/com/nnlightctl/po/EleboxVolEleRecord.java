@@ -31,6 +31,12 @@ public class EleboxVolEleRecord implements Serializable {
 
     private String cElectricity;
 
+    private String aActivePower;
+
+    private String bActivePower;
+
+    private String cActivePower;
+
     private String totalActivePower;
 
     private String totalActiveEnergy;
@@ -155,6 +161,30 @@ public class EleboxVolEleRecord implements Serializable {
         this.cElectricity = cElectricity == null ? null : cElectricity.trim();
     }
 
+    public String getaActivePower() {
+        return aActivePower;
+    }
+
+    public void setaActivePower(String aActivePower) {
+        this.aActivePower = aActivePower == null ? null : aActivePower.trim();
+    }
+
+    public String getbActivePower() {
+        return bActivePower;
+    }
+
+    public void setbActivePower(String bActivePower) {
+        this.bActivePower = bActivePower == null ? null : bActivePower.trim();
+    }
+
+    public String getcActivePower() {
+        return cActivePower;
+    }
+
+    public void setcActivePower(String cActivePower) {
+        this.cActivePower = cActivePower == null ? null : cActivePower.trim();
+    }
+
     public String getTotalActivePower() {
         return totalActivePower;
     }
@@ -252,6 +282,9 @@ public class EleboxVolEleRecord implements Serializable {
             && (this.getaElectricity() == null ? other.getaElectricity() == null : this.getaElectricity().equals(other.getaElectricity()))
             && (this.getbElectricity() == null ? other.getbElectricity() == null : this.getbElectricity().equals(other.getbElectricity()))
             && (this.getcElectricity() == null ? other.getcElectricity() == null : this.getcElectricity().equals(other.getcElectricity()))
+            && (this.getaActivePower() == null ? other.getaActivePower() == null : this.getaActivePower().equals(other.getaActivePower()))
+            && (this.getbActivePower() == null ? other.getbActivePower() == null : this.getbActivePower().equals(other.getbActivePower()))
+            && (this.getcActivePower() == null ? other.getcActivePower() == null : this.getcActivePower().equals(other.getcActivePower()))
             && (this.getTotalActivePower() == null ? other.getTotalActivePower() == null : this.getTotalActivePower().equals(other.getTotalActivePower()))
             && (this.getTotalActiveEnergy() == null ? other.getTotalActiveEnergy() == null : this.getTotalActiveEnergy().equals(other.getTotalActiveEnergy()))
             && (this.getTotalReactiveEnergy() == null ? other.getTotalReactiveEnergy() == null : this.getTotalReactiveEnergy().equals(other.getTotalReactiveEnergy()))
@@ -280,6 +313,9 @@ public class EleboxVolEleRecord implements Serializable {
         result = prime * result + ((getaElectricity() == null) ? 0 : getaElectricity().hashCode());
         result = prime * result + ((getbElectricity() == null) ? 0 : getbElectricity().hashCode());
         result = prime * result + ((getcElectricity() == null) ? 0 : getcElectricity().hashCode());
+        result = prime * result + ((getaActivePower() == null) ? 0 : getaActivePower().hashCode());
+        result = prime * result + ((getbActivePower() == null) ? 0 : getbActivePower().hashCode());
+        result = prime * result + ((getcActivePower() == null) ? 0 : getcActivePower().hashCode());
         result = prime * result + ((getTotalActivePower() == null) ? 0 : getTotalActivePower().hashCode());
         result = prime * result + ((getTotalActiveEnergy() == null) ? 0 : getTotalActiveEnergy().hashCode());
         result = prime * result + ((getTotalReactiveEnergy() == null) ? 0 : getTotalReactiveEnergy().hashCode());
@@ -311,6 +347,9 @@ public class EleboxVolEleRecord implements Serializable {
         sb.append(", aElectricity=").append(aElectricity);
         sb.append(", bElectricity=").append(bElectricity);
         sb.append(", cElectricity=").append(cElectricity);
+        sb.append(", aActivePower=").append(aActivePower);
+        sb.append(", bActivePower=").append(bActivePower);
+        sb.append(", cActivePower=").append(cActivePower);
         sb.append(", totalActivePower=").append(totalActivePower);
         sb.append(", totalActiveEnergy=").append(totalActiveEnergy);
         sb.append(", totalReactiveEnergy=").append(totalReactiveEnergy);

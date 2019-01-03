@@ -15,6 +15,9 @@
     <result column="a_electricity" property="aElectricity" jdbcType="VARCHAR" />
     <result column="b_electricity" property="bElectricity" jdbcType="VARCHAR" />
     <result column="c_electricity" property="cElectricity" jdbcType="VARCHAR" />
+    <result column="a_active_power" property="aActivePower" jdbcType="VARCHAR" />
+    <result column="b_active_power" property="bActivePower" jdbcType="VARCHAR" />
+    <result column="c_active_power" property="cActivePower" jdbcType="VARCHAR" />
     <result column="total_active_power" property="totalActivePower" jdbcType="VARCHAR" />
     <result column="total_active_energy" property="totalActiveEnergy" jdbcType="VARCHAR" />
     <result column="total_reactive_energy" property="totalReactiveEnergy" jdbcType="VARCHAR" />
@@ -85,9 +88,9 @@
   </sql>
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, realtime_date, voltage, electricity, a_voltage, 
-    b_voltage, c_voltage, a_electricity, b_electricity, c_electricity, total_active_power, 
-    total_active_energy, total_reactive_energy, a_power_factor, b_power_factor, c_power_factor, 
-    total_power_factor, energy, elebox_power
+    b_voltage, c_voltage, a_electricity, b_electricity, c_electricity, a_active_power, 
+    b_active_power, c_active_power, total_active_power, total_active_energy, total_reactive_energy, 
+    a_power_factor, b_power_factor, c_power_factor, total_power_factor, energy, elebox_power
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxVolEleRecordExample" >
     select
@@ -128,6 +131,7 @@
       realtime_date, voltage, electricity, 
       a_voltage, b_voltage, c_voltage, 
       a_electricity, b_electricity, c_electricity, 
+      a_active_power, b_active_power, c_active_power, 
       total_active_power, total_active_energy, total_reactive_energy, 
       a_power_factor, b_power_factor, c_power_factor, 
       total_power_factor, energy, elebox_power
@@ -136,6 +140,7 @@
       #{realtimeDate,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricity,jdbcType=DECIMAL}, 
       #{aVoltage,jdbcType=VARCHAR}, #{bVoltage,jdbcType=VARCHAR}, #{cVoltage,jdbcType=VARCHAR}, 
       #{aElectricity,jdbcType=VARCHAR}, #{bElectricity,jdbcType=VARCHAR}, #{cElectricity,jdbcType=VARCHAR}, 
+      #{aActivePower,jdbcType=VARCHAR}, #{bActivePower,jdbcType=VARCHAR}, #{cActivePower,jdbcType=VARCHAR}, 
       #{totalActivePower,jdbcType=VARCHAR}, #{totalActiveEnergy,jdbcType=VARCHAR}, #{totalReactiveEnergy,jdbcType=VARCHAR}, 
       #{aPowerFactor,jdbcType=VARCHAR}, #{bPowerFactor,jdbcType=VARCHAR}, #{cPowerFactor,jdbcType=VARCHAR}, 
       #{totalPowerFactor,jdbcType=VARCHAR}, #{energy,jdbcType=DECIMAL}, #{eleboxPower,jdbcType=DECIMAL}
@@ -182,6 +187,15 @@
       </if>
       <if test="cElectricity != null" >
         c_electricity,
+      </if>
+      <if test="aActivePower != null" >
+        a_active_power,
+      </if>
+      <if test="bActivePower != null" >
+        b_active_power,
+      </if>
+      <if test="cActivePower != null" >
+        c_active_power,
       </if>
       <if test="totalActivePower != null" >
         total_active_power,
@@ -247,6 +261,15 @@
       </if>
       <if test="cElectricity != null" >
         #{cElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="aActivePower != null" >
+        #{aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="bActivePower != null" >
+        #{bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="cActivePower != null" >
+        #{cActivePower,jdbcType=VARCHAR},
       </if>
       <if test="totalActivePower != null" >
         #{totalActivePower,jdbcType=VARCHAR},
@@ -325,6 +348,15 @@
       <if test="record.cElectricity != null" >
         c_electricity = #{record.cElectricity,jdbcType=VARCHAR},
       </if>
+      <if test="record.aActivePower != null" >
+        a_active_power = #{record.aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bActivePower != null" >
+        b_active_power = #{record.bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cActivePower != null" >
+        c_active_power = #{record.cActivePower,jdbcType=VARCHAR},
+      </if>
       <if test="record.totalActivePower != null" >
         total_active_power = #{record.totalActivePower,jdbcType=VARCHAR},
       </if>
@@ -372,6 +404,9 @@
       a_electricity = #{record.aElectricity,jdbcType=VARCHAR},
       b_electricity = #{record.bElectricity,jdbcType=VARCHAR},
       c_electricity = #{record.cElectricity,jdbcType=VARCHAR},
+      a_active_power = #{record.aActivePower,jdbcType=VARCHAR},
+      b_active_power = #{record.bActivePower,jdbcType=VARCHAR},
+      c_active_power = #{record.cActivePower,jdbcType=VARCHAR},
       total_active_power = #{record.totalActivePower,jdbcType=VARCHAR},
       total_active_energy = #{record.totalActiveEnergy,jdbcType=VARCHAR},
       total_reactive_energy = #{record.totalReactiveEnergy,jdbcType=VARCHAR},
@@ -424,6 +459,15 @@
       <if test="cElectricity != null" >
         c_electricity = #{cElectricity,jdbcType=VARCHAR},
       </if>
+      <if test="aActivePower != null" >
+        a_active_power = #{aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="bActivePower != null" >
+        b_active_power = #{bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="cActivePower != null" >
+        c_active_power = #{cActivePower,jdbcType=VARCHAR},
+      </if>
       <if test="totalActivePower != null" >
         total_active_power = #{totalActivePower,jdbcType=VARCHAR},
       </if>
@@ -468,6 +512,9 @@
       a_electricity = #{aElectricity,jdbcType=VARCHAR},
       b_electricity = #{bElectricity,jdbcType=VARCHAR},
       c_electricity = #{cElectricity,jdbcType=VARCHAR},
+      a_active_power = #{aActivePower,jdbcType=VARCHAR},
+      b_active_power = #{bActivePower,jdbcType=VARCHAR},
+      c_active_power = #{cActivePower,jdbcType=VARCHAR},
       total_active_power = #{totalActivePower,jdbcType=VARCHAR},
       total_active_energy = #{totalActiveEnergy,jdbcType=VARCHAR},
       total_reactive_energy = #{totalReactiveEnergy,jdbcType=VARCHAR},

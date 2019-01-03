@@ -1136,6 +1136,76 @@ public class EleboxExample {
             return (Criteria) this;
         }
 
+        public Criteria andModbusEmIsNull() {
+            addCriterion("modbus_EM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmIsNotNull() {
+            addCriterion("modbus_EM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmEqualTo(String value) {
+            addCriterion("modbus_EM =", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmNotEqualTo(String value) {
+            addCriterion("modbus_EM <>", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmGreaterThan(String value) {
+            addCriterion("modbus_EM >", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmGreaterThanOrEqualTo(String value) {
+            addCriterion("modbus_EM >=", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmLessThan(String value) {
+            addCriterion("modbus_EM <", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmLessThanOrEqualTo(String value) {
+            addCriterion("modbus_EM <=", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmLike(String value) {
+            addCriterion("modbus_EM like", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmNotLike(String value) {
+            addCriterion("modbus_EM not like", value, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmIn(List<String> values) {
+            addCriterion("modbus_EM in", values, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmNotIn(List<String> values) {
+            addCriterion("modbus_EM not in", values, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmBetween(String value1, String value2) {
+            addCriterion("modbus_EM between", value1, value2, "modbusEm");
+            return (Criteria) this;
+        }
+
+        public Criteria andModbusEmNotBetween(String value1, String value2) {
+            addCriterion("modbus_EM not between", value1, value2, "modbusEm");
+            return (Criteria) this;
+        }
+
         public Criteria andMainSwitchIsNull() {
             addCriterion("main_switch is null");
             return (Criteria) this;

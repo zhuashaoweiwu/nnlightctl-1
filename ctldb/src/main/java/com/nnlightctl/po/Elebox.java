@@ -37,6 +37,8 @@ public class Elebox implements Serializable {
 
     private String spd;
 
+    private String modbusEm;
+
     private String mainSwitch;
 
     private Long nnlightctlEleboxGisId;
@@ -175,6 +177,14 @@ public class Elebox implements Serializable {
         this.spd = spd == null ? null : spd.trim();
     }
 
+    public String getModbusEm() {
+        return modbusEm;
+    }
+
+    public void setModbusEm(String modbusEm) {
+        this.modbusEm = modbusEm == null ? null : modbusEm.trim();
+    }
+
     public String getMainSwitch() {
         return mainSwitch;
     }
@@ -235,6 +245,7 @@ public class Elebox implements Serializable {
             && (this.getPowerRating() == null ? other.getPowerRating() == null : this.getPowerRating().equals(other.getPowerRating()))
             && (this.getMaxUseTime() == null ? other.getMaxUseTime() == null : this.getMaxUseTime().equals(other.getMaxUseTime()))
             && (this.getSpd() == null ? other.getSpd() == null : this.getSpd().equals(other.getSpd()))
+            && (this.getModbusEm() == null ? other.getModbusEm() == null : this.getModbusEm().equals(other.getModbusEm()))
             && (this.getMainSwitch() == null ? other.getMainSwitch() == null : this.getMainSwitch().equals(other.getMainSwitch()))
             && (this.getNnlightctlEleboxGisId() == null ? other.getNnlightctlEleboxGisId() == null : this.getNnlightctlEleboxGisId().equals(other.getNnlightctlEleboxGisId()))
             && (this.getNnlightctlRegionId() == null ? other.getNnlightctlRegionId() == null : this.getNnlightctlRegionId().equals(other.getNnlightctlRegionId()))
@@ -261,6 +272,7 @@ public class Elebox implements Serializable {
         result = prime * result + ((getPowerRating() == null) ? 0 : getPowerRating().hashCode());
         result = prime * result + ((getMaxUseTime() == null) ? 0 : getMaxUseTime().hashCode());
         result = prime * result + ((getSpd() == null) ? 0 : getSpd().hashCode());
+        result = prime * result + ((getModbusEm() == null) ? 0 : getModbusEm().hashCode());
         result = prime * result + ((getMainSwitch() == null) ? 0 : getMainSwitch().hashCode());
         result = prime * result + ((getNnlightctlEleboxGisId() == null) ? 0 : getNnlightctlEleboxGisId().hashCode());
         result = prime * result + ((getNnlightctlRegionId() == null) ? 0 : getNnlightctlRegionId().hashCode());
@@ -290,6 +302,7 @@ public class Elebox implements Serializable {
         sb.append(", powerRating=").append(powerRating);
         sb.append(", maxUseTime=").append(maxUseTime);
         sb.append(", spd=").append(spd);
+        sb.append(", modbusEm=").append(modbusEm);
         sb.append(", mainSwitch=").append(mainSwitch);
         sb.append(", nnlightctlEleboxGisId=").append(nnlightctlEleboxGisId);
         sb.append(", nnlightctlRegionId=").append(nnlightctlRegionId);
