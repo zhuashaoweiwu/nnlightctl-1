@@ -31,7 +31,10 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
         StringBuilder sql = new StringBuilder();
 
         List<Object> param = new ArrayList<>(3);
-        sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,realtime_date ,voltage ,electricity ,voltage*electricity as elebox_power from nnlightctl_elebox_vol_ele_record where 1=1 ");
+        sql.append("SELECT id ,gmt_created ,gmt_updated ,uid ,realtime_date ,voltage ,electricity ,voltage*electricity as elebox_power " +
+                " ,a_voltage ,b_voltage ,c_voltage ,a_electricity ,b_electricity ,c_electricity ,a_active_power ,b_active_power ,c_active_power, " +
+                " a_power_factor ,b_power_factor ,c_power_factor ,total_active_energy " +
+                " from nnlightctl_elebox_vol_ele_record where 1=1 ");
 
         if (eleboxPowerRequest.getEleboxId() != null) {
             sql.append("and  uid = ? ");
@@ -58,6 +61,16 @@ public class EnergyStatisticDaoImpl implements EnergyStatisticDao {
                 eleboxVolEleRecord.setRealtimeDate(resultSet.getTimestamp("realtime_date"));
                 eleboxVolEleRecord.setUid(resultSet.getString("uid"));
                 eleboxVolEleRecord.setVoltage(resultSet.getBigDecimal("voltage"));
+                eleboxVolEleRecord.setaVoltage(resultSet.getString("a_voltage"));
+                eleboxVolEleRecord.setbVoltage(resultSet.getString("b_voltage"));
+                eleboxVolEleRecord.setcVoltage(resultSet.getString("c_voltage"));
+                eleboxVolEleRecord.setaElectricity(resultSet.getString("a_electricity"));
+                eleboxVolEleRecord.setbElectricity(resultSet.getString("b_electricity"));
+                eleboxVolEleRecord.setcElectricity(resultSet.getString("c_electricity"));
+                eleboxVolEleRecord.setaPowerFactor(resultSet.getString("a_active_power"));
+                eleboxVolEleRecord.setbPowerFactor(resultSet.getString("b_active_power"));
+                eleboxVolEleRecord.setcPowerFactor(resultSet.getString("c_active_power"));
+                eleboxVolEleRecord.setTotalActiveEnergy(resultSet.getString("total_active_energy"));
                 return eleboxVolEleRecord;
             }
         });
