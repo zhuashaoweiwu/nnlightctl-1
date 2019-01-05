@@ -7,6 +7,7 @@ import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.po.LightSignalLog;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.util.BytesHexStrTranslate;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -185,5 +186,23 @@ public class DataTransferUtil {
         modBusResponse.setOriginalPackageInfoHex(BytesHexStrTranslate.bytesToHexFun(data));
 
         return modBusResponse;
+    }
+
+    public static String transToModbusResponseValue(String modbusResponseHex) {
+        if (StringUtils.isEmpty(modbusResponseHex)) {
+            return "";
+        }
+
+        //截取数据总长度
+        int valueLength = ByteConvert.bytesToUbyte(BytesHexStrTranslate.toBytes(modbusResponseHex.substring(4, 6)));
+
+        return modbusResponseHex.substring(6, 6 + 2 * valueLength);
+    }
+
+    public static void main(String[] args) {
+        String hexValue = transToModbusResponseValue("01030409520006D87C");
+        System.out.println(hexValue);
+        int value = ByteConvert.bytesToUshort(BytesHexStrTranslate.toBytes(hexValue.substring(0, hexValue.length() / 2)));
+        System.out.println("value = " + String.valueOf(value));
     }
 }

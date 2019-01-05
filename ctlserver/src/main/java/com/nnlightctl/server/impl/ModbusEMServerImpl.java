@@ -1,8 +1,13 @@
 package com.nnlightctl.server.impl;
 
 import com.nnlight.common.PropertiesUtil;
+import com.nnlight.common.QuartzUtil;
 import com.nnlightctl.dao.EleboxMapper;
+import com.nnlightctl.dao.EleboxVolEleRecordMapper;
+import com.nnlightctl.kafka.util.DataTransferUtil;
+import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxExample;
+import com.nnlightctl.po.EleboxVolEleRecord;
 import com.nnlightctl.request.ModbusRequest;
 import com.nnlightctl.server.CommandServer;
 import com.nnlightctl.server.ModbusEMServer;
@@ -13,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 @Service
@@ -28,6 +35,9 @@ public class ModbusEMServerImpl implements ModbusEMServer {
 
     @Autowired
     private EleboxMapper eleboxMapper;
+
+    @Autowired
+    private EleboxVolEleRecordMapper eleboxVolEleRecordMapper;
 
     public ModbusEMServerImpl() throws IOException {
         properties = PropertiesUtil.load("config/modbusDirective.properties");
@@ -57,5 +67,31 @@ public class ModbusEMServerImpl implements ModbusEMServer {
 
 
         return commandServer.invokeModbusDirective(realtimeUUID, BytesHexStrTranslate.toBytes(modbusDirectiveStr)).getOriginalPackageInfoHex();
+    }
+
+//    @PostConstruct
+    public void startScanEleboxModbusEM() {
+        QuartzUtil.addJob(() -> {
+            //获取全部控制柜
+            List<Elebox> eleboxList = eleboxMapper.selectByExample(new EleboxExample());
+            //针对每个控制柜，通过电表获取电能数据
+            for (Elebox elebox : eleboxList) {
+                String realtimeUUID = elebox.getRealtimeUid();
+                if (StringUtils.isEmpty(realtimeUUID)) {
+                    continue;
+                }
+
+                EleboxVolEleRecord eleboxVolEleRecord = new EleboxVolEleRecord();
+
+                //A电压
+                String modbusDirectiveForAVoltage = properties.getProperty("3");
+                String responseHexForAVoltage = commandServer.invokeModbusDirective(realtimeUUID, BytesHexStrTranslate.toBytes(modbusDirectiveForAVoltage)).
+                        getOriginalPackageInfoHex();
+                String responseHexForAVoltageValue = DataTransferUtil.transToModbusResponseValue(responseHexForAVoltage);
+                //todo
+
+                eleboxVolEleRecordMapper.insertSelective(eleboxVolEleRecord);
+            }
+        }, 3600, null);
     }
 }
