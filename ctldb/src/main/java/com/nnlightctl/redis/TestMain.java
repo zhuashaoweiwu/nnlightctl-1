@@ -15,7 +15,7 @@ public class TestMain {
         for (Map.Entry<String, String> entry : hashMap.entrySet()) {
             System.out.println(entry.getKey() + "=" + entry.getValue());
         }
-        System.out.println("Redis Test End");
+        System.out.println("Redis Test End Master");
         System.exit(0);
     }
 }
