@@ -7,7 +7,7 @@
     <groupId>com.nnlight</groupId>
     <artifactId>nnlightctl</artifactId>
     <packaging>pom</packaging>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9.1-SNAPSHOT</version>
     <modules>
         <module>netserver</module>
         <module>webctl</module>

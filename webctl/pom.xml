@@ -5,7 +5,7 @@
     <parent>
         <artifactId>nnlightctl</artifactId>
         <groupId>com.nnlight</groupId>
-        <version>0.9-SNAPSHOT</version>
+        <version>0.9.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
