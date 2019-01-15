@@ -16,6 +16,7 @@
         <module>ctldb</module>
         <module>ctlcommon</module>
         <module>netcommand</module>
+        <module>netcuconnect</module>
     </modules>
 
     <properties>
@@ -51,6 +52,18 @@
         <hibernate.validate.version>4.2.0.Final</hibernate.validate.version>
         <validate.api.version>1.1.0.Final</validate.api.version>
         <pingying4j.version>2.5.0</pingying4j.version>
+        <httpclient.version>4.5.2</httpclient.version>
+        <json.lib.version>2.4</json.lib.version>
+        <commons-lang.version>2.5</commons-lang.version>
+        <commons-beanutils.version>1.8.0</commons-beanutils.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <ezmorph.version>1.0.6</ezmorph.version>
+        <httpcore.version>4.4.4</httpcore.version>
+        <jackson-annotations.version>2.5.4</jackson-annotations.version>
+        <jackson-core.version>2.5.4</jackson-core.version>
+        <jackson-databind.version>2.5.4</jackson-databind.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <json.version>20160810</json.version>
     </properties>
 
     <repositories>
@@ -358,6 +371,91 @@
                 <version>${pingying4j.version}</version>
             </dependency>
 
+            <!-- httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <!-- json-lib -->
+            <dependency>
+                <groupId>net.sf.json-lib</groupId>
+                <artifactId>json-lib</artifactId>
+                <version>${json.lib.version}</version>
+                <classifier>jdk15</classifier>
+            </dependency>
+
+            <!-- commons-lang -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+
+            <!-- commons-beanutils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <!-- commons-collections -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+
+            <!-- ezmorph -->
+            <dependency>
+                <groupId>net.sf.ezmorph</groupId>
+                <artifactId>ezmorph</artifactId>
+                <version>${ezmorph.version}</version>
+            </dependency>
+
+            <!-- httpcore -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
+
+            <!-- jackson-annotations -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
+            </dependency>
+
+            <!-- jackson-core -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-core.version}</version>
+            </dependency>
+
+            <!-- jackson-databind -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
+            </dependency>
+
+            <!-- commons-logging -->
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
+
+            <!-- json -->
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
+            </dependency>
+
 
 
 
@@ -389,6 +487,12 @@
             <dependency>
                 <groupId>com.nnlight</groupId>
                 <artifactId>netcommand</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nnlight</groupId>
+                <artifactId>netcuconnect</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
