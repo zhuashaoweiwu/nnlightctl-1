@@ -10,11 +10,15 @@ import com.iotplatform.client.invokeapi.Authentication;
 import com.iotplatform.utils.PropertyUtil;
 import com.nnlight.common.PropertiesUtil;
 import com.nnlight.common.Tuple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
 
 public class AuthenticationUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationUtil.class);
 
     public static Tuple.TwoTuple<NorthApiClient, String> authentication(String propertiesPath) {
         /**---------------------initialize northApiClient------------------------*/
@@ -23,7 +27,7 @@ public class AuthenticationUtil {
         try {
             properties = PropertiesUtil.load(propertiesPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         if (properties != null) {
@@ -52,7 +56,7 @@ public class AuthenticationUtil {
         try {
             authOutDTO = authentication.getAuthToken();
         } catch (NorthApiException e) {
-            e.printStackTrace();
+            log.error(e.getError_code() + ":" + e.getError_desc());
         }
         System.out.println(authOutDTO.toString());
 
@@ -71,7 +75,7 @@ public class AuthenticationUtil {
         try {
             authRefreshOutDTO = authentication.refreshAuthToken(authRefreshInDTO);
         } catch (NorthApiException e) {
-            e.printStackTrace();
+            log.error(e.getError_code() + ":" + e.getError_desc());
         }
 
         System.out.println(authRefreshOutDTO.toString());

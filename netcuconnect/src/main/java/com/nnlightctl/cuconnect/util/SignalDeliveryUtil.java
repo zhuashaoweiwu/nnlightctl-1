@@ -5,12 +5,17 @@ import com.iotplatform.client.NorthApiException;
 import com.iotplatform.client.dto.*;
 import com.iotplatform.client.invokeapi.SignalDelivery;
 import com.nnlight.common.Tuple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignalDeliveryUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(SignalDeliveryUtil.class);
+
     private static PostDeviceCommandOutDTO2 postCommand(SignalDelivery signalDelivery, String deviceId, String accessToken, CommandDTOV4 commandDTOV4) {
         PostDeviceCommandInDTO2 pdcInDTO = new PostDeviceCommandInDTO2();
         pdcInDTO.setDeviceId(deviceId);
@@ -19,7 +24,7 @@ public class SignalDeliveryUtil {
         try {
             return signalDelivery.postDeviceCommand(pdcInDTO, null, accessToken);
         } catch (NorthApiException e) {
-            System.out.println(e.toString());
+            log.error(e.getError_code() + ":" + e.getError_desc());
         }
         return null;
     }
@@ -63,7 +68,7 @@ public class SignalDeliveryUtil {
         try {
             signalDelivery(tuple.getFirst(), tuple.getSecond(), "6255f65f-230f-404b-89d8-917705267638", cmd);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }

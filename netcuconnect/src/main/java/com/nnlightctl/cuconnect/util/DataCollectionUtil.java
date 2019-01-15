@@ -5,11 +5,17 @@ import com.iotplatform.client.dto.*;
 import com.iotplatform.client.invokeapi.Authentication;
 import com.iotplatform.client.invokeapi.DataCollection;
 import com.nnlight.common.Tuple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 public class DataCollectionUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DataCollectionUtil.class);
+
     public static void dataCollection(NorthApiClient northApiClient, String accessToken, String deviceId) throws Exception {
         if (StringUtils.isEmpty(accessToken) || northApiClient == null || StringUtils.isEmpty(deviceId)) {
+            log.error("收集终端数据，终端deviceId不可为空");
             return;
         }
 
@@ -69,7 +75,7 @@ public class DataCollectionUtil {
         try {
             dataCollection(tuple.getFirst(), tuple.getSecond(), "6255f65f-230f-404b-89d8-917705267638");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }
