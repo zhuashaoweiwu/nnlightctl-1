@@ -77,6 +77,11 @@
         </param-value>
     </context-param>
 
+    <!-- 初始化全局ServletContext -->
+    <listener>
+        <listener-class>com.nnlightctl.listener.GlobalServletContextListener</listener-class>
+    </listener>
+
     <!-- 配置shiro -->
     <filter>
         <filter-name>shiroFilter</filter-name>

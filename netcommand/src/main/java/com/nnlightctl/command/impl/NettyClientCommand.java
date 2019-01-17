@@ -226,6 +226,11 @@ public class NettyClientCommand implements Command {
     }
 
     @Override
+    public void sendFirewareBytes(String realtimeUUID, byte[] firewareBytes) {
+        context.sendFirewareBytes(realtimeUUID, firewareBytes);
+    }
+
+    @Override
     public void close() {
         context.close();
     }

@@ -11,6 +11,7 @@ import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.FirewareUploadRecordMapper;
+import com.nnlightctl.listener.GlobalServletContextListener;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
@@ -24,6 +25,8 @@ import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.server.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +72,41 @@ public class CommandServerImpl implements CommandServer {
         command = CommandFactory.getNettyClientCommand(new MessageEvent() {
             @Override
             public void receiveMsg(CommandData msg) {
+                //解析指令，前端调试显示
                 globalMsg = CommandAnalyzeFactory.getCommandAnalyzer(msg.getControl()).analyze(msg);
+
+                //终端申请固件拆包指令
+                if (msg.getControl() == (byte)0xf3) {
+                    byte[] data = msg.getData();
+                    //获取imei
+                    byte[] imeiBytes = new byte[15];
+                    System.arraycopy(data, 0, imeiBytes, 0, 15);
+                    String imei = new String(imeiBytes);
+
+                    //url
+                    byte[] urlBytes = new byte[data.length - 15];
+                    System.arraycopy(data, 15, urlBytes, 0, urlBytes.length);
+                    String url = new String(urlBytes);
+
+                    //通过imei获取realtimeUUID
+                    String realtimeUUID = lightServer.getRealtimeUUIDByLightIMEI(imei);
+
+                    //获取固件字节
+                    byte[] firewareBytes = null;
+                    String firewarePackagePath = GlobalServletContextListener.getGlobalServletContext().getRealPath("/") +
+                            File.separator + url;
+                    try (InputStream inputStream = new FileInputStream(firewarePackagePath)) {
+                        firewareBytes = new byte[inputStream.available()];
+                        inputStream.read(firewareBytes);
+                    } catch (IOException e) {
+                        logger.error(e.getMessage());
+                    }
+
+                    if (firewareBytes != null) {
+                        logger.info(BytesHexStrTranslate.bytesToHexFun(firewareBytes));
+                        command.sendFirewareBytes(realtimeUUID, firewareBytes);
+                    }
+                }
             }
         }, produce);
     }

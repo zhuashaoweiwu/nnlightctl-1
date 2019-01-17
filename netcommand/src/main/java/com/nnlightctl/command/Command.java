@@ -39,6 +39,9 @@ public interface Command {
     //modbus配电柜中电表，测量配电柜电能数据
     ModBusResponse invokeModbusEM(String realtimeUUID, byte[] modBusDirectiveBytes);
 
+    //传送固件
+    void sendFirewareBytes(String realtimeUUID, byte[] firewareBytes);
+
     void close();
     void reConnect();
 }

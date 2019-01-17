@@ -460,4 +460,20 @@ public class LightServerImpl implements LightServer {
     public String getLightSignalByUUID(String uuid){
         return lightSignalRecordDao.getLightSignalByUUID(uuid);
     }
+
+    @Override
+    public String getRealtimeUUIDByLightIMEI(String imei) {
+        if (StringUtils.isEmpty(imei)) {
+            throw new RuntimeException("通过IMEI查询，IMEI不可为空");
+        }
+
+        LightingExample lightingExample = new LightingExample();
+        lightingExample.createCriteria().andLightingImeiEqualTo(imei);
+        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
+        if (lightingList != null && lightingList.size() > 0) {
+            return lightingList.get(0).getRealtimeUid();
+        }
+
+        return null;
+    }
 }

@@ -35,4 +35,5 @@ public interface LightServer {
     int updateLightPriority(LightConditionRequest request);
     int updatePairLighting(Lighting lighting);
     String getLightSignalByUUID(String uuid);
+    String getRealtimeUUIDByLightIMEI(String imei);
 }

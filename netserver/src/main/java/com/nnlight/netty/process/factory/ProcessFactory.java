@@ -66,6 +66,10 @@ public class ProcessFactory {
             case (byte)0xf1:
                 return f1;
 
+                //终端申请固件拆包
+            case (byte)0xf3:
+                return f3;
+
                 //命令层终端高光电源模式
             case (byte)0xb2:
                 return b2;
@@ -142,6 +146,7 @@ public class ProcessFactory {
     private static final Process c9 = new C9Process();
     private static final Process f0 = new F0Process();
     private static final Process f1 = new F1Process();
+    private static final Process f3 = new F3Process();
     private static final Process b2 = new B2Process();
     private static final Process a0 = new A0Process();
     private static final Process d0 = new D0Process();

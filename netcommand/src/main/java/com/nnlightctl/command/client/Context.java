@@ -219,6 +219,10 @@ public class Context {
         return DataTransferUtil.transToModbusResponse(commandData);
     }
 
+    public void sendFirewareBytes(String realtimeUUID, byte[] firewareBytes) {
+        channelHandlerContext.writeAndFlush(CommandData.getC11CommandData(realtimeUUID, firewareBytes));
+    }
+
     public void close() {
         if (channelHandlerContext != null) {
             channelHandlerContext.close();
