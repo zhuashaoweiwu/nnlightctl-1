@@ -32,10 +32,12 @@ public class RedisDataSourceImpl implements RedisDataSource {
 
     public void returnResource(ShardedJedis shardedJedis) {
 //        shardedJedisPool.returnResource(shardedJedis);
+        shardedJedis.close();
         sentinelPool.returnResource(shardedJedis);
     }
 
     public void returnResource(ShardedJedis shardedJedis, boolean broken) {
+        shardedJedis.close();
         if (broken) {
 //            sentinelPool.close();
             sentinelPool.returnBrokenResource(shardedJedis);

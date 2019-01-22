@@ -2,7 +2,9 @@ package com.nnlightctl.redis;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import redis.clients.jedis.ShardedJedisPipeline;
 
+import java.util.List;
 import java.util.Map;
 
 public class TestMain {
@@ -20,6 +22,19 @@ public class TestMain {
         System.out.println(redisClient.append("key", "world"));
         System.out.println(redisClient.get("key"));
         System.out.println("Redis Test End");
+
+        //pipline
+        System.out.println("Redis Test pipeline");
+        ShardedJedisPipeline pipeline = redisClient.pipeline();
+        System.out.println(pipeline.set("pipelineKeyTest", "OK").toString());
+        System.out.println(pipeline.set("pipelineKeyTest2", "OK2").toString());
+        System.out.println(pipeline.get("pipelineKeyTest").toString());
+        System.out.println(pipeline.get("pipelineKeyTest2").toString());
+        List<Object> resultList = pipeline.syncAndReturnAll();
+        for (Object result : resultList) {
+            System.out.println(result.toString());
+        }
+
         System.exit(0);
     }
 }

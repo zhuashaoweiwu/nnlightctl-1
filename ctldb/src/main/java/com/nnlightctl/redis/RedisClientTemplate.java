@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Repository("redisClientTemplate")
@@ -2908,6 +2905,23 @@ public class RedisClientTemplate {
         } finally {
             redisDataSource.returnResource(shardedJedis, broken);
         }
+        return result;
+    }
+
+    public ShardedJedisPipeline pipeline() {
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+        Optional<ShardedJedis> optionalShardedJedis = Optional.ofNullable(shardedJedis);
+        ShardedJedisPipeline result = null;
+        if (optionalShardedJedis.isPresent()) {
+            try {
+                result = shardedJedis.pipelined();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            } finally {
+                redisDataSource.returnResource(shardedJedis);
+            }
+        }
+
         return result;
     }
 
