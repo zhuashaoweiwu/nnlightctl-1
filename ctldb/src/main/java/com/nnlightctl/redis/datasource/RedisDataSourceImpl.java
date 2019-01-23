@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import redis.clients.jedis.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository("redisDataSource")
 public class RedisDataSourceImpl implements RedisDataSource {
@@ -31,11 +32,19 @@ public class RedisDataSourceImpl implements RedisDataSource {
     }
 
     public void returnResource(ShardedJedis shardedJedis) {
+        Optional<ShardedJedis> optionalJedis = Optional.ofNullable(shardedJedis);
+        optionalJedis.ifPresent((optionalJedisValue) -> {
+            optionalJedisValue.close();
+        });
 //        shardedJedisPool.returnResource(shardedJedis);
         sentinelPool.returnResource(shardedJedis);
     }
 
     public void returnResource(ShardedJedis shardedJedis, boolean broken) {
+        Optional<ShardedJedis> optionalJedis = Optional.ofNullable(shardedJedis);
+        optionalJedis.ifPresent((optionalJedisValue) -> {
+            optionalJedisValue.close();
+        });
         if (broken) {
 //            sentinelPool.close();
             sentinelPool.returnBrokenResource(shardedJedis);
