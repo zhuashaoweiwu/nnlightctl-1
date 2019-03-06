@@ -38,6 +38,12 @@ public class Context {
         this.command = command;
     }
 
+    public Context(Command command, int countDown) {
+        this.countDownLatch = new CountDownLatch(countDown);
+        globalContext = this;
+        this.command = command;
+    }
+
     public void await() throws InterruptedException {
         if (this.countDownLatch != null) {
             this.countDownLatch.await();

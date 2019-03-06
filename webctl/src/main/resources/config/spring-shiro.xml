@@ -38,6 +38,7 @@
                 /api/login/loginUrl = anon
                 /api/login/Login = anon
                 /device = anon
+                /eleboxModel = anon
                 /api/command/** = anon
                 /html/pages/nnlightctlweb/Index.html = user
                 /html/** = anon
