@@ -29,8 +29,10 @@ public class BatchNettyClientCommand implements Command {
     }
 
     public BatchNettyClientCommand() throws IOException {
-        this.context = new Context(this);
         properties = PropertiesUtil.load("config/batchClient.properties");
+        String[] nettyBrokerIPs = properties.getProperty("netty.cluster").split(",");
+        this.context = new Context(this, nettyBrokerIPs.length);
+
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.execute(() -> {
