@@ -14,6 +14,8 @@ public interface LightingGISMapper {
 
     int insert(LightingGIS record);
 
+    int insertUploadData(LightingGIS record);
+
     int insertSelective(LightingGIS record);
 
     List<LightingGIS> selectByExample(LightingGISExample example);

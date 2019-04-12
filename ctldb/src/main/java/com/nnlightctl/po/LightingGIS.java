@@ -3,6 +3,7 @@ package com.nnlightctl.po;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class LightingGIS implements Serializable {
     private Long id;
 
@@ -15,6 +16,8 @@ public class LightingGIS implements Serializable {
     private String latitude;
 
     private String mem;
+
+    private String EMEI;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +50,7 @@ public class LightingGIS implements Serializable {
     }
 
     public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
+        this.longitude = longitude;
     }
 
     public String getLatitude() {
@@ -55,7 +58,7 @@ public class LightingGIS implements Serializable {
     }
 
     public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
+        this.latitude = latitude;
     }
 
     public String getMem() {
@@ -63,7 +66,15 @@ public class LightingGIS implements Serializable {
     }
 
     public void setMem(String mem) {
-        this.mem = mem == null ? null : mem.trim();
+        this.mem = mem;
+    }
+
+    public String getEMEI() {
+        return EMEI;
+    }
+
+    public void setEMEI(String EMEI) {
+        this.EMEI = EMEI;
     }
 
     @Override
@@ -79,11 +90,12 @@ public class LightingGIS implements Serializable {
         }
         LightingGIS other = (LightingGIS) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
-            && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
-            && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
-            && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
-            && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()));
+                && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
+                && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
+                && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
+                && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
+                && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()))
+                && (this.getEMEI() == null ? other.getEMEI() == null : this.getEMEI().equals(other.getEMEI()));
     }
 
     @Override
@@ -96,6 +108,7 @@ public class LightingGIS implements Serializable {
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
         result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
+        result = prime * result + ((getEMEI() == null) ? 0 : getEMEI().hashCode());
         return result;
     }
 
@@ -111,6 +124,7 @@ public class LightingGIS implements Serializable {
         sb.append(", longitude=").append(longitude);
         sb.append(", latitude=").append(latitude);
         sb.append(", mem=").append(mem);
+        sb.append(", EMEI=").append(EMEI);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
