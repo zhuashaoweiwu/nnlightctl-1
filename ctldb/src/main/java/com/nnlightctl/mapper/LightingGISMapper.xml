@@ -8,7 +8,7 @@
     <result column="longitude" property="longitude" jdbcType="VARCHAR" />
     <result column="latitude" property="latitude" jdbcType="VARCHAR" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
-    <result column="EMEI" property="EMEI" javaType="VARCHAR" />
+    <result column="EMEI" property="EMEI" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -133,6 +133,9 @@
       </if>
       <if test="mem != null" >
         mem,
+      </if>
+      <if test="EMEI !=null">
+        #{EMEI,jdbcType=VARCHAR}
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >

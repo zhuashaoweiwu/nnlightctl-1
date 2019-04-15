@@ -5,9 +5,10 @@ import com.nnlightctl.po.LightingGIS;
 import com.nnlightctl.request.UploadDataRequest;
 import com.nnlightctl.server.UploadDataServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
+@Service
 public class UploadDataServerImpl implements UploadDataServer {
 
     @Autowired
