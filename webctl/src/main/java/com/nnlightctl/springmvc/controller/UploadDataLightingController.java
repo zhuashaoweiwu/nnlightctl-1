@@ -28,13 +28,13 @@ public class UploadDataLightingController extends BaseController{
      * @return
      */
     @RequestMapping("xyEMEI")
-    public String xyEMEI(String longitude,String latitude,String EMEI){
+    public String xyEMEI(String x, String y, String imei){
         logger.info("[post] /api/uploadDataLighting/xyEMEI/");
 
         UploadDataRequest uploadDataRequest=new UploadDataRequest();
-        uploadDataRequest.setLatitude(latitude);
-        uploadDataRequest.setLongitude(longitude);
-        uploadDataRequest.setEMEI(EMEI);
+        uploadDataRequest.setLatitude(y);
+        uploadDataRequest.setLongitude(x);
+        uploadDataRequest.setEMEI(imei);
 
         JsonResult jsonResult = null;
 
