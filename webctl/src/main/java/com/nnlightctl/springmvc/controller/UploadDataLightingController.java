@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 上传GPS和imei编号
+ * 上传GPS和EMEI编号
  *
  * @author keriezhang
  * @date 2019/4/11
@@ -24,30 +24,27 @@ public class UploadDataLightingController extends BaseController{
     private UploadDataServer uploadDataServer;
 
     /**
-     * 经度 维度 imei
+     * 经度 维度 EMEI
      * @return
      */
-    @RequestMapping("xyImei")
-    public String xyImei(String x,String y,String imei){
-        logger.info("[post] /api/uploadDataLighting/xyImei/");
+    @RequestMapping("xyEMEI")
+    public String xyEMEI(String x, String y, String imei){
+        logger.info("[post] /api/uploadDataLighting/xyEMEI/");
 
         UploadDataRequest uploadDataRequest=new UploadDataRequest();
-        uploadDataRequest.setLatitude(x);
-        uploadDataRequest.setLongitude(y);
-        uploadDataRequest.setImei(imei);
+        uploadDataRequest.setLatitude(y);
+        uploadDataRequest.setLongitude(x);
+        uploadDataRequest.setEMEI(imei);
 
         JsonResult jsonResult = null;
 
-        int ret = uploadDataServer.UploadGISAndImei(uploadDataRequest);
+        int ret = uploadDataServer.UploadGISAndEMEI(uploadDataRequest);
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
             jsonResult = JsonResult.getFAILURE();
         }
         return toJson(jsonResult);
-
-
-
 
 
     }
