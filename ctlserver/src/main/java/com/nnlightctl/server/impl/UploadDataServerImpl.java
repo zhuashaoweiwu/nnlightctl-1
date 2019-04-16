@@ -15,7 +15,7 @@ public class UploadDataServerImpl implements UploadDataServer {
     private LightingGISMapper lightingGISMapper;
 
     @Override
-    public int UploadGISAndEMEI(UploadDataRequest request) {
+    public int UploadGISAndImei(UploadDataRequest request) {
         if (request.getId()==null){
             LightingGIS lightingGIS=new LightingGIS();
             lightingGIS.setGmtCreated(new Date());
@@ -23,7 +23,7 @@ public class UploadDataServerImpl implements UploadDataServer {
 
             lightingGIS.setLatitude(request.getLatitude());
             lightingGIS.setLongitude(request.getLongitude());
-            lightingGIS.setEMEI(request.getEMEI());
+            lightingGIS.setImei(request.getImei());
             lightingGIS.setMem(request.getMem());
 
             this.lightingGISMapper.insertUploadData(lightingGIS);

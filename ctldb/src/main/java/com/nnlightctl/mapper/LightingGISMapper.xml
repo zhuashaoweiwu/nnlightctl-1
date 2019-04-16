@@ -8,7 +8,7 @@
     <result column="longitude" property="longitude" jdbcType="VARCHAR" />
     <result column="latitude" property="latitude" jdbcType="VARCHAR" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
-    <result column="EMEI" property="EMEI" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -112,7 +112,7 @@
       #{latitude,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR})
   </insert>
 
-  <!--保存gis和EMEI到数据库-->
+  <!--保存gis和imei到数据库-->
   <insert id="insertUploadData" parameterType="com.nnlightctl.po.LightingGIS" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -134,8 +134,8 @@
       <if test="mem != null" >
         mem,
       </if>
-      <if test="EMEI !=null">
-        #{EMEI,jdbcType=VARCHAR}
+      <if test="imei !=null">
+       imei,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -154,8 +154,8 @@
       <if test="mem != null" >
         #{mem,jdbcType=VARCHAR},
       </if>
-      <if test="EMEI !=null">
-        #{EMEI,jdbcType=VARCHAR}
+      <if test="imei !=null">
+        #{imei,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>

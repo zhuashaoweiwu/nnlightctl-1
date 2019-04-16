@@ -2,13 +2,13 @@ package com.nnlightctl.request;
 
 public class UploadDataRequest extends GISRequest{
 
-    private String EMEI;
+    private String imei;
 
-    public String getEMEI() {
-        return EMEI;
+    public String getImei() {
+        return imei;
     }
 
-    public void setEMEI(String EMEI) {
-        this.EMEI = EMEI;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 }

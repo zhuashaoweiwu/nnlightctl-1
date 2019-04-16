@@ -26,8 +26,8 @@
                 <div class="text-l">
                     <!--UUID：-->
                     <!--<input type="text" name="uuid" id="uuid" placeholder="UUID" style="width:250px" class="input-text">-->
-                    IMEI：
-                    <input type="text" name="IMEI" id="IMEI" placeholder="IMEI" style="width:250px" class="input-text">
+                    imei：
+                    <input type="text" name="imei" id="imei" placeholder="imei" style="width:250px" class="input-text">
                     <span class="pl-20">灯具唯一编码：</span>
                     <input type="text" name="lightingCode" id="lightingCode" placeholder="灯具唯一编码" style="width:250px" class="input-text">
                     <button name="" id="btnLightSearch" class="btn btn-success f-r" type="submit"><i class="Hui-iconfont">&#xe665;</i>灯具</button>
@@ -58,7 +58,7 @@
                                 <th width="25"><input type="checkbox" name="" value=""></th>
                                 <th width="160">编码</th>
                                 <!--<th>UUID</th>-->
-                                <th>IMEI</th>
+                                <th>imei</th>
                                 <th>灯头号</th>
                                 <th>灯杆</th>
                                 <th>光衰</th>
@@ -94,11 +94,11 @@
         
         $("#btnLightSearch").click(function () {
             // var searchUUID = $("#uuid").val().trim();
-            var searchIMEI = $("#IMEI").val().trim();
+            var searchEMEI = $("#imei").val().trim();
             var searchLightingCode = $("#lightingCode").val().trim();
             //搜索
             // param["uuid"] = searchUUID;
-            param["IMEI"] = searchIMEI;
+            param["imei"] = searchEMEI;
             param["lightingCode"] = searchLightingCode;
             searchLight(param);
         });
@@ -291,7 +291,7 @@
                             { "data": "id" },
                             { "data": "lightingCode", "defaultContent": "" },
                             // { "data": "uid", "defaultContent": "" },
-                            { "data": "IMEI", "defaultContent": "" },
+                            { "data": "imei", "defaultContent": "" },
                             { "data": "lamphead", "defaultContent": "" },
                             { "data": "lamppost", "defaultContent": "" },
                             { "data": "decay", "defaultContent": "" },

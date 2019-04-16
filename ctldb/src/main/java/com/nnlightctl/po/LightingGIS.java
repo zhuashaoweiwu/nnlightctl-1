@@ -17,7 +17,7 @@ public class LightingGIS implements Serializable {
 
     private String mem;
 
-    private String EMEI;
+    private String imei;
 
     private static final long serialVersionUID = 1L;
 
@@ -69,12 +69,12 @@ public class LightingGIS implements Serializable {
         this.mem = mem;
     }
 
-    public String getEMEI() {
-        return EMEI;
+    public String getImei() {
+        return imei;
     }
 
-    public void setEMEI(String EMEI) {
-        this.EMEI = EMEI;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class LightingGIS implements Serializable {
                 && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
                 && (this.getLatitude() == null ? other.getLatitude() == null : this.getLatitude().equals(other.getLatitude()))
                 && (this.getMem() == null ? other.getMem() == null : this.getMem().equals(other.getMem()))
-                && (this.getEMEI() == null ? other.getEMEI() == null : this.getEMEI().equals(other.getEMEI()));
+                && (this.getImei() == null ? other.getImei() == null : this.getImei().equals(other.getImei()));
     }
 
     @Override
@@ -108,7 +108,7 @@ public class LightingGIS implements Serializable {
         result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
         result = prime * result + ((getLatitude() == null) ? 0 : getLatitude().hashCode());
         result = prime * result + ((getMem() == null) ? 0 : getMem().hashCode());
-        result = prime * result + ((getEMEI() == null) ? 0 : getEMEI().hashCode());
+        result = prime * result + ((getImei() == null) ? 0 : getImei().hashCode());
         return result;
     }
 
@@ -124,7 +124,7 @@ public class LightingGIS implements Serializable {
         sb.append(", longitude=").append(longitude);
         sb.append(", latitude=").append(latitude);
         sb.append(", mem=").append(mem);
-        sb.append(", EMEI=").append(EMEI);
+        sb.append(", imei=").append(imei);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
