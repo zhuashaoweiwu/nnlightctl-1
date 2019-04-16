@@ -34,11 +34,11 @@ public class UploadDataLightingController extends BaseController{
         UploadDataRequest uploadDataRequest=new UploadDataRequest();
         uploadDataRequest.setLatitude(y);
         uploadDataRequest.setLongitude(x);
-        uploadDataRequest.setEMEI(imei);
+        uploadDataRequest.setImei(imei);
 
         JsonResult jsonResult = null;
 
-        int ret = uploadDataServer.UploadGISAndEMEI(uploadDataRequest);
+        int ret = uploadDataServer.UploadGISAndImei(uploadDataRequest);
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
