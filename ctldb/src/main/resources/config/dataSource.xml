@@ -22,9 +22,9 @@
     <!-- ========================================配置数据源========================================= -->
     <!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
     <bean name="dataSourceMaster" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="url" value="${jdbc_url2}" />
+        <property name="url" value="${jdbc_url}" />
         <property name="username" value="${jdbc_username}" />
-        <property name="password" value="${jdbc_password2}" />
+        <property name="password" value="${jdbc_password}" />
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="100" />
         <!-- 连接池最大使用连接数量 -->
