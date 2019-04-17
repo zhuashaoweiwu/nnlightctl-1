@@ -45,10 +45,6 @@ public class RedisDataSourceImpl implements RedisDataSource {
         optionalJedis.ifPresent((optionalJedisValue) -> {
             optionalJedisValue.close();
         });
-<<<<<<< HEAD
-=======
-
->>>>>>> 0.9
         if (broken) {
 //            sentinelPool.close();
             sentinelPool.returnBrokenResource(shardedJedis);
