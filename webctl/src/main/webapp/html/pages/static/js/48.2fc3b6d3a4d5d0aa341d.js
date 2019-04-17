@@ -1,2 +1,0 @@
-webpackJsonp([48],{"pu/E":function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement,n=this._self._c||e;return n("transition",{attrs:{name:"fade",mode:"out-in"}},[n("router-view")],1)},staticRenderFns:[]},a=t("VU/8")({name:"WaringIndex"},r,!1,null,null,null);n.default=a.exports}});
-//# sourceMappingURL=48.2fc3b6d3a4d5d0aa341d.js.map
