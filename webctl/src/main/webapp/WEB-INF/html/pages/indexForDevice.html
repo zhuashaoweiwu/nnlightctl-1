@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/tether.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="/nnlightctl/html/css/bootstrap/bootstrap-datetimepicker.min.css">
+    <title>设备调试</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-1"><label class="form-control">命令：</label></div>
+        <div class="col-sm-8"><textarea class="form-control" id="comandText" rows="3"></textarea></div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendCommand">发送命令</button>
+        </div>
+    </div>
+
+    <br/>
+
+    <!--<div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">命令返回：</label>
+        </div>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" id="resultText" rows="3"></textarea>
+        </div>
+    </div>-->
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 终端电源模式选择 -->
+    <div class="row">
+        <div class="col-sm-2">
+            <label class="form-control">终端电源模式选择：</label>
+        </div>
+
+        <div class="col-sm-2">
+            <select class="form-control" id="powerTypeSelect">
+                <option value="0">0~10V</option>
+                <option value="1">PWM</option>
+                <option value="2">UART</option>
+                <option value="3">DALI</option>
+            </select>
+        </div>
+
+        <div class="col-sm-1">
+            <label class="form-control">UUID:</label>
+        </div>
+
+        <div class="col-sm-4">
+            <input class="form-control" type="text" size="36" value="" id="powerTypeUUID"/>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="sendCommandTerminalPowerType">发送命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 灯具调节 -->
+    <div class="row">
+        <div class="col-sm-2">
+            <label class="form-control">灯具灯光调节：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input type="text" class="form-control" id="lightPercent">
+        </div>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="range" min="0" max="100" value="0" step="5" id="lightPercentSlide"/>
+        </div>
+
+        <div class="col-sm-2">
+            <label for="lightUUID" class="form-control">单灯UUID值：</label>
+        </div>
+
+        <div class="col-sm-4">
+            <input id="lightUUID" class="form-control" size="36" type="text" value="">
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="sendCommandLightAdjust">发送命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 重启/复位 -->
+    <div class="row">
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="resetBtn">重启/复位</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 设置定时发送参数 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">定时发送(秒)：</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="sendPeriod">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="sendPeriodBtn">发送</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 控制柜断电通电 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">控制柜通断电：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="switch switch-large">
+                <input id="eleboxOnBtn" type="checkbox" checked/>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 开关任务策略 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务1：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch1TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input1" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-10" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input1" value=""/><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input2" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-10" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input2" value=""/><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent1" class="form-control" type="text"/>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">开关任务2：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <select id="switch2TypeSelect" class="form-control">
+                <option value="1">平常</option>
+                <option value="2">周末</option>
+                <option value="4">节假日</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input3" class="col-md-3 control-label">开始时间：</label>
+                <div class="input-group date form_datetime col-md-10" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input3">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input3" value=""/><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="dtp_input4" class="col-md-3 control-label">结束时间：</label>
+                <div class="input-group date form_datetime col-md-10" data-date="1979-09-16T05:25:07Z"
+                     data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input4">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input4" value=""/><br/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="percent2" class="form-control" type="text"/>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="form-group">
+                <label for="switchPolicyUUID" class="col-md-3 control-label">UUID：</label>
+                <div class="input-group col-md-8">
+                    <input id="switchPolicyUUID" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button id="sendTerminalSwitchBtn" type="button" class="btn btn-primary">发送开关任务策略命令</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 读取终端信息 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">读取终端信息：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="readTerminalInfo">读取终端信息</button>
+        </div>
+
+        <!--<div class="col-sm-5">
+            <textarea class="form-control" id="terminalInfoTextArea" rows="3"></textarea>
+        </div>-->
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 设置终端自动模式0-自动 1-手动 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">终端手动模式：</label>
+        </div>
+
+        <div class="col-sm-10">
+            <div class="form-group">
+                <label for="terminalModelUUID" class="col-md-3 control-label">UUID：</label>
+                <div class="input-group col-md-8">
+                    <input id="terminalModelUUID" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="switch switch-large">
+                <input id="terminalAutoModel" type="checkbox" checked/>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- 客户端实时消息接收 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">实时消息接收：</label>
+        </div>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" id="netMessageTextArea" rows="8"></textarea>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="lightIdD0" class="form-control">指令D0(模块UUID)：</label>
+        </div>
+
+        <div class="col-sm-4">
+            <input id="lightIdD0" class="form-control" size="36" type="text" value="">
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchCommandReadServiceFixedInfo">发送指令D0</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="lightIdD1" class="form-control">指令D1(模块UUID)：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <input id="lightIdD1" class="form-control" size="36" type="text" value="">
+        </div>
+
+        <div class="col-sm-2">
+            <label for="lightIdD1Loop" class="form-control">要操作的继电器位(2字节)：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="lightIdD1Loop" class="form-control" size="6" type="text" value="">
+        </div>
+
+        <div class="col-sm-2">
+            <label for="lightIdD1LoopState" class="form-control">要操作的继电器位状态(2字节)：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <input id="lightIdD1LoopState" class="form-control" size="6" type="text" value="">
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchCommandConfigModelState">发送指令D1</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <form id="updateFirewareForm" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-sm-1">
+                <label class="form-control">固件文件上传：</label>
+            </div>
+
+            <!--<div class="col-sm-3">
+                <div class="form-group">
+                    <label for="terminalUpWareUUID" class="col-md-12 control-label">升级固件UUID：</label>
+                    <div class="input-group col-md-12">
+                        <input id="terminalUpWareUUID" name="uuids[0]" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="version" class="col-md-12 control-label">版本：</label>
+                    <div class="input-group col-md-12">
+                        <input id="version" name="version" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="aspect" class="col-md-12 control-label">AB面：</label>
+                    <div class="input-group col-md-12">
+                        <input id="aspect" name="aspect" class="form-control" size="36" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="fireware" class="col-md-5 control-label">上传固件：</label>
+                    <div class="input-group col-md-12">
+                        <input id="fireware" name="updateFireware" class="form-control" size="36" type="file" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-primary" id="updateFirewareBtn">上传</button>
+            </div>
+        </div>
+    </form>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <!-- E3固件升级指令 -->
+    <div class="row">
+        <div class="col-sm-1">
+            <label class="form-control">固件升级：</label>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="terminalUpWareUUID" class="col-md-12 control-label">升级固件UUID：</label>
+                <div class="input-group col-md-12">
+                    <input id="terminalUpWareUUID" name="uuids[0]" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="firewareSelect" class="col-md-5 control-label">升级固件：</label>
+                <div class="input-group col-md-12">
+                    <select id="firewareSelect" class="form-control">
+                        <option value="0">选择一个版本的固件</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="invokeUpdateFirewareBtn">升级固件</button>
+        </div>
+
+
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D2：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD2" class="form-control" size="16" type="text" value="">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigRestart">发送指令A2</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D3：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD3" class="form-control" size="16" type="text" value="">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadTimeParameter">发送指令A3</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D4：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD4" class="form-control" size="16" type="text" value="">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchCommandReadSending">发送指令A4</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="batchConfigSetTime" class="form-control">服务器广播定时指令D5：</label>
+        </div>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="batchConfigSetTime">发送指令D5</button>
+        </div>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D6：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD6" class="form-control" size="16" type="text" value="">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigOpenCloseStrategy">发送指令A6</button>
+    </div>
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label for="lightId" class="col-md-3 control-label">指令D7：</label>
+            <div class="input-group col-md-8">
+                <input id="lightIdD7" class="form-control" size="16" type="text" value="">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary" id="batchConfigWorkModel">发送指令A7</button>
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="row">
+        <!-- 透传网卡地址 -->
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="netway" class="col-md-6 control-label">透传Addr：</label>
+                <div class="input-group col-md-12">
+                    <input id="netway" class="form-control" size="36" type="text" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- 指令 -->
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="modbusDirector" class="col-md-6 control-label">指令：</label>
+                <div class="input-group col-md-8">
+                    <select id="modbusDirector" class="form-control">
+                        <option value="1">读取总有功功率</option>
+                        <option value="2">读取总功率</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 手动输入modbus指令 -->
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="manuModbusDirective" class="col-md-12 control-label">Modbus指令(16进制字符串)：</label>
+                <div class="input-group col-md-12">
+                    <input id="manuModbusDirective" class="form-control" size="22" type="text" value="" />
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回 -->
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="modbusResult" class="col-md-12 control-label">返回结果：</label>
+                <div class="col-md-12">
+                    <textarea id="modbusResult" rows="3" class="form-control">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 按扭 -->
+        <div class="col-sm-1">
+            <button class="form-control btn btn-primary" id="btnModbusDirector">发送</button>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/nnlightctl/html/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/popper.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/tether.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-switch.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
+<script src="/nnlightctl/html/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+    $("#sendCommand").click(function () {
+        $.post("/nnlightctl/api/command/sendcommand", {"msg": $("#comandText").val().trim()}, function (result) {
+            // $("#resultText").val(result);
+        }, "text");
+    });
+
+    $("#sendCommandLightAdjust").click(function () {
+        $.post("/nnlightctl/api/command/batchUUIDLightAdjustCommand",
+            {
+                "lightPercent": $("#lightPercent").val().trim(),
+                "lightUUIDs[0]": $("#lightUUID").val().trim()
+            }, function (result) {
+            });
+    });
+
+    $("#sendCommandTerminalPowerType").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandConfigTerminalPowerType",
+            {"lightUUIDs[0]": $("#powerTypeUUID").val().trim(), "powerType": $("#powerTypeSelect").val()});
+    });
+
+    //指令D0
+    $("#batchCommandReadServiceFixedInfo").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandGetModelInfoUUID",
+            {"modelUUIDs[0]": $("#lightIdD0").val().trim()}, function (result) {
+                if (result) {
+                    if (result.header.code == 1000) {
+                        console.log(result.body.data[0]);
+                    }
+                }
+            });
+    });
+
+    //指令D1
+    $("#batchCommandConfigModelState").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigModelStateUUID",
+            {
+                "modelUUIDs[0]": $("#lightIdD1").val().trim(),
+                "modelLoop": $("#lightIdD1Loop").val().trim(),
+                "modelLoopState": $("#lightIdD1LoopState").val().trim()
+            }, function (result) {
+
+            });
+    });
+
+    //指令A2
+    $("#batchConfigRestart").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigRestart",
+            {"lightIds[0]": $("#lightIdD2").val().trim()}, function (result) {
+            });
+    });
+    //指令A3
+    $("#batchCommandReadTimeParameter").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandReadTimeParameter",
+            {"lightIds[0]": $("#lightIdD3").val().trim()}, function (result) {
+            });
+    });
+    //指令A4
+    $("#batchCommandReadSending").click(function () {
+        $.post("/nnlightctl/api/command/batchCommandReadSending",
+            {"lightIds[0]": $("#lightIdD4").val().trim()}, function (result) {
+            });
+    });
+
+    //指令A5
+    $("#batchConfigSetTime").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigSetTime",
+            {}, function (result) {
+            });
+    });
+    //指令A6
+    $("#batchConfigOpenCloseStrategy").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigOpenCloseStrategy",
+            {"lightIds[0]": $("#lightIdD6").val().trim()}, function (result) {
+            });
+    });
+    //指令A7
+    $("#batchConfigWorkModel").click(function () {
+        $.post("/nnlightctl/api/command/batchConfigWorkModel",
+            {"lightIds[0]": $("#lightIdD7").val().trim()}, function (result) {
+            });
+    });
+
+    $("#lightPercentSlide").change(function () {
+        $("#lightPercent").val(this.value);
+        $("#sendCommandLightAdjust").click();
+    });
+
+    //终端模块测试用函数，打开uuid为36个1的终端
+
+    //每10秒发送打开继电器开关，如果继电器已打开则关闭该定时器
+    var time = null;
+
+    function doOpenModel() {
+        $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
+            {"lightPercent": 1, "lightIds[0]": 201}, function (result) {
+
+            });
+    }
+
+    function openModel() {
+        time = setInterval("doOpenModel()", 10 * 1000);
+    }
+
+    function clearOpenModelInterval() {
+        if (time) {
+            clearInterval(time);
+        }
+    }
+
+    //定时获取服务器端消息
+    var timeGetMessage = setInterval(function () {
+        $.post("/nnlightctl/api/command/webClientReceiveMsg", {}, function (result) {
+            if (!result) {
+                return;
+            }
+            var newMsg = result.body.data[0];
+            if (!newMsg) {
+                return;
+            }
+
+            //终端模块调试开始
+            //1.从newMsg中获取UUID
+            // var uuid = newMsg.substr(newMsg.indexOf("UUID") + 5, 36);
+            // if (uuid == "111111111111111111111111111111111111") {
+            //     clearOpenModelInterval();
+            // }
+            //2.判断uuid是否为36个2
+            // if (uuid == "222222222222222222222222222222222222") {
+            //     //3.关闭uuid为36个1对应的终端
+            //     $.post("/nnlightctl/api/command/sendLightAdjustCommandBatch",
+            //         {"lightPercent": 0, "lightIds[0]": 201}, function (result) {
+            //             if (result) {   //判断关闭成功
+            //                 debugger;
+            //                 //4.20秒之后重新打开uuid为36个1对应的终端
+            //                 setTimeout("openModel()", 20 * 1000);
+            //             }
+            //         });
+            // }
+            //终端模块调试结束
+
+            var text = $("#netMessageTextArea").val();
+            text += "\r\n";
+            text += (new Date().toLocaleString() + "  " + newMsg);
+            $("#netMessageTextArea").val(text);
+        }, "json");
+    }, 5000);
+
+    //周期发送调光指令
+    var value = 0;
+    // var timeTestLightAdjust = setInterval(function () {
+    //     $("#lightPercentSlide").val(value);
+    //     $("#lightPercentSlide").change();
+    //     value += 5;
+    //     if (value >= 100) {
+    //         value = 0;
+    //     }
+    // }, 5000);
+
+    //重启复位
+    $("#resetBtn").click(function () {
+        $.post("/nnlightctl/api/command/resetCommand", {}, function () {
+
+        });
+    });
+
+    //设置定时发送参数
+    $("#sendPeriodBtn").click(function () {
+        var period = $("#sendPeriod").val().trim();
+        $.post("/nnlightctl/api/command/configTerminalSendMsgPeriod", {"terminalSendMsgPeriod": period}, function () {
+
+        });
+    });
+
+    //控制柜通断电
+    $("#eleboxOnBtn").bootstrapSwitch();
+    $('#eleboxOnBtn').on('switchChange.bootstrapSwitch', function (event, state) {
+        console.log(state);
+        $.post("/nnlightctl/api/command/commandTerminalEleboxOn", {"terminalEleboxOn": state}, function () {
+
+        });
+    });
+
+    //任务开关策略
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        minuteStep: 5
+    });
+    $("#sendTerminalSwitchBtn").click(function () {
+        var sendData = {
+            "switch1Type": $("#switch1TypeSelect").val(),
+            "switch1StartDate": $("#dtp_input1").val(),
+            "switch1EndDate": $("#dtp_input2").val(),
+            "switch1Percent": $("#percent1").val(),
+            "switch2Type": $("#switch2TypeSelect").val(),
+            "switch2StartDate": $("#dtp_input3").val(),
+            "switch2EndDate": $("#dtp_input4").val(),
+            "switch2Percent": $("#percent2").val(),
+            "uuid": $("#switchPolicyUUID").val().trim()
+        };
+        $.post("/nnlightctl/api/command/testConfigTerminalSwitchPolicy", sendData, function () {
+
+        });
+    });
+
+    //读取终端信息
+    $("#readTerminalInfo").click(function () {
+        $.post("/nnlightctl/api/command/commandReadTerminalInfo", {}, function (data) {
+            // $("#terminalInfoTextArea").val(JSON.stringify(data));
+        });
+    });
+
+    //终端自动模式
+    $("#terminalAutoModel").bootstrapSwitch();
+    $('#terminalAutoModel').on('switchChange.bootstrapSwitch', function (event, state) {
+        console.log(state);
+        var model = 0;
+        if (state) {
+            model = 1;
+        }
+        $.post("/nnlightctl/api/command/batchCommandConfigTerminalAutoModel", {
+            "autoModel": model,
+            "lightUUIDs[0]": $("#terminalModelUUID").val().trim()
+        }, function () {
+
+        });
+    });
+
+    //上传升级固件
+    $("#updateFirewareBtn").click(function () {
+        $.ajax({
+            url : "/nnlightctl/api/command/updateFireware",
+            type : "post",
+            data: new FormData($('#updateFirewareForm')[0]),
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success : function(data) {
+                if (data) {
+                    if (data.header.code == 1000) {
+                        console.log("上传固件成功！");
+                    }
+                }
+            }
+        });
+    });
+
+    //更新固件上传记录下拉列表
+    function flushFirewareSelect() {
+        $.post("/nnlightctl/api/command/listFirewareUploadRecord", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var firewareUploadRecordArray = data.body.data;
+                    var $uploadFirewareSelect = $("#firewareSelect");
+                    for (var i = 0; i < firewareUploadRecordArray.length; ++i) {
+                        var firewareUploadRecord = firewareUploadRecordArray[i];
+                        $('<option value="'+firewareUploadRecord.id+'">'+firewareUploadRecord.firewareVersion+'</option>').appendTo($uploadFirewareSelect);
+                    }
+                }
+            }
+        });
+    }
+
+    flushFirewareSelect();
+    
+    $("#invokeUpdateFirewareBtn").click(function () {
+        $.post("/nnlightctl/api/command/invokeFirewareUpdateUUID",
+            {"lightUUIDs[0]" : $("#terminalUpWareUUID").val().trim(), "uploadFirewareRecordId" : $("#firewareSelect").val()}, function (data) {
+                if (data) {
+                    if (data.header.code == 1000) {
+                        console.log("升级固件成功");
+                    } else {
+                        console.log(data.header.msg);
+                    }
+                }
+            });
+    });
+
+    //配电柜modbus电表指令
+    $("#btnModbusDirector").click(function () {
+        var param = {};
+        param["netway"] = $("#netway").val().trim();
+        param["directiveType"] = $("#modbusDirector").val();
+        param["hexModbusDirective"] = $("#manuModbusDirective").val().trim();
+        $.post("/nnlightctl/api/command/invokeModbusEMTest", param, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var msg = data.body.data[0];
+                    var oMsg = $("#modbusResult").val();
+                    oMsg += "\r\n";
+                    oMsg += (new Date().toLocaleString() + "  " + msg);
+                    $("#modbusResult").val(oMsg);
+                } else {
+                    console.error(data.header.msg);
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

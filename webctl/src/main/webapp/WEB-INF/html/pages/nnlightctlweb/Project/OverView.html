@@ -1,0 +1,201 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <title>项目列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span> 项目管理
+    <span class="c-gray en">&gt;</span>项目列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="text-l">
+        项目名称：
+        <input type="text" name="projectName" id="projectName" placeholder="项目名称" style="width:250px" class="input-text">
+        <span class="pl-20">项目编码：</span>
+        <input type="text" name="codeNumber" id="codeNumber" placeholder="项目编码" style="width:250px" class="input-text">
+        <button id="btnSearch" class="btn btn-success f-r" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜项目</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a href="javascript:void(0);" onclick="project_del_more()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+            <a href="javascript:void(0);" class="btn btn-primary radius" data-title="添加项目" onclick="project_add('添加项目', 'Project-add.html', '800', '650')"><i class="Hui-iconfont">&#xe600;</i> 添加项目</a>
+        </span>
+    </div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-l">
+                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th>编码</th>
+                <th>项目名称</th>
+                <th>国家</th>
+                <th>省份</th>
+                <th>城市</th>
+                <th>经度</th>
+                <th>纬度</th>
+                <th>配电柜统计</th>
+                <th>灯具统计</th>
+                <th>状态</th>
+                <th>备注</th>
+                <th width="120">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/admin.js"></script>
+
+<script type="text/javascript" src="../js/api/requestRoot.js"></script>
+<script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../lib/layer/2.4/layer.js"></script><!--弹出插件-->
+<script type="text/javascript" src="../lib/datatables/1.10.0/jquery.dataTables.min.js"></script><!--表单插件-->
+<script type="text/javascript">
+    var param = {};
+    $(function () { searchProject(param); });
+    $("#btnSearch").click(function () {
+        //搜索条件
+        var searchProjectName = $("#projectName").val().trim();
+        var searchCodeNumber = $("#codeNumber").val().trim();
+
+        param["projectName"] = searchProjectName;
+        param["projectCode"] = searchCodeNumber;
+        //初始化，然后绑定
+        $('.table-sort').DataTable().destroy();
+        searchProject(param);
+    });
+    function searchProject(param) {
+        $('.table-sort').dataTable({
+            "destroy": true,
+            "autoWidth": true,
+            "ordering": false, //设置所有布排序
+            "bStateSave": true,
+            "ajax": function (data, callback, settings) {
+                ajaxRequest("post", "/api/project/listproject", param, function (data) {
+                    //封装返回数据
+                    var returnData = {};
+                    if (data) {
+                        if (data.header.code == 1000) {
+                            returnData.data = data.body.data;
+                        }
+                    }
+                    callback(returnData);
+                });
+            },
+            "columnDefs": [//对table格式的定义（表格的列从0开始）
+                {
+                    targets: 0,
+                    render: function (data, type, row) {
+                        return '<input type="checkbox" value="' + row.id + '" >';
+                    }
+                }, {
+                    targets: 12,
+                    render: function (data, type, row) {
+                        return '<a class="ml-10" href="javascript:void(0);" style="text-decoration:none" title="项目编辑" onclick="project_edit(\'项目编辑\', \'Project-add.html\', \'' + row.id + '\', \'800\', \'500\')"><i class="Hui-iconfont">&#xe6df;</i></a>' +
+                               '<a class="ml-10" href="javascript:void(0);" style="text-decoration:none" title="删除" onclick="project_del(this, \'' + row.id + '\')" ><i class="Hui-iconfont">&#xe6e2;</i></a></td>';
+                    }
+                }
+            ],
+            "columns": [//返回的json数据在这里填充，注意一定要与上面的<th>数量对应，否则排版出现扭曲
+                        { "data": "id" },
+                        { "data": "codeNumber", "defaultContent": "" },
+                        { "data": "projectName", "defaultContent": "" },
+                        { "data": "contryName", "defaultContent": "" },
+                        { "data": "provinceName", "defaultContent": "" },
+                        { "data": "cityName", "defaultContent": "" },
+                        { "data": "longitude", "defaultContent": "" },
+                        { "data": "latitude", "defaultContent": "" },
+                        { "data": "eleboxs", "defaultContent": "" },
+                        { "data": "lights", "defaultContent": "" },
+                        {
+                            "data": "state", "render": function (data) {
+                                if (data == 1) { return '<span class=\"label label-success radius\">' + PROJECT_STATE[data] + '</span>'; }
+                                else { return '<span class=\"label radius\">' + PROJECT_STATE[data] + '</span>'; }
+                            }
+                        },
+                        { "data": "mem", "defaultContent": "" }
+                   ]
+        });
+    }
+    function project_add(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //批量删除
+    function project_del_more() {
+        //获取全部批量删除的id
+        var idArray = [];
+        $("table.table").find("input[type='checkbox']:checked").each(function () {
+            idArray.push($(this).val());
+        });
+
+        if (idArray.length <= 0) {
+            return;
+        }
+
+        layer.confirm('确认批量删除？', function (index) {
+            batchDeleteProject(idArray);
+            layer.close(index);
+        })
+    }
+
+    /*编辑*/
+    function project_edit(title, url, id, w, h) {
+        layer_show(title, url + "?id=" + id, w, h);
+    }
+
+    /*删除*/
+    function batchDeleteProject(idArray) {
+        if (!idArray) {
+            return;
+        }
+
+        ajaxRequest("post", "/api/project/deleteproject", transArray({idList : idArray}), function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    searchProject(1);
+                } else {
+                    layer.msg(data.header.msg, { icon: 2, time: 3000 });
+                }
+            }
+        });
+        $('.table-sort').DataTable().destroy();//表单局部刷新
+    }
+
+    /*删除*/
+    function project_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            // var id = $(obj).parents("tr").find("input[type='checkbox']").eq(0).val();
+            var idArray = [];
+            idArray.push(id);
+            batchDeleteProject(idArray);
+            layer.close(index);
+        });
+    }
+</script>
+</body>
+</html>

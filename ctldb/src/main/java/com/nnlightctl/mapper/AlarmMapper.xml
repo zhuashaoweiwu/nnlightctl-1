@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.AlarmMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.Alarm" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
+    <result column="alarm_source" property="alarmSource" jdbcType="VARCHAR" />
+    <result column="alarm_level" property="alarmLevel" jdbcType="TINYINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="ctype" property="ctype" jdbcType="TINYINT" />
+    <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="remove_alarm_time" property="removeAlarmTime" jdbcType="TIMESTAMP" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="alarm_count" property="alarmCount" jdbcType="BIGINT" />
+    <result column="is_use" property="isUse" jdbcType="TINYINT" />
+    <result column="nnlightctl_alarm_config_id" property="nnlightctlAlarmConfigId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, code_number, alarm_source, alarm_level, state, ctype, 
+    alarm_time, remove_alarm_time, msg, alarm_count, is_use, nnlightctl_alarm_config_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.AlarmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_alarm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_alarm
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_alarm
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.AlarmExample" >
+    delete from nnlightctl_alarm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.Alarm" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_alarm (gmt_created, gmt_updated, code_number, 
+      alarm_source, alarm_level, state, 
+      ctype, alarm_time, remove_alarm_time, 
+      msg, alarm_count, is_use, 
+      nnlightctl_alarm_config_id)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{codeNumber,jdbcType=VARCHAR}, 
+      #{alarmSource,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
+      #{ctype,jdbcType=TINYINT}, #{alarmTime,jdbcType=TIMESTAMP}, #{removeAlarmTime,jdbcType=TIMESTAMP}, 
+      #{msg,jdbcType=VARCHAR}, #{alarmCount,jdbcType=BIGINT}, #{isUse,jdbcType=TINYINT}, 
+      #{nnlightctlAlarmConfigId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.Alarm" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_alarm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="codeNumber != null" >
+        code_number,
+      </if>
+      <if test="alarmSource != null" >
+        alarm_source,
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time,
+      </if>
+      <if test="removeAlarmTime != null" >
+        remove_alarm_time,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+      <if test="alarmCount != null" >
+        alarm_count,
+      </if>
+      <if test="isUse != null" >
+        is_use,
+      </if>
+      <if test="nnlightctlAlarmConfigId != null" >
+        nnlightctl_alarm_config_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeNumber != null" >
+        #{codeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmSource != null" >
+        #{alarmSource,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        #{alarmLevel,jdbcType=TINYINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=TINYINT},
+      </if>
+      <if test="alarmTime != null" >
+        #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="removeAlarmTime != null" >
+        #{removeAlarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmCount != null" >
+        #{alarmCount,jdbcType=BIGINT},
+      </if>
+      <if test="isUse != null" >
+        #{isUse,jdbcType=TINYINT},
+      </if>
+      <if test="nnlightctlAlarmConfigId != null" >
+        #{nnlightctlAlarmConfigId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.AlarmExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_alarm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_alarm
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.codeNumber != null" >
+        code_number = #{record.codeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmSource != null" >
+        alarm_source = #{record.alarmSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmLevel != null" >
+        alarm_level = #{record.alarmLevel,jdbcType=TINYINT},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.ctype != null" >
+        ctype = #{record.ctype,jdbcType=TINYINT},
+      </if>
+      <if test="record.alarmTime != null" >
+        alarm_time = #{record.alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.removeAlarmTime != null" >
+        remove_alarm_time = #{record.removeAlarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.msg != null" >
+        msg = #{record.msg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmCount != null" >
+        alarm_count = #{record.alarmCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.isUse != null" >
+        is_use = #{record.isUse,jdbcType=TINYINT},
+      </if>
+      <if test="record.nnlightctlAlarmConfigId != null" >
+        nnlightctl_alarm_config_id = #{record.nnlightctlAlarmConfigId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_alarm
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      code_number = #{record.codeNumber,jdbcType=VARCHAR},
+      alarm_source = #{record.alarmSource,jdbcType=VARCHAR},
+      alarm_level = #{record.alarmLevel,jdbcType=TINYINT},
+      state = #{record.state,jdbcType=TINYINT},
+      ctype = #{record.ctype,jdbcType=TINYINT},
+      alarm_time = #{record.alarmTime,jdbcType=TIMESTAMP},
+      remove_alarm_time = #{record.removeAlarmTime,jdbcType=TIMESTAMP},
+      msg = #{record.msg,jdbcType=VARCHAR},
+      alarm_count = #{record.alarmCount,jdbcType=BIGINT},
+      is_use = #{record.isUse,jdbcType=TINYINT},
+      nnlightctl_alarm_config_id = #{record.nnlightctlAlarmConfigId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Alarm" >
+    update nnlightctl_alarm
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeNumber != null" >
+        code_number = #{codeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmSource != null" >
+        alarm_source = #{alarmSource,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level = #{alarmLevel,jdbcType=TINYINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=TINYINT},
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="removeAlarmTime != null" >
+        remove_alarm_time = #{removeAlarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmCount != null" >
+        alarm_count = #{alarmCount,jdbcType=BIGINT},
+      </if>
+      <if test="isUse != null" >
+        is_use = #{isUse,jdbcType=TINYINT},
+      </if>
+      <if test="nnlightctlAlarmConfigId != null" >
+        nnlightctl_alarm_config_id = #{nnlightctlAlarmConfigId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Alarm" >
+    update nnlightctl_alarm
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      code_number = #{codeNumber,jdbcType=VARCHAR},
+      alarm_source = #{alarmSource,jdbcType=VARCHAR},
+      alarm_level = #{alarmLevel,jdbcType=TINYINT},
+      state = #{state,jdbcType=TINYINT},
+      ctype = #{ctype,jdbcType=TINYINT},
+      alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+      remove_alarm_time = #{removeAlarmTime,jdbcType=TIMESTAMP},
+      msg = #{msg,jdbcType=VARCHAR},
+      alarm_count = #{alarmCount,jdbcType=BIGINT},
+      is_use = #{isUse,jdbcType=TINYINT},
+      nnlightctl_alarm_config_id = #{nnlightctlAlarmConfigId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

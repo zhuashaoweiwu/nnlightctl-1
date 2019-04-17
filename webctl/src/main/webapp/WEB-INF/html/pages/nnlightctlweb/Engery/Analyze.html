@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>能耗分析</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        首页<span class="c-gray en">&gt;</span>能耗分析
+        <span class="c-gray en">&gt;</span>能耗分析
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container clearfix">
+        <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">用电量</span></h4>
+        <div class="useengery">
+            <dl class="ue1">
+                <dt class="pl-20 pt-30 f-18">今年</dt>
+                <dd class="pl-20 pt-30 f-24"></dd>
+            </dl>
+            <dl class="ue2">
+                <dt class="pl-20 pt-30 f-18">本月</dt>
+                <dd class="pl-20 pt-30 f-24"></dd>
+            </dl>
+            <dl class="ue3">
+                <dt class="pl-20 pt-30 f-18">昨日</dt>
+                <dd class="pl-20 pt-30 f-24"></dd>
+            </dl>
+        </div><!--useengery end-->
+        <div class="clear"></div>
+        <div class="monthengery f-l">
+            <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">月能耗</span></h4>
+            <div id="monthengery" class="mt-30"></div>
+        </div>
+        <div class="monthconut f-l ml-40">
+            <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">月统计</span></h4>
+            <div id="monthconut" class="mt-30"></div>
+            <div id="monthconut1" class="mt-30"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/highcharts.js"></script> <!--图表插件-->
+    <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+    <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /*一、获取常规能耗统计数据年，月，日能耗*/
+            ajaxRequest("post", "/api/energyStatistic/getCommonEnergyStatistic",{},
+                function (data) {
+                console.log(data);
+                    var year=0;
+                    var month=0;
+                    var day=0;
+                    if (data.header.code=="1000"){
+                        var length = data.body.data.length;
+                        if (length > 0){
+                            for (var i = 0 ; i< length ; i++){
+                                if (data.body.data[i].mouth){
+                                    month = data.body.data[i].totalEnergy;
+                                }else if(data.body.data[i].year){
+                                    year = data.body.data[i].totalEnergy;
+                                }else if(data.body.data[i].date){
+                                    day = data.body.data[i].totalEnergy;
+                                }
+                            }
+                        }
+                    }
+                    var statistics = new Array();
+                    $(".ue1 dd").append(year/1000+"KW/h");
+                    $(".ue2 dd").append(month/1000+"KW/h");
+                    $(".ue3 dd").append(day/1000+"KW/h");
+                    //['本月', 85.0], ['当天', 15.8]
+                     statistics.push(['本年',year]);
+                    statistics.push(['本月',month]);
+                    console.log(statistics);
+                  //月统计饼状图
+                    $('#monthconut').highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '月能耗与本年能耗'
+                        },
+                        tooltip: {
+                            pointFormat: '本月消耗: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#D53A35',
+                                    connectorColor: '#D53A35',
+                                    format: '<b>本年能耗</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '能耗',
+                            data:
+                                statistics
+
+                        }]
+                    });
+                });
+            /*二、按月份获取每天的能耗*/
+            var date=new Date;
+            var month=date.getMonth()+1;
+            var categories = new Array();
+            var ennery = new Array();
+            day = date.getDate();
+            ajaxRequest("post", "/api/energyStatistic/listEnergyStatisticByDay",{'month':month},
+                function (data) {
+                    for(var i = 0 ; i < day ;i++){
+                        if(i< 9){
+                            var d = i+1;
+                            categories[i] ="0"+d;
+                        }else {
+                            categories[i] = i+1+"";
+                        }
+                    }
+                    for(var h = 0 ; h < categories.length ; h++) {
+                        for (var j = 0; j < data.body.data.length; j++) {
+                            if (categories[h]==data.body.data[j].date.substr(8,9)) {
+                                ennery[h] = data.body.data[j].energy/1000;
+                                break;
+                            } else {
+                                ennery[h] = 0;
+                            }
+                        }
+                    }
+                    Highcharts.chart('monthengery', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: '',
+                            x: 0
+                        },
+                        subtitle: {
+                            text: '',
+                            x: 0
+                        },
+                        xAxis: {
+                            categories:categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: '耗电量（KWh）'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#B8C2D7'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: 'KWh'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: '耗电量',
+                            data: ennery
+                        }]
+                    });
+                });
+            $('#monthconut1').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: '亮灯率'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#D53A35',
+                            connectorColor: '#D53A35',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '能耗',
+                    data: [
+                        ['本月', 85.0],
+                        ['当天', 15.8]
+                    ]
+                }]
+            });
+        });
+    </script>
+</body>
+</html>

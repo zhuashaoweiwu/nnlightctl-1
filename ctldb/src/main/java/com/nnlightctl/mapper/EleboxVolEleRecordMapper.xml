@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.EleboxVolEleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.EleboxVolEleRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="realtime_date" property="realtimeDate" jdbcType="TIMESTAMP" />
+    <result column="voltage" property="voltage" jdbcType="DECIMAL" />
+    <result column="electricity" property="electricity" jdbcType="DECIMAL" />
+    <result column="a_voltage" property="aVoltage" jdbcType="VARCHAR" />
+    <result column="b_voltage" property="bVoltage" jdbcType="VARCHAR" />
+    <result column="c_voltage" property="cVoltage" jdbcType="VARCHAR" />
+    <result column="a_electricity" property="aElectricity" jdbcType="VARCHAR" />
+    <result column="b_electricity" property="bElectricity" jdbcType="VARCHAR" />
+    <result column="c_electricity" property="cElectricity" jdbcType="VARCHAR" />
+    <result column="a_active_power" property="aActivePower" jdbcType="VARCHAR" />
+    <result column="b_active_power" property="bActivePower" jdbcType="VARCHAR" />
+    <result column="c_active_power" property="cActivePower" jdbcType="VARCHAR" />
+    <result column="total_active_power" property="totalActivePower" jdbcType="VARCHAR" />
+    <result column="total_active_energy" property="totalActiveEnergy" jdbcType="VARCHAR" />
+    <result column="total_reactive_energy" property="totalReactiveEnergy" jdbcType="VARCHAR" />
+    <result column="a_power_factor" property="aPowerFactor" jdbcType="VARCHAR" />
+    <result column="b_power_factor" property="bPowerFactor" jdbcType="VARCHAR" />
+    <result column="c_power_factor" property="cPowerFactor" jdbcType="VARCHAR" />
+    <result column="total_power_factor" property="totalPowerFactor" jdbcType="VARCHAR" />
+    <result column="energy" property="energy" jdbcType="DECIMAL" />
+    <result column="elebox_power" property="eleboxPower" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, uid, realtime_date, voltage, electricity, a_voltage, 
+    b_voltage, c_voltage, a_electricity, b_electricity, c_electricity, a_active_power, 
+    b_active_power, c_active_power, total_active_power, total_active_energy, total_reactive_energy, 
+    a_power_factor, b_power_factor, c_power_factor, total_power_factor, energy, elebox_power
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxVolEleRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_elebox_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_elebox_vol_ele_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_elebox_vol_ele_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.EleboxVolEleRecordExample" >
+    delete from nnlightctl_elebox_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_elebox_vol_ele_record (gmt_created, gmt_updated, uid, 
+      realtime_date, voltage, electricity, 
+      a_voltage, b_voltage, c_voltage, 
+      a_electricity, b_electricity, c_electricity, 
+      a_active_power, b_active_power, c_active_power, 
+      total_active_power, total_active_energy, total_reactive_energy, 
+      a_power_factor, b_power_factor, c_power_factor, 
+      total_power_factor, energy, elebox_power
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
+      #{realtimeDate,jdbcType=TIMESTAMP}, #{voltage,jdbcType=DECIMAL}, #{electricity,jdbcType=DECIMAL}, 
+      #{aVoltage,jdbcType=VARCHAR}, #{bVoltage,jdbcType=VARCHAR}, #{cVoltage,jdbcType=VARCHAR}, 
+      #{aElectricity,jdbcType=VARCHAR}, #{bElectricity,jdbcType=VARCHAR}, #{cElectricity,jdbcType=VARCHAR}, 
+      #{aActivePower,jdbcType=VARCHAR}, #{bActivePower,jdbcType=VARCHAR}, #{cActivePower,jdbcType=VARCHAR}, 
+      #{totalActivePower,jdbcType=VARCHAR}, #{totalActiveEnergy,jdbcType=VARCHAR}, #{totalReactiveEnergy,jdbcType=VARCHAR}, 
+      #{aPowerFactor,jdbcType=VARCHAR}, #{bPowerFactor,jdbcType=VARCHAR}, #{cPowerFactor,jdbcType=VARCHAR}, 
+      #{totalPowerFactor,jdbcType=VARCHAR}, #{energy,jdbcType=DECIMAL}, #{eleboxPower,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_elebox_vol_ele_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="realtimeDate != null" >
+        realtime_date,
+      </if>
+      <if test="voltage != null" >
+        voltage,
+      </if>
+      <if test="electricity != null" >
+        electricity,
+      </if>
+      <if test="aVoltage != null" >
+        a_voltage,
+      </if>
+      <if test="bVoltage != null" >
+        b_voltage,
+      </if>
+      <if test="cVoltage != null" >
+        c_voltage,
+      </if>
+      <if test="aElectricity != null" >
+        a_electricity,
+      </if>
+      <if test="bElectricity != null" >
+        b_electricity,
+      </if>
+      <if test="cElectricity != null" >
+        c_electricity,
+      </if>
+      <if test="aActivePower != null" >
+        a_active_power,
+      </if>
+      <if test="bActivePower != null" >
+        b_active_power,
+      </if>
+      <if test="cActivePower != null" >
+        c_active_power,
+      </if>
+      <if test="totalActivePower != null" >
+        total_active_power,
+      </if>
+      <if test="totalActiveEnergy != null" >
+        total_active_energy,
+      </if>
+      <if test="totalReactiveEnergy != null" >
+        total_reactive_energy,
+      </if>
+      <if test="aPowerFactor != null" >
+        a_power_factor,
+      </if>
+      <if test="bPowerFactor != null" >
+        b_power_factor,
+      </if>
+      <if test="cPowerFactor != null" >
+        c_power_factor,
+      </if>
+      <if test="totalPowerFactor != null" >
+        total_power_factor,
+      </if>
+      <if test="energy != null" >
+        energy,
+      </if>
+      <if test="eleboxPower != null" >
+        elebox_power,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeDate != null" >
+        #{realtimeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        #{voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="electricity != null" >
+        #{electricity,jdbcType=DECIMAL},
+      </if>
+      <if test="aVoltage != null" >
+        #{aVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="bVoltage != null" >
+        #{bVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="cVoltage != null" >
+        #{cVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="aElectricity != null" >
+        #{aElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="bElectricity != null" >
+        #{bElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="cElectricity != null" >
+        #{cElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="aActivePower != null" >
+        #{aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="bActivePower != null" >
+        #{bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="cActivePower != null" >
+        #{cActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="totalActivePower != null" >
+        #{totalActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="totalActiveEnergy != null" >
+        #{totalActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="totalReactiveEnergy != null" >
+        #{totalReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="aPowerFactor != null" >
+        #{aPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPowerFactor != null" >
+        #{bPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="cPowerFactor != null" >
+        #{cPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPowerFactor != null" >
+        #{totalPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="energy != null" >
+        #{energy,jdbcType=DECIMAL},
+      </if>
+      <if test="eleboxPower != null" >
+        #{eleboxPower,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.EleboxVolEleRecordExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_elebox_vol_ele_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_elebox_vol_ele_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realtimeDate != null" >
+        realtime_date = #{record.realtimeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.voltage != null" >
+        voltage = #{record.voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="record.electricity != null" >
+        electricity = #{record.electricity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aVoltage != null" >
+        a_voltage = #{record.aVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bVoltage != null" >
+        b_voltage = #{record.bVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cVoltage != null" >
+        c_voltage = #{record.cVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aElectricity != null" >
+        a_electricity = #{record.aElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bElectricity != null" >
+        b_electricity = #{record.bElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cElectricity != null" >
+        c_electricity = #{record.cElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aActivePower != null" >
+        a_active_power = #{record.aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bActivePower != null" >
+        b_active_power = #{record.bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cActivePower != null" >
+        c_active_power = #{record.cActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalActivePower != null" >
+        total_active_power = #{record.totalActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalActiveEnergy != null" >
+        total_active_energy = #{record.totalActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalReactiveEnergy != null" >
+        total_reactive_energy = #{record.totalReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aPowerFactor != null" >
+        a_power_factor = #{record.aPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPowerFactor != null" >
+        b_power_factor = #{record.bPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cPowerFactor != null" >
+        c_power_factor = #{record.cPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalPowerFactor != null" >
+        total_power_factor = #{record.totalPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energy != null" >
+        energy = #{record.energy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.eleboxPower != null" >
+        elebox_power = #{record.eleboxPower,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_elebox_vol_ele_record
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      realtime_date = #{record.realtimeDate,jdbcType=TIMESTAMP},
+      voltage = #{record.voltage,jdbcType=DECIMAL},
+      electricity = #{record.electricity,jdbcType=DECIMAL},
+      a_voltage = #{record.aVoltage,jdbcType=VARCHAR},
+      b_voltage = #{record.bVoltage,jdbcType=VARCHAR},
+      c_voltage = #{record.cVoltage,jdbcType=VARCHAR},
+      a_electricity = #{record.aElectricity,jdbcType=VARCHAR},
+      b_electricity = #{record.bElectricity,jdbcType=VARCHAR},
+      c_electricity = #{record.cElectricity,jdbcType=VARCHAR},
+      a_active_power = #{record.aActivePower,jdbcType=VARCHAR},
+      b_active_power = #{record.bActivePower,jdbcType=VARCHAR},
+      c_active_power = #{record.cActivePower,jdbcType=VARCHAR},
+      total_active_power = #{record.totalActivePower,jdbcType=VARCHAR},
+      total_active_energy = #{record.totalActiveEnergy,jdbcType=VARCHAR},
+      total_reactive_energy = #{record.totalReactiveEnergy,jdbcType=VARCHAR},
+      a_power_factor = #{record.aPowerFactor,jdbcType=VARCHAR},
+      b_power_factor = #{record.bPowerFactor,jdbcType=VARCHAR},
+      c_power_factor = #{record.cPowerFactor,jdbcType=VARCHAR},
+      total_power_factor = #{record.totalPowerFactor,jdbcType=VARCHAR},
+      energy = #{record.energy,jdbcType=DECIMAL},
+      elebox_power = #{record.eleboxPower,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
+    update nnlightctl_elebox_vol_ele_record
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeDate != null" >
+        realtime_date = #{realtimeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        voltage = #{voltage,jdbcType=DECIMAL},
+      </if>
+      <if test="electricity != null" >
+        electricity = #{electricity,jdbcType=DECIMAL},
+      </if>
+      <if test="aVoltage != null" >
+        a_voltage = #{aVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="bVoltage != null" >
+        b_voltage = #{bVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="cVoltage != null" >
+        c_voltage = #{cVoltage,jdbcType=VARCHAR},
+      </if>
+      <if test="aElectricity != null" >
+        a_electricity = #{aElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="bElectricity != null" >
+        b_electricity = #{bElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="cElectricity != null" >
+        c_electricity = #{cElectricity,jdbcType=VARCHAR},
+      </if>
+      <if test="aActivePower != null" >
+        a_active_power = #{aActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="bActivePower != null" >
+        b_active_power = #{bActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="cActivePower != null" >
+        c_active_power = #{cActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="totalActivePower != null" >
+        total_active_power = #{totalActivePower,jdbcType=VARCHAR},
+      </if>
+      <if test="totalActiveEnergy != null" >
+        total_active_energy = #{totalActiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="totalReactiveEnergy != null" >
+        total_reactive_energy = #{totalReactiveEnergy,jdbcType=VARCHAR},
+      </if>
+      <if test="aPowerFactor != null" >
+        a_power_factor = #{aPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPowerFactor != null" >
+        b_power_factor = #{bPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="cPowerFactor != null" >
+        c_power_factor = #{cPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPowerFactor != null" >
+        total_power_factor = #{totalPowerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="energy != null" >
+        energy = #{energy,jdbcType=DECIMAL},
+      </if>
+      <if test="eleboxPower != null" >
+        elebox_power = #{eleboxPower,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.EleboxVolEleRecord" >
+    update nnlightctl_elebox_vol_ele_record
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=VARCHAR},
+      realtime_date = #{realtimeDate,jdbcType=TIMESTAMP},
+      voltage = #{voltage,jdbcType=DECIMAL},
+      electricity = #{electricity,jdbcType=DECIMAL},
+      a_voltage = #{aVoltage,jdbcType=VARCHAR},
+      b_voltage = #{bVoltage,jdbcType=VARCHAR},
+      c_voltage = #{cVoltage,jdbcType=VARCHAR},
+      a_electricity = #{aElectricity,jdbcType=VARCHAR},
+      b_electricity = #{bElectricity,jdbcType=VARCHAR},
+      c_electricity = #{cElectricity,jdbcType=VARCHAR},
+      a_active_power = #{aActivePower,jdbcType=VARCHAR},
+      b_active_power = #{bActivePower,jdbcType=VARCHAR},
+      c_active_power = #{cActivePower,jdbcType=VARCHAR},
+      total_active_power = #{totalActivePower,jdbcType=VARCHAR},
+      total_active_energy = #{totalActiveEnergy,jdbcType=VARCHAR},
+      total_reactive_energy = #{totalReactiveEnergy,jdbcType=VARCHAR},
+      a_power_factor = #{aPowerFactor,jdbcType=VARCHAR},
+      b_power_factor = #{bPowerFactor,jdbcType=VARCHAR},
+      c_power_factor = #{cPowerFactor,jdbcType=VARCHAR},
+      total_power_factor = #{totalPowerFactor,jdbcType=VARCHAR},
+      energy = #{energy,jdbcType=DECIMAL},
+      elebox_power = #{eleboxPower,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

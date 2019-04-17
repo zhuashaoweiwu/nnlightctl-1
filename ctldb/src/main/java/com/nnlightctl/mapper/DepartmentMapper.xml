@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.Department" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="nnlightctl_institution_id_belong" property="nnlightctlInstitutionIdBelong" jdbcType="BIGINT" />
+    <result column="mem" property="mem" jdbcType="VARCHAR" />
+    <result column="nnlightctl_department_id_parent" property="nnlightctlDepartmentIdParent" jdbcType="BIGINT" />
+    <result column="department_level" property="departmentLevel" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, department_name, create_time, addr, nnlightctl_institution_id_belong, 
+    mem, nnlightctl_department_id_parent, department_level
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.DepartmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_department
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_department
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.DepartmentExample" >
+    delete from nnlightctl_department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.Department" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_department (gmt_created, gmt_updated, department_name, 
+      create_time, addr, nnlightctl_institution_id_belong, 
+      mem, nnlightctl_department_id_parent, department_level
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{departmentName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{addr,jdbcType=VARCHAR}, #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT}, 
+      #{mem,jdbcType=VARCHAR}, #{nnlightctlDepartmentIdParent,jdbcType=BIGINT}, #{departmentLevel,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.Department" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="nnlightctlInstitutionIdBelong != null" >
+        nnlightctl_institution_id_belong,
+      </if>
+      <if test="mem != null" >
+        mem,
+      </if>
+      <if test="nnlightctlDepartmentIdParent != null" >
+        nnlightctl_department_id_parent,
+      </if>
+      <if test="departmentLevel != null" >
+        department_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlInstitutionIdBelong != null" >
+        #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT},
+      </if>
+      <if test="mem != null" >
+        #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlDepartmentIdParent != null" >
+        #{nnlightctlDepartmentIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="departmentLevel != null" >
+        #{departmentLevel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.DepartmentExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_department
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.departmentName != null" >
+        department_name = #{record.departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nnlightctlInstitutionIdBelong != null" >
+        nnlightctl_institution_id_belong = #{record.nnlightctlInstitutionIdBelong,jdbcType=BIGINT},
+      </if>
+      <if test="record.mem != null" >
+        mem = #{record.mem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nnlightctlDepartmentIdParent != null" >
+        nnlightctl_department_id_parent = #{record.nnlightctlDepartmentIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentLevel != null" >
+        department_level = #{record.departmentLevel,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_department
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      department_name = #{record.departmentName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      nnlightctl_institution_id_belong = #{record.nnlightctlInstitutionIdBelong,jdbcType=BIGINT},
+      mem = #{record.mem,jdbcType=VARCHAR},
+      nnlightctl_department_id_parent = #{record.nnlightctlDepartmentIdParent,jdbcType=BIGINT},
+      department_level = #{record.departmentLevel,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Department" >
+    update nnlightctl_department
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlInstitutionIdBelong != null" >
+        nnlightctl_institution_id_belong = #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT},
+      </if>
+      <if test="mem != null" >
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="nnlightctlDepartmentIdParent != null" >
+        nnlightctl_department_id_parent = #{nnlightctlDepartmentIdParent,jdbcType=BIGINT},
+      </if>
+      <if test="departmentLevel != null" >
+        department_level = #{departmentLevel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Department" >
+    update nnlightctl_department
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      addr = #{addr,jdbcType=VARCHAR},
+      nnlightctl_institution_id_belong = #{nnlightctlInstitutionIdBelong,jdbcType=BIGINT},
+      mem = #{mem,jdbcType=VARCHAR},
+      nnlightctl_department_id_parent = #{nnlightctlDepartmentIdParent,jdbcType=BIGINT},
+      department_level = #{departmentLevel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

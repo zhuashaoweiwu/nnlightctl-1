@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>终端报表</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        首页<span class="c-gray en">&gt;</span>能耗分析
+        <span class="c-gray en">&gt;</span>终端报表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <div class="text-l">
+            灯具编码：
+            <input type="text" name="projectName" id="search_text" placeholder="灯具编码" style="width:250px" class="input-text">
+            <div id="auto_div"></div>
+
+            <span class="pl-20">日期范围：</span>
+            <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
+
+            <button name="" id="Button1" class="btn btn-success f-r" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+        </div><!--搜索end-->
+        <div id="tab-system" class="HuiTab mt-30">
+            <div class="tabBar cl">
+                <span>功率</span>
+                <span>电流</span>
+                <span>电压</span>
+                <span>电能</span>
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container" style="width:96%;"></div><!--绑定功率线图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container1" style="width:96%;"></div><!--绑定电流线图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container2" style="width:96%;"></div><!--绑定电压柱状图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container3" style="width:96%;"></div><!--绑定电能线图end-->
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> <!--日期插件-->
+    <script type="text/javascript" src="../js/highcharts.js"></script> <!--图表插件-->
+    <script type="text/javascript" src="../js/exporting.js"></script> <!--图表下载插件-->
+    <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+    <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+    <style type="text/css">
+        .search {
+            left: 0;
+            position: relative;
+        }
+        #auto_div {
+            display: none;
+            width: 300px;
+            border: 1px #74c0f9 solid;
+            background: #FFF;
+            position: absolute;
+            top: 91px;
+            left: 83px;
+            color: #323232;
+            z-index: 99;
+            max-height: 128px;
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript">
+        var test_list = new Array();
+        var j = 0;
+        ajaxRequest("post", "/api/roadlighting/listLighting",{},
+            function (data) {
+                if(data.header.code=="1000"){
+                    var length = data.body.data.length;
+                    if (length > 0){
+                        for(var i = 0 ; i < length ; i++){
+                            if (data.body.data[i].lightingCode){
+                                ++j;
+                                test_list[j] = data.body.data[i].lightingCode;
+                            }
+                        }
+                    }
+                }
+            })
+        var old_value = "";
+        var highlightindex = -1; //高亮
+        //自动完成
+        function AutoComplete(auto, search, mylist) {
+            if($("#" + search).val() != old_value || old_value == "") {
+                var autoNode = $("#" + auto); //缓存对象（弹出框）
+                var carlist = new Array();
+                var n = 0;
+                old_value = $("#" + search).val();
+                for(i in mylist) {
+                    if(mylist[i].indexOf(old_value) >= 0) {
+                        carlist[n++] = mylist[i];
+                    }
+                }
+                if(carlist.length == 0) {
+                    autoNode.hide();
+                    return;
+                }
+                autoNode.empty(); //清空上次的记录
+                for(i in carlist) {
+                    var wordNode = carlist[i]; //弹出框里的每一条内容
+                    var newDivNode = $("<div>").attr("id", i); //设置每个节点的id值
+                    newDivNode.attr("style", "font:14px/25px arial;height:25px;padding:0 8px;cursor: pointer;");
+                    newDivNode.html(wordNode).appendTo(autoNode); //追加到弹出框
+                    //鼠标移入高亮，移开不高亮
+                    newDivNode.mouseover(function() {
+                        if(highlightindex != -1) { //原来高亮的节点要取消高亮（是-1就不需要了）
+                            autoNode.children("div").eq(highlightindex).css("background-color", "white");
+                        }
+                        //记录新的高亮节点索引
+                        highlightindex = $(this).attr("id");
+                        $(this).css("background-color", "#ebebeb");
+                    });
+                    newDivNode.mouseout(function() {
+                        $(this).css("background-color", "white");
+                    });
+                    //鼠标点击文字上屏
+                    newDivNode.click(function() {
+                        //取出高亮节点的文本内容
+                        var comText = autoNode.hide().children("div").eq(highlightindex).text();
+                        highlightindex = -1;
+                        //文本框中的内容变成高亮节点的内容
+                        $("#" + search).val(comText);
+                    })
+                    if(carlist.length > 0) { //如果返回值有内容就显示出来
+                        autoNode.show();
+                    } else { //服务器端无内容返回 那么隐藏弹出框
+                        autoNode.hide();
+                        //弹出框隐藏的同时，高亮节点索引值也变成-1
+                        highlightindex = -1;
+                    }
+                }
+            }
+            //点击页面隐藏自动补全提示框
+            document.onclick = function(e) {
+                var e = e ? e : window.event;
+                var tar = e.srcElement || e.target;
+                if(tar.id != search) {
+                    if($("#" + auto).is(":visible")) {
+                        $("#" + auto).css("display", "none")
+                    }
+                }
+            }
+        }
+        $(function () {
+            old_value = $("#search_text").val();
+            $("#search_text").focus(function() {
+                if($("#search_text").val() == "") {
+                    AutoComplete("auto_div", "search_text", test_list);
+                }
+            });
+            $("#search_text").keyup(function() {
+                AutoComplete("auto_div", "search_text", test_list);
+            });
+
+            var k = 0;
+            var list = new Array();
+            var code = 0;
+            ajaxRequest("post", "/api/roadlighting/listLighting",{},
+                function (data) {
+                    if(data.header.code=="1000"){
+                        var length = data.body.data.length;
+                        if (length > 0){
+                            for(var i = 0 ; i < length ; i++){
+                                if (data.body.data[i].lightingCode){
+                                    k++;
+                                    list[k] = data.body.data[i].lightingCode;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                })
+            ajaxRequest("post", "/api/energyStatistic/statisticLightEnergy",{"lightingCode":"10004"},
+                function (data) {
+                    if (data.header.code == "1000"){
+                        var categories = new Array();
+                        var  ele = new Array();
+                        var vol = new Array();
+                        var power = new Array();//功率
+                        var energy = new Array(); //能耗
+                        var notEnergy = new Array();//无用功
+                        var length;
+                        if(data.body.data.length < 100){
+                            length =  data.body.data.length
+                        }else {
+                            length = 100
+                        }
+                        if (length > 0){
+                            for (var i = 0 ; i< length ; i++){
+                                var now = new Date(data.body.data[i].recordDatetime)
+                                y = now.getFullYear(),
+                                    m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                    d = ("0" + now.getDate()).slice(-2);
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                ele[i] = data.body.data[i].electricty;
+                                vol[i] = data.body.data[i].voltage;
+                                power[i] = data.body.data[i].energy;
+                                energy[i] = data.body.data[i].energy/10;
+                                notEnergy[i] = 35;
+                            }
+                            if (length != 0){
+                                var now = new Date(data.body.data[0].recordDatetime)
+                                y = now.getFullYear(),
+                                    m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                    d = ("0" + now.getDate()).slice(-2);
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                categories[0] = timestamp
+                                if (length >= 1){
+                                    var nowl = new Date(data.body.data[length-1].recordDatetime)
+                                    yl = now.getFullYear(),
+                                        ml = ("0" + (now.getMonth() + 1)).slice(-2),
+                                        dl = ("0" + now.getDate()).slice(-2);
+                                    var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                                    categories[length-1] = timestampl;
+                                }
+                            }
+                        }
+                    }
+                    //功率
+                    Highcharts.chart('container', {
+
+                        title: {
+                            text: '',
+                            x: 0 //center
+                        },
+                        subtitle: {
+                            text: '',
+                            x: 0
+                        },
+                        xAxis: {
+                            categories: categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: '功率（KW）'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: 'KW'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: '有功功率',
+                            data: energy
+                        }, {
+                            name: '无功功率',
+                            data: notEnergy
+                        }],
+                        lang:{
+
+                            printChart: '打印图表',
+
+                            downloadPNG: '下载JPEG 图片',
+
+                            downloadJPEG: '下载JPEG文档',
+
+                            downloadPDF: '下载PDF 图片',
+
+                            downloadSVG: '下载SVG 矢量图',
+
+                            contextButtonTitle: '下载图片'
+
+                        }
+                    });
+                    //电流
+                    Highcharts.chart('container1', {
+
+                        title: {
+                            text: '电流',
+                            x: 0 //center
+                        },
+                        subtitle: {
+                            text: '',
+                            x: 0
+                        },
+                        xAxis: {
+                            categories: categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: '电流（KW）'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: 'KW'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: '电流',
+                            data: ele
+                        }],
+                        lang:{
+
+                            printChart: '打印图表',
+
+                            downloadPNG: '下载JPEG 图片',
+
+                            downloadJPEG: '下载JPEG文档',
+
+                            downloadPDF: '下载PDF 图片',
+
+                            downloadSVG: '下载SVG 矢量图',
+
+                            contextButtonTitle: '下载图片'
+
+                        }
+                    });
+                    //电压
+                    Highcharts.chart('container2', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: '电压',
+                            x: 0 //center
+                        },
+                        subtitle: {
+                            text: '',
+                            x: 0
+                        },
+                        xAxis: {
+                            categories: categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: '电压（KW）'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: 'KW'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: '电压',
+                            data:vol
+                        }],
+                        lang:{
+
+                            printChart: '打印图表',
+
+                            downloadPNG: '下载JPEG 图片',
+
+                            downloadJPEG: '下载JPEG文档',
+
+                            downloadPDF: '下载PDF 图片',
+
+                            downloadSVG: '下载SVG 矢量图',
+
+                            contextButtonTitle: '下载图片'
+
+                        }
+                    });
+                    //电能
+                    Highcharts.chart('container3', {
+
+                        title: {
+                            text: '电能',
+                            x: 0 //center
+                        },
+                        subtitle: {
+                            text: '',
+                            x: 0
+                        },
+                        xAxis: {
+                            categories: categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: '电能（KW）'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: 'KW'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: '电能',
+                            data:energy
+                        }],
+                        lang:{
+
+                            printChart: '打印图表',
+
+                            downloadPNG: '下载JPEG 图片',
+
+                            downloadJPEG: '下载JPEG文档',
+
+                            downloadPDF: '下载PDF 图片',
+
+                            downloadSVG: '下载SVG 矢量图',
+
+                            contextButtonTitle: '下载图片'
+
+                        }
+                    });
+                })
+
+
+            $("#Button1").click(function(){
+                var param = {};
+                var lithingCode = $("#search_text").val();
+                param["lightingCode"] = lithingCode;
+                if ($("#logmin").val().trim()!=""){
+                    var startDate = new Date($("#logmin").val());
+                    param["startDate"] = startDate;
+                }else {
+                    startDate=null;
+                }
+                if ($("#logmax").val().trim()!=""){
+                    var endDate = new Date($("#logmax").val());
+                    param["endDate"] = endDate;
+                }else {
+                    endDate=null;
+                }
+                ajaxRequest("post", "/api/energyStatistic/statisticLightEnergy",param,
+                    function (data) {
+                        if (data.header.code == "1000"){
+                            var categories = new Array();
+                            var  ele = new Array();
+                            var vol = new Array();
+                            var power = new Array();//功率
+                            var energy = new Array(); //能耗
+                            var notEnergy = new Array();//无用功
+                            var length;
+                            if(data.body.data.length < 100){
+                                length =  data.body.data.length
+                            }else {
+                                length = 100
+                            }
+                            if (length > 0){
+                                for (var i = 0 ; i< length ; i++){
+                                    var now = new Date(data.body.data[i].recordDatetime)
+                                    y = now.getFullYear(),
+                                        m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                        d = ("0" + now.getDate()).slice(-2);
+                                    var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                        ele[i] = data.body.data[i].electricty;
+                                        vol[i] = data.body.data[i].voltage;
+                                        power[i] = data.body.data[i].energy;
+                                        energy[i] = data.body.data[i].energy/10;
+                                        notEnergy[i] = 25;
+                                }
+                                if (length != 0){
+                                    var now = new Date(data.body.data[0].recordDatetime)
+                                    y = now.getFullYear(),
+                                        m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                        d = ("0" + now.getDate()).slice(-2);
+                                    var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                    categories[0] = timestamp
+                                    if (length >= 1){
+                                        var nowl = new Date(data.body.data[length-1].recordDatetime)
+                                        yl = now.getFullYear(),
+                                            ml = ("0" + (now.getMonth() + 1)).slice(-2),
+                                            dl = ("0" + now.getDate()).slice(-2);
+                                        var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                                        categories[length-1] = timestampl;
+                                    }
+                                }
+                            }
+                        }
+                        //功率
+                        Highcharts.chart('container', {
+
+                            title: {
+                                text: '',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '功率（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: '有功功率',
+                                data: energy
+                            }, {
+                                name: '无功功率',
+                                data: notEnergy
+                            }],
+                            lang:{
+
+                                printChart: '打印图表',
+
+                                downloadPNG: '下载JPEG 图片',
+
+                                downloadJPEG: '下载JPEG文档',
+
+                                downloadPDF: '下载PDF 图片',
+
+                                downloadSVG: '下载SVG 矢量图',
+
+                                contextButtonTitle: '下载图片'
+
+                            }
+                        });
+                        //电流
+                        Highcharts.chart('container1', {
+
+                            title: {
+                                text: '电流',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电流（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: '电流',
+                                data: ele
+                            }],
+                            lang:{
+
+                                printChart: '打印图表',
+
+                                downloadPNG: '下载JPEG 图片',
+
+                                downloadJPEG: '下载JPEG文档',
+
+                                downloadPDF: '下载PDF 图片',
+
+                                downloadSVG: '下载SVG 矢量图',
+
+                                contextButtonTitle: '下载图片'
+
+                            }
+                        });
+                        //电压
+                        Highcharts.chart('container2', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: '电压',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电压（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: '电压',
+                                data:vol
+                            }],
+                            lang:{
+
+                                printChart: '打印图表',
+
+                                downloadPNG: '下载JPEG 图片',
+
+                                downloadJPEG: '下载JPEG文档',
+
+                                downloadPDF: '下载PDF 图片',
+
+                                downloadSVG: '下载SVG 矢量图',
+
+                                contextButtonTitle: '下载图片'
+
+                            }
+                        });
+                        //电能
+                        Highcharts.chart('container3', {
+
+                            title: {
+                                text: '电能',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电能（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: '电能',
+                                data:energy
+                            }],
+                            lang:{
+
+                                printChart: '打印图表',
+
+                                downloadPNG: '下载JPEG 图片',
+
+                                downloadJPEG: '下载JPEG文档',
+
+                                downloadPDF: '下载PDF 图片',
+
+                                downloadSVG: '下载SVG 矢量图',
+
+                                contextButtonTitle: '下载图片'
+
+                            }
+                        });
+                    })
+            });
+
+            //tab切换
+            $("#tab-system").Huitab({
+                index: 0//默认第一个；
+            });
+        });
+    </script>
+</body>
+</html>

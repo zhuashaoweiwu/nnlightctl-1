@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.RepertoryInApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.RepertoryInApply" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="serialnumber" property="serialnumber" jdbcType="VARCHAR" />
+    <result column="in_repertory_date" property="inRepertoryDate" jdbcType="TIMESTAMP" />
+    <result column="nnlightctl_property_classify_catalog_id" property="nnlightctlPropertyClassifyCatalogId" jdbcType="BIGINT" />
+    <result column="nnlightctl_supplier" property="nnlightctlSupplier" jdbcType="BIGINT" />
+    <result column="property_name" property="propertyName" jdbcType="VARCHAR" />
+    <result column="property_uid" property="propertyUid" jdbcType="VARCHAR" />
+    <result column="property_count" property="propertyCount" jdbcType="BIGINT" />
+    <result column="nnlightctl_repertory_in_reason_id" property="nnlightctlRepertoryInReasonId" jdbcType="BIGINT" />
+    <result column="nnlightctl_repertory_id" property="nnlightctlRepertoryId" jdbcType="BIGINT" />
+    <result column="nnlightctl_user_apply_id" property="nnlightctlUserApplyId" jdbcType="BIGINT" />
+    <result column="apply_state" property="applyState" jdbcType="TINYINT" />
+    <result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_created, gmt_updated, serialnumber, in_repertory_date, nnlightctl_property_classify_catalog_id, 
+    nnlightctl_supplier, property_name, property_uid, property_count, nnlightctl_repertory_in_reason_id, 
+    nnlightctl_repertory_id, nnlightctl_user_apply_id, apply_state, refuse_reason
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.RepertoryInApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_repertory_in_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_repertory_in_apply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_repertory_in_apply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.RepertoryInApplyExample" >
+    delete from nnlightctl_repertory_in_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.RepertoryInApply" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_repertory_in_apply (gmt_created, gmt_updated, serialnumber, 
+      in_repertory_date, nnlightctl_property_classify_catalog_id, 
+      nnlightctl_supplier, property_name, property_uid, 
+      property_count, nnlightctl_repertory_in_reason_id, 
+      nnlightctl_repertory_id, nnlightctl_user_apply_id, 
+      apply_state, refuse_reason)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{serialnumber,jdbcType=VARCHAR}, 
+      #{inRepertoryDate,jdbcType=TIMESTAMP}, #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT}, 
+      #{nnlightctlSupplier,jdbcType=BIGINT}, #{propertyName,jdbcType=VARCHAR}, #{propertyUid,jdbcType=VARCHAR}, 
+      #{propertyCount,jdbcType=BIGINT}, #{nnlightctlRepertoryInReasonId,jdbcType=BIGINT}, 
+      #{nnlightctlRepertoryId,jdbcType=BIGINT}, #{nnlightctlUserApplyId,jdbcType=BIGINT}, 
+      #{applyState,jdbcType=TINYINT}, #{refuseReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.RepertoryInApply" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into nnlightctl_repertory_in_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="serialnumber != null" >
+        serialnumber,
+      </if>
+      <if test="inRepertoryDate != null" >
+        in_repertory_date,
+      </if>
+      <if test="nnlightctlPropertyClassifyCatalogId != null" >
+        nnlightctl_property_classify_catalog_id,
+      </if>
+      <if test="nnlightctlSupplier != null" >
+        nnlightctl_supplier,
+      </if>
+      <if test="propertyName != null" >
+        property_name,
+      </if>
+      <if test="propertyUid != null" >
+        property_uid,
+      </if>
+      <if test="propertyCount != null" >
+        property_count,
+      </if>
+      <if test="nnlightctlRepertoryInReasonId != null" >
+        nnlightctl_repertory_in_reason_id,
+      </if>
+      <if test="nnlightctlRepertoryId != null" >
+        nnlightctl_repertory_id,
+      </if>
+      <if test="nnlightctlUserApplyId != null" >
+        nnlightctl_user_apply_id,
+      </if>
+      <if test="applyState != null" >
+        apply_state,
+      </if>
+      <if test="refuseReason != null" >
+        refuse_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialnumber != null" >
+        #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="inRepertoryDate != null" >
+        #{inRepertoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nnlightctlPropertyClassifyCatalogId != null" >
+        #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlSupplier != null" >
+        #{nnlightctlSupplier,jdbcType=BIGINT},
+      </if>
+      <if test="propertyName != null" >
+        #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyUid != null" >
+        #{propertyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyCount != null" >
+        #{propertyCount,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlRepertoryInReasonId != null" >
+        #{nnlightctlRepertoryInReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlRepertoryId != null" >
+        #{nnlightctlRepertoryId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlUserApplyId != null" >
+        #{nnlightctlUserApplyId,jdbcType=BIGINT},
+      </if>
+      <if test="applyState != null" >
+        #{applyState,jdbcType=TINYINT},
+      </if>
+      <if test="refuseReason != null" >
+        #{refuseReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.RepertoryInApplyExample" resultType="java.lang.Integer" >
+    select count(*) from nnlightctl_repertory_in_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nnlightctl_repertory_in_apply
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreated != null" >
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtUpdated != null" >
+        gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.serialnumber != null" >
+        serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inRepertoryDate != null" >
+        in_repertory_date = #{record.inRepertoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nnlightctlPropertyClassifyCatalogId != null" >
+        nnlightctl_property_classify_catalog_id = #{record.nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nnlightctlSupplier != null" >
+        nnlightctl_supplier = #{record.nnlightctlSupplier,jdbcType=BIGINT},
+      </if>
+      <if test="record.propertyName != null" >
+        property_name = #{record.propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyUid != null" >
+        property_uid = #{record.propertyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyCount != null" >
+        property_count = #{record.propertyCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.nnlightctlRepertoryInReasonId != null" >
+        nnlightctl_repertory_in_reason_id = #{record.nnlightctlRepertoryInReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nnlightctlRepertoryId != null" >
+        nnlightctl_repertory_id = #{record.nnlightctlRepertoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nnlightctlUserApplyId != null" >
+        nnlightctl_user_apply_id = #{record.nnlightctlUserApplyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applyState != null" >
+        apply_state = #{record.applyState,jdbcType=TINYINT},
+      </if>
+      <if test="record.refuseReason != null" >
+        refuse_reason = #{record.refuseReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nnlightctl_repertory_in_apply
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+      serialnumber = #{record.serialnumber,jdbcType=VARCHAR},
+      in_repertory_date = #{record.inRepertoryDate,jdbcType=TIMESTAMP},
+      nnlightctl_property_classify_catalog_id = #{record.nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT},
+      nnlightctl_supplier = #{record.nnlightctlSupplier,jdbcType=BIGINT},
+      property_name = #{record.propertyName,jdbcType=VARCHAR},
+      property_uid = #{record.propertyUid,jdbcType=VARCHAR},
+      property_count = #{record.propertyCount,jdbcType=BIGINT},
+      nnlightctl_repertory_in_reason_id = #{record.nnlightctlRepertoryInReasonId,jdbcType=BIGINT},
+      nnlightctl_repertory_id = #{record.nnlightctlRepertoryId,jdbcType=BIGINT},
+      nnlightctl_user_apply_id = #{record.nnlightctlUserApplyId,jdbcType=BIGINT},
+      apply_state = #{record.applyState,jdbcType=TINYINT},
+      refuse_reason = #{record.refuseReason,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.RepertoryInApply" >
+    update nnlightctl_repertory_in_apply
+    <set >
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialnumber != null" >
+        serialnumber = #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="inRepertoryDate != null" >
+        in_repertory_date = #{inRepertoryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nnlightctlPropertyClassifyCatalogId != null" >
+        nnlightctl_property_classify_catalog_id = #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlSupplier != null" >
+        nnlightctl_supplier = #{nnlightctlSupplier,jdbcType=BIGINT},
+      </if>
+      <if test="propertyName != null" >
+        property_name = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyUid != null" >
+        property_uid = #{propertyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyCount != null" >
+        property_count = #{propertyCount,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlRepertoryInReasonId != null" >
+        nnlightctl_repertory_in_reason_id = #{nnlightctlRepertoryInReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlRepertoryId != null" >
+        nnlightctl_repertory_id = #{nnlightctlRepertoryId,jdbcType=BIGINT},
+      </if>
+      <if test="nnlightctlUserApplyId != null" >
+        nnlightctl_user_apply_id = #{nnlightctlUserApplyId,jdbcType=BIGINT},
+      </if>
+      <if test="applyState != null" >
+        apply_state = #{applyState,jdbcType=TINYINT},
+      </if>
+      <if test="refuseReason != null" >
+        refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.RepertoryInApply" >
+    update nnlightctl_repertory_in_apply
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      serialnumber = #{serialnumber,jdbcType=VARCHAR},
+      in_repertory_date = #{inRepertoryDate,jdbcType=TIMESTAMP},
+      nnlightctl_property_classify_catalog_id = #{nnlightctlPropertyClassifyCatalogId,jdbcType=BIGINT},
+      nnlightctl_supplier = #{nnlightctlSupplier,jdbcType=BIGINT},
+      property_name = #{propertyName,jdbcType=VARCHAR},
+      property_uid = #{propertyUid,jdbcType=VARCHAR},
+      property_count = #{propertyCount,jdbcType=BIGINT},
+      nnlightctl_repertory_in_reason_id = #{nnlightctlRepertoryInReasonId,jdbcType=BIGINT},
+      nnlightctl_repertory_id = #{nnlightctlRepertoryId,jdbcType=BIGINT},
+      nnlightctl_user_apply_id = #{nnlightctlUserApplyId,jdbcType=BIGINT},
+      apply_state = #{applyState,jdbcType=TINYINT},
+      refuse_reason = #{refuseReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
