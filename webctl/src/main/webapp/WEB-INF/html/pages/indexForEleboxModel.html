@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模块开关</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap-switch.css">
+    <script type="text/javascript" src="styles/jquery.min.js"></script>
+    <script src="styles/bootstrap.min.js"></script>
+    <script type="text/javascript" src="styles/bootstrap-switch.js"></script>
+</head>
+<body>
+<div id="box" class="container">
+    <caption class="text-center"><h3>模块操作</h3></caption>
+    <caption class="form-group">
+        <label style="display:inline" class="form-label" control-label>模块uuid：</label>
+        <input style="display:inline; width: 50%" class="form-control"  type="text" id="uuid" value="000000000000000000000000000000000003">
+    </caption><br><br>
+    <caption>
+        <input id="btnOpenAll" type="button" class="btn-primary btn" value="全部打开">
+        <input id="btnCloseAll" type="button" class="btn text-right btn-danger" value="全部关闭">
+    </caption><br><br>
+    <table class="table table-bordered table-hover ">
+
+        <thead>
+            <tr class="bg-info">
+                <th class="text-center col-sm-1">继电器编号</th>
+                <th class="text-center">状态</th>
+                <th class="text-center">操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <tr class="text-center" >
+            <td>1</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test" >
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>2</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>3</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>4</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>5</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>6</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>7</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>8</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>9</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>10</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>11</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        <tr class="text-center" >
+            <td>12</td>
+            <td>关闭</td>
+            <td>
+                <input type="checkbox" name="test">
+            </td>
+        </tr>
+        </tbody>
+
+        </table>
+
+
+</div>
+<script type="text/javascript">
+    $("[name='test']").bootstrapSwitch({
+        onSwitchChange:function(event,state){
+            var $tr = $(this).parents("tr.text-center");
+            var number = $tr.find("td").eq(0).text();
+            console.log("number:" + number);
+            var modelLoopState = 0;
+            if(state==true){
+                console.log("开启");
+                $tr.find("td").eq(1).text("开启");
+                modelLoopState = 1;
+            }else{
+                console.log("关闭");
+                $tr.find("td").eq(1).text("关闭");
+                modelLoopState = 0;
+            }
+
+            $.post("/nnlightctl/api/command/batchConfigModelStateUUID",
+                {
+                    "modelUUIDs[0]": $("#uuid").val().trim(),
+                    "modelLoop": (1 << (Number(number) - 1)),
+                    "modelLoopState": (modelLoopState << (Number(number) - 1))
+                }, function (result) {
+
+                });
+        }
+    });
+
+    //全部打开
+    $("#btnOpenAll").click(function () {
+        doAllOperator(true);
+    });
+
+    //全部关闭
+    $("#btnCloseAll").click(function () {
+        doAllOperator(false);
+    });
+
+    function doAllOperator(open) {
+        // $("[name='test']").bootstrapSwitch('state', open);
+        var state = 0;
+        if (open) {
+            //全部开启
+            state = "4095";
+        } else {
+            //全部关闭
+            state = "0";
+        }
+
+        $.post("/nnlightctl/api/command/batchConfigModelStateUUID",
+            {
+                "modelUUIDs[0]": $("#uuid").val().trim(),
+                "modelLoop": "4095",
+                "modelLoopState": state
+            }, function (result) {
+
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -52,6 +52,11 @@ public class Index extends BaseController {
         return "redirect:/html/pages/indexForDevice.html";
     }
 
+    @RequestMapping("/eleboxModel")
+    public String indexForEleboxModel() {
+        return "redirect:/html/pages/indexForEleboxModel.html";
+    }
+
     @RequestMapping("/original")
     public String startOriginalPage() {
         return "redirect:/html/pages/index.html";
