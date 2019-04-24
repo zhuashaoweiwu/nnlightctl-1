@@ -1,0 +1,602 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>能耗监测</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        首页<span class="c-gray en">&gt;</span>能耗分析
+        <span class="c-gray en">&gt;</span>能耗监测
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <div class="text-l">
+            控制柜：
+            <!--<input type="text" name="projectName" id="projectName" placeholder="控制柜" style="width:250px" class="input-text">-->
+            <select id = "eleboxName" style="width:250px" class="input-text" placeholder="控制柜">
+            </select>
+            <span class="pl-20">日期范围：</span>
+            <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
+
+            <button name="" id="Button1" class="btn btn-success f-r" type="submit"><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+        </div><!--搜索end-->
+        <div id="tab-system" class="HuiTab mt-30">
+            <div class="tabBar cl">
+                <span>功率</span>
+                <span>电流</span>
+                <span>电压</span>
+                <span>电能</span>
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container" style="width:96%;"></div><!--绑定功率线图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container1" style="width:96%;"></div><!--绑定电流线图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container2" style="width:96%;"></div><!--绑定电压柱状图end-->
+            </div>
+            <div class="tabCon mt-30">
+                <div id="container3" style="width:96%;"></div><!--绑定电能线图end-->
+            </div>
+        </div>
+
+        </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> <!--日期插件-->
+    <script type="text/javascript" src="../js/highcharts.js"></script> <!--图表插件-->
+    <script type="text/javascript" src="../js/exporting.js"></script> <!--图表下载插件-->
+    <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+    <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#Button1").click(function(){
+                var param = {};
+                var eleboxId = parseInt($("#eleboxName").val());
+                param["eleboxId"] = eleboxId;
+                if ($("#logmin").val().trim()!=""){
+                    var startDate = new Date($("#logmin").val());
+                    param["startDate"] = startDate;
+                }else {
+                    startDate=null;
+                }
+                //var endDate = new Date($("#logmax").val());
+                if ($("#logmax").val().trim()!=""){
+                    var endDate = new Date($("#logmax").val());
+                    param["endDate"] = endDate;
+                }else {
+                    endDate=null;
+                }
+                ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",param,
+                    function (data) {
+                        var categories = new Array();
+                        var ele = new Array();
+                        var aele = new Array();
+                        var bele = new Array();
+                        var cele = new Array();
+                        var vol = new Array();
+                        var avol  = new Array();
+                        var bvol  = new Array();
+                        var cvol  = new Array();
+                        var power = new Array();//功率
+                        var apower = new Array();
+                        var bpower = new Array();
+                        var cpower = new Array();
+                        var energy = new Array(); //能耗
+                        var totalActiveEnergy = new Array();
+                        var notEnergy = new Array();//无用功
+                        var series = [];
+                        var length;
+                        if(data.body.data.length < 100){
+                            length =  data.body.data.length
+                        }else {
+                            length = 100
+                        }
+                        for (var i = 0 ; i< length ; i++){
+                            var now = new Date(data.body.data[i].realtimeDate)
+                            y = now.getFullYear(),
+                                m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                d = ("0" + now.getDate()).slice(-2);
+                            var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                            ele[i] = data.body.data[i].electricity;
+                            aele[i] = parseInt(data.body.data[i].aElectricity);
+                            bele[i] = parseInt(data.body.data[i].bElectricity);
+                            cele[i] = parseInt(data.body.data[i].cElectricity);
+                            vol[i] = data.body.data[i].voltage;
+                            avol[i] = parseInt(data.body.data[i].aVoltage);
+                            bvol[i] = parseInt(data.body.data[i].bVoltage);
+                            cvol[i] = parseInt(data.body.data[i].cVoltage);
+                            power[i] = data.body.data[i].eleboxPower;
+                            apower[i] = parseInt(data.body.data[i].aPowerFactor);
+                            bpower[i] = parseInt(data.body.data[i].bPowerFactor);
+                            cpower[i] = parseInt(data.body.data[i].cPowerFactor);
+                            totalActiveEnergy[i] = parseInt(data.body.data[i].totalActiveEnergy);
+                            energy[i] = data.body.data[i].eleboxPower/10
+                            notEnergy[i] = 10 ;
+                        }
+                        //X抽第一与最后一个显示时间中间显示数
+                       if (length != 0){
+                           var now = new Date(data.body.data[0].realtimeDate)
+                           y = now.getFullYear(),
+                               m = ("0" + (now.getMonth() + 1)).slice(-2),
+                               d = ("0" + now.getDate()).slice(-2);
+                           var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                           categories[0] = timestamp
+                           if (length >= 1){
+                               var nowl = new Date(data.body.data[length-1].realtimeDate)
+                               yl = now.getFullYear(),
+                                   ml = ("0" + (now.getMonth() + 1)).slice(-2),
+                                   dl = ("0" + now.getDate()).slice(-2);
+                               var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                               categories[length-1] = timestampl;
+                           }
+                       }
+
+                        //电流
+                        Highcharts.chart('container1', {
+
+                            title: {
+                                text: '电流',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电流（mAh）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'mAh'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: 'A电流',
+                                data: aele
+                            }, {
+                                name: 'B电流',
+                                data: bele
+                            }, {
+                                name: 'C电流',
+                                data: cele
+                            }]
+                        });
+                        //电压
+                        Highcharts.chart('container2', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: '电压',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电压（V）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'V'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: 'A电压',
+                                data: avol
+                            },{
+                                name: 'B电压',
+                                data: bvol
+                            },{
+                                name: 'C电压',
+                                data: cvol
+                            }]
+                        });
+                        //电能
+                        Highcharts.chart('container3', {
+
+                            title: {
+                                text: '当前总有功电能',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '电能（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: '当前总有功电能',
+                                data: totalActiveEnergy
+                            }]
+                        });
+                        //功率
+                        Highcharts.chart('container', {
+
+                            title: {
+                                text: '',
+                                x: 0 //center
+                            },
+                            subtitle: {
+                                text: '',
+                                x: 0
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '功率（KW）'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: 'KW'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: 'A有功功率',
+                                data: apower
+                            }, {
+                                name: 'B有功功率',
+                                data: bpower
+                            }, {
+                                name: 'C有功功率',
+                                data: cpower
+                            }]
+                        });
+                    });
+
+            })
+
+            ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",{},
+                function (data) {
+                    var eleboxIdFirst = data.body.data[0].id;
+                    ajaxRequest("post", "/api/energyStatistic/listEleboxElectric",{"eleboxId":eleboxIdFirst},
+                        function (data) {
+                        console.log(data);
+                            var categories = new Array();
+                            var ele = new Array();
+                            var aele = new Array();
+                            var bele = new Array();
+                            var cele = new Array();
+                            var vol  = new Array();
+                            var avol  = new Array();
+                            var bvol  = new Array();
+                            var cvol  = new Array();
+                            var power = new Array();//功率
+                            var apower = new Array();
+                            var bpower = new Array();
+                            var cpower = new Array();
+                            var energy = new Array(); //能耗
+                            var totalActiveEnergy = new Array();
+                            var notEnergy = new Array();//无用功
+                            var length;
+                            if(data.body.data.length < 100){
+                                length =  data.body.data.length
+                            }else {
+                                length = 100
+                            }
+                            for (var i = 0 ; i< length ; i++){
+                                //categories[i] = data.body.data[i].realtimeDate;
+                                var now = new Date(data.body.data[i].realtimeDate)
+                                y = now.getFullYear(),
+                                m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                d = ("0" + now.getDate()).slice(-2);
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+
+                                //categories[i] = timestamp;
+                                aele[i] = parseInt(data.body.data[i].aElectricity);
+                                bele[i] = parseInt(data.body.data[i].bElectricity);
+                                cele[i] = parseInt(data.body.data[i].cElectricity);
+                                ele[i] = data.body.data[i].electricity;
+                                vol[i] = data.body.data[i].voltage;
+                                avol[i] = parseInt(data.body.data[i].aVoltage);
+                                bvol[i] = parseInt(data.body.data[i].bVoltage);
+                                cvol[i] = parseInt(data.body.data[i].cVoltage);
+                                power[i] = data.body.data[i].eleboxPower;
+                                apower[i] = parseInt(data.body.data[i].aPowerFactor);
+                                bpower[i] = parseInt(data.body.data[i].bPowerFactor);
+                                cpower[i] = parseInt(data.body.data[i].cPowerFactor);
+                                totalActiveEnergy[i] = parseInt(data.body.data[i].totalActiveEnergy);
+                                energy[i] = data.body.data[i].eleboxPower/10;
+                                notEnergy[i] = 20;
+                            }
+                            //X抽第一与最后一个显示时间中间显示数
+                            if (length != 0) {
+                                var now = new Date(data.body.data[0].realtimeDate)
+                                y = now.getFullYear(),
+                                    m = ("0" + (now.getMonth() + 1)).slice(-2),
+                                    d = ("0" + now.getDate()).slice(-2);
+                                var timestamp = y + "-" + m + "-" + d + " " + now.toTimeString().substr(0, 8)
+                                categories[0] = timestamp
+                                if (length >= 1) {
+                                    var nowl = new Date(data.body.data[length - 1].realtimeDate)
+                                    yl = now.getFullYear(),
+                                        ml = ("0" + (now.getMonth() + 1)).slice(-2),
+                                        dl = ("0" + now.getDate()).slice(-2);
+                                    var timestampl = yl + "-" + ml + "-" + dl + " " + nowl.toTimeString().substr(0, 8)
+                                    categories[length - 1] = timestampl;
+                                }
+                            }
+                            console.log(aele)
+                            console.log(ele)
+                            //电流
+                            Highcharts.chart('container1', {
+
+                                title: {
+                                    text: '电流',
+                                    x: 0 //center
+                                },
+                                subtitle: {
+                                    text: '',
+                                    x: 0
+                                },
+                                xAxis: {
+                                    categories: categories
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '电流（mAh）'
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    valueSuffix: 'mAh'
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                },
+                                series: [{
+                                    name: 'A电流',
+                                    data: aele
+                                }, {
+                                    name: 'B电流',
+                                    data: bele
+                                }, {
+                                    name: 'C电流',
+                                    data: cele
+                                }]
+                            });
+                            //电压
+                            Highcharts.chart('container2', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: '电压',
+                                    x: 0 //center
+                                },
+                                subtitle: {
+                                    text: '',
+                                    x: 0
+                                },
+                                xAxis: {
+                                    categories: categories
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '电压（V）'
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    valueSuffix: 'V'
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                },
+                                series: [{
+                                    name: 'A电压',
+                                    data: avol
+                                },{
+                                    name: 'B电压',
+                                    data: bvol
+                                },{
+                                    name: 'C电压',
+                                    data: cvol
+                                }]
+                            });
+                            //电能
+                            Highcharts.chart('container3', {
+
+                                title: {
+                                    text: '当前总有功电能',
+                                    x: 0 //center
+                                },
+                                subtitle: {
+                                    text: '',
+                                    x: 0
+                                },
+                                xAxis: {
+                                    categories: categories
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '电能（KW）'
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    valueSuffix: 'KW'
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                },
+                                series: [{
+                                    name: '当前总有功电能',
+                                    data: totalActiveEnergy
+                                }]
+                            });
+                            //功率
+                            Highcharts.chart('container', {
+
+                                title: {
+                                    text: '功率',
+                                    x: 0 //center
+                                },
+                                subtitle: {
+                                    text: '',
+                                    x: 0
+                                },
+                                xAxis: {
+                                    categories: categories
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '功率（KW）'
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    valueSuffix: 'KW'
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                },
+                                series: [{
+                                    name: 'A有功功率',
+                                    data: apower
+                                }, {
+                                    name: 'B有功功率',
+                                    data: bpower
+                                }, {
+                                    name: 'C有功功率',
+                                    data: cpower
+                                }]
+                            });
+                        }
+                    );
+                }
+            );
+
+
+            //tab切换
+            $("#tab-system").Huitab({
+                index: 0//默认第一个；
+            });
+            //获取所有控制柜
+            function flushEleBox() {
+                ajaxRequest("post", "/api/roadlighting/listelebox", {}, function (data) {
+                    if (data) {
+                        if (data.header.code == 1000) {
+                            var eleBox = data.body.data;
+                            var $eleBoxSelect = $("#eleboxName");
+                            for (var i = 0; i < eleBox.length; ++i) {
+                                var ele = eleBox[i];
+                                    $('<option value="' + ele.id + '">' + ele.codeNumber + '</option>').appendTo($eleBoxSelect);
+
+                            }
+                        }
+                    }
+                });
+            }
+            flushEleBox();
+        });
+    </script>
+
+</body>
+</html>

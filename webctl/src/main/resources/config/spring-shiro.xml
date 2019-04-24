@@ -40,7 +40,7 @@
                 /device = anon
                 /eleboxModel = anon
                 /api/command/** = anon
-                /html/pages/nnlightctlweb/Index.html = user
+                /html/singlelamp/nnlightctl/Index.html = anon
                 /html/** = anon
                 /api/** = anon
                 /hardware/** = anon

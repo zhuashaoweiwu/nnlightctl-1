@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>部署 --新增回路</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+
+</head>
+<body>
+    <article class="page-container">
+        <form class="form form-horizontal" id="form-admin-add">
+            
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3 text-c"><span class="c-red">*</span>回路编号：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <input type="text" class="input-text" value="" placeholder="回路编号" id="loopCode" name="loopCode">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3 text-r">回路电压：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <input type="text" class="input-text" value="" placeholder="回路电压" id="voltage" name="voltage">
+                    <label id="voltage-error" class="error" style="display:none">*格式不正确。</label>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3 text-r">回路电流：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <input type="text" class="input-text" value="" placeholder="回路电流" id="electricity" name="electricity">
+                    <label id="electricity-error" class="error" style="display:none">*格式不正确。</label>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3 text-r">回路灯具数量：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <input type="text" class="input-text" value="" placeholder="回路灯具数量" id="lightCount" name="lightCount">
+                    <label id="lightCount-error" class="error" style="display:none">*格式不正确。</label>
+                </div>
+            </div>
+        </form>
+    </article>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+    <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+
+    <!--表单验证-->
+    <script type="text/javascript" src="../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var doureg = /^[0-9,.]*$/ //^[-\+]?\d+(\.\d+)?$/;
+            var numreg = /^\d+$/;
+            $("#voltage").blur(function () {
+                var a = $("#voltage").val();
+                if (!doureg.test(a) || a=="") {
+                    layer.tips('请输入double类型数字', '#voltage');
+                    $("#voltage-error").show();
+                } else { $("#voltage-error").hide(); }
+            })
+            $("#electricity").blur(function () {
+                var a = $("#electricity").val();
+                if (!doureg.test(a) || a == "") {
+                    layer.tips('请输入double类型数字', '#electricity');
+                    $("#electricity-error").show();
+                } else { $("#electricity-error").hide(); }
+            })
+            $("#lightCount").blur(function () {
+                var a = $("#lightCount").val();
+                if (!numreg.test(a) || a == "") {
+                    layer.tips('请输入byte类型数字', '#lightCount');
+                    $("#lightCount-error").show();
+                } else { $("#lightCount-error").hide(); }
+            })
+        });
+
+        var getData = function () {
+            var formDataArray = $(".form").serializeArray();
+
+            var param = {};
+            for (var i = 0; i < formDataArray.length; ++i) {
+                var o = formDataArray[i];
+                param[o["name"]] = o["value"];
+            }
+
+            return param;
+        };
+        
+        $(function () {
+            //判断是否编辑模式
+            var paramContext = editModelParam(window.location.href);
+            if (paramContext) {
+                var paramArray = paramContext.split(",");
+                for (var i = 0; i < paramArray.length; ++i) {
+                    var paramStr = paramArray[i];
+                    var paramSplitArray = paramStr.split("=");
+                    $("#" + paramSplitArray[0]).val(paramSplitArray[1]);
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,11 +1,10 @@
 package com.nnlightctl.kafka.consume;
 
-import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlight.common.TableNameUtil;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.hbasedao.LightRealtimeDao;
-import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
 import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
@@ -13,7 +12,6 @@ import com.nnlightctl.net.CommandData;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingVolEleRecord;
 import com.nnlightctl.redis.RedisClientTemplate;
-import com.nnlightctl.util.BytesHexStrTranslate;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -25,7 +23,6 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -74,10 +71,10 @@ public class Consumer {
                             try {
                                 switch (record.topic()) {
                                     case TopicConstant.TOPIC_ELEBOX:
-                                        CommandData eleboxE0Command = (CommandData) ObjectTransferUtil.byteArray2Object(record.value());
+                                        CommandData eleboxE0Command = (CommandData) TableNameUtil.ObjectTransferUtil.byteArray2Object(record.value());
                                         break;
                                     case TopicConstant.TOPIC_LIGHT:
-                                        CommandData lightE0Command = (CommandData) ObjectTransferUtil.byteArray2Object(record.value());
+                                        CommandData lightE0Command = (CommandData) TableNameUtil.ObjectTransferUtil.byteArray2Object(record.value());
                                         LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
                                         lightingVolEleRecord.setGmtCreated(new Date());
                                         lightingVolEleRecord.setGmtUpdated(new Date());

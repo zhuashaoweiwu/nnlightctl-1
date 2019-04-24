@@ -1,7 +1,7 @@
 package com.nnlightctl.kafka.produce;
 
-import com.nnlight.common.ObjectTransferUtil;
 import com.nnlight.common.PropertiesUtil;
+import com.nnlight.common.TableNameUtil;
 import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.net.CommandData;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
 
 public class Produce {
 
@@ -36,7 +35,7 @@ public class Produce {
             producer = new KafkaProducer<>(props);
 
             producer.send(new ProducerRecord<String, byte[]>(topic, String.valueOf(key++),
-                    ObjectTransferUtil.object2ByteArray(commandData)));
+                    TableNameUtil.ObjectTransferUtil.object2ByteArray(commandData)));
 
             producer.flush();
 

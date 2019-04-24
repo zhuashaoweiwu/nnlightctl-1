@@ -1,22 +1,16 @@
 package com.nnlightctl.mymessage.consumer;
 
-import com.nnlight.common.ObjectTransferUtil;
-import com.nnlight.common.PropertiesUtil;
 import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingVolEleRecordMapper;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
 import com.nnlightctl.jdbcdao.LightSignalRecordDao;
 import com.nnlightctl.jdbcdao.LightingVolEleRecordDao;
-import com.nnlightctl.kafka.topic.TopicConstant;
 import com.nnlightctl.kafka.util.DataTransferUtil;
 import com.nnlightctl.mymessage.MsgQuene;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.po.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +20,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -136,6 +126,7 @@ public class Consumer {
                     } catch (InterruptedException ie) {
                         logger.error(ie.getMessage());
                     } catch (Exception e) {
+                        e.printStackTrace();
                         logger.error(e.getMessage());
                     }
                 }

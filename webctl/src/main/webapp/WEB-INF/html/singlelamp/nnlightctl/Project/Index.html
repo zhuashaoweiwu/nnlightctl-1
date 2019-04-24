@@ -1,0 +1,116 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>项目总览</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        首页 <span class="c-gray en">&gt;</span> 项目管理
+        <span class="c-gray en">&gt;</span>项目总览
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">全球项目概况</span></h4>
+        <div id="globalProjectPanel" class="projectview" style="height:250px;">
+            <div class="pr1">
+                <span class="Hui-iconfont bigfont">&#xe643;</span><span class="pl-10 f-18">国家</span>
+                <p class="pronum" id="countryStatistic"></p>
+            </div>
+        </div>
+        <h4 class="f-18 tit" style="margin-top:40px;"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">全球统计数据</span></h4>
+        <div class="projectview">
+            <div class="pr1">
+                <span class="Hui-iconfont bigfont">&#xe643;</span><span class="pl-10 f-18">项目</span>
+                <p id="projectStatistic" class="pronum">12452222222224</p>
+            </div>
+            <div class="pr2">
+                <span class="Hui-iconfont bigfont">&#xe72b;</span><span class="pl-10 f-18">控制柜</span>
+                <p id="eleboxStatistic" class="pronum">12452222222224</p>
+            </div>
+            <div class="pr3">
+                <span class="Hui-iconfont bigfont">&#xe6c1;</span><span class="pl-10 f-18">灯具</span>
+                <p id="lightStatistic" class="pronum">12452222222224</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+    <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+    <script type="text/javascript">
+        ajaxRequest("post", "/api/project/listproject", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var projectArray = data.body.data;
+
+                    var countryStatistic = {};
+                    var countryTotal = 0;
+                    var eleboxTotal = 0;
+                    var lightingTotal = 0;
+                    var projectTotal = data.body.total;
+                    for (var i = 0; i < projectArray.length; ++i) {
+                        var project = projectArray[i];
+                        var countryName = project.contryName;
+                        if (countryStatistic[countryName]) {
+                            countryStatistic[countryName] += 1;
+                        } else {
+                            countryStatistic[countryName] = 1;
+                        }
+
+                        eleboxTotal += project.eleboxs;
+                        lightingTotal += project.lights;
+
+                    }
+
+                    // console.log("国家统计：");
+                    var $countryProjectPanel = $("#globalProjectPanel");
+                    // $countryProjectPanel.empty();
+                    // for (var key in countryStatistic) {
+                    //     // console.log(key + ":" + countryStatistic[key]);
+                    //     $('<div class="pr1">' +
+                    //         '<span class="Hui-iconfont bigfont">&#xe643;</span><span class="pl-10 f-18">'+key+'</span>' +
+                    //         '<p class="pronum" >'+countryStatistic[key]+'</p>'</p>' +
+                    //         '</div>').appendTo($countryProjectPanel);
+                    //     projectTotal += countryStatistic[key];
+                    //     console.log(countryStatistic)
+                    // }
+                    console.log("项目统计：" + projectTotal)
+                    $("#projectStatistic").text(projectTotal);
+                    // console.log("控制柜统计：" + eleboxTotal);
+                    $("#eleboxStatistic").text(eleboxTotal);
+                    // console.log("灯具统计：" + lightingTotal);
+                    $("#lightStatistic").text(lightingTotal);
+                } else {
+                    layer.msg(data.header.msg,{icon:2,time:3000});
+                }
+            }
+        });
+
+        ajaxRequest("post", "/api/project/listcountry", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var countryArray = data.body.data;
+
+                    console.log(countryArray);
+                }
+            }
+            $("#countryStatistic").text(countryArray.length);
+            console.log(countryArray.length);
+        })
+    </script>
+
+</body>
+</html>

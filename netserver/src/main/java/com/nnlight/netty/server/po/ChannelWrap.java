@@ -4,10 +4,11 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 public class ChannelWrap {
-    private String uuid;
+    private String imei;
     private String name;
     private Channel channel;
     private ChannelHandlerContext context;
+
 
     public ChannelHandlerContext getContext() {
         return context;
@@ -17,12 +18,13 @@ public class ChannelWrap {
         this.context = context;
     }
 
-    public String getUuid() {
-        return uuid;
+
+    public String getImei() {
+        return imei;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public String getName() {

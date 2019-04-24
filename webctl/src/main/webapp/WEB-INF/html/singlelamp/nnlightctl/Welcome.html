@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1" maximum-scale=1.0, minimum-scale=1.0;>
+
+    <title>单灯控制系统</title>
+    <link href="css/welcome.css" rel="stylesheet" type="text/css"/>
+    <link href="css/iconfont/iconfont.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="welcome">
+    <div class="nav">
+        <a href="javascript:void(0)" ref="0" id="changepassword">
+            <span>
+                <img src="bg/index/pic.png">
+            </span>
+            <span>系统管理员</span>
+        </a>
+        <a id="btnLogout" href="#" >
+            <span>
+                <img src="bg/index/out.png">
+            </span>
+        </a>
+
+    </div>
+    <div class="title">智慧灯杆管理系统</div>
+    <div class="welbox">
+        <a href="" target="_blank">
+            <div class="gis">
+                <img src="bg/index/gis.png" />
+                <p>Gis地图管理</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="user">
+                <img src="bg/index/user.png" />
+                <p>系统用户</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="set">
+                <img src="bg/index/set.png" />
+                <p>系统设置</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="warning">
+                <img src="bg/index/warning.png" />
+                <p>事件告警</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="energy">
+                <img src="bg/index/energy.png" />
+                <p>能耗分析</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="lamp">
+                <img src="bg/index/lamp.png" />
+                <p>智慧灯杆</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="road">
+                <img src="bg/index/road.png" />
+                <p>路灯设备</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="project">
+                <img src="bg/index/project.png" />
+                <p>项目管理</p>
+            </div>
+        </a>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+
+<script type="text/javascript" src="js/api/requestRoot.js"></script>
+<script type="text/javascript" src="js/api/ajaxScript.js"></script>
+<script type="text/javascript">
+    //刷新菜单图标
+    function flushMenu () {
+        var $contain = $("div.welbox");
+        $contain.empty();
+        var zhihuihtml = '<a href="Wisdom.html" target="_blank">\n' +
+            '            <div class="lamp">\n' +
+            '                <img src="bg/index/lamp.png" />\n' +
+            '                <p>智慧灯杆管理系统</p>\n' +
+            '            </div>\n' +
+            '        </a>';
+        $(zhihuihtml).appendTo($contain);
+        var sethtml = '<a>\n' +
+            '            <div class="set">\n' +
+            '                <img src="bg/index/set.png" />\n' +
+            '                <p>系统设置</p>\n' +
+            '            </div>\n' +
+            '        </a>';
+        $(sethtml).appendTo($contain);
+        var warninghtml = '<a >\n' +
+            '            <div class="warning">\n' +
+            '                <img src="bg/index/warning.png" />\n' +
+            '                <p>事件告警</p>\n' +
+            '            </div>\n' +
+            '        </a>';
+        $(warninghtml).appendTo($contain);
+        ajaxRequest("post", "/api/login/getMenu", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var menuArray = data.body.data;
+                    for (var i = 0; i < menuArray.length; ++i) {
+                        var menu = menuArray[i];
+                        if (menu.name == "首页") {
+                            continue;
+                        }
+                        var html = "";
+                        switch (menu.name) {
+                            case "用户管理":
+                                html = '<a href="User-index.html" target="_blank">\n' +
+                                    '            <div class="user">\n' +
+                                    '                <img src="bg/index/user.png" />\n' +
+                                    '                <p>系统用户</p>\n' +
+                                    '            </div>\n' +
+                                    '        </a>';
+                                break;
+
+
+                            case "项目管理":
+                                html = '<a href="Project-index.html" target="_blank">\n' +
+                                    '            <div class="project">\n' +
+                                    '                <img src="bg/index/project.png" />\n' +
+                                    '                <p>项目管理</p>\n' +
+                                    '            </div>\n' +
+                                    '        </a>';
+                                break;
+
+                            case "道路照明系统":
+                                html = '<a href="Roadlighting-index.html" target="_blank">\n' +
+                                    '            <div class="road">\n' +
+                                    '                <img src="bg/index/road.png" />\n' +
+                                    '                <p>道路照明系统</p>\n' +
+                                    '            </div>\n' +
+                                    '        </a>';
+                                break;
+
+                            case "Gis地理信息系统":
+                                html = '<a href="Gisservice-index.html" target="_blank">\n' +
+                                    '            <div class="gis">\n' +
+                                    '                <img src="bg/index/gis.png" />\n' +
+                                    '                <p>Gis地图管理</p>\n' +
+                                    '            </div>\n' +
+                                    '        </a>';
+                                break;
+
+                            case "能耗分析":
+                                html = '<a href="Engery-index.html" target="_blank">\n' +
+                                    '            <div class="energy">\n' +
+                                    '                <img src="bg/index/energy.png" />\n' +
+                                    '                <p>能耗分析</p>\n' +
+                                    '            </div>\n' +
+                                    '        </a>';
+                                break;
+                        }
+
+                        $(html).appendTo($contain);
+                    }
+                }
+            }
+        });
+    }
+    $("#changepassword").click(function () {
+        var url = "User/User-password-edit.html";
+        var id = $(this).attr("ref");
+        if (id > 0) {
+            layer_show("修改密码", url + "?id=" + id, 350, 250);
+        }
+    })
+    //初始化用户信息
+    function initLoginUser() {
+        ajaxRequest("post", "/api/login/getLoginUser", {}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var user = data.body.data[0];
+                    $("#username").text(user.loginName);
+                    $("#changepassword").attr("ref",user.id);
+                }
+            }
+        });
+
+        //注册退出事件
+        $("#btnLogout").click(function () {
+            ajaxRequest("post", "/api/login/Logout", {}, function (data) {
+                if (data) {
+                    if (data.header.code == 1000) {
+                        location.replace("Login.html");
+                    }
+                }
+            });
+        });
+    }
+    $(function () {
+        flushMenu();
+        initLoginUser();
+    });
+
+
+</script>
+</body>
+</html>

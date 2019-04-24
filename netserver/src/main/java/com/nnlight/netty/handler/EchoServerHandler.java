@@ -1,5 +1,6 @@
 package com.nnlight.netty.handler;
 
+import com.nnlight.common.PubMethod;
 import com.nnlight.netty.process.factory.ProcessFactory;
 import com.nnlight.netty.server.EchoServer;
 import com.nnlight.netty.server.po.ChannelWrap;
@@ -35,12 +36,16 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        CommandData commandData = (CommandData)msg;
+        CommandData commandData = (CommandData) msg;
 
         //将终端在netty中的唯一编码附带上
         logger.info("id = " + ctx.channel().id() + ", id.asShortText=" + ctx.channel().id().asShortText());
-        byte[] addr = BytesHexStrTranslate.toBytes(ctx.channel().id().asShortText());
+        String changeId = ctx.channel().id().asShortText();
+        byte[] addr = BytesHexStrTranslate.toBytes(changeId);
         System.arraycopy(addr, 0, commandData.getAddr(), 0, addr.length);
+        ChannelWrap channelWrap = applicationContext.getClientChannelMap().get(changeId);
+        if (!PubMethod.isEmpty(channelWrap))
+            channelWrap.setImei(new String(commandData.getImei()));
         //重置命令校验码
         commandData.resetCheck();
 
@@ -64,7 +69,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
             ChannelWrap wrap = new ChannelWrap();
             Channel channel = ctx.channel();
             String name = channel.id().asShortText();
-            wrap.setUuid(name);
+//            wrap.setImei(name);
             wrap.setName(name);
             wrap.setChannel(channel);
             wrap.setContext(ctx);

@@ -86,7 +86,7 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void sendLightAdjustCommandBatch(List<Long> lightIds, int percent) {
         if (lightIds == null || lightIds.size() < 1) {
-            throw new RuntimeException("批量操作的灯具数量为0");
+             throw new RuntimeException("批量操作的灯具数量为0");
         }
 
         List<String> realtime_ids = new ArrayList<>(1);

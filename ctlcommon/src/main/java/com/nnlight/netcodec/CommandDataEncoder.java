@@ -10,7 +10,7 @@ public class CommandDataEncoder extends MessageToByteEncoder<CommandData> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, CommandData commandData, ByteBuf byteBuf) {
         try {
-            byte[] data = new byte[18 + ByteConvert.byteToUbyte(commandData.getDataLength())];
+            byte[] data = new byte[35 + ByteConvert.byteToUbyte(commandData.getDataLength())];
             int k = 0;
             //帧起始符
             data[k++] = commandData.getStart0();
@@ -19,6 +19,9 @@ public class CommandDataEncoder extends MessageToByteEncoder<CommandData> {
             k += commandData.getAddr().length;
             //帧起始符
             data[k++] = commandData.getStart1();
+            //IMEI
+            System.arraycopy(commandData.getImei(), 0, data, k, 17);
+            k += 17;
             //控制码
             data[k++] = commandData.getControl();
             //数据域长度

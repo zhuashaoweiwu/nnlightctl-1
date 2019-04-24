@@ -2,7 +2,7 @@ package com.nnlightctl.hbase;
 
 import java.io.IOException;
 
-import com.nnlight.common.ObjectTransferUtil;
+//import com.nnlight.common.ObjectTransferUtil;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.KeyValue;
@@ -48,14 +48,14 @@ public class HBaseClient {
             String familyName = columnFamilies[i].getNameAsString(); // 获取列族名
             if (familyName.equals("base")) {
                 for (int j = 0; j < column1.length; j++) {
-                    put.add(Bytes.toBytes(familyName),
-                            Bytes.toBytes(column1[j]), ObjectTransferUtil.object2ByteArray(value1[j]));
+//                    put.add(Bytes.toBytes(familyName),
+//                            Bytes.toBytes(column1[j]), ObjectTransferUtil.object2ByteArray(value1[j]));
                 }
             }
             if (familyName.equals("high")) {
                 for (int j = 0; j < column2.length; j++) {
-                    put.add(Bytes.toBytes(familyName),
-                            Bytes.toBytes(column2[j]), ObjectTransferUtil.object2ByteArray(value2[j]));
+//                    put.add(Bytes.toBytes(familyName),
+//                            Bytes.toBytes(column2[j]), ObjectTransferUtil.object2ByteArray(value2[j]));
                 }
             }
         }

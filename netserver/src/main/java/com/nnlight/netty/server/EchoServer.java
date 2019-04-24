@@ -9,6 +9,7 @@ import com.nnlight.netty.handler.HeartbeatServerHandler;
 import com.nnlight.netty.server.po.ChannelWrap;
 import com.nnlightctl.kafka.produce.Produce;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.util.BytesHexStrTranslate;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -20,7 +21,11 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,8 +56,8 @@ public class EchoServer {
         return globalApplicationContext;
     }
 
-    public Map<String, ChannelWrap> getClientChannelMap() {
-        return this.clientChannelMap;
+    public    Map<String, ChannelWrap> getClientChannelMap() {
+        return clientChannelMap;
     }
 
     public Map<String, ChannelWrap> getCommandMap() {
@@ -89,7 +94,7 @@ public class EchoServer {
     public void allSendCommandLightAdjust(int percent) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
-            CommandData commandData = new CommandData((byte)percent);
+            CommandData commandData = new CommandData((byte)percent, BytesHexStrTranslate.toBytes(entry.getValue().getImei()));
             context.writeAndFlush(commandData);
         }
     }
@@ -103,10 +108,39 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             String shortChanelId = entry.getValue().getChannel().id().asShortText();
             if (channelId.equalsIgnoreCase(shortChanelId)) {
-                entry.getValue().getContext().writeAndFlush(new CommandData((byte)percent));
+                CommandData c =new CommandData((byte)percent, entry.getValue().getImei().getBytes());
+                serializeToString(c);
+                entry.getValue().getContext().writeAndFlush(c);
                 break;
             }
         }
+    }
+
+
+    public static String serializeToString( CommandData c) {
+        String s = new String();
+        s += c.getStart0() + "";
+        for (int i = 0;i < c.getAddr().length; i ++) {
+            s+= c.getAddr()[i];
+        }
+        s +=c.getStart1();
+        for (int i = 0;i < c.getImei().length; i ++) {
+            s+= c.getImei()[i];
+        }
+        s+= c.getControl();
+        s +=c.getDataLength();
+        for (int i = 0;i < c.getData().length; i ++) {
+            s+= c.getData()[i];
+        }
+        s += c.getCheck();
+        s += c.getEnd0();
+        for (int i = 0;i < c.getEnd1().length; i ++) {
+            s+= c.getEnd1()[i];
+        }
+//        s += c.getLogicalArea();
+//        s += c.getPhysicsArea();
+        System.out.println(s);
+        return s;
     }
 
     /**
@@ -117,7 +151,7 @@ public class EchoServer {
     public void sendTerminalPowerType(String realtimeUUID, byte powerType) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
-                entry.getValue().getContext().writeAndFlush(CommandData.getChangePowerTypeCommandData(powerType));
+                entry.getValue().getContext().writeAndFlush(CommandData.getChangePowerTypeCommandData(powerType,entry.getValue().getImei().getBytes()));
                 break;
             }
         }
@@ -166,7 +200,7 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
 
-            context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command));
+            context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command,entry.getValue().getImei().getBytes()));
         }
     }
 
@@ -179,7 +213,7 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
                 ChannelHandlerContext context = entry.getValue().getContext();
-                context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command));
+                context.writeAndFlush(CommandData.getConfigTerminalSwitchPolicy(c7Command,entry.getValue().getImei().getBytes()));
                 break;
             }
         }
@@ -205,7 +239,7 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(realtimeUUID)) {
                 ChannelHandlerContext context = entry.getValue().getContext();
-                context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model));
+                context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model,entry.getValue().getImei().getBytes()));
                 break;
             }
         }
@@ -219,7 +253,7 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
 
-            context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model));
+            context.writeAndFlush(CommandData.getCommandConfigTerminalModel(model,entry.getValue().getImei().getBytes()));
         }
     }
 
@@ -416,7 +450,7 @@ public class EchoServer {
     public void batchCommandReadTimeParamter(String realtime_id){
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
-            CommandData commandData = CommandData.getA3CommandData(realtime_id);
+            CommandData commandData = CommandData.getA3CommandData(realtime_id,entry.getValue().getImei().getBytes());
             context.writeAndFlush(commandData);
         }
     }

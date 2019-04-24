@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{55F346AB-4635-443C-8714-EEA734B69138}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nnlightctl</RootNamespace>
+    <AssemblyName>nnlightctl</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <ApplicationInsightsResourceId />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bg\acrossTab-2.png" />
+    <Content Include="bg\acrossTab-close.png" />
+    <Content Include="bg\admin-login-bg.jpg" />
+    <Content Include="bg\admin-loginform-bg.png" />
+    <Content Include="bg\blue%402x.png" />
+    <Content Include="bg\blue.png" />
+    <Content Include="bg\icon_arrow.png" />
+    <Content Include="bg\icon_eith.gif" />
+    <Content Include="bg\icon_eith.png" />
+    <Content Include="bg\icon_nh.png" />
+    <Content Include="bg\icon_project.png" />
+    <Content Include="bg\icon_road.png" />
+    <Content Include="bg\icon_user.png" />
+    <Content Include="bg\index_m_1.png" />
+    <Content Include="bg\index_m_2.png" />
+    <Content Include="bg\index_m_3.png" />
+    <Content Include="bg\index_m_4.png" />
+    <Content Include="bg\index_m_5.png" />
+    <Content Include="bg\index_m_6.png" />
+    <Content Include="bg\index_m_7.png" />
+    <Content Include="bg\index_m_8.png" />
+    <Content Include="bg\lightsbg_0.png" />
+    <Content Include="bg\lightsbg_100.png" />
+    <Content Include="bg\lightsbg_20.png" />
+    <Content Include="bg\lightsbg_40.png" />
+    <Content Include="bg\lightsbg_60.png" />
+    <Content Include="bg\lightsbg_80.png" />
+    <Content Include="bg\loading.gif" />
+    <Content Include="bg\loginbg.png" />
+    <Content Include="bg\logo.png" />
+    <Content Include="bg\sort_asc.png" />
+    <Content Include="bg\sort_both.png" />
+    <Content Include="bg\sort_desc.png" />
+    <Content Include="bg\u_admin.png" />
+    <Content Include="bg\welcomebg.jpg" />
+    <Content Include="css\admin.css" />
+    <Content Include="css\base.css" />
+    <Content Include="css\common.css" />
+    <Content Include="css\iconfont\demo.html" />
+    <Content Include="css\iconfont\iconfont.css" />
+    <Content Include="css\iconfont\iconfont.min.css" />
+    <Content Include="css\iconfont\iconfont.svg" />
+    <Content Include="css\login.css" />
+    <Content Include="css\welcome.css" />
+    <Content Include="Engery\Analyze.html" />
+    <Content Include="Engery\Analyzelog.html" />
+    <Content Include="Engery\EnergyMonitor.html" />
+    <Content Include="Engery\EnergyReport2.html" />
+    <Content Include="Engery\EnergyReport.html" />
+    <Content Include="Engery\History.html" />
+    <Content Include="Engery\Lamp.html" />
+    <Content Include="Engery\terReport.html" />
+    <Content Include="Gisservice\addLampsGroup.html" />
+    <Content Include="Gisservice\addScene.html" />
+    <Content Include="Gisservice\addTaskSwitch.html" />
+    <Content Include="Gisservice\AlertInfo.html" />
+    <Content Include="Gisservice\checkLampsGroup.html" />
+    <Content Include="Gisservice\checkTaskSwitch.html" />
+    <Content Include="Gisservice\Control.html" />
+    <Content Include="Gisservice\editScene.html" />
+    <Content Include="Gisservice\elebox.html" />
+    <Content Include="Gisservice\Lamp.html" />
+    <Content Include="Gisservice\Lights.html" />
+    <Content Include="Gisservice\LampsGroup.html" />
+    <Content Include="Gisservice\LightSet.html" />
+    <Content Include="Gisservice\loop.html" />
+    <Content Include="Gisservice\Project.html" />
+    <Content Include="Gisservice\Scene.html" />
+    <Content Include="Gisservice\ShortcutKey.html" />
+    <Content Include="Gisservice\TaskSwitch.html" />
+    <Content Include="Gisservice\test.html" />
+    <Content Include="Index.html" />
+    <Content Include="js\admin.js" />
+    <Content Include="js\api\ajaxScript.js" />
+    <Content Include="js\api\requestRoot.js" />
+    <Content Include="js\common.js" />
+    <Content Include="js\exporting.js" />
+    <Content Include="js\highcharts.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="lib\datatables\1.10.0\dataTables.fixedColumns.min.js" />
+    <Content Include="lib\datatables\1.10.0\jquery.dataTables.min.js" />
+    <Content Include="lib\DD_belatedPNG_0.0.8a-min.js" />
+    <Content Include="lib\expressInstall.swf" />
+    <Content Include="lib\html5shiv.js" />
+    <Content Include="lib\jquery.contextmenu\jquery.contextmenu.r2.js" />
+    <Content Include="lib\jquery.SuperSlide\2.1.1\jquery.SuperSlide.min.js" />
+    <Content Include="lib\jquery.validation\1.14.0\additional-methods.js" />
+    <Content Include="lib\jquery.validation\1.14.0\jquery.validate.js" />
+    <Content Include="lib\jquery.validation\1.14.0\messages_zh.js" />
+    <Content Include="lib\jquery.validation\1.14.0\validate-methods.js" />
+    <Content Include="lib\jselect-1.0.js" />
+    <Content Include="lib\layer\2.4\layer.js" />
+    <Content Include="lib\layer\2.4\skin\default\icon-ext.png" />
+    <Content Include="lib\layer\2.4\skin\default\icon.png" />
+    <Content Include="lib\layer\2.4\skin\default\loading-0.gif" />
+    <Content Include="lib\layer\2.4\skin\default\loading-1.gif" />
+    <Content Include="lib\layer\2.4\skin\default\loading-2.gif" />
+    <Content Include="lib\layer\2.4\skin\layer.css" />
+    <Content Include="lib\laypage\1.2\laypage.js" />
+    <Content Include="lib\laypage\1.2\skin\laypage.css" />
+    <Content Include="lib\My97DatePicker\4.8\calendar.js" />
+    <Content Include="lib\My97DatePicker\4.8\lang\en.js" />
+    <Content Include="lib\My97DatePicker\4.8\lang\zh-cn.js" />
+    <Content Include="lib\My97DatePicker\4.8\lang\zh-tw.js" />
+    <Content Include="lib\My97DatePicker\4.8\skin\datePicker.gif" />
+    <Content Include="lib\My97DatePicker\4.8\skin\default\datepicker.css" />
+    <Content Include="lib\My97DatePicker\4.8\skin\default\img.gif" />
+    <Content Include="lib\My97DatePicker\4.8\skin\twoer\datepicker-dev.css" />
+    <Content Include="lib\My97DatePicker\4.8\skin\twoer\datepicker.css" />
+    <Content Include="lib\My97DatePicker\4.8\skin\twoer\img.gif" />
+    <Content Include="lib\My97DatePicker\4.8\skin\twoer\img.png" />
+    <Content Include="lib\My97DatePicker\4.8\skin\WdatePicker.css" />
+    <Content Include="lib\My97DatePicker\4.8\skin\whyGreen\bg.jpg" />
+    <Content Include="lib\My97DatePicker\4.8\skin\whyGreen\datepicker.css" />
+    <Content Include="lib\My97DatePicker\4.8\skin\whyGreen\img.gif" />
+    <Content Include="lib\My97DatePicker\4.8\WdatePicker.js" />
+    <Content Include="lib\nprogress\0.2.0\nprogress.css" />
+    <Content Include="lib\nprogress\0.2.0\nprogress.js" />
+    <Content Include="lib\nprogress\0.2.0\nprogress.min.css" />
+    <Content Include="lib\nprogress\0.2.0\nprogress.min.js" />
+    <Content Include="lib\respond.min.js" />
+    <Content Include="lib\squid.js" />
+    <Content Include="lib\swfobject.js" />
+    <Content Include="lib\webuploader\0.1.5\cropper\cropper.js" />
+    <Content Include="lib\webuploader\0.1.5\cropper\index.html" />
+    <Content Include="lib\webuploader\0.1.5\cropper\uploader.js" />
+    <Content Include="lib\webuploader\0.1.5\expressInstall.swf" />
+    <Content Include="lib\webuploader\0.1.5\image-upload\index.html" />
+    <Content Include="lib\webuploader\0.1.5\image-upload\upload.js" />
+    <Content Include="lib\webuploader\0.1.5\images\bg.png" />
+    <Content Include="lib\webuploader\0.1.5\images\icons.png" />
+    <Content Include="lib\webuploader\0.1.5\images\image.png" />
+    <Content Include="lib\webuploader\0.1.5\images\progress.png" />
+    <Content Include="lib\webuploader\0.1.5\images\success.png" />
+    <Content Include="lib\webuploader\0.1.5\md5-demo\index.html" />
+    <Content Include="lib\webuploader\0.1.5\md5-demo\script.js" />
+    <Content Include="lib\webuploader\0.1.5\requirejs\app.js" />
+    <Content Include="lib\webuploader\0.1.5\requirejs\index.html" />
+    <Content Include="lib\webuploader\0.1.5\requirejs\require.js" />
+    <Content Include="lib\webuploader\0.1.5\server\crossdomain.xml" />
+    <Content Include="lib\webuploader\0.1.5\Uploader.swf" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.css" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.custom.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.custom.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.fis.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.flashonly.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.flashonly.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.html5only.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.html5only.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.noimage.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.noimage.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.nolog.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.nolog.min.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.withoutimage.js" />
+    <Content Include="lib\webuploader\0.1.5\webuploader.withoutimage.min.js" />
+    <Content Include="Login.html" />
+    <Content Include="Project\Add-City.html" />
+    <Content Include="Project\Add-Country.html" />
+    <Content Include="Project\Add-Province.html" />
+    <Content Include="Project\GlobalRegion.html" />
+    <Content Include="Project\Index.html" />
+    <Content Include="Project\OverView.html" />
+    <Content Include="Project\Project-add.html" />
+    <Content Include="Roadlighting\addArea.html" />
+    <Content Include="Roadlighting\addDevice.html" />
+    <Content Include="Roadlighting\addEleBox.html" />
+    <Content Include="Roadlighting\addLamps.html" />
+    <Content Include="Roadlighting\addLampsMore.html" />
+    <Content Include="Roadlighting\addLight.html" />
+    <Content Include="Roadlighting\addLightType.html" />
+    <Content Include="Roadlighting\addLoop.html" />
+    <Content Include="Roadlighting\AreaAdmin.html" />
+    <Content Include="Roadlighting\editDevice.html" />
+    <Content Include="Roadlighting\editEleBox.html" />
+    <Content Include="Roadlighting\EleBox.html" />
+    <Content Include="Roadlighting\EquipmentType.html" />
+    <Content Include="Roadlighting\firmware.html" />
+    <Content Include="Roadlighting\Index.html" />
+    <Content Include="Roadlighting\Lamps.html" />
+    <Content Include="Roadlighting\LampsManage.html" />
+    <Content Include="Roadlighting\LightType.html" />
+    <Content Include="Roadlighting\setArea.html" />
+    <Content Include="Roadlighting\setEleBox.html" />
+    <Content Include="Roadlighting\setMappic.html" />
+    <Content Include="User\Belong.html" />
+    <Content Include="User\Department-add.html" />
+    <Content Include="User\Department.html" />
+    <Content Include="User\Index.html" />
+    <Content Include="User\Institution-add.html" />
+    <Content Include="User\Institution.html" />
+    <Content Include="User\OnlineUser.html" />
+    <Content Include="User\User-add-role.html" />
+    <Content Include="User\User-add.html" />
+    <Content Include="User\User-password-edit.html" />
+    <Content Include="User\UserList.html" />
+    <Content Include="Web.config" />
+    <Content Include="Welcome.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\iconfont\iconfont.eot" />
+    <Content Include="css\iconfont\iconfont.ttf" />
+    <Content Include="css\iconfont\iconfont.woff" />
+    <Content Include="lib\webuploader\0.1.5\images\icons.psd" />
+    <Content Include="lib\webuploader\0.1.5\images\progress.psd" />
+    <Content Include="lib\webuploader\0.1.5\README.md" />
+    <Content Include="lib\webuploader\0.1.5\server\fileupload.php" />
+    <Content Include="lib\webuploader\0.1.5\server\fileupload2.php" />
+    <Content Include="lib\webuploader\0.1.5\server\preview.php" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3183</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3183/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

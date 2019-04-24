@@ -1,0 +1,125 @@
+﻿.wisdom{ height:auto; width:100%; left:0; top:0; bottom:0; right:0; z-index:1;
+  background:#3283AC url(../bg/index/bg.png) no-repeat center;
+  height: 100%; width: 100%;background-size: cover; position: fixed;}
+*{
+  margin: 0;
+  padding: 0;
+}
+.nav{
+  text-align: right;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 25px;
+  position: relative;
+}
+.logo{
+  position: absolute;
+  left: 0px;
+}
+.nav img{
+  vertical-align: middle;
+}
+.nav a{
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+}
+.nav span{
+  margin-left: 10px;
+}
+.wisdom .title{
+  color: #fff;
+  text-align: center;
+  font-size: 36px;
+  font-family: "Microsoft Yahei";
+  padding-top: 0.8vw;
+}
+.welbox{
+  width: 63vw;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 35px;
+
+}
+.welbox a{
+  text-align: center;
+  display: block;
+  font-family: "Microsoft Yahei";
+  font-size: 1.5em;
+  line-height: 38px;
+
+}
+.welbox p{
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.61px;
+}
+.city{
+  background: url("../bg/wisdom/citybg.png");
+  width: 20.6vw;
+  height: 65.6vh;
+  position: absolute;
+  left: 0;
+  background-size:cover;
+}
+.weather{
+  background: url("../bg/wisdom/weatherbg.png");
+  width: 20.6vw;
+  height: 32.4vh;
+  position: absolute;
+  left: 21.4vw;
+  top:0;
+  background-size:cover;
+}
+.ai{
+  background: url("../bg/wisdom/aibg.png");
+  width: 20.6vw;
+  height: 32.4vh;
+  position: absolute;
+  left: 42.8vw;
+  top:0;
+  background-size:cover;
+}
+.wifi{
+  background: url("../bg/wisdom/wifibg.png");
+  width: 13.5vw;
+  height: 32.4vh;
+  position: absolute;
+  left: 21.4vw;
+  top: 33.2vh;
+  background-size:cover;
+}
+.charge{
+  background: url("../bg/wisdom/chargebg.png");
+  width: 13.5vw;
+  height: 32.4vh;
+  position: absolute;
+  left: 35.7vw;
+  top: 33.2vh;
+  background-size:cover;
+}
+.newEnergy{
+  background: url("../bg/wisdom/newEnergybg.png");
+  width: 13.5vw;
+  height: 32.4vh;
+  position: absolute;
+  left: 50vw;
+  top: 33.2vh;
+  background-size:cover;
+}
+
+
+.weather img,.ai img,.wifi img,.charge img,.newEnergy img{
+  margin: 3.2vw auto 0;
+  width: 8.5vw;
+  height: 14.8vh;
+}
+/*.warning img,.energy img,.lamp img,.road img,.product img*/
+/*.warning img,.energy img,.road img,.project img{*/
+  /*margin: 90px auto 0;*/
+/*}*/
+.city img{
+  margin: 7.2vw auto 0;
+  width: 11.5vw;
+  height: 32.8vh;
+}

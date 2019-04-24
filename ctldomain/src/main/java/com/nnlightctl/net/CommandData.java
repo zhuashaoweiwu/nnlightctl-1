@@ -1,17 +1,42 @@
 package com.nnlightctl.net;
 
-import com.nnlightctl.request.CommandRequest;
+
 import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
 
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CommandData implements Serializable {
+
+
+//    public byte getLogicalArea() {
+//        return logicalArea;
+//    }
+//
+//    public void setLogicalArea(byte logicalArea) {
+//        this.logicalArea = logicalArea;
+//    }
+//
+//    public byte getPhysicsArea() {
+//        return physicsArea;
+//    }
+//
+//    public void setPhysicsArea(byte physicsArea) {
+//        this.physicsArea = physicsArea;
+//    }
+
+    public byte[] getImei() {
+        return imei;
+    }
+
+    public void setImei(byte[] imei) {
+        this.imei = imei;
+    }
+
     public byte getStart0() {
         return start0;
     }
@@ -94,6 +119,9 @@ public class CommandData implements Serializable {
         }
 
         sum += this.start1;
+        for (int i = 0; i < imei.length; i++) {
+            sum += this.imei[i];
+        }
         sum += this.control;
         sum += this.dataLength;
 
@@ -103,22 +131,24 @@ public class CommandData implements Serializable {
             sum += this.data[i];
         }
 
-        return (byte)sum;
+        return (byte) sum;
     }
 
-    public CommandData() {}
+    public CommandData() {
+    }
 
-    public CommandData(int percent) {
-        this.control = (byte)0xe2;
+    public CommandData(int percent, byte[] imei) {
+        this.control = (byte) 0xe2;
         this.dataLength = 1;
         this.data = new byte[1];
-        this.data[0] = (byte)percent;
+        this.data[0] = (byte) percent;
+        this.imei = imei;
         this.check = createCheck();
     }
 
     public static CommandData getTerminalResetCommand() {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xe4);
+        commandData.setControl((byte) 0xe4);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -127,9 +157,9 @@ public class CommandData implements Serializable {
     public static CommandData getConfigTerminalSendMsgPeriod(int period) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xe5);
-        commandData.setDataLength((byte)2);
-        commandData.setData(ByteConvert.shortToBytes((short)period));
+        commandData.setControl((byte) 0xe5);
+        commandData.setDataLength((byte) 2);
+        commandData.setData(ByteConvert.shortToBytes((short) period));
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -138,22 +168,24 @@ public class CommandData implements Serializable {
     public static CommandData getCommandTerminalEleboxOn(Boolean eleboxOn) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xe6);
-        commandData.setDataLength((byte)1);
+        commandData.setControl((byte) 0xe6);
+        commandData.setDataLength((byte) 1);
         byte[] data = new byte[1];
-        data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
+        data[0] = eleboxOn ? (byte) 0x01 : (byte) 0x00;
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
     }
 
-    public static CommandData getConfigTerminalSwitchPolicy(CommandData c7Command) {
+    public static CommandData getConfigTerminalSwitchPolicy(CommandData c7Command,byte [] imei) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xe7);
 
-        commandData.setDataLength((byte)(c7Command.getDataLength() - 4));
+        commandData.setImei(imei);
+        commandData.setControl((byte) 0xe7);
+
+        commandData.setDataLength((byte) (c7Command.getDataLength() - 4));
 
         byte[] data = new byte[ByteConvert.byteToUbyte(commandData.getDataLength())];
         System.arraycopy(c7Command.getData(), 4, data, 0, data.length);
@@ -167,18 +199,19 @@ public class CommandData implements Serializable {
     public static CommandData getCommandReadTerminalInfo() {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xe8);
+        commandData.setControl((byte) 0xe8);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
     }
 
-    public static CommandData getCommandConfigTerminalModel(byte model) {
+    public static CommandData getCommandConfigTerminalModel(byte model,byte [] imei) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xe9);
-        commandData.setDataLength((byte)1);
-        commandData.setData(new byte[] {model});
+        commandData.setImei(imei);
+        commandData.setControl((byte) 0xe9);
+        commandData.setDataLength((byte) 1);
+        commandData.setData(new byte[]{model});
 
         commandData.setCheck(commandData.createCheck());
 
@@ -188,8 +221,8 @@ public class CommandData implements Serializable {
     public static CommandData getReturnTerminalUUID(String uuid) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xf0);
-        commandData.setDataLength((byte)uuid.getBytes().length);
+        commandData.setControl((byte) 0xf0);
+        commandData.setDataLength((byte) uuid.getBytes().length);
         commandData.setData(uuid.getBytes());
         commandData.setCheck(commandData.createCheck());
 
@@ -198,8 +231,8 @@ public class CommandData implements Serializable {
 
     public static CommandData getCheckTimeCommand(byte[] timeBytes) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xf1);
-        commandData.setDataLength((byte)6);
+        commandData.setControl((byte) 0xf1);
+        commandData.setDataLength((byte) 6);
         commandData.setData(timeBytes);
         commandData.setCheck(commandData.createCheck());
         return commandData;
@@ -208,8 +241,8 @@ public class CommandData implements Serializable {
     public static CommandData getACKCommandData(byte control, Boolean success) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0x80);
-        commandData.setDataLength((byte)2);
+        commandData.setControl((byte) 0x80);
+        commandData.setDataLength((byte) 2);
         byte[] data = new byte[2];
         data[0] = control;
         if (success) {
@@ -223,11 +256,11 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
-    public static CommandData getChangePowerTypeCommandData(byte powerType) {
+    public static CommandData getChangePowerTypeCommandData(byte powerType,byte[] imei) {
         CommandData commandData = new CommandData();
-
-        commandData.setControl((byte)0xf2);
-        commandData.setDataLength((byte)1);
+        commandData.setImei(imei);
+        commandData.setControl((byte) 0xEC);
+        commandData.setDataLength((byte) 1);
 
         byte[] data = new byte[1];
         data[0] = powerType;
@@ -241,8 +274,8 @@ public class CommandData implements Serializable {
     public static CommandData commandGetModelStateByGateway(String modelUUID) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xd0);
-        commandData.setDataLength((byte)36);
+        commandData.setControl((byte) 0xd0);
+        commandData.setDataLength((byte) 36);
 
         byte[] data = modelUUID.getBytes();
         commandData.setData(data);
@@ -255,8 +288,8 @@ public class CommandData implements Serializable {
     public static CommandData commandConfigModelStateByGateway(String modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xd1);
-        commandData.setDataLength((byte)40);
+        commandData.setControl((byte) 0xd1);
+        commandData.setDataLength((byte) 40);
 
         byte[] data = new byte[40];
 
@@ -282,9 +315,9 @@ public class CommandData implements Serializable {
 
     public static CommandData getConfigSetTimeCommand(byte[] time) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xd5);
+        commandData.setControl((byte) 0xd5);
 
-        commandData.setDataLength((byte)6);
+        commandData.setDataLength((byte) 6);
         commandData.setData(time);
         commandData.resetCheck();
 
@@ -293,8 +326,8 @@ public class CommandData implements Serializable {
 
     public static CommandData getUpdateFirewareCommand(short version, short packageNumber, byte lastPackageSize) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xe3);
-        commandData.setDataLength((byte)5);
+        commandData.setControl((byte) 0xe3);
+        commandData.setDataLength((byte) 5);
 
         byte[] data = new byte[5];
 
@@ -317,8 +350,8 @@ public class CommandData implements Serializable {
     public static CommandData getInvokeModbusEMDirectiveCommandData(byte[] directiveBytes) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0x11);
-        commandData.setDataLength((byte)directiveBytes.length);
+        commandData.setControl((byte) 0x11);
+        commandData.setDataLength((byte) directiveBytes.length);
         commandData.setData(directiveBytes);
         commandData.resetCheck();
 
@@ -327,6 +360,7 @@ public class CommandData implements Serializable {
 
     /**
      * 生成命令的16进制字符串形式
+     *
      * @return
      */
     public String toHexString() {
@@ -355,6 +389,7 @@ public class CommandData implements Serializable {
 
     /**
      * 获取CommandData的UUID
+     *
      * @return
      */
     public String getUUID() {
@@ -366,6 +401,7 @@ public class CommandData implements Serializable {
 
     /**
      * 从数据域0位置获取网上字符串数据
+     *
      * @return
      */
     public String getNetworkAddr() {
@@ -377,6 +413,7 @@ public class CommandData implements Serializable {
 
     /**
      * 获取CommandData的RealtimeUUID
+     *
      * @return
      */
     public String getRealtimeUUID() {
@@ -387,6 +424,7 @@ public class CommandData implements Serializable {
 
     /**
      * 获取CommandData的RealtimeUUID，从数据域中
+     *
      * @return
      */
     public String getRealtimeUUIDFromData() {
@@ -397,6 +435,7 @@ public class CommandData implements Serializable {
 
     /**
      * 校验
+     *
      * @return
      */
     public boolean check() {
@@ -416,16 +455,17 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C1字符型命令
+     *
      * @param command
      */
     public CommandData(String command) {
-        this.control = (byte)0xc1;
+        this.control = (byte) 0xc1;
         byte[] strBytes = command.getBytes();
-        byte tmpDataLength = (byte)0;
+        byte tmpDataLength = (byte) 0;
         if (strBytes.length > 255) {
-            tmpDataLength = (byte)0xff;
+            tmpDataLength = (byte) 0xff;
         } else {
-            tmpDataLength = (byte)strBytes.length;
+            tmpDataLength = (byte) strBytes.length;
         }
 
         this.dataLength = tmpDataLength;
@@ -436,6 +476,7 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C2灯光调节命令
+     *
      * @param percent
      * @param control
      */
@@ -445,6 +486,7 @@ public class CommandData implements Serializable {
 
     /**
      * 单灯C2灯光调节命令
+     *
      * @param realtime_uid
      * @param percent
      * @param control
@@ -455,45 +497,49 @@ public class CommandData implements Serializable {
         this.dataLength = (byte) (1 + realtime_uid_bytes.length);
         int uByteDataLength = ByteConvert.byteToUbyte(dataLength);
         this.data = new byte[uByteDataLength];
-        this.data[0] = (byte)percent;
+        this.data[0] = (byte) percent;
         System.arraycopy(realtime_uid_bytes, 0, this.data, 1, realtime_uid_bytes.length);
         this.check = createCheck();
     }
 
     /**
-    *继电器模块与服务器通讯协议A
-    *@param realtime_uid
-    * @param control
-    */
-    public CommandData(String realtime_uid ,byte control){
+     * 继电器模块与服务器通讯协议A
+     *
+     * @param realtime_uid
+     * @param control
+     */
+    public CommandData(String realtime_uid, byte control) {
         byte[] realtime_uid_bytes = BytesHexStrTranslate.toBytes(realtime_uid);
         this.control = control;
-        this.dataLength = (byte) ( realtime_uid_bytes.length);
+        this.dataLength = (byte) (realtime_uid_bytes.length);
         int uByteDataLength = ByteConvert.byteToUbyte(dataLength);
         this.data = new byte[uByteDataLength];
         System.arraycopy(realtime_uid_bytes, 0, this.data, 0, realtime_uid_bytes.length);
         this.check = createCheck();
     }
+
     /**
      * 命令层C4重启复位命令
+     *
      * @return
      */
     public static CommandData getC4CommandData() {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xc4);
+        commandData.setControl((byte) 0xc4);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
 
     /**
      * 命令层C5设置终端定时发送参数命令
+     *
      * @return
      */
     public static CommandData getC5CommandData(int period) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xc5);
+        commandData.setControl((byte) 0xc5);
         commandData.setDataLength((byte) 2);
-        commandData.setData(ByteConvert.shortToBytes((short)period));
+        commandData.setData(ByteConvert.shortToBytes((short) period));
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -501,16 +547,17 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C6命令控制柜通断电
+     *
      * @param eleboxOn
      * @return
      */
     public static CommandData getC6CommandData(Boolean eleboxOn) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc6);
-        commandData.setDataLength((byte)1);
+        commandData.setControl((byte) 0xc6);
+        commandData.setDataLength((byte) 1);
         byte[] data = new byte[1];
-        data[0] = eleboxOn ? (byte)0x01 : (byte)0x00;
+        data[0] = eleboxOn ? (byte) 0x01 : (byte) 0x00;
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
@@ -519,20 +566,21 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C7设置终端开关灯策略
+     *
      * @param switchTaskList
      * @return
      */
     public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc7);
+        commandData.setControl((byte) 0xc7);
 
         int dataLength = 14 * switchTaskList.size();
         if (dataLength > 255) {
             throw new RuntimeException("设置开关任务策略大于15条错误");
         }
 
-        commandData.setDataLength((byte)dataLength);
+        commandData.setDataLength((byte) dataLength);
 
         byte[] data = new byte[dataLength];
         int k = 0;
@@ -557,7 +605,7 @@ public class CommandData implements Serializable {
             data[k++] = Byte.parseByte(endDateStrArray[2]);
             data[k++] = Byte.parseByte(endDateStrArray[3]);
             data[k++] = Byte.parseByte(endDateStrArray[4]);
-            data[k++] = (byte)0;
+            data[k++] = (byte) 0;
         }
 
         commandData.setData(data);
@@ -568,6 +616,7 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C7设置终端开关灯策略,特定RealtimeUUID
+     *
      * @param switchTaskList
      * @param realtimeUUID
      * @return
@@ -575,14 +624,14 @@ public class CommandData implements Serializable {
     public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList, String realtimeUUID) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc7);
+        commandData.setControl((byte) 0xc7);
 
         int dataLength = 14 * switchTaskList.size() + 4;
         if (dataLength > 255) {
             throw new RuntimeException("设置开关任务策略大于15条错误");
         }
 
-        commandData.setDataLength((byte)dataLength);
+        commandData.setDataLength((byte) dataLength);
 
         byte[] data = new byte[dataLength];
         int k = 0;
@@ -612,7 +661,7 @@ public class CommandData implements Serializable {
             data[k++] = Byte.parseByte(endDateStrArray[2]);
             data[k++] = Byte.parseByte(endDateStrArray[3]);
             data[k++] = Byte.parseByte(endDateStrArray[4]);
-            data[k++] = (byte)0;
+            data[k++] = (byte) 0;
         }
 
         commandData.setData(data);
@@ -623,12 +672,13 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C8命令获取终端信息
+     *
      * @return
      */
     public static CommandData getC8CommandData() {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc8);
+        commandData.setControl((byte) 0xc8);
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -636,14 +686,15 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C9设置终端的工作模式（自动-0或者手动-1）
+     *
      * @return
      */
     public static CommandData getC9CommandData(int model) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc9);
-        commandData.setDataLength((byte)1);
-        commandData.setData(new byte[] {(byte)model});
+        commandData.setControl((byte) 0xc9);
+        commandData.setDataLength((byte) 1);
+        commandData.setData(new byte[]{(byte) model});
         commandData.setCheck(commandData.createCheck());
 
         return commandData;
@@ -651,6 +702,7 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层C9设置终端的工作模式（自动-0或者手动-1）,特定realtimeUUID
+     *
      * @param model
      * @param realtimeUUID
      * @return
@@ -658,15 +710,15 @@ public class CommandData implements Serializable {
     public static CommandData getC9CommandData(int model, String realtimeUUID) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc9);
-        commandData.setDataLength((byte)5);
+        commandData.setControl((byte) 0xc9);
+        commandData.setDataLength((byte) 5);
 
         byte[] data = new byte[5];
 
         //realtimeUUID
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
         System.arraycopy(realtimeUUIDBytes, 0, data, 0, 4);
-        data[4] = (byte)model;
+        data[4] = (byte) model;
 
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
@@ -677,13 +729,13 @@ public class CommandData implements Serializable {
     public static CommandData getF2CommandData(int powerType, String realtimeUUID) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xb2);
-        commandData.setDataLength((byte)5);
+        commandData.setControl((byte) 0xb2);
+        commandData.setDataLength((byte) 5);
 
         byte[] data = new byte[5];
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
         System.arraycopy(realtimeUUIDBytes, 0, data, 0, 4);
-        data[4] = (byte)powerType;
+        data[4] = (byte) powerType;
 
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
@@ -694,7 +746,7 @@ public class CommandData implements Serializable {
     public static CommandData getC3CommandData(String realtimeUUID, String version, int packageNumber, int lastPackageSize) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xc3);
+        commandData.setControl((byte) 0xc3);
 
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUID);
 
@@ -706,12 +758,12 @@ public class CommandData implements Serializable {
 
         byte[] versionBytes = ByteConvert.shortToBytes(Short.parseShort(stringBuilder.toString()));
 
-        byte[] packageNumberBytes = ByteConvert.shortToBytes((short)packageNumber);
-        byte[] lastPackageSizeBytes = new byte[] {(byte)lastPackageSize};
+        byte[] packageNumberBytes = ByteConvert.shortToBytes((short) packageNumber);
+        byte[] lastPackageSizeBytes = new byte[]{(byte) lastPackageSize};
 
         int dataLength = realtimeUUIDBytes.length + versionBytes.length + packageNumberBytes.length + lastPackageSizeBytes.length;
 
-        commandData.setDataLength((byte)dataLength);
+        commandData.setDataLength((byte) dataLength);
 
         byte[] data = new byte[dataLength];
 
@@ -737,16 +789,17 @@ public class CommandData implements Serializable {
 
     /**
      * 命令层B80应答指令
+     *
      * @return
      */
     public static CommandData getB80ReplyCommandData(byte control, Boolean success) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xb8);
-        commandData.setDataLength((byte)2);
+        commandData.setControl((byte) 0xb8);
+        commandData.setDataLength((byte) 2);
         byte[] data = new byte[2];
         data[0] = control;
-        data[1] = success ? (byte)0x00 : (byte)0x01;
+        data[1] = success ? (byte) 0x00 : (byte) 0x01;
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
 
@@ -758,11 +811,11 @@ public class CommandData implements Serializable {
 
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xb8);
-        commandData.setDataLength((byte)6);
+        commandData.setControl((byte) 0xb8);
+        commandData.setDataLength((byte) 6);
         byte[] data = new byte[6];
         data[0] = control;
-        data[1] = success ? (byte)0x00 : (byte)0x01;
+        data[1] = success ? (byte) 0x00 : (byte) 0x01;
         System.arraycopy(realtimeUUIDBytes, 0, data, 2, 4);
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
@@ -773,8 +826,8 @@ public class CommandData implements Serializable {
     public static CommandData getA0CommandData(String gatewayRealtimeUUID, String modelUUID) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xa0);
-        commandData.setDataLength((byte)40);
+        commandData.setControl((byte) 0xa0);
+        commandData.setDataLength((byte) 40);
 
         byte[] data = new byte[40];
 
@@ -801,7 +854,7 @@ public class CommandData implements Serializable {
     * */
     public static CommandData getA0CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa0);
+        commandData.setControl((byte) 0xa0);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
@@ -812,13 +865,14 @@ public class CommandData implements Serializable {
      * */
     public static CommandData getA1CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa1);
+        commandData.setControl((byte) 0xa1);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
 
     /**
      * 命令层-A1指令，对应D1指令
+     *
      * @param gatewayRealtimeUUID
      * @param modelUUID
      * @param modelLoop
@@ -828,8 +882,8 @@ public class CommandData implements Serializable {
     public static CommandData getA1CommandData(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xa1);
-        commandData.setDataLength((byte)44);
+        commandData.setControl((byte) 0xa1);
+        commandData.setDataLength((byte) 44);
 
         byte[] data = new byte[44];
 
@@ -863,49 +917,54 @@ public class CommandData implements Serializable {
      * */
     public static CommandData getA2CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa2);
+        commandData.setControl((byte) 0xa2);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
     /*
      *命令层设置0xA3应答指令
      *@return
      * */
-    public static CommandData getA3CommandData(String realtime_id) {
+    public static CommandData getA3CommandData(String realtime_id,byte [] imei) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa3);
+        commandData.setImei(imei);
+        commandData.setControl((byte) 0xa3);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
     /*
      *命令层设置0xA4应答指令
      *@return
      * */
     public static CommandData getA4CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa4);
+        commandData.setControl((byte) 0xa4);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
     /*
      *命令层设置0xA5应答指令
      *@return
      * */
     public static CommandData getA5CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa5);
+        commandData.setControl((byte) 0xa5);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
 
     /**
      * 命令层广播对时指令A5-对应终端D5指令
+     *
      * @return
      */
     public static CommandData getA5CommandData() {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0xa5);
+        commandData.setControl((byte) 0xa5);
         commandData.resetCheck();
 
         return commandData;
@@ -917,17 +976,18 @@ public class CommandData implements Serializable {
      * */
     public static CommandData getA6CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa6);
+        commandData.setControl((byte) 0xa6);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
+
     /*
      *命令层设置0xA7应答指令
      *@return
      * */
     public static CommandData getA7CommandData(String realtime_id) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte)0xa7);
+        commandData.setControl((byte) 0xa7);
         commandData.setCheck(commandData.createCheck());
         return commandData;
     }
@@ -935,11 +995,11 @@ public class CommandData implements Serializable {
     public static CommandData getC11CommandData(String realtimeUUId, byte[] modbusDirectiveBytes) {
         CommandData commandData = new CommandData();
 
-        commandData.setControl((byte)0x11);
+        commandData.setControl((byte) 0x11);
 
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(realtimeUUId);
         int dataLength = realtimeUUIDBytes.length + modbusDirectiveBytes.length;
-        commandData.setDataLength((byte)dataLength);
+        commandData.setDataLength((byte) dataLength);
 
         byte[] data = new byte[dataLength];
 
@@ -956,16 +1016,20 @@ public class CommandData implements Serializable {
 
         return commandData;
     }
+
     /***************************************************命令客户端指令********************************************/
 
     private byte start0 = 0x68;
     private byte[] addr = new byte[6];
     private byte start1 = 0x68;
+    private byte[] imei = new byte[17];
     private byte control;
-    private byte dataLength = (byte)0;
+    private byte dataLength = (byte) 0;
     private byte[] data = new byte[0];
     private byte check;
     private byte end0 = 0x16;
-    private byte[] end1 = new byte[] {(byte)0xFE, (byte)0xFD, (byte)0xFC, (byte)0xFB, (byte)0xFA, (byte)0xF9};
+    private byte[] end1 = new byte[]{(byte) 0xFE, (byte) 0xFD, (byte) 0xFC, (byte) 0xFB, (byte) 0xFA, (byte) 0xF9};
+    //    private byte logicalArea;
+//    private byte physicsArea;
     private static final long serialVersionUID = 1L;
 }

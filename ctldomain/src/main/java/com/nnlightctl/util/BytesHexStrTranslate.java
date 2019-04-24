@@ -4,6 +4,8 @@ public class BytesHexStrTranslate {
     private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
+
+
     public static String bytesToHexFun(byte... bytes) {
         char[] buf = new char[bytes.length * 2];
         int index = 0;
@@ -30,25 +32,26 @@ public class BytesHexStrTranslate {
     }
 
     public static void main(String[] args) {
-        System.out.println(BytesHexStrTranslate.bytesToHexFun((byte)0xe2, (byte)0x08));
-        byte[] bytes = BytesHexStrTranslate.toBytes("E208");
-        for (byte b : bytes) {
-            System.out.print(b);
-            System.out.print(",");
-        }
+//        System.out.println(BytesHexStrTranslate.bytesToHexFun((byte)01));
 
-        byte[] hexBytes = toBytes("c465");
-        System.out.print("[");
-        for (byte b : hexBytes) {
-            System.out.print(b);
-            System.out.print(",");
-        }
-        System.out.print("]");
-
-        String hex = bytesToHexFun(hexBytes);
-        System.out.println(hex);
-
-        byte[] bytes1 = new byte[] {0, 0, 0, 0};
-        System.out.println(bytesToHexFun(bytes1));
+//        byte[] bytes = BytesHexStrTranslate.toBytes("E208");
+//        for (byte b : bytes) {
+//            System.out.print(b);
+//            System.out.print(",");
+//        }
+//
+//        byte[] hexBytes = toBytes("c465");
+//        System.out.print("[");
+//        for (byte b : hexBytes) {
+//            System.out.print(b);
+//            System.out.print(",");
+//        }
+//        System.out.print("]");
+//
+//        String hex = bytesToHexFun(hexBytes);
+//        System.out.println(hex);
+//
+//        byte[] bytes1 = new byte[] {0, 0, 0, 0};
+//        System.out.println(bytesToHexFun(bytes1));
     }
 }

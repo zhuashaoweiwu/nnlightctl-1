@@ -1,0 +1,114 @@
+﻿.wisdom{ height:auto; width:100%; left:0; top:0; bottom:0; right:0; z-index:1;
+  background:#3283AC url(../bg/index/bg.png) no-repeat center;
+  height: 100%; width: 100%;background-size: cover; position: fixed;}
+*{
+  margin: 0;
+  padding: 0;
+}
+.nav{
+  text-align: right;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 25px;
+  position: relative;
+}
+.logo{
+  position: absolute;
+  left: 0px;
+}
+.nav img{
+  vertical-align: middle;
+}
+.nav a{
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+}
+.nav span{
+  margin-left: 10px;
+}
+.wisdom .title{
+  color: #fff;
+  text-align: center;
+  font-size: 36px;
+  font-family: "Microsoft Yahei";
+  padding-top: 10px;
+}
+.welbox{
+  width: 1205px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 35px;
+
+}
+.welbox a{
+  text-align: center;
+  display: block;
+  font-family: "Microsoft Yahei";
+  font-size: 28px;
+  line-height: 38px;
+
+}
+.welbox p{
+  color: #fff;
+  text-align: center;
+}
+.city{
+  background: url("../bg/wisdom/citybg.png");
+  width: 396px;
+  height: 709px;
+  position: absolute;
+  left: 0;
+}
+.weather{
+  background: url("../bg/wisdom/weatherbg.png");
+  width: 396px;
+  height: 350px;
+  position: absolute;
+  left: 402px;
+  top:-2px;
+}
+.ai{
+  background: url("../bg/wisdom/aibg.png");
+  width: 395px;
+  height: 350px;
+  position: absolute;
+  left: 811px;
+  top:-1px;
+}
+.wifi{
+  background: url("../bg/wisdom/wifibg.png");
+  width: 260px;
+  height: 350px;
+  position: absolute;
+  left: 406px;
+  top: 360px;
+}
+.charge{
+  background: url("../bg/wisdom/chargebg.png");
+  width: 260px;
+  height: 350px;
+  position: absolute;
+  left: 676px;
+  top: 360px;
+}
+.newEnergy{
+  background: url("../bg/wisdom/newEnergybg.png");
+  width: 260px;
+  height: 350px;
+  position: absolute;
+  left: 946px;
+  top: 360px;
+}
+
+
+.weather img,.ai img,.wifi img,.charge img,.newEnergy img{
+  margin: 90px auto 0;
+}
+/*.warning img,.energy img,.lamp img,.road img,.product img*/
+/*.warning img,.energy img,.road img,.project img{*/
+  /*margin: 90px auto 0;*/
+/*}*/
+.city img{
+  margin: 200px auto 0;
+}

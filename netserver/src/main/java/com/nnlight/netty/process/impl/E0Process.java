@@ -16,7 +16,7 @@ public class E0Process implements Process {
 
     @Override
     public void process(ChannelHandlerContext netServerContext, CommandData msg) {
-        logger.info(DateTimeUtil.nowStr() + " 接收 " + msg.getUUID() + " E0固定消息[" + msg.toHexString() + "]");
+        logger.info(DateTimeUtil.nowStr() + " 接收 " + msg.getImei() + " E0固定消息[" + msg.toHexString() + "]");
 
         EchoServer.getGlobalApplicationContext().allClientSendCommand(msg);
 

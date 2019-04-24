@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <title>部署--灯具增加</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+</head>
+<body>
+<div class="page-container">
+    <div class="mt-20">
+        <table border="0">
+            <tr>
+                <td style="height:400px;width:48%;border:1px solid #ddd;" valign="top">
+                    <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">可添加（<span
+                            class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                    <!--<h4 class="f-20">
+                        <a href="javascript:void(0);" onclick="project_del_more()" class="btn btn-secondary radius mr-10"><i class="Hui-iconfont">&#xe645;</i>导入</a>
+                        <a class="btn btn-primary radius mr-10" data-title="添加灯具" onclick="addLamps('添加灯具', 'addLamps.html', '800', '550')" href="javascript:void(0);"><i class="Hui-iconfont">&#xe600;</i>添加灯具</a>
+                        <a class="btn btn-primary radius" data-title="批量添加灯具" onclick="addLampsMore('批量添加灯具', 'addLampsMore.html', '1050', '550')" href="javascript:void(0);"><i class="Hui-iconfont">&#xe600;</i>批量添加灯具</a>
+                    </h4>-->
+                    <div style="height:90%;overflow-y:scroll;">
+                        <table id="selectableTable" class="table table-border table-bordered table-bg table-hover">
+                            <thead>
+                            <tr class="text-c">
+                                <th>灯具编码</th>
+                                <th>灯头</th>
+                                <th>灯杆</th>
+                                <th>资产编号</th>
+                                <th>区域</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tb1">
+                            <tr class="text-c" ref="1">
+                                <td>L0001</td>
+                                <td>L00012H0180917</td>
+                                <td>L00012P0180917</td>
+                                <td>L00012P0180917</td>
+                                <td>三亚-海东区-精英路</td>
+                            </tr>
+                            <tr class="text-c" ref="2">
+                                <td>L0002</td>
+                                <td>L00012H0180917</td>
+                                <td>L00012P0180917</td>
+                                <td>L00012P0180917</td>
+                                <td>三亚-海东区-精英路</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+
+                <td width="4%" align="center">
+                    <!--<a href="javascript:void(0);" onclick="project_del_more()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+                <a href="javascript:void(0);" onclick="project_del_more()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+                </td>
+
+                <td style="border:1px solid #ddd;" valign="top">
+                    <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">已添加（<span
+                            class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                    <h4 class="f-20">
+                        <span class="c-red">*</span>模块：
+                        <span class="select-box inline">
+                                <select name="modelSelect" id="modelSelect" class="select">
+                                    <option value="0">请选择模块</option>
+                                </select>
+                            </span>
+                        <span class="c-red pl-25">*</span>回路：
+                        <span class="select-box inline">
+                                <select name="modelLoopSelect" id="modelLoopSelect" class="select">
+                                    <option value="0">请选择回路</option>
+                                </select>
+                            </span>
+                    </h4>
+                    <div style="height:340px;overflow-y:scroll;">
+                        <table id="selectedTable" class="table table-border table-bordered table-bg table-hover">
+                            <thead>
+                                <tr class="text-c">
+                                    <th>灯具编码</th>
+                                    <th>灯头</th>
+                                    <th>灯杆</th>
+                                    <th>资产编号</th>
+                                    <th>区域</th>
+                                    <th>回路序号</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb2">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+    <div class="row cl mt-20">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+            <input id="btnSubmit" class="btn btn-primary radius" type="button" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/admin.js"></script>
+
+<script type="text/javascript" src="../js/api/requestRoot.js"></script>
+<script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../lib/layer/2.4/layer.js"></script><!--弹出插件-->
+<script type="text/javascript">
+
+    var originalLightIds = [];
+
+    $("#tb1").delegate('.text-c', 'click', function () {
+        var _this = $(this).parent("tr").eq(0);
+        _this.remove();
+        var StrHtml = getRightRowFromLeft(_this);
+        $("#tb2").append(StrHtml);
+        resetSortColumn();
+    });
+
+    $("#tb2").delegate('.text-c', 'click', function () {
+        var _this = $(this).parent("tr").eq(0);
+        _this.remove();
+        var StrHtml = getLeftRowFromRight(_this);
+        $("#tb1").append(StrHtml);
+        resetSortColumn();
+    });
+
+    //左边到右边，获取右边行html
+    function getRightRowFromLeft($leftRow) {
+        var currentId = $leftRow.attr("ref");
+        var html = ("<tr ref='" + currentId + "'>");
+        $leftRow.find("td").each(function (index, value) {
+            var tdHtml = "<td class=\"text-c\">" + $(this).html() + "</td>";
+            html += tdHtml;
+        });
+
+        //添加下拉列表列
+        html += "<td><select></select></td>";
+
+        html += "</tr>";
+
+        return html;
+    }
+
+    //右边到左边，获取左边行html
+    function getLeftRowFromRight($rightRow) {
+        var currentId = $rightRow.attr("ref");
+        var html = ("<tr ref='" + currentId + "'>");
+        $rightRow.find("td").each(function (index, value) {
+            if ($(this).find("select").length <= 0) {
+                var tdHtml = "<td class=\"text-c\">" + $(this).html() + "</td>";
+                html += tdHtml;
+            }
+        });
+
+        html += "</tr>";
+
+        return html;
+    }
+
+    //重置回路表格序号下拉列表
+    function resetSortColumn() {
+        var count = $("#tb2").find("tr").length;
+
+        $("#tb2").find("tr").each(function (index, value) {
+            var $Select = $(this).find("select").eq(0);
+            $Select.empty();
+
+            for (var i = 0; i < count; ++i) {
+                $('<option value="' + (i + 1) + '">' + (i + 1) + '</option>').appendTo($Select);
+            }
+
+            //选中当前序号
+            var priority = $Select.attr("cur");
+            if (priority && priority > 0) {
+                $Select.val(priority);
+            }
+
+            //注册select选择事件
+            var lightId = $(this).attr("ref");
+            $Select.unbind("change").change(function () {
+                var number = $(this).val();
+                ajaxRequest("post", "/api/roadlighting/updateLightPriority", {"id" : lightId, "priority" : number}, function (data) {
+                    if (data) {
+                        if (data.header.code != 1000) {
+                            layer.msg(data.header.msg, {icon : 2, time : 3000});
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    //批量添加灯具
+    function addLampsMore(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //添加灯具
+    function addLamps(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //刷新可添加灯具列表
+    function flushSelectableLight() {
+        ajaxRequest("post", "/api/roadlighting/listLighting", {"notBe": 1}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var lightArray = data.body.data;
+
+                    var $tbody = $("#tb1");
+                    $tbody.empty();
+
+                    for (var i = 0; i < lightArray.length; ++i) {
+                        var light = lightArray[i];
+
+                        $('<tr ref="' + light.id + '">\n' +
+                            '<td class="text-c">' + light.lightingCode + '</td>\n' +
+                            '<td class="text-c">' + light.lamphead + '</td>\n' +
+                            '<td class="text-c">' + light.lamppost + '</td>\n' +
+                            '<td class="text-c">' + light.propertySerialNumber + '</td>\n' +
+                            '<td class="text-c">' + light.regionLevelDesc + '</td>\n' +
+                            '</tr>').appendTo($tbody);
+                    }
+
+                } else {
+                    layer.msg(data.header.msg, {icon: 2, time: 3000});
+                }
+            }
+        });
+    }
+
+    //刷新该控制柜下全部模块
+    function flushEleboxModel() {
+        var eleboxId = editModel(window.location.href);
+        ajaxRequest("post", "/api/roadlighting/listmodel", {"eleboxId": eleboxId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var modelArray = data.body.data;
+
+                    var $modelSelect = $("#modelSelect");
+
+                    for (var i = 0; i < modelArray.length; ++i) {
+                        var model = modelArray[i];
+                        $('<option value="' + model.id + '">' + model.modelName + '</option>').appendTo($modelSelect);
+                    }
+
+                } else {
+                    layer.msg(data.header.msg, {icon: 2, time: 3000});
+                }
+            }
+        });
+    }
+
+    //根据模块id获取该模块下全部回路
+    function flushModelLoopByModelId(modelId) {
+        ajaxRequest("post", "/api/roadlighting/listmodelloop", {"modelId": modelId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var modelLoopArray = data.body.data;
+                    var $modelLoopSelect = $("#modelLoopSelect");
+                    $modelLoopSelect.empty();
+                    $('<option value="0">请选择回路</option>').appendTo($modelLoopSelect);
+
+                    for (var i = 0; i < modelLoopArray.length; ++i) {
+                        var modelLoop = modelLoopArray[i];
+
+                        $('<option value="' + modelLoop.id + '">' + modelLoop.loopCode + '</option>').appendTo($modelLoopSelect);
+                    }
+                } else {
+                    layer.msg(data.header.msg, {icon: 2, time: 3000});
+                }
+            }
+        });
+    }
+
+    //根据回路id获取回路下全部灯具
+    function listLightByModelLoopId(modelLoopId) {
+        ajaxRequest("post", "/api/roadlighting/getLoopLight", {"id": modelLoopId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var lightArray = data.body.data;
+
+                    //表格
+                    var $tbody = $("#tb2");
+                    $tbody.empty();
+
+                    originalLightIds = [];
+                    for (var i = 0; i < lightArray.length; ++i) {
+                        var light = lightArray[i];
+
+                        $('<tr ref="' + light.id + '">\n' +
+                            '<td class="text-c">' + light.lightingCode + '</td>\n' +
+                            '<td class="text-c">' + light.lamphead + '</td>\n' +
+                            '<td class="text-c">' + light.lamppost + '</td>\n' +
+                            '<td class="text-c">' + light.propertySerialNumber + '</td>\n' +
+                            '<td class="text-c">' + light.regionLevelDesc + '</td>\n' +
+                            '<td><select cur="'+light.loopPriority+'"></select></td>' +
+                            '</tr>').appendTo($tbody);
+
+                        originalLightIds.push(light.id);
+                    }
+
+                    resetSortColumn();
+
+                    //刷新左侧可添加灯具列表
+                    flushSelectableLight();
+                }
+            }
+        });
+    }
+
+    $(function () {
+        flushSelectableLight();
+        flushEleboxModel();
+
+        //注册模块下拉列表选择事件
+        $("#modelSelect").change(function () {
+            flushModelLoopByModelId($(this).val());
+        });
+
+        //注册回路下拉列表选择事件
+        $("#modelLoopSelect").change(function () {
+            listLightByModelLoopId($(this).val());
+        });
+
+        //注册提交按扭事件
+        $("#btnSubmit").click(function () {
+            //提交之前先触发灯具序号提交事件
+            $("#tb2").find("select").change();
+            //获取操作后灯具id集合
+            var lightIds = [];
+            $("#tb2").find("tr").each(function (index, value) {
+                lightIds.push($(this).attr("ref"));
+            });
+
+            var eleboxId = editModel(window.location.href);
+            var modelLoopId = $("#modelLoopSelect").val();
+
+            ajaxRequest("post", "/api/roadlighting/updateLightBeEleboxBeLoop2",
+                transArray({"beEleboxId" : eleboxId, "modelLoopId" : modelLoopId, "originalLightIds" : originalLightIds, "lightIdList" : lightIds}),
+                function (data) {
+                    if (data) {
+                        if (data.header.code == 1000) {
+                            layer.msg("回路添加灯具成功", {icon : 2, time : 3000});
+                            //关闭对话框
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.$('.btn-refresh').click();
+                            parent.layer.close(index);
+                        } else {
+                            layer.msg(data.header.msg, {icon : 2, time : 3000});
+                        }
+                    }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

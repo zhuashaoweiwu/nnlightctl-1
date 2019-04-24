@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1" maximum-scale=1.0, minimum-scale=1.0;>
+
+    <title>单灯控制系统</title>
+    <link href="css/wisdom.css" rel="stylesheet" type="text/css"/>
+    <link href="css/iconfont/iconfont.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="wisdom">
+    <div class="nav">
+        <div class="logo">
+            <a href="Welcome.html"><img src="bg/wisdom/logo.png"></a>
+        </div>
+
+
+        <a href="javascript:void(0)" ref="0" id="changepassword">
+            <span>
+                <img src="bg/index/pic.png">
+            </span>
+            <span>系统管理员</span>
+        </a>
+        <a id="btnLogout" href="#" >
+            <span>
+                <img src="bg/index/out.png">
+            </span>
+        </a>
+
+    </div>
+    <div class="title">智慧灯杆管理系统</div>
+    <div class="welbox">
+        <a href="" target="_blank">
+            <div class="city">
+                <img src="bg/wisdom/city.png" />
+                <p>城市大脑系统</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="weather">
+                <img src="bg/wisdom/weather.png" />
+                <p>智慧气象系统</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="ai">
+                <img src="bg/wisdom/ai.png" />
+                <p>人机交互系统</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="wifi">
+                <img src="bg/wisdom/wifi.png" />
+                <p>无线网络系统</p>
+            </div>
+        </a>
+        <a href="Charge-index.html" target="_blank">
+            <div class="charge">
+                <img src="bg/wisdom/charge.png" />
+                <p>充电管理系统</p>
+            </div>
+        </a>
+        <a href="" target="_blank">
+            <div class="newEnergy">
+                <img src="bg/wisdom/newEnergy.png" />
+                <p>新能源系统</p>
+            </div>
+        </a>
+    </div>
+</div><script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+
+<script type="text/javascript" src="js/api/requestRoot.js"></script>
+<script type="text/javascript" src="js/api/ajaxScript.js"></script>
+<script type="text/javascript">
+
+  //刷新菜单图标
+  function flushMenu () {
+      // var $contain = $("div.welbox");
+      // $contain.empty();
+      // var zhihuihtml = '<a href="Wisdom.html" target="_blank">\n' +
+      // '            <div class="user1">\n' +
+      // '                <img src="bg/icon_user.png" />\n' +
+      // '                <p>智慧灯杆管理系统</p>\n' +
+      // '            </div>\n' +
+      // '        </a>';
+      // $(zhihuihtml).appendTo($contain);
+
+  }
+  $("#changepassword").click(function () {
+      var url = "User/User-password-edit.html";
+      var id = $(this).attr("ref");
+      if (id > 0) {
+          layer_show("修改密码", url + "?id=" + id, 350, 250);
+      }
+  })
+
+  //初始化用户信息
+  function initLoginUser() {
+      ajaxRequest("post", "/api/login/getLoginUser", {}, function (data) {
+          if (data) {
+              if (data.header.code == 1000) {
+                  var user = data.body.data[0];
+                  $("#username").text(user.loginName);
+                  $("#changepassword").attr("ref", user.id);
+              }
+          }
+      });
+
+      //注册退出事件
+      $("#btnLogout").click(function () {
+          ajaxRequest("post", "/api/login/Logout", {}, function (data) {
+              if (data) {
+                  if (data.header.code == 1000) {
+                      location.replace("Login.html");
+                  }
+              }
+          });
+      });
+  }
+  $(function () {
+    flushMenu();
+    initLoginUser();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>灯具道路地理信息--新建灯具分组</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+</head>
+<body>
+    <div class="page-container">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3 text-r"><span class="c-red">*</span>灯具分组名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="灯具分组名称" id="cityName" name="cityName">
+            </div>
+        </div>
+        <div class="row cl mt-10">
+            <label class="form-label col-xs-4 col-sm-3 text-r"><span class="c-red">*</span>描述：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea cols="" rows="" class="textarea" placeholder="说点什么...512个字符以内" dragonfly="true" id="mem" name="mem" maxlength="512"></textarea>
+            </div>
+        </div>
+
+        <div id="tab-system" class="HuiTab mt-30">
+            <div class="tabBar cl">
+                <!--<span>地图模式</span>-->
+                <span>控制柜模式</span>
+                <span>组组模式</span>
+            </div>
+            <!-- 控制柜面板 -->
+           <!-- <div class="tabCon mt-30">
+                <div id="map">这里绑定地图</div>&lt;!&ndash;地图end&ndash;&gt;
+            </div>-->
+            <div class="tabCon mt-30">
+                    <table border="0">
+                        <tr>
+                            <td style="height:260px;width:48%;overflow-y:scroll;border:1px solid #ddd;" valign="top">
+                                <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">可添加灯具列表（<span class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                                <table class="table table-border table-bordered table-bg table-hover">
+                                    <thead>
+                                        <tr class="text-c">
+                                            <th>ID</th>
+                                            <th>灯杆</th>
+                                            <th>灯头号</th>
+                                            <th>经度</th>
+                                            <th>纬度</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tb0_1">
+                                       <!-- <tr class="text-c" ref="1" data-id="0">
+                                            <td>01</td>
+                                            <td>三亚项目</td>
+                                            <td>三亚项目</td>
+                                            <td>121.232354</td>
+                                            <td>31.1212112</td>
+                                        </tr>
+                                        <tr class="text-c" ref="1" data-id="0">
+                                            <td>01</td>
+                                            <td>三亚项目</td>
+                                            <td>三亚项目</td>
+                                            <td>121.232354</td>
+                                            <td>31.1212112</td>
+                                        </tr>-->
+                                    </tbody>
+                                </table>
+                            </td>
+
+                            <td width="4%" align="center"> </td>
+                            <td style="height:260px;width:48%;overflow-y:scroll;border:1px solid #ddd;" valign="top">
+                                <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">已添加灯具列表（<span class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                                
+                                <table class="table table-border table-bordered table-bg table-hover">
+                                    <thead>
+                                        <tr class="text-c">
+                                            <th>ID</th>
+                                            <th>灯杆</th>
+                                            <th>灯头号</th>
+                                            <th>经度</th>
+                                            <th>纬度2</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tb0"  id="tb2"></tbody>
+                                </table>
+                            </td>
+
+                        </tr>
+                    </table><!--控制柜模式end-->
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-4 mt-20">
+                    <input class="btn btn-primary radius" type="submit" id = "lightingGroupBtn" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+            <div class="tabCon mt-30">
+                <table border="0">
+                    <tr>
+                        <td style="height:260px;width:48%;overflow-y:scroll;border:1px solid #ddd;" valign="top">
+                            <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">可添加灯具分组（<span class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                            <table class="table table-border table-bordered table-bg table-hover">
+                                <thead>
+                                    <tr class="text-c">
+                                        <th>灯具分组名称</th>
+                                        <th>描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tb1_1">
+                                  <!--  <tr class="text-c" ref="1" data-id="1">
+                                        <td>三亚项目</td>
+                                        <td>三亚项目</td>
+                                    </tr>
+                                    <tr class="text-c" ref="2" data-id="1">
+                                        <td>三亚项目1</td>
+                                        <td>三亚项目1</td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="4%" align="center"> </td>
+                        <td style="height:260px;width:48%;overflow-y:scroll;border:1px solid #ddd;" valign="top">
+                            <h4 class="f-18 tit"><span class="Hui-iconfont">&#xe667;</span><span class="pl-10">已添加灯具分组（<span class="f-18 c-orange">备注：点击当前列，移除</span>）</span></h4>
+                            <table class="table table-border table-bordered table-bg table-hover">
+                                <thead>
+                                    <tr class="text-c">
+                                        <th>灯具分组名称</th>
+                                        <th>描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tb1" id="tb1"></tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+                </table><!--组组模式end-->
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-4 mt-20">
+                    <input class="btn btn-primary radius" id="lightGroupGroupbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+        </div><!--tab切换end -->
+
+    </div>
+
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/common.js"></script>
+        <script type="text/javascript" src="../js/admin.js"></script>
+
+        <script type="text/javascript" src="../js/api/requestRoot.js"></script>
+        <script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+        <!--请在下方写此页面业务相关的脚本-->
+        <script type="text/javascript" src="../lib/layer/2.4/layer.js"></script><!--弹出插件-->
+        <script type="text/javascript">
+
+            $(function () {
+                function getAllGroup() {
+                    ajaxRequest("post", "/api/lightGroup/listLightGroup",{},
+                        function (data) {
+
+                        })
+                }
+                
+                
+                //tab切换
+	            $("#tab-system").Huitab({
+	                index:0//默认第一个；
+	            });
+/*
+                $("#lightingGroupBtn").click(function(){
+                    var lightIds = [];
+                    $("#tb2").find("tr").each(function (index, value) {
+                        lightIds.push(parseInt($(this).attr("ref")));
+                    });
+                    var groupName = $("#cityName").val();
+                    var mem = $("#mem").val();
+                    var param = {}
+                    param["cGroupName"] = groupName;
+                    param["mem"] = mem;
+                    param["lightIds"] = lightIds;
+                    ajaxRequest("post", "/api/lightGroup/createLightGroupByLightIds",transArray(param),
+                        function (data) {
+                            if(data.header.code=="1000"){
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.$('.btn-refresh').click();
+                                parent.layer.close(index);
+                            }
+                        })
+                });
+                $("#lightGroupGroupbtn").click(function(){
+                    var GroupLightIds = [];
+                    $("#tb1").find("tr").each(function (index, value) {
+                        GroupLightIds.push(parseInt($(this).attr("ref")));
+                        var groupName = $("#cityName").val();
+                        var mem = $("#mem").val();
+                        var param = {}
+                        param["cGroupName"] = groupName;
+                        param["men"] = mem;
+                        param["lightGroupIds"] = GroupLightIds;
+                        ajaxRequest("post", "/api/lightGroup/createLightGroupByLightGroup",transArray(param),
+                            function (data) {
+                                if(data.header.code=="1000"){
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.$('.btn-refresh').click();
+                                    parent.layer.close(index);
+                                }
+                            })
+                    });
+                });*/
+                //编辑显示
+                var id = editModel(window.location.href);
+                if(id.indexOf("a") != -1 ){
+                    var addId = id.replace("a","");
+                    var add = parseInt(addId);
+                    $("#lightingGroupBtn").click(function(){
+                        var lightIds = [];
+                        $("#tb2").find("tr").each(function (index, value) {
+                            lightIds.push(parseInt($(this).attr("ref")));
+                        });
+                        var groupName = $("#cityName").val();
+                        var mem = $("#mem").val();
+                        var param = {}
+                        param["cGroupName"] = groupName;
+                        param["mem"] = mem;
+                        param["lightIds"] = lightIds;
+                        ajaxRequest("post", "/api/lightGroup/createLightGroupByLightIds",transArray(param),
+                            function (data) {
+                                if(data.header.code=="1000"){
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.$('.btn-refresh').click();
+                                    parent.layer.close(index);
+                                }
+                            })
+                    });
+                    $("#lightGroupGroupbtn").click(function(){
+                        var GroupLightIds = [];
+                        $("#tb1").find("tr").each(function (index, value) {
+                            GroupLightIds.push(parseInt($(this).attr("ref")));
+                            var groupName = $("#cityName").val();
+                            var mem = $("#mem").val();
+                            var param = {}
+                            param["cGroupName"] = groupName;
+                            param["mem"] = mem;
+                            param["lightGroupIds"] = GroupLightIds;
+                            ajaxRequest("post", "/api/lightGroup/createLightGroupByLightGroup",transArray(param),
+                                function (data) {
+                                    if(data.header.code=="1000"){
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.$('.btn-refresh').click();
+                                        parent.layer.close(index);
+                                    }
+                                })
+                        });
+                    });
+                    getAllLightingByProjectId(add);
+                    getAllLightGroup();
+                }else {
+                    var projectId = getStr(id,"u")
+                    var groupId = getStr2(id,"u")
+                    if (groupId) {
+                        ajaxRequest("post", "/api/lightGroup/getLightGroupSubLight", {"id": getStr2(id,"u")}, function (data) {
+                            if (data.body.data) {
+                                if(data.body.data.length > 0){
+                                    $("#cityName").val(data.body.data[0].cGroupName);
+                                    $("#mem").val(data.body.data[0].mem)
+                                    if(data.body.data[0].lightingGroupList){
+                                        if (data.body.data[0].lightingGroupList.length>0){
+                                            for(var i = 0 ; i < data.body.data[0].lightingGroupList.length>0 ; i++){
+                                                var group = data.body.data[0].lightingGroupList[i]
+                                                $("#tb1").append("<tr class='text-c' ref="+group.id+" data-id='0'>\n" +
+                                                    "                                            <td>"+group.cGroupName+"</td>" +
+                                                    "                                            <td>"+group.mem+"</td>" +
+                                                    "                                        </tr>");
+                                            }
+                                        }
+                                    }
+                                    if(data.body.data[0].lightingList){
+                                        if(data.body.data[0].lightingList.length > 0){
+                                            for (var i = 0 ; i < data.body.data[0].lightingList.length ; i++){
+                                                var light = data.body.data[0].lightingList[i];
+                                                $("#tb2").append("<tr class='text-c' ref="+light.id+" data-id='0'>"+
+                                                    "<td>"+light.id+"</td>"+
+                                                    "<td>"+light.lamppost+"</td>"+
+                                                    "<td>"+light.lamphead+"</td>"+
+                                                    "<td>"+light.longitude+"</td>"+
+                                                    "<td>"+light.latitude+"</td>"+
+                                                    "</tr>");
+                                            }
+                                        }
+                                    }
+
+                                }
+                            } else {
+                                layer.msg(data.header.msg, {icon: 2});
+                            }
+                        });
+                    }
+
+                    $("#lightingGroupBtn").click(function(){
+                        var lightIds = [];
+                        $("#tb2").find("tr").each(function (index, value) {
+                            lightIds.push(parseInt($(this).attr("ref")));
+                        });
+                        var groupName = $("#cityName").val();
+                        var mem = $("#mem").val();
+                        var param = {}
+                        param["id"] = groupId;
+                        param["cGroupName"] = groupName;
+                        param["mem"] = mem;
+                        param["lightIds"] = lightIds;
+                        console.log(param);
+                        ajaxRequest("post", "/api/lightGroup/updateLightGroupFromLight",transArray(param),
+                            function (data) {
+                                if(data.header.code=="1000"){
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.$('.btn-refresh').click();
+                                    parent.layer.close(index);
+                                }
+                            })
+                    });
+                    $("#lightGroupGroupbtn").click(function(){
+                        alert("OXOXO");
+                        var GroupLightIds = [];
+                        $("#tb1").find("tr").each(function (index, value) {
+                            GroupLightIds.push(parseInt($(this).attr("ref")));
+                            var groupName = $("#cityName").val();
+                            var mem = $("#mem").val();
+                            var param = {}
+                            param["id"] = groupId;
+                            param["cGroupName"] = groupName;
+                            param["mem"] = mem;
+                            param["lightGroupIds"] = GroupLightIds;
+                            console.log(param);
+                            ajaxRequest("post", "/api/lightGroup/updateLightGroupFromLightGroup",transArray(param),
+                                function (data) {
+                                    if(data.header.code=="1000"){
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.$('.btn-refresh').click();
+                                        parent.layer.close(index);
+                                    }
+                                })
+                        });
+                    });
+                    getAllLightingByProjectId(getStr(id,"u"));
+                    getAllLightGroup();
+                }
+
+            });
+            //获取某个项目下所有灯具
+            function getAllLightingByProjectId(id) {
+                ajaxRequest("post", "/api/gis/listLighting",{"projectId":id},
+                    function (data) {
+                        if(data.body.data){
+                            for (var i = 0 ; i < data.body.data.length ; i++){
+                                $(".tb0_1").append("<tr class='text-c' ref="+data.body.data[i].id+" data-id='0'>"+
+                                    "<td>"+data.body.data[i].id+"</td>"+
+                                    "<td>"+data.body.data[i].lamppost+"</td>"+
+                                    "<td>"+data.body.data[i].lamphead+"</td>"+
+                                    "<td>"+data.body.data[i].longitude+"</td>"+
+                                    "<td>"+data.body.data[i].latitude+"</td>"+
+                                    "</tr>");
+                            }
+                        }
+
+                    });
+            }
+
+            //获取所有灯具分组
+            function getAllLightGroup(){
+                ajaxRequest("post", "/api/lightGroup/listLightGroup",{},
+                    function (data) {
+                        if(data.body.data){
+                            for (var i = 0 ; i < data.body.data.length ; i++){
+                                $(".tb1_1").append("<tr class='text-c' ref="+data.body.data[i].id+" data-id='1'>" +
+                                    "                                        <td>"+data.body.data[i].cGroupName+"</td>" +
+                                    "                                        <td>"+data.body.data[i].mem+"</td>" +
+                                    "                                    </tr>");
+                            }
+                        }
+                    })
+            }
+            $(".table tbody").delegate('.text-c', 'click', function () {
+                var _this = $(this);
+                _this.remove();
+                var currentId = _this.attr("ref");//这里的Id是数据Id
+                var data_id = _this.attr("data-id");//这里Id是tab切换绑定ID
+                var Strid = _this.attr("id");//这里Id是绑定左边ID
+                var TabId = ".tb" + data_id;
+                var StrHtml = "<tr class='text-c' ref='" + currentId + "' data-id='" + data_id + "' id='" + data_id + "'>" + _this.html() + "</tr>";
+                if (Strid != undefined && Strid != "") {
+                    TabId = ".tb" + Strid + "_1";
+                    StrHtml = "<tr class='text-c' ref='" + currentId + "' data-id='" + data_id + "'>" + _this.html() + "</tr>";
+                }
+                $(TabId).append(StrHtml);
+            });
+            function getStr(string,str){
+                var str_before = string.split(str)[0];
+                var str_after = string.split(str)[1];
+                return str_before;
+            }
+            function getStr2(string,str){
+                var str_before = string.split(str)[0];
+                var str_after = string.split(str)[1];
+                return str_after;
+            }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <title>灯具地理信息</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css?v=1"/>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+
+
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页<span class="c-gray en">&gt;</span>Gis地理信息
+    <span class="c-gray en">&gt;</span>灯具地理信息
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div id="map" style="position:relative;"></div>
+    <div class="search-map">
+        <input type="text" placeholder="请输入搜索内容">
+        <button></button>
+    </div>
+    <ul class="leftmaptab ml-40 mt-40">
+        <li class="tab1"><a href="javascript:void(0);" onclick="LampsGroup('灯具分组', 'LampsGroup.html')">灯具分组</a></li>
+        <li class="tab2"><a href="javascript:void(0);" onclick="TaskSwitch('任务开关', 'TaskSwitch.html', '800', '550')">任务开关</a></li>
+        <li class="tab3"><a href="javascript:void(0);" onclick="Scene('场景', 'Scene.html', '800', '550')">场景</a></li>
+        <!--<li class="tab4"><a href="javascript:void(0);"
+                            onclick="Control('控制柜', 'Control.html', '1200', '600')"><span>控制</span></a></li>
+        <li class="tab5"><a href="javascript:void(0);"
+                            onclick="Lights('灯具', 'Lights.html', '1200', '700')"><span>灯具</span></a></li>-->
+    </ul>
+    <div class="topmaptab mr-40">
+        <a href="javascript:void(0);" class="btn btn-primary" onclick="ShortcutKey('快捷键', 'ShortcutKey.html', '700', '320')"><span><img src="../bg/new/fast-key.png"></span><span>快捷键</span></a>
+        <a href="javascript:void(0);" class="btn btn-warning" onclick="AlertInfo('警报信息', 'AlertInfo.html', '800', '550')"><span><img src="../bg/new/alarm.png"></span><span>警报信息</span></a>
+    </div>
+</div>
+
+<div id="lightpage"></div><!--灯具加载弹出内容-->
+<div id="eleboxpage"></div><!--控制柜加载弹出内容-->
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<script type="text/javascript" src="../js/api/requestRoot.js"></script>
+<script type="text/javascript" src="../js/api/ajaxScript.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../lib/layer/2.4/layer.js"></script><!--弹出插件-->
+<script type="text/javascript" src="../js/api/convertor.js"></script>
+
+<script type="text/javascript">
+
+    //灯具分组
+    function LampsGroup(title, url) {
+        var index = layer.open({
+            type: 99,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
+    }
+
+    //任务开关
+    function TaskSwitch(title, url, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
+    }
+
+    //场景
+    function Scene(title, url, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
+    }
+
+    //控制
+    function Control(title, url, w, h) {
+        var projectId = editModel(window.location.href);
+        layer_show(title, url + "?id=" + projectId, w, h);
+    }
+
+    //灯具
+    function Lights(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //快捷键
+    function ShortcutKey(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //警报信息
+    function AlertInfo(title, url, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+        //layer_show(title, url, w, h);
+    }
+
+    var eleboxArray = null;
+
+    var map = null;
+
+
+    //灯具分组
+    function LampsGroup(title, url, w, h) {
+        var id = editModel(window.location.href);
+        layer_show(title, url + "?id=" + id, w, h);
+    }
+
+    //任务开关
+    function TaskSwitch(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //场景
+    function Scene(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //控制
+    function Control(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //灯具
+    function Lights(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //快捷键
+    function ShortcutKey(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    //警报信息
+    function AlertInfo(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+
+    function translateCallback(point, param) {
+
+        var isLight = param["isLight"];
+        var id = param["id"];
+        var lightFalutTag = param["lightFaultTag"];
+
+        var marker = new BMap.Marker(point);  // 创建标注
+        marker.setTitle(id);
+        if (isLight) {
+            var icon;
+            switch (lightFalutTag) {
+                case 0:
+                case 1:
+                    icon = new BMap.Icon('../bg/light.png', new BMap.Size(60, 60), {anchor: new BMap.Size(15, 15)});
+                    break;
+
+                case 2:
+                    icon = new BMap.Icon('../bg/light_off.png', new BMap.Size(60, 60), {anchor: new BMap.Size(15, 15)});
+                    break;
+
+                default:
+                    icon = new BMap.Icon('../bg/light.png', new BMap.Size(60, 60), {anchor: new BMap.Size(15, 15)});
+            }
+            marker.setIcon(icon);
+            var opts = {
+                width: 600,     // 信息窗口宽度
+                height: 590,     // 信息窗口高度
+                title: "<span style='font-size:22px;'>灯光调节</span>", // 信息窗口标题
+            }
+            marker.addEventListener("click", function (event) {
+                var clickMarker = event.target;
+                LightAdjustInit(clickMarker.getTitle());
+                var StrHtmlNew = $("#lightpage").html();
+                var infoWindow = new BMap.InfoWindow(StrHtmlNew, opts);  // 创建信息窗口对象
+                map.openInfoWindow(infoWindow, point); //开启信息窗口
+            });
+        } else {
+            var icon = new BMap.Icon('../bg/elebox.png', new BMap.Size(60, 60), {anchor: new BMap.Size(15, 15)});
+            marker.setIcon(icon);
+            var opts = {
+                width: 600,     // 信息窗口宽度
+                height: 450,     // 信息窗口高度
+                title: "<span style='font-size:22px;'>控制柜操作</span>", // 信息窗口标题
+            }
+            marker.addEventListener("click", function (event) {
+                var clickMarker = event.target;
+                bmapEleboxInit(clickMarker.getTitle());
+                var StrHtml = $("#eleboxpage").html();
+                var infoWindow = new BMap.InfoWindow(StrHtml, opts);  // 创建信息窗口对象
+                map.openInfoWindow(infoWindow, point); //开启信息窗口
+            });
+        }
+
+        map.addOverlay(marker);
+    }
+
+    function addMarker(point, _isLight, _id) {
+        if (point.lng && point.lat) {
+            translate(point, 1, translateCallback, {"isLight": _isLight, "id": _id, "lightFaultTag" : arguments[3]});
+        }
+    }
+
+    /*根据序号查询灯具，可多返回*/
+    function searchLightByPriority(lightArray, priority) {
+        var searchLightArray = [];
+        for (var i = 0; i < lightArray.length; ++i) {
+            var light = lightArray[i];
+            if (light.loopPriority == priority) {
+                searchLightArray.push(light);
+            }
+        }
+        return searchLightArray;
+    }
+
+    /*回路灯具集合按序号排序*/
+    function sortLight(lightArray) {
+        var sortLightArray = [];
+        for (var i = 0; i < lightArray.length; ++i) {
+            var searchKey = i + 1;
+            sortLightArray.push(searchLightByPriority(lightArray, searchKey));
+        }
+        return sortLightArray;
+    }
+
+    function getEleboxFromArray(eleboxId) {
+        if (eleboxArray) {
+            for (var i = 0; i < eleboxArray.length; ++i) {
+                if (eleboxArray[i].id == eleboxId) {
+                    return eleboxArray[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    /*根据回路id获取该回路下全部灯具*/
+    function flushModelLoopLight(modelLoopId) {
+        ajaxRequest("post", "/api/roadlighting/getLoopLight", {"id": modelLoopId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var lightArray = data.body.data;
+
+                    for (var i = 0; i < lightArray.length; ++i) {
+                        var light = lightArray[i];
+                        console.log("添加回路id[" + light.nnlightctlEleboxModelLoopId + "]下的灯具id[" + light.id + "]到地图");
+                        addMarker(new BMap.Point(light.longitude, light.latitude), true, light.id, light.faultTag);
+                    }
+
+                    //构造灯具连线数据
+                    var sortLightArray = sortLight(lightArray);
+
+                    var linePointArray = [];
+                    for (var i = 0; i < sortLightArray.length; ++i) {
+                        var light = sortLightArray[i];
+                        var point = new BMap.Point(light.longitude, light.latitude);
+                        linePointArray.push(point);
+                    }
+
+                    if (sortLightArray && sortLightArray.length > 0) {
+                        var eleboxId = sortLightArray[0][0]["nnlightctlEleboxId"];
+                        var elebox = getEleboxFromArray(eleboxId);
+                        if (elebox) {
+                            var startPoint = new BMap.Point(elebox.longitude, elebox.latitude);
+                            var bmapPointArray = [];
+                            bmapPointArray.push(startPoint);
+
+                            for (var i = 0; i < sortLightArray.length; ++i) {
+                                var lights = sortLightArray[i];
+                                for (var k = 0; k < lights.length; ++k) {
+                                    bmapPointArray.push(new BMap.Point(lights[k].longitude, lights[k].latitude));
+                                }
+                            }
+
+                            new BMap.Convertor().translate(bmapPointArray, 1, 5, function (data) {
+                                if (data.status === 0) {
+                                    var polyline = new BMap.Polyline(data.points, {
+                                        strokeColor: "blue",
+                                        strokeWeight: 2,
+                                        strokeOpacity: 0.5
+                                    });
+                                    if (map) {
+                                        map.addOverlay(polyline);
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+    }
+
+    /*根据模块id获取该模块下全部回路*/
+    function flushEleboxModelLoop(eleboxModelId) {
+        ajaxRequest("post", "/api/roadlighting/listmodelloop", {"modelId": eleboxModelId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var modelLoopArray = data.body.data;
+
+                    for (var i = 0; i < modelLoopArray.length; ++i) {
+                        var modelLoop = modelLoopArray[i];
+                        console.log("获取模块回路id为[" + modelLoop.id + "]的灯具信息");
+                        flushModelLoopLight(modelLoop.id);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 根据控制柜id获取该控制柜下全部模块
+     * @param eleboxId
+     */
+    function flushEleboxModel(eleboxId) {
+        ajaxRequest("post", "/api/roadlighting/listmodel", {"eleboxId": eleboxId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+                    var eleboxModelArray = data.body.data;
+
+                    for (var i = 0; i < eleboxModelArray.length; ++i) {
+                        var eleboxModel = eleboxModelArray[i];
+                        flushEleboxModelLoop(eleboxModel.id);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取项目下全部控制柜集合
+     */
+    function flushElebox(isInit) {
+        //消除地图上全部覆盖物
+        if (map) {
+            map.clearOverlays();
+        }
+
+        var projectId = editModel(window.location.href);
+
+        ajaxRequest("post", "/api/gis/listElebox", {"projectId": projectId}, function (data) {
+            if (data) {
+                if (data.header.code == 1000) {
+
+                    eleboxArray = data.body.data;
+
+                    for (var i = 0; i < eleboxArray.length; ++i) {
+                        var point = new BMap.Point(eleboxArray[i].longitude, eleboxArray[i].latitude);
+                        addMarker(point, false, eleboxArray[i].id);
+
+                        if (i == 0 && isInit) {
+                            map.centerAndZoom(point, 15);
+                        }
+
+                        //获取控制柜中全部模块
+                        flushEleboxModel(eleboxArray[i].id);
+                    }
+                }
+            }
+        });
+    }
+
+    function init() {
+        map = new BMap.Map("map");
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+        var mapType1 = new BMap.MapTypeControl(
+            {
+                mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP],
+                anchor: BMAP_ANCHOR_TOP_RIGHT
+            }
+        );
+        map.addControl(mapType1);
+        map.enableScrollWheelZoom(true);
+
+        var timer = setInterval(function () {
+            flushElebox(false);
+        }, 1000 * 60);
+
+        flushElebox(true);
+    }
+
+    $(function () {
+        keyboard();
+        //获取当前屏幕宽度和高度
+        var Vw = document.body.clientWidth - 40;
+        var Vh = document.documentElement.clientHeight - 40;
+        $("#map").height(Vh);
+        $("#map").width(Vw);
+
+        loadJScript();
+
+        $("#eleboxpage").load("elebox.html");//先预加载
+        $("#lightpage").load("LightSet.html");//先预加载
+    });
+
+    function keyboard() {
+        document.onkeydown = function (event) {
+            var shotcutName;
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            switch (e.keyCode) {
+                case 49:
+                case 97:
+                    shotcutName = "1";
+                    break;
+                case 50:
+                case 98:
+                    shotcutName = "2";
+                    break;
+                case 51:
+                case 99:
+                    shotcutName = "3";
+                    break;
+                case 52:
+                case 100:
+                    shotcutName = "4";
+                    break;
+                case 53:
+                case 101:
+                    shotcutName = "5";
+                    break;
+                case 54:
+                case 102:
+                    shotcutName = "6";
+                    break;
+                case 55:
+                case 103:
+                    shotcutName = "7";
+                    break;
+                case 56:
+                case 104:
+                    shotcutName = "8";
+                    break;
+            }
+
+            if (shotcutName) {
+                layer.confirm('确认开启快捷键'+shotcutName+'？', function (index) {
+                    ajaxRequest("post", "/api/scene/invokeSceneShotcut", {"shotcutName": shotcutName}, function (data) {
+                        if (data.header.code == 1000) {
+                        }
+
+                    });
+                    layer.close(index);
+                })
+
+            }
+        }
+    }
+</script>
+</body>
+</html>

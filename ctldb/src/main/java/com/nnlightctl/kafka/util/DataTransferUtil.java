@@ -23,20 +23,20 @@ public class DataTransferUtil {
         int k = 0;
 
         //uuid
-        byte[] uuidBytes = new byte[36];
-        System.arraycopy(data, k, uuidBytes, 0, 36);
-        String uuid = new String(uuidBytes);
-        lightingVolEleRecord.setUid(uuid);
+//        byte[] uuidBytes = new byte[36];
+//        System.arraycopy(data, k, uuidBytes, 0, 36);
+//        String uuid = new String(uuidBytes);
+        lightingVolEleRecord.setUid(new String(e0CommandData.getImei()));
 
-        k += 36;
+//        k += 36;
 
         //imei
-        byte[] imeiBytes = new byte[15];
-        System.arraycopy(data, k, imeiBytes, 0, 15);
-        String imei = new String(imeiBytes);
-        lightingVolEleRecord.setLightimei(imei);
+//        byte[] imeiBytes = new byte[15];
+//        System.arraycopy(data, k, imeiBytes, 0, 15);
+//        String imei = new String(imeiBytes);
+        lightingVolEleRecord.setLightimei(new String(e0CommandData.getImei()));
 
-        k += 15;
+//        k += 15;
 
         //判断版本
         byte version = e0CommandData.getAddr()[4];
@@ -125,14 +125,14 @@ public class DataTransferUtil {
         lightingVolEleRecord.setRecordDatetime(DateTimeUtil.fromLocalDateTime(dateTime));
 
         //GPS
-        int gpsByteLength = data.length - k;
-        byte[] gpsByte = new byte[gpsByteLength];
-        System.arraycopy(data, k, gpsByte, 0, gpsByteLength);
-        String gpsStr = new String(gpsByte);
-        String strLongititude = gpsStr.substring(gpsStr.indexOf("N") + 1, gpsStr.indexOf("E"));
-        lightingVolEleRecord.setLongitude(DegreeTrans.dufen2du(Arithmetic.divide(strLongititude, "100")));
-        String strLatitude = gpsStr.substring(0, gpsStr.indexOf("N"));
-        lightingVolEleRecord.setLatitude(DegreeTrans.dufen2du(Arithmetic.divide(strLatitude, "100")));
+//        int gpsByteLength = data.length - k;
+//        byte[] gpsByte = new byte[gpsByteLength];
+//        System.arraycopy(data, k, gpsByte, 0, gpsByteLength);
+//        String gpsStr = new String(gpsByte);
+//        String strLongititude = gpsStr.substring(gpsStr.indexOf("N") + 1, gpsStr.indexOf("E"));
+//        lightingVolEleRecord.setLongitude(DegreeTrans.dufen2du(Arithmetic.divide(strLongititude, "100")));
+//        String strLatitude = gpsStr.substring(0, gpsStr.indexOf("N"));
+//        lightingVolEleRecord.setLatitude(DegreeTrans.dufen2du(Arithmetic.divide(strLatitude, "100")));
 
         return lightingVolEleRecord;
     }

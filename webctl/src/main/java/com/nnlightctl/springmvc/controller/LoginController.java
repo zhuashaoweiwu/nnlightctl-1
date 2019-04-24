@@ -96,14 +96,14 @@ public class LoginController extends BaseController {
     public String loginUrl() {
         log.info("[POST] /api/login/loginUrl");
 
-        return "redirect:/html/pages/nnlightctlweb/Login.html";
+        return "redirect:/html/singlelamp/nnlightctl/Login.html";
     }
 
     @RequestMapping("sucessUrl")
     public String successLogin() {
         log.info("[POST] /api/login/sucessUrl");
 
-        return "redirect:/html/pages/nnlightctlweb/Index.html";
+        return "redirect:/html/singlelamp/nnlightctl/Index.html";
     }
 
     @RequestMapping("getLoginUser")
