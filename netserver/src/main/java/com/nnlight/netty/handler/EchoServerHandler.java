@@ -44,8 +44,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         byte[] addr = BytesHexStrTranslate.toBytes(changeId);
         System.arraycopy(addr, 0, commandData.getAddr(), 0, addr.length);
         ChannelWrap channelWrap = applicationContext.getClientChannelMap().get(changeId);
-        if (!PubMethod.isEmpty(channelWrap))
+        if (!PubMethod.isEmpty(channelWrap)) {
             channelWrap.setImei(new String(commandData.getImei()));
+        }
         //重置命令校验码
         commandData.resetCheck();
 
@@ -65,6 +66,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+
         if (applicationContext != null) {
             ChannelWrap wrap = new ChannelWrap();
             Channel channel = ctx.channel();

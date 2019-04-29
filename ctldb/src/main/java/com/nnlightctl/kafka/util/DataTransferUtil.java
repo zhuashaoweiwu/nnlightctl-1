@@ -156,13 +156,13 @@ public class DataTransferUtil {
     public static D0Response transToD0Response(CommandData d0CommandData) {
         D0Response d0Response = new D0Response();
 
-        byte[] data = d0CommandData.getData();
+//        byte[] data = d0CommandData.getData();
 
         int k = 0;
 
         //uuid
-        d0Response.setUuid(d0CommandData.getUUID().getBytes());
-        k += 36;
+        d0Response.setUuid(d0CommandData.getImei());
+//        k += 36;
 
         //继电器状态
         System.arraycopy(d0CommandData.getData(), k, d0Response.getModelState(), 0, 2);

@@ -21,16 +21,16 @@ public class A1Process implements Process {
 
         logger.info(LocalDate.now() + " " + LocalTime.now() + " 设置模块继电器状态指令D1");
 
-        byte[] modelUUIDBytes = new byte[36];
-        System.arraycopy(msg.getData(), 4, modelUUIDBytes, 0, 36);
+//        byte[] modelUUIDBytes = new byte[36];
+//        System.arraycopy(msg.getData(), 4, modelUUIDBytes, 0, 36);
 
         byte[] modelLoopBytes = new byte[2];
-        System.arraycopy(msg.getData(), 40, modelLoopBytes, 0, 2);
+        System.arraycopy(msg.getData(), 4, modelLoopBytes, 0, 2);
 
         byte[] modelLoopStateBytes = new byte[2];
-        System.arraycopy(msg.getData(), 42, modelLoopStateBytes, 0, 2);
+        System.arraycopy(msg.getData(), 6, modelLoopStateBytes, 0, 2);
 
         EchoServer.getGlobalApplicationContext().configModelState(msg.getRealtimeUUIDFromData(),
-                new String(modelUUIDBytes), ByteConvert.bytesToShort(modelLoopBytes), ByteConvert.bytesToShort(modelLoopStateBytes));
+                msg.getImei(), ByteConvert.bytesToShort(modelLoopBytes), ByteConvert.bytesToShort(modelLoopStateBytes));
     }
 }

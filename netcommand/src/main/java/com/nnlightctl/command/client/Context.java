@@ -63,7 +63,7 @@ public class Context {
         }
 
         if (in.getControl() == (byte)0xd0) {
-            FutureResult futureResult = uuidMapFutureResult.get(in.getUUID());
+            FutureResult futureResult = uuidMapFutureResult.get(getImei(in.getUUID().getBytes()));
             if (futureResult != null) {
                 futureResult.setCommandData(in);
                 futureResult.run();
@@ -79,6 +79,15 @@ public class Context {
             }
         }
     }
+
+    private  String getImei (byte... bytes) {
+        String returnS = "";
+        for (int i = 0; i < bytes.length; i++) {
+            returnS +=bytes[i];
+        }
+        return returnS;
+    }
+
 
     public void sendMsg(String msg) {
         channelHandlerContext.writeAndFlush(new CommandData(msg));

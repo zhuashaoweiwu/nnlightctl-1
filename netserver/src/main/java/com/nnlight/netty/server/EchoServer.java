@@ -164,7 +164,7 @@ public class EchoServer {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
 
-            context.writeAndFlush(CommandData.getTerminalResetCommand());
+            context.writeAndFlush(CommandData.getTerminalResetCommand(entry.getValue().getImei().getBytes(),(byte) 0xe4));
         }
     }
 
@@ -362,8 +362,8 @@ public class EchoServer {
                                     socketChannel.pipeline().addLast(new CommandDataDecoder());
                                     socketChannel.pipeline().addLast(new CommandDataEncoder());
                                     socketChannel.pipeline().addLast(serverHandler);
-                                    socketChannel.pipeline().addLast(new IdleStateHandler(4,
-                                            5, 7, TimeUnit.SECONDS));
+                                    socketChannel.pipeline().addLast(new IdleStateHandler(10,
+                                            10, 10, TimeUnit.MINUTES));
                                     socketChannel.pipeline().addLast(heartbeatServerHandler);
                                 }
                             });
@@ -396,14 +396,46 @@ public class EchoServer {
         }
     }
 
-    public void commandGetModelState(String gatewayRealtimeUUID, String modelUUID) {
+    public void commandGetModelState(String gatewayRealtimeUUID, byte[] modelUUIDBytes) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(gatewayRealtimeUUID)) {
                 ChannelHandlerContext context = entry.getValue().getContext();
-                CommandData commandData = CommandData.commandGetModelStateByGateway(modelUUID);
+                CommandData commandData = CommandData.commandGetModelStateByGateway(modelUUIDBytes);
+
+//                test(commandData);
                 context.writeAndFlush(commandData);
                 break;
             }
+        }
+    }
+
+
+    private  void  test(CommandData commandData) {
+        System.out.print( BytesHexStrTranslate.bytesToHexFun(commandData.getStart0()) );
+        for (int i = 0 ; i < commandData.getAddr().length; i ++ ) {
+            System.out.print(commandData.getAddr()[i]);
+        }
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getStart1()));
+
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getLogicalArea()));
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getPhysicsArea()));
+
+        for (int i = 0 ; i < commandData.getImei().length; i ++ ) {
+            System.out.print(commandData.getImei()[i]);
+        }
+
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getControl()));
+        System.out.print(commandData.getDataLength());
+
+        for (int i = 0 ; i < commandData.getData().length; i ++ ) {
+            System.out.print(commandData.getData()[i]);
+        }
+
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getCheck()));
+        System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getEnd0()));
+
+        for (int i = 0 ; i < commandData.getEnd1().length; i ++) {
+            System.out.print(BytesHexStrTranslate.bytesToHexFun(commandData.getEnd1()[i]));
         }
     }
 
@@ -425,7 +457,7 @@ public class EchoServer {
      * @param modelLoop
      * @param modelLoopState
      */
-    public void configModelState(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
+    public void configModelState(String gatewayRealtimeUUID, byte[] modelUUID, short modelLoop, short modelLoopState) {
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(gatewayRealtimeUUID)) {
                 entry.getValue().getContext().writeAndFlush(CommandData.commandConfigModelStateByGateway(modelUUID, modelLoop, modelLoopState));
@@ -509,6 +541,20 @@ public class EchoServer {
             }
         }
     }
+
+    /**
+     * 重启/复位 D2 指令
+     * @param realtime_id
+     */
+    public void restart(String realtime_id) {
+        for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(realtime_id)) {
+                entry.getValue().getContext().writeAndFlush(CommandData.getTerminalResetCommand(entry.getValue().getImei().getBytes(),(byte)0xd2));
+                break;
+            }
+        }
+    }
+
 
     /**
      * 发送指令到modbus电表的透传

@@ -1,75 +1,77 @@
 //设置ajax全局默认参数
 $.ajaxSetup({
-    contentType : "application/x-www-form-urlencoded",
-    timeout : 60000,
-    dataType : "json",
+    contentType: "application/x-www-form-urlencoded",
+    timeout: 60000,
+    dataType: "json",
     async: false,
     xhrFields: {
         withCredentials: true    // 要在这里设置 跨域设置cookie
     },
-    error : function (xmlRequest, errorInfo, exception) {
+    error: function (xmlRequest, errorInfo, exception) {
         console.log("XmlHttpRequest:" + xmlRequest + ", errorInfo:" + errorInfo + ", exception:" + exception);
     }
 });
 
 function ajaxRequest(requestType, url, params, backFuc) {
     $.ajax({
-        method : requestType,
-        url : BASE_ROOT + url,
-        data : params,
-        success : function (data) {
+        method: requestType,
+        url: BASE_ROOT + url,
+        data: params,
+        success: function (data) {
             backFuc(data);
         }
     });
 }
 
 //时间方法,时间对象转换成"2010-09-12 22:12:23"格式
-function formatDateTime(inputTime) {
-    var date = new Date(inputTime);
-    var y = date.getFullYear();
-    var m = date.getMonth() + 1;
-    m = m < 10 ? ('0' + m) : m;
-    var d = date.getDate();
-    d = d < 10 ? ('0' + d) : d;
-    var h = date.getHours();
-    h = h < 10 ? ('0' + h) : h;
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
-    minute = minute < 10 ? ('0' + minute) : minute;
-    second = second < 10 ? ('0' + second) : second;
-    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+function formatDateTime(inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 }
 
 //时间方法，时间对象转换成"2010-09-12"格式
 function formatDate(inputTime) {
-    var date = new Date(inputTime);
-    var y = date.getFullYear();
-    var m = date.getMonth() + 1;
-    m = m < 10 ? ('0' + m) : m;
-    var d = date.getDate();
-    d = d < 10 ? ('0' + d) : d;
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
 
-    return y + '-' + m + '-' + d;
+    return y + '-' + m + '-' + d;
 }
+
 //时间方法，将毫秒转换成标准时间格式
-function transDate(date){
+function transDate(date) {
     date = new Date(date);
-    var y=date.getFullYear();
-    var m=date.getMonth()+1;
-    var d=date.getDate();
-    var h=date.getHours();
-    var m1=date.getMinutes();
-    var s=date.getSeconds();
-    m = m<10?("0"+m):m;
-    d = d<10?("0"+d):d;
-    return y+"-"+m+"-"+d+" "+h+":"+m1+":"+s;
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var h = date.getHours();
+    var m1 = date.getMinutes();
+    var s = date.getSeconds();
+    m = m < 10 ? ("0" + m) : m;
+    d = d < 10 ? ("0" + d) : d;
+    return y + "-" + m + "-" + d + " " + h + ":" + m1 + ":" + s;
 }
+
 //时间方法，形如"2010-09-12"格式转换成时间对象
 function str2Date(dateStr) {
     if (!dateStr) {
         return null;
     }
-    return new Date(dateStr.replace(/-/g,"/"));
+    return new Date(dateStr.replace(/-/g, "/"));
 }
 
 
@@ -173,7 +175,8 @@ function loadJScript() {
     document.body.appendChild(script);
 }
 
-//获取bitNumber上第bit位的数值为0还是1
+    //获取bitNumber上第bit位的数值为0还是1
 function getNumberBitValue(bitNumber, bit) {
-    return ((1 << bit) & bitNumber) >> bit;
+    return bitNumber >> (bitNumber.toString(2).length - bit) & 1;
+    // return ((Number(bitNumber.toString(2)) & (1 << bitNumber.toString(2)  -1 -  bit)) >>  bitNumber.toString(2)  -1 -  bit)
 }

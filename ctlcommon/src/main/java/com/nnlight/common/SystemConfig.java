@@ -95,6 +95,9 @@ public class SystemConfig {
             switch (ilength) {
                 case data:
                     byte[] dataArea = new byte[controlTransformation.runLength];
+                    if (controlTransformation.runLength >= data.length || controlTransformation.getStartIndex(ilength.getValue().startIndex) >= data.length) {
+                        System.out.println("error");
+                    }
                     System.arraycopy(data, controlTransformation.getStartIndex(ilength.getValue().startIndex), dataArea, 0, controlTransformation.runLength);
                     return dataArea;
                 case check:
@@ -102,12 +105,14 @@ public class SystemConfig {
                 case dataLength:
                     int drm = data[controlTransformation.getStartIndex(ilength.getValue().startIndex)];
                     controlTransformation.runLength = drm & 0x000000ff;
-                    return (byte)drm;
+                    return (byte) drm;
                 case addr:
                     byte[] addr = new byte[ilength.getValue().ilength];
                     System.arraycopy(data, ilength.getValue().startIndex, addr, 0, ilength.getValue().ilength);
                     if (addr[addr.length - 1] == 02)
                         controlTransformation.point = 2;
+                    else if (addr[addr.length - 1] == 04)
+                        controlTransformation.flag = Boolean.TRUE;
                     return addr;
                 case logicalArea:
                 case physicsArea:
@@ -116,14 +121,26 @@ public class SystemConfig {
                     else
                         return data[ilength.getValue().startIndex];
                 case imei:
+                    if (!PubMethod.isEmpty(controlTransformation.flag) && controlTransformation.flag) return null;
                     byte[] imei = new byte[ilength.getValue().ilength];
                     System.arraycopy(data, controlTransformation.getStartIndex(ilength.getValue().startIndex), imei, 0, ilength.getValue().ilength);
                     return imei;
                 case control:
+//                    System.out.println("control = " + data[controlTransformation.getStartIndex(ilength.getValue().startIndex)]);
+//                    System.out.println("control *= " + byteToHex(data[controlTransformation.getStartIndex(ilength.getValue().startIndex)]));
                     return data[controlTransformation.getStartIndex(ilength.getValue().startIndex)];
                 default:
                     return null;
             }
+        }
+
+
+        public static String byteToHex(byte b) {
+            String hex = Integer.toHexString(b & 0xFF);
+            if (hex.length() < 2) {
+                hex = "0" + hex;
+            }
+            return hex;
         }
 
 

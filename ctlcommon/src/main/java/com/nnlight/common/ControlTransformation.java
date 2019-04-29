@@ -14,12 +14,13 @@ public class ControlTransformation {
     protected Integer startIndex;     //起始位置
     protected Integer runLength = 0;  //协议data长度
     protected Integer ilength = 0;    //截至位置
+    protected Boolean flag = Boolean.FALSE; //是否存在IMEI
     protected int point;      //向后位移位置
 
 
     public Integer getStartIndex(Integer startIndex) {
 
-        return startIndex + point;
+        return startIndex + point - (this.flag ? 17 : 0);
     }
 
     public static class Builder {

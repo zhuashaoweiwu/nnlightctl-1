@@ -6,6 +6,7 @@ import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -13,21 +14,21 @@ import java.util.List;
 public class CommandData implements Serializable {
 
 
-//    public byte getLogicalArea() {
-//        return logicalArea;
-//    }
-//
-//    public void setLogicalArea(byte logicalArea) {
-//        this.logicalArea = logicalArea;
-//    }
-//
-//    public byte getPhysicsArea() {
-//        return physicsArea;
-//    }
-//
-//    public void setPhysicsArea(byte physicsArea) {
-//        this.physicsArea = physicsArea;
-//    }
+    public byte getLogicalArea() {
+        return logicalArea;
+    }
+
+    public void setLogicalArea(byte logicalArea) {
+        this.logicalArea = logicalArea;
+    }
+
+    public byte getPhysicsArea() {
+        return physicsArea;
+    }
+
+    public void setPhysicsArea(byte physicsArea) {
+        this.physicsArea = physicsArea;
+    }
 
     public byte[] getImei() {
         return imei;
@@ -119,6 +120,15 @@ public class CommandData implements Serializable {
         }
 
         sum += this.start1;
+
+        if( this.logicalArea != 0 ) {
+            sum += this.logicalArea & 0xFF ;
+        }
+
+        if( this.physicsArea != 0 ) {
+            sum += this.physicsArea  & 0xFF;
+        }
+
         for (int i = 0; i < imei.length; i++) {
             sum += this.imei[i];
         }
@@ -146,11 +156,12 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
-    public static CommandData getTerminalResetCommand() {
+    public static CommandData getTerminalResetCommand(byte[] imei,byte control) {
         CommandData commandData = new CommandData();
-        commandData.setControl((byte) 0xe4);
+        commandData.setImei(imei);
+        commandData.setControl(control);
+        commandData.setDataLength((byte) 0);
         commandData.setCheck(commandData.createCheck());
-
         return commandData;
     }
 
@@ -271,46 +282,43 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
-    public static CommandData commandGetModelStateByGateway(String modelUUID) {
+    public static CommandData commandGetModelStateByGateway(byte[] modelUUIDBytes) {
         CommandData commandData = new CommandData();
-
+        commandData.setAddr(new byte[]{0,0,0,0,0,2});
+        commandData.setLogicalArea((byte)0xff);
+        commandData.setPhysicsArea((byte)0xff);
+        commandData.setImei(modelUUIDBytes);
         commandData.setControl((byte) 0xd0);
-        commandData.setDataLength((byte) 36);
-
-        byte[] data = modelUUID.getBytes();
-        commandData.setData(data);
-
+        commandData.setDataLength((byte) 0);
+//      byte[] data = modelUUID.getBytes();
+//      commandData.setData(data);
         commandData.resetCheck();
+
+
 
         return commandData;
     }
 
-    public static CommandData commandConfigModelStateByGateway(String modelUUID, short modelLoop, short modelLoopState) {
+    public static CommandData commandConfigModelStateByGateway(byte[] modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
-
+        commandData.setAddr(new byte[]{0,0,0,0,0,2});
+        commandData.setLogicalArea((byte) 0xff);
+        commandData.setPhysicsArea((byte) 0xff);
+        commandData.setImei(modelUUID);
         commandData.setControl((byte) 0xd1);
-        commandData.setDataLength((byte) 40);
+        commandData.setDataLength((byte) 4);
 
-        byte[] data = new byte[40];
-
+        byte[] data = new byte[4];
         int k = 0;
-
-        byte[] modelUUIDBytes = modelUUID.getBytes();
-        System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
-        k += modelUUIDBytes.length;
-
         byte[] modelLoopBytes = ByteConvert.shortToBytes(modelLoop);
         System.arraycopy(modelLoopBytes, 0, data, k, modelLoopBytes.length);
         k += 2;
-
         byte[] modelLoopStateBytes = ByteConvert.shortToBytes(modelLoopState);
         System.arraycopy(modelLoopStateBytes, 0, data, k, modelLoopStateBytes.length);
         k += 2;
-
         commandData.setData(data);
         commandData.resetCheck();
-
-        return commandData;
+         return commandData;
     }
 
     public static CommandData getConfigSetTimeCommand(byte[] time) {
@@ -393,9 +401,9 @@ public class CommandData implements Serializable {
      * @return
      */
     public String getUUID() {
-        byte[] uuidBytes = new byte[36];
-        System.arraycopy(this.data, 0, uuidBytes, 0, 36);
-        String uuid = new String(uuidBytes);
+//        byte[] uuidBytes = new byte[17];
+//        System.arraycopy(this.data, 0, uuidBytes, 0, 17);
+        String uuid = new String(this.imei);
         return uuid;
     }
 
@@ -827,25 +835,27 @@ public class CommandData implements Serializable {
         CommandData commandData = new CommandData();
 
         commandData.setControl((byte) 0xa0);
-        commandData.setDataLength((byte) 40);
-
-        byte[] data = new byte[40];
-
-        int k = 0;
 
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(gatewayRealtimeUUID);
+        byte[] modelUUIDBytes = new byte[modelUUID.length()];
+        for (int i = 0; i < modelUUID.length(); i++) {
+            modelUUIDBytes[i] = Byte.parseByte(""+modelUUID.charAt(i));
+        }
+        int length = realtimeUUIDBytes.length + modelUUIDBytes.length;
+        commandData.setDataLength((byte) length);
+        byte[] data = new byte[length];
+        int k = 0;
         System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
 
         k += realtimeUUIDBytes.length;
 
-        byte[] modelUUIDBytes = modelUUID.getBytes();
         System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
-
         commandData.setData(data);
         commandData.resetCheck();
-
         return commandData;
     }
+
+
 
 
     /*
@@ -881,21 +891,21 @@ public class CommandData implements Serializable {
      */
     public static CommandData getA1CommandData(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
-
+        byte [] modelUUIDBytes = new byte[17];
+        for (int i = 0; i < modelUUID.length(); i++) {
+            modelUUIDBytes[i] = Byte.parseByte(""+modelUUID.charAt(i));
+        }
+        commandData.setImei(modelUUIDBytes);
         commandData.setControl((byte) 0xa1);
-        commandData.setDataLength((byte) 44);
+        commandData.setDataLength((byte) 8);
 
-        byte[] data = new byte[44];
+        byte[] data = new byte[8];
 
         int k = 0;
 
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(gatewayRealtimeUUID);
         System.arraycopy(realtimeUUIDBytes, 0, data, k, realtimeUUIDBytes.length);
         k += realtimeUUIDBytes.length;
-
-        byte[] modelUUIDBytes = modelUUID.getBytes();
-        System.arraycopy(modelUUIDBytes, 0, data, k, modelUUIDBytes.length);
-        k += modelUUIDBytes.length;
 
         byte[] modelLoopBytes = ByteConvert.shortToBytes(modelLoop);
         System.arraycopy(modelLoopBytes, 0, data, k, modelLoopBytes.length);
@@ -1022,6 +1032,8 @@ public class CommandData implements Serializable {
     private byte start0 = 0x68;
     private byte[] addr = new byte[6];
     private byte start1 = 0x68;
+    private byte logicalArea;
+    private byte physicsArea;
     private byte[] imei = new byte[17];
     private byte control;
     private byte dataLength = (byte) 0;

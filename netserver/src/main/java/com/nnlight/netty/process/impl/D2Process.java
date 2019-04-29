@@ -1,7 +1,9 @@
 package com.nnlight.netty.process.impl;
 
 import com.nnlight.netty.process.Process;
+import com.nnlight.netty.server.EchoServer;
 import com.nnlightctl.net.CommandData;
+import com.nnlightctl.util.BytesHexStrTranslate;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +19,10 @@ public class D2Process implements Process {
 
         logger.info(LocalDate.now() + " " + LocalTime.now() + " 重启/复位 0xD2[" + msg.getControl() + "]");
         System.out.println();
-        /*byte[] id = new byte[4];
+        byte[] id = new byte[4];
         System.arraycopy(msg.getData(), 1, id, 0, 4);
 
         String realtimeId = BytesHexStrTranslate.bytesToHexFun(id);
-        EchoServer.getGlobalApplicationContext().allserviceFixedInfo(realtimeId);*/
+        EchoServer.getGlobalApplicationContext().restart(realtimeId);
     }
 }

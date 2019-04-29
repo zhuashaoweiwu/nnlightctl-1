@@ -21,10 +21,9 @@ public class A0Process implements Process {
 
         String realtimeId = msg.getRealtimeUUIDFromData();
 
-        byte[] modelUUIDBytes = new byte[36];
-        System.arraycopy(msg.getData(), 4, modelUUIDBytes, 0, 36);
-        String modelUUID = new String(modelUUIDBytes, Charset.forName("UTF-8"));
+        byte[] modelUUIDBytes = new byte[17];
+        System.arraycopy(msg.getData(), 4, modelUUIDBytes, 0, 17);
 
-        EchoServer.getGlobalApplicationContext().commandGetModelState(realtimeId, modelUUID);
+        EchoServer.getGlobalApplicationContext().commandGetModelState(realtimeId, modelUUIDBytes);
     }
 }
