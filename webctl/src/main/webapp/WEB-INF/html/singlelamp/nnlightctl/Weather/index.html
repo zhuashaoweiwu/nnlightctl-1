@@ -1,0 +1,214 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/weather.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+    <style>
+        .pd-20{
+            min-width: 1650px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div class="pd-20">
+        <div class="weather-top bk-gray">
+            <div class="t-title pl-20">数值显示</div>
+            <div class="text-l">
+                <span class="pl-20 mt-20">MAC编号：</span>
+                <span class="select-box inline">
+                    <select name="userType" id="userType" class="select">
+                        <option value="-1">9ca5258A1d48</option>
+                        <option value="0">9ca5258A1d49</option>
+                    </select>
+                </span>
+                <span class="pl-20">经度：</span>
+                116.29561667
+                <span class="pl-20">纬度：</span>
+                39.29561667
+                <div class="clear mt-20"></div>
+            </div>
+        </div>
+        <div class="mt-20 weather-con">
+            <div class="con-top">
+                <div class="item border-hui">
+                    <p class="con-title">空气质量</p>
+                    <div>
+                        <div class="circle circle1">
+                            <!--<p class="cir-pic"><img src="../bg/weather/cir1.png"></p>-->
+                            <p class="cir-title">PM</p>
+                            <p class="cir-subtitle">2.5</p>
+                            <p class="cir-con">12.00</p>
+                            <p class="cir-danwei">ug/m³</p>
+                        </div>
+                        <div class="circle circle2">
+                            <p class="cir-title">PM</p>
+                            <p class="cir-subtitle">10</p>
+                            <p class="cir-con">14.00</p>
+                            <p class="cir-danwei">ug/m³</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item border-hui">
+                    <p class="con-title">空气气温湿度</p>
+                    <div>
+                        <div class="circle circle3">
+                            <p class="cir-title">温度</p>
+                            <p class="cir-con">23.00</p>
+                            <p class="cir-danwei">℃</p>
+                        </div>
+                        <div class="circle circle4">
+                            <p class="cir-title">湿度</p>
+                            <p class="cir-con">13.00</p>
+                            <p class="cir-danwei">%/RH</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item border-hui">
+                    <p class="con-title">风向</p>
+                    <div>
+                        <div class="circle circle5">
+                            <p class="cir-title">方向</p>
+                            <p class="cir-con">西南风</p>
+                        </div>
+                        <div class="circle circle6">
+                            <p class="cir-title">风向</p>
+                            <p class="cir-con">225</p>
+                            <p class="cir-danwei">度</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="con-con ">
+                <div class="item2 border-hui">
+                    <p class="con-title">风速（m/s）</p>
+                    <p class="item2-title fs">2.50</p>
+                    <p> <img src="../bg/weather/fengsu.png"></p>
+                </div>
+                <div class="item2 border-hui">
+                    <p class="con-title">噪声(db)</p>
+                    <p class="item2-title zs">45</p>
+                    <p> <img src="../bg/weather/zaoyin.png"></p>
+                </div>
+                <div class="item2 border-hui">
+                    <p class="con-title">气压(kpa)</p>
+                    <p class="item2-title qy">1015</p>
+                    <p> <img src="../bg/weather/qiya.png"></p>
+                </div>
+                <div class="item2 border-hui">
+                    <p class="con-title">光照(lux)</p>
+                    <p class="item2-title gz">9000</p>
+                    <p> <img src="../bg/weather/guangzhao.png"></p>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> <!--日期插件-->
+    <script type="text/javascript">
+        // function sj() {
+        //     //x上限，y下限
+        //     var x = 100;
+        //     var y = 0;
+        //     // var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+        //     var rand = Math.round((Math.random() * (x - y) + y) * 10) / 100
+        //     $(".circle2 .cir-con").html("").append(rand);
+        //     $(".circle1 .cir-con").html("").append(rand);
+        // }
+        function pm2() {
+            //x上限，y下限
+            var x = 8;
+            var y = 12;
+            var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 100
+            $(".circle1 .cir-con").html("").append(rand);
+        }
+        function pm10() {
+            //x上限，y下限
+            var x = 14;
+            var y = 16;
+            var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 100
+            $(".circle2 .cir-con").html("").append(rand);
+        }
+        function wd() {
+            //x上限，y下限
+            var x = 20;
+            var y = 28;
+            var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 100
+            $(".circle3 .cir-con").html("").append(rand);
+        }
+        function sd() {
+            //x上限，y下限
+            var x = 11;
+            var y = 14;
+            var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 100
+            $(".circle4 .cir-con").html("").append(rand);
+        }
+        function fs() {
+            //x上限，y下限
+            var x = 0.3;
+            var y = 5.4;
+            // var rand = parseInt(Math.random() * (x - y + 1) + y).toFixed(2);
+            var rand = Math.round((Math.random() * (x - y) + y) * 10) / 10//如果保留1位小数就除以10，保留2位小数就除以100，以此类推
+            $(".fs").html("").append(rand);
+        }
+        function zs() {
+            //x上限，y下限
+            var x = 45;
+            var y = 55;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 10//如果保留1位小数就除以10，保留2位小数就除以100，以此类推
+            $(".zs").html("").append(rand);
+        }
+        function qy() {
+            //x上限，y下限
+            var x = 1015;
+            var y = 1025;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 10//如果保留1位小数就除以10，保留2位小数就除以100，以此类推
+            $(".qy").html("").append(rand);
+        }
+        function gz() {
+            //x上限，y下限
+            var x = 8000;
+            var y = 10000;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            // var rand = Math.round((Math.random() * (x - y) + y) * 10) / 10//如果保留1位小数就除以10，保留2位小数就除以100，以此类推
+            $(".gz").html("").append(rand);
+        }
+
+        // $(".cir-con").click(function() {
+        //     sj();
+        // });
+        // window.setInterval("sj()",3000);
+        window.setInterval("wd()",3000);
+        window.setInterval("sd()",3000);
+        window.setInterval("pm2()",3000);
+        window.setInterval("pm10()",3000);
+        window.setInterval("fs()",3000);
+        window.setInterval("zs()",3000);
+        window.setInterval("gz()",3000);
+        window.setInterval("qy()",3000);
+    </script>
+
+
+
+</body>
+</html>

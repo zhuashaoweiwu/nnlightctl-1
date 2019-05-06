@@ -111,6 +111,7 @@
       menuHtml += '</dl>';
     }
     $(menuHtml).appendTo($menu);
+
   }
 
   //刷新菜单
@@ -139,7 +140,6 @@
             titCell: '.menu_dropdown dl dt',
             mainCell: '.menu_dropdown dl dd',
           });
-
           /*选项卡导航*/
           $(".Hui-aside").on("click", ".menu_dropdown a", function () {
             Hui_admin_tab(this);
@@ -184,6 +184,7 @@
   $(function () {
     flushMenu();
     // initLoginUser();
+      $('dd').find('li').eq(1).hide();
   });
 </script>
 </body>

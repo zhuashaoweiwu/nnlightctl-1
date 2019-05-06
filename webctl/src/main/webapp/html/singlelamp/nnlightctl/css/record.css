@@ -1,0 +1,42 @@
+﻿@charset "utf-8";
+
+html, body{ height:100%}
+body{font-size:14px; font-family: '黑体'}
+.monthengery{
+    width: 100%;
+}
+.con{
+    position: relative;
+}
+#tab-system{
+    /*width: 75vw;*/
+    width: 98%;
+    overflow: auto;
+    position: absolute;
+    right: 2vw;
+}
+.con-left{
+    position: absolute;
+    left: 2vw;
+    width: 20vw;
+    background: #fff;
+
+}
+.row{
+    position: absolute;
+    margin-left: 20px;
+}
+.form-label{
+    line-height: 30px;
+    font-size: 12px;
+}
+.chart-left{
+    width: 78%;
+    overflow: auto;
+}
+.chart-right{
+    width: 15%;
+}
+.c-blue1{
+    color: #2388ed;
+}

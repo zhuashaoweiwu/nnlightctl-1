@@ -1,0 +1,112 @@
+﻿@charset "utf-8";
+
+html, body{ height:100%}
+body{font-size:14px; font-family: '黑体'}
+.page-container{
+    position: relative;
+    min-width: 1650px;
+}
+.right-bar{
+    position: absolute;
+    right: 0;
+    top: 20px;
+    width: 220px;
+    max-height: 95vh;
+    min-height: 95vh;
+    overflow: auto;
+    height: auto;
+    z-index: 99999;
+    background: #fff;
+    padding-left: 10px;
+    padding-top: 10px;
+    display: none;
+    line-height: 36px;
+}
+.title1{
+    border-left: 2px solid #0a79d8;
+    text-indent: 3px;
+    color: #000;
+    margin-top: 15px;
+}
+.title2{
+    border-left: 2px solid #35c85b;
+    text-indent: 3px;
+    color: #000;
+    margin-top: 15px;
+
+}
+.lv{
+    color: #35c85b;
+    font-size: 26px;
+}
+.lan{
+    color: #2388ed;
+    font-size: 26px;
+}
+.circle-style{
+    /*background: #2388ed;*/
+    /*padding: 6px;*/
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+.circle-style2{
+    /*background: #35c85b;*/
+    /*padding: 6px;*/
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 10px;
+
+}
+/*.circle-style3{*/
+    /*line-height: 36px;*/
+    /*background: #35c85b;*/
+    /*padding: 6px;*/
+    /*border-radius: 50%;*/
+
+/*}*/
+.border-bottom{
+    border-bottom: 1px solid #dedede;
+}
+.bg-lan{
+    background:bottom left url("../bg/charge/bg-lan.png") no-repeat;
+}
+.bg-lan1{
+     background:bottom left url("../bg/charge/bg-lan1.png") no-repeat;
+ }
+.bg-lv{
+    background:bottom left url("../bg/charge/bg-lv.png") no-repeat;
+}
+/*record记录开始*/
+.monthengery{
+    width: 100%;
+}
+.con{
+    position: relative;
+}
+#tab-system{
+    /*width: 75vw;*/
+    width: 98%;
+    overflow: auto;
+    position: absolute;
+    right: 2vw;
+}
+.con-left{
+    position: absolute;
+    left: 2vw;
+    width: 20vw;
+    background: #fff;
+
+}
+.row{
+    position: absolute;
+    margin-left: 20px;
+}
+.form-label{
+    line-height: 30px;
+    font-size: 12px;
+}

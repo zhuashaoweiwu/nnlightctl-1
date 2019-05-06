@@ -56,7 +56,7 @@
     <script type="text/javascript">
         $(function () {
             /*一、获取常规能耗统计数据年，月，日能耗*/
-            ajaxRequest("post", "/api/energyStatistic/getCommonEnergyStatistic",{},
+            ajaxRequest("post", "",{}, ///api/energyStatistic/getCommonEnergyStatistic
                 function (data) {
                 console.log(data);
                     var year=0;

@@ -1,0 +1,29 @@
+﻿@charset "utf-8";
+
+html, body{ height:100%}
+body{font-size:14px}
+.row {
+    width: 33%;
+    float: left;
+}
+
+.top {
+    width: 100%;
+    padding: 0px 20px;
+}
+.state-count{
+    width: 23%;
+    float: right;
+}
+
+.pc-left{
+    width: 75%;
+}
+.sc-title{
+    /*background: #F5FAFE;*/
+    background: #221;
+    line-height: 28px;
+    text-indent: 10px;
+    color: #fff;
+}
+.sc-con{}

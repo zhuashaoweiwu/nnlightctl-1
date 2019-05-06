@@ -1,0 +1,215 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+		<title>单灯控制系统</title>
+		<link rel="shortcut icon" href="bg/login_title.png" type="image/x-icon">
+
+		<link href="css/base.css" rel="stylesheet" type="text/css" />
+		<link href="css/admin.css" rel="stylesheet" type="text/css" />
+		<link href="css/admin.css" rel="stylesheet" type="text/css" />
+		<link href="css/iconfont/iconfont.css" rel="stylesheet" type="text/css" />
+
+	</head>
+
+	<body>
+		<header class="admintop">
+			<div class="adminnav">
+				<p class="logotit"><span class="pl10 wh f14"><a href="Index.html"><img src="bg/new/logo-word.png" class="logo"/></a></span></p>
+				<p class="user">
+					<a href="javascript:void(0)" ref="0" id="changepassword"><span id="username">系统管理员</span></a>
+					<a id="btnLogout" href="#" class="red pl20 f14" title="注销登录"><img src="bg/new/logout.png"></a>
+				</p>
+			</div>
+		</header>
+		<aside class="Hui-aside">
+			<div id="menuContain" class="menu_dropdown bk_2">
+				<dl id="menu-article">
+					<dt>
+                <i class="Hui-iconfont">
+                    <img src="bg/charge/icon1.png" />
+                </i>
+                <a  data-href="monitor.over/demo.html" data-title="监控查看" >
+                    <span class="pl10">监控查看</span>
+                </a>
+            </dt>
+				</dl>
+			</div>
+		</aside>
+		<div class="dislpayArrow hidden-xs">
+			<a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+		</div>
+		<section class="Hui-article-box">
+			<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+				<div class="Hui-tabNav-wp">
+					<ul id="min_title_list" class="acrossTab cl">
+						<li class="active">
+							<span title="我的桌面" data-href="Welcome.html">我的桌面</span>
+							<em></em></li>
+					</ul>
+				</div>
+				<div class="Hui-tabNav-more btn-group">
+					<a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a>
+					<a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a>
+				</div>
+			</div>
+			<div id="iframe_box" class="Hui-article">
+				<div class="show_iframe">
+					<div style="display:none" class="loading"></div>
+					<!--预加载-->
+					<iframe scrolling="yes" frameborder="0" src="monitor.over/demo.html"></iframe>
+				</div>
+			</div>
+		</section>
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/admin.js"></script>
+		<!--/_footer 作为公共模版分离出去-->
+		<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+		<script type="text/javascript" src="js/api/requestRoot.js"></script>
+		<script type="text/javascript" src="js/api/ajaxScript.js"></script>
+
+		<script type="text/javascript">
+			//获取菜单图标
+			// function getIconByMenuName(name) {
+			//     var icon = "";
+			//     switch (name) {
+			//         case "用户管理":
+			//             icon = "&#xe60d;";
+			//             break;
+			//
+			//         case "项目管理":
+			//             icon = "&#xe636;";
+			//             break;
+			//
+			//         case "道路照明系统":
+			//             icon = "&#xe62e;";
+			//             break;
+			//
+			//         case "Gis地理信息系统":
+			//             icon = "&#xe671;";
+			//             break;
+			//
+			//         case "能耗分析":
+			//             icon = "&#xe635;";
+			//             break;
+			//     }
+			//     return icon;
+			// }
+
+			//添加一个菜单
+			// function addMenu(menu) {
+			//     //首页不添加
+			//     if (menu.name == "首页") {
+			//         return;
+			//     }
+			//
+			//     var $menu = $("#menuContain");
+			//
+			//     var menuHtml = '<dl>\n' +
+			//         '<dt><i class="Hui-iconfont">'+getIconByMenuName(menu.name)+'</i><span class="pl10">'+menu.name+'</span><i\n' +
+			//         'class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>\n';
+			//
+			//     var subMenuList = menu.subMenuViewList;
+			//     if (subMenuList && subMenuList.length > 0) {
+			//         menuHtml += '<dd class="pl15">\n' +
+			//             '                <ul>';
+			//
+			//         for (var i = 0; i < subMenuList.length; ++i) {
+			//             var subMenu = subMenuList[i];
+			//
+			//             menuHtml += '<li><a data-href="'+subMenu.url+'" data-title="'+subMenu.name+'" href="javascript:void(0)">'+subMenu.name+'</a></li>';
+			//         }
+			//
+			//         menuHtml += '</ul>\n' +
+			//             '            </dd>';
+			//     }
+			//
+			//     menuHtml += '</dl>';
+			//
+			//     $(menuHtml).appendTo($menu);
+			// }
+
+			//刷新菜单
+			// function flushMenu() {
+			//     $("#menuContain").empty();
+			//     ajaxRequest("post", "/api/login/getMenu", {}, function (data) {
+			//         if (data) {
+			//             if (data.header.code == 1000) {
+			//                 var menuArray = data.body.data;
+			//                 console.log(menuArray);
+			//                 for (var i = 0; i < menuArray.length; ++i) {
+			//                     var menu = menuArray[i];
+			//                     addMenu(menu);
+			//                 }
+			//
+			//                 //注册菜单事件
+			//                 $(".nav-toggle").click(function(){
+			//                     $(".Hui-aside").slideToggle();
+			//                 });
+			//                 $(".Hui-aside").on("click",".menu_dropdown dd li a",function(){
+			//                     if($(window).width()<768){
+			//                         $(".Hui-aside").slideToggle();
+			//                     }
+			//                 });
+			/*左侧菜单*/
+			$(".Hui-aside").Huifold({
+				titCell: '.menu_dropdown dl dt',
+				mainCell: '.menu_dropdown dl dd',
+			});
+			//
+			//                 /*选项卡导航*/
+			$(".Hui-aside").on("click", ".menu_dropdown a", function() {
+				Hui_admin_tab(this);
+			});
+			//             }
+			//         }
+			//     });
+			// }
+			$("#changepassword").click(function() {
+				var url = "User/User-password-edit.html";
+				var id = $(this).attr("ref");
+				if(id > 0) {
+					layer_show("修改密码", url + "?id=" + id, 350, 250);
+				}
+			})
+			//初始化用户信息
+			function initLoginUser() {
+				ajaxRequest("post", "/api/login/getLoginUser", {}, function(data) {
+					if(data) {
+						if(data.header.code == 1000) {
+							var user = data.body.data[0];
+							$("#username").text(user.loginName);
+							$("#changepassword").attr("ref", user.id);
+						}
+					}
+				});
+
+				//注册退出事件
+				$("#btnLogout").click(function() {
+					ajaxRequest("post", "/api/login/Logout", {}, function(data) {
+						if(data) {
+							if(data.header.code == 1000) {
+								location.replace("Login.html");
+							}
+						}
+					});
+				});
+			}
+
+			$(function() {
+				// flushMenu();
+				initLoginUser();
+			});
+		</script>
+
+	</body>
+
+</html>

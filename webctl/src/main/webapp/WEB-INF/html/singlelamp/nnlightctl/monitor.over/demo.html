@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="Expires" content="0" />
+		<link rel="stylesheet" href="layui/css/layui.css">
+		<script>
+			document.write("<link type='text/css' href='demo.css?version=" + new Date().getTime() + "' rel='stylesheet' />");
+		</script>
+	</head>
+
+	<body>
+		<form class="layui-form">
+			<div class="left">
+
+				<fieldset class="login">
+					<legend>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</legend>
+					<table cellpadding="0" cellspacing="3" border="0">
+						<tr>
+							<td class="tt"><label class="layui-form-label">IP&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;&nbsp;址</label></td>
+							<td><input id="loginip" type="text" class="layui-input" value="172.9.4.222" /></td>
+							<td class="tt"><label class="layui-form-label">端&nbsp;&nbsp;口&nbsp;&nbsp;号</label></td>
+							<td><input id="port" type="text" class="layui-input" value="80" /></td>
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">用&nbsp;&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;&nbsp;名</label></td>
+							<td><input id="username" type="text" class="layui-input" value="admin" /></td>
+							<td class="tt"><label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label></td>
+							<td><input id="password" type="password" class="layui-input" value="12345" /></td>
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">设&nbsp;&nbsp;备&nbsp;&nbsp;端&nbsp;口</label></td>
+							<td colspan="2"><input id="deviceport" type="text" class="layui-input" value="8000" />
+								<!--（可选参数）-->
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="layui-form-label">窗口分割数&nbsp;</label>
+
+							</td>
+							<td>
+								<select class="sel2" lay-filter="test">
+									<option value="1">1x1</option>
+									<option value="2" selected>2x2</option>
+									<option value="3">3x3</option>
+									<option value="4">4x4</option>
+								</select>
+							</td>
+						</tr><br />
+						<tr>
+							<td colspan="4" align="center"><br/>
+								<input type="button" class="layui-btn layui-btn-warm" value="登录" onclick="clickLogin();" />
+								<input type="button" class="layui-btn layui-btn-warm" value="退出" onclick="clickLogout();" />
+								<input type="button" class="layui-btn layui-btn-warm" value="获取基本信息" onclick="clickGetDeviceInfo();" />
+							</td>
+						</tr><br />
+						<tr>
+							<td class="tt"><br/>已登录设备</td>
+							<td>
+								<br/>
+								<select id="ip" class="sel" onchange="getChannelInfo();"></select>
+							</td>
+							<td class="tt"><br/>&nbsp;&nbsp;&nbsp;通道列表</td>
+							<td>
+								<br/>
+								<select id="channels" class="sel"></select>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<fieldset class="ipparse">
+
+					<legend>设备IP解析</legend>
+					<table cellpadding="0" cellspacing="3" border="0">
+						<tr>
+							<td class=""><label class="layui-form-label">模&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;式</label></td><br />
+							<td colspan="3">
+								<select id="devicemode" class="sel" onchange="changeIPMode(this.value);">
+									<option value="1">IPServer</option>
+									<option value="2">HiDDNS</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">服&nbsp;务器地址</label></td>
+							<td colspan="2"><input id="serveraddress" type="text" class="layui-input" value="" /></td>
+
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">端&nbsp;&nbsp;&nbsp;&nbsp;口&nbsp;&nbsp;&nbsp;&nbsp;号</label></td>
+							<td colspan="2"><input id="serverport" type="text" class="layui-input" value="7071" /></td>
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">设&nbsp;&nbsp;备&nbsp;&nbsp;标&nbsp;识</label></td>
+							<td><input id="deviceid" type="text" class="layui-input" value="" /></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<td><input type="button" class="layui-btn layui-btn-warm layui-btn-sm" value="获取设备IP" onclick="clickGetDeviceIP();" /></td>
+						</tr>
+					</table>
+				</fieldset>
+
+			</div>
+			<div class="left">
+				<div id="divPlugin" class="plugin"></div>
+				<fieldset class="preview">
+					<legend>预览</legend>
+					<table cellpadding="0" cellspacing="4" border="0">
+						<tr>
+							<td class="tt"><label class="layui-form-label">码流类型<label></td>
+				<td>
+					<select id="streamtype" class="sel">
+						<option value="1">主码流</option>
+						<option value="2">子码流</option>
+						<option value="3">第三码流</option>
+						<option value="4">转码码流</option>
+					</select>
+				</td>
+				
+			</tr>
+			<tr>
+				<td colspan="4" align="center">
+					<input type="button" class="layui-btn layui-btn-warm" value="开始预览" onclick="clickStartRealPlay();" />
+					<input type="button" class="layui-btn layui-btn-warm" value="停止预览" onclick="clickStopRealPlay();" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tt"><label class="layui-form-label">音量</label></td>
+							<td>
+								<input type="text" id="volume" class="txt" value="50" maxlength="3" />&nbsp;
+								<!--<input type="button" class="layui-btn layui-btn-xs" value="设置" onclick="clickSetVolume();" />-->(0~100)
+							</td>
+							<td>
+								<input type="button" class="layui-btn layui-btn-xs" value="打开声音" onclick="clickOpenSound();" />
+								<input type="button" class="layui-btn layui-btn-xs" value="关闭声音" onclick="clickCloseSound();" />
+							</td>
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">对讲通道</label></td>
+							<td>
+								<select id="audiochannels" class="sel">
+								</select>
+								<!--<input type="button" class="layui-btn layui-btn-xs" value="获取通道" onclick="clickGetAudioInfo();" />-->
+							</td>
+							<td>
+								<input type="button" class="layui-btn layui-btn-xs" value="开始对讲" onclick="clickStartVoiceTalk();" />
+								<input type="button" class="layui-btn layui-btn-xs" value="停止对讲" onclick="clickStopVoiceTalk();" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4" align="center"><br/>
+								<input type="button" class="layui-btn layui-btn-warm" value="抓图" onclick="clickCapturePic();" />
+								<input type="button" class="layui-btn layui-btn-warm" value="开始录像" onclick="clickStartRecord();" />
+								<input type="button" class="layui-btn layui-btn-warm" value="停止录像" onclick="clickStopRecord();" />
+								<input type="button" class="layui-btn layui-btn-warm" value="全屏" onclick="clickFullScreen();" />
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+
+			</div>
+			<div class="left">
+				<fieldset class="ptz">
+					<legend>云台控制</legend>
+					<table cellpadding="0" border="0" align="center">
+						<tr>
+							<td>
+								<img src="左上.svg" class="btn" value="左上" onmousedown="mouseDownPTZControl(5);" onmouseup="mouseUpPTZControl();" />
+								<img src="上.svg" class="btn" value="上" onmousedown="mouseDownPTZControl(1);" onmouseup="mouseUpPTZControl();" />
+								<img src="右上.svg" class="btn" value="右上" onmousedown="mouseDownPTZControl(7);" onmouseup="mouseUpPTZControl();" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<br/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="左.svg" class="btn" value="左" onmousedown="mouseDownPTZControl(3);" onmouseup="mouseUpPTZControl();" />
+								<img src="播放.svg" class="btn" value="自动" onclick="mouseDownPTZControl(9);" />
+								<img src="右.svg" class="btn" value="右" onmousedown="mouseDownPTZControl(4);" onmouseup="mouseUpPTZControl();" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<br/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="左下.svg" class="btn" value="左下" onmousedown="mouseDownPTZControl(6);" onmouseup="mouseUpPTZControl();" />
+								<img src="下.svg" class="btn" value="下" onmousedown="mouseDownPTZControl(2);" onmouseup="mouseUpPTZControl();" />
+								<img src="右下.svg" class="btn" value="右下" onmousedown="mouseDownPTZControl(8);" onmouseup="mouseUpPTZControl();" />
+							</td>
+						</tr>
+					</table>
+					<table cellpadding="0" cellspacing="3" border="0" class="">
+						<tr>
+							<td class="tt"><label class="layui-form-label">云&nbsp;台&nbsp;速&nbsp;度</label></td>
+							<td>
+								<select id="ptzspeed" class="sel">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option selected>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+								</select>
+							</td><br />
+						</tr>
+						<tr>
+							<td class="tt"><label class="layui-form-label">预&nbsp;置&nbsp;点&nbsp;号</label></td>
+							<td><input id="preset" type="text" class="layui-input" value="1" /></td>
+						</tr>
+					</table>
+					<table cellpadding="0" cellspacing="3" border="0" class="left">
+						<tr>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="变倍+" onmousedown="PTZZoomIn()" onmouseup="PTZZoomStop()"></td>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="变倍-" onmousedown="PTZZoomout()" onmouseup="PTZZoomStop()"></td>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="变焦+" onmousedown="PTZFocusIn()" onmouseup="PTZFoucusStop()"></td>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="变焦-" onmousedown="PTZFoucusOut()" onmouseup="PTZFoucusStop()"></td>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="光圈+" onmousedown="PTZIrisIn()" onmouseup="PTZIrisStop()"></td>
+							<td class="tt">&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs" value="光圈-" onmousedown="PTZIrisOut()" onmouseup="PTZIrisStop()"></td>
+						</tr>
+						<tr><br />
+
+							<tr>
+								<td colspan="6" align="center"><br />
+									<input type="button" class="layui-btn layui-btn-warm" value="设置" onclick="clickSetPreset();" />
+									<input type="button" class="layui-btn layui-btn-warm" value="调用" onclick="clickGoPreset();" />
+								</td>
+							</tr>
+					</table>
+				</fieldset>
+				<fieldset class="localconfig">
+					<legend>本地配置</legend>
+					<table cellpadding="0" cellspacing="3" border="0">
+						<tr>
+							<td class="tt">播放性能</td>
+							<td class="tt">
+								<select id="netsPreach" name="netsPreach" class="sel">
+									<option value="0">最短延时</option>
+									<option value="1">实时性好</option>
+									<option value="2">均衡</option>
+									<option value="3">流畅性好</option>
+								</select>
+							</td>
+							<td class="tt">图像尺寸</td>
+							<td class="tt">
+								<select id="wndSize" name="wndSize" class="sel">
+									<option value="0">充满</option>
+									<option value="1">4:3</option>
+									<option value="2">16:9</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="tt">规则信息</td>
+							<td class="tt">
+								<select id="rulesInfo" name="rulesInfo" class="sel">
+									<option value="1">启用</option>
+									<option value="0">禁用</option>
+								</select>
+							</td>
+							<td class="tt">抓图格式</td>
+							<td class="tt">
+								<select id="captureFileFormat" name="captureFileFormat" class="sel">
+									<option value="0">JPEG</option>
+									<option value="1">BMP</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="tt">文&nbsp;件&nbsp;保存&nbsp;路&nbsp;径</td>
+							<td colspan="3"><input id="recordPath" type="text" class="layui--input" /></td>
+							<td><input type="button" class="layui-btn layui-btn-xs" value="浏&nbsp;&nbsp;&nbsp;览" onclick="clickOpenFileDlg('recordPath', 0);" /></td>
+						</tr>
+						<tr>
+							<td class="tt">回&nbsp;放&nbsp;下载&nbsp;路&nbsp;径</td>
+							<td colspan="3"><input id="downloadPath" type="text" class="layui--input" /></td>
+							<td><input type="button" class="layui-btn layui-btn-xs" value="浏&nbsp;&nbsp;&nbsp;览" onclick="clickOpenFileDlg('downloadPath', 0);" /></td>
+						</tr>
+						</tr>
+						<tr>
+							<div class="layui-btn-container">
+								<td colspan="2" align="center"><br /><input type="button" class="layui-btn layui-btn-warm" value="获取路径" onclick="clickGetLocalCfg();" />&nbsp;</td>
+								<td colspan="2" align="center"><br /><input type="button" class="layui-btn layui-btn-warm" value="设置参数" onclick="clickSetLocalCfg();" /></td>
+							</div>
+						</tr>
+					</table>
+				</fieldset>
+
+			</div>
+		</form>
+	</body>
+	<script src="jquery-1.7.1.min.js"></script>
+	<script src="webVideoCtrl.js"></script>
+	<script src="demo.js"></script>
+
+	<script src="layui/layui.js"></script>
+	<script>
+		//一般直接写在一个js文件中
+		layui.use(['layer', 'form'], function() {
+			var layer = layui.layer,
+				form = layui.form;
+
+			form.on('select(test)', function(data) {
+				changeWndNum(data.value)
+			});
+
+		});
+	</script>
+
+</html>

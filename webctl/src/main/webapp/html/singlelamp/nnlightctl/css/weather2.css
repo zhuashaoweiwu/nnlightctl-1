@@ -1,0 +1,146 @@
+﻿@charset "utf-8";
+
+body{
+	background: #fbfbfb;
+}
+.weather-top{
+	font-size: 20px;
+	width: 1630px;
+}
+.t-title{
+	font-family: PingFangSC-Regular;
+	font-size: 28px;
+	color: #0D1022;
+	letter-spacing: 0.53px;
+}
+.select-box{
+	border-radius: 6px;
+}
+.border-hui{
+	background: #FFFFFF;
+	box-shadow: 0 2px 9px 0 rgba(223,230,250,0.48);
+	border-radius: 6px;
+}
+.con-top .item{
+	float: left;
+	margin-left: 3.5vw;
+	width: 26.6vw;
+	height: 27.8vh;
+	/*margin-left: 51px;*/
+	/*width:510px;*/
+	/*height: 260px;*/
+	padding: 20px 0;
+}
+.con-top .item:first-child{ margin-left: 0;}
+.con-title{
+	text-align: center;
+	font-family: PingFangSC-Regular;
+	font-size: 24px;
+	color: #0D1022;
+	letter-spacing: 0.46px;
+}
+.circle{
+	width: 9.9vw;
+	height: 17.5vh;
+	position: relative;
+	text-align: center;
+	margin-left: 40px;
+
+}
+.cir-pic{
+	position: absolute;
+	width: 9.9vw;
+	height: 17.5vh;
+	z-index: 1;
+}
+.cir-pic img{
+	width: 9.9vw;
+	height: 17.5vh;
+}
+.cir-title{
+	font-family: PingFangSC-Regular;
+	font-size: 28px;
+	color: #0D1022;
+	letter-spacing: 0.53px;
+	position: absolute;
+	top: 6px;
+	left: 110px;
+}
+.cir-subtitle{
+	font-family: PingFangSC-Regular;
+	font-size: 17px;
+	color: #888888;
+	letter-spacing: 0.32px;
+	position: absolute;
+	top: 36px;
+	left: 157px;
+}
+.cir-con{
+	font-family: PingFangSC-Regular;
+	font-size: 40px;
+	color: #0D1022;
+	letter-spacing: 0.76px;
+	padding-top: 50px;
+}
+.cir-danwei{
+	font-family: PingFangSC-Regular;
+	font-size: 16px;
+	color: #555555;
+	letter-spacing: 0.3px;
+	line-height: 0px;
+
+}
+.circle1{
+	background: url("../bg/weather/cir1.png") no-repeat center;
+	float: left;
+}
+.circle2{
+	background: url("../bg/weather/cir2.png") no-repeat center;
+	float: left;
+
+}
+.circle3{
+	background: url("../bg/weather/cir3.png") no-repeat center;
+	float: left;
+
+}
+.circle4{
+	background: url("../bg/weather/cir4.png") no-repeat center;
+	float: left;
+
+}
+.circle5{
+	background: url("../bg/weather/cir5.png") no-repeat center;
+	float: left;
+
+}
+.circle6{
+	background: url("../bg/weather/cir6.png") no-repeat center;
+	float: left;
+
+}
+.con-con{
+	margin-top: 20px;
+}
+.item2{
+	background: #FFFFFF;
+	box-shadow: 0 2px 9px 0 rgba(223,230,250,0.48);
+	border-radius: 6px;
+	width: 373px;
+	height: 280px;
+	float: left;
+	margin-left: 46px;
+	text-align: center;
+	padding: 20px 0;
+	font-family: PingFangSC-Regular;
+	font-size: 40px;
+	color: #0D1022;
+	letter-spacing: 0.76px;
+}
+.con-con .item2:first-child{ margin-left: 0;}
+.item2-title{
+	margin-top: 10px;
+}
+.item2 img{ margin-top: 20px;}
+
+

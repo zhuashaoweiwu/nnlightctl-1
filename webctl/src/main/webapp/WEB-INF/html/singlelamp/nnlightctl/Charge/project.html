@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100vw; /*padding: 1.6vw;*/ height: 100%;overflow: hidden;font-family:"微软雅黑";}
+        #container{width: 100%;height: 100%;overflow: hidden;margin-left:0;font-family:"微软雅黑";}
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="../css/charge-index.css"/>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=kG0l1mn4xUHoTGvG1cxXfm613Cvw0twf"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <title>设置点的新图标</title>
+    <style>
+        .BMapLabel{
+            border:none !important;
+            background: none !important;
+            width: 35px !important;
+            height: 35px !important;
+            line-height: 35px !important;
+            text-align: center !important;
+            /*left: 0 !important;*/
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container"></div>
+<div class="right-bar">
+    <p>充电站数（已投运）</p>
+    <p class="bg-lan1">
+        <span class="circle-style">
+            站
+        </span>
+        616
+    </p>
+    <p class="border-bottom"></p>
+    <p class="title1">
+        总充电量
+    </p>
+    <P>
+        <span class="lan">173</span>万度
+    </P>
+    <p>
+        7,726,701度
+    </p>
+    <p class="border-bottom">
+
+    </p>
+    <p class="title2">
+        总碳减量
+    </p>
+    <P>
+        <span class="lv">1</span>吨
+    </P>
+    <p>
+        650，996克
+    </p>
+    <p class="border-bottom">
+
+    </p>
+    <p class="title1">
+        直流桩数（已投运）
+    </p>
+    <p class="bg-lan">
+        <span class="circle-style">
+            桩
+        </span>
+        117
+    </p>
+    <p class="title2">
+        日充电次数
+    </p>
+    <p class="bg-lv">
+        <span class="circle-style2">
+            日
+        </span>
+        117
+    </p>
+    <p class="title2">
+        日充电度数
+    </p>
+    <p class="bg-lv">
+        <span class="circle-style2">
+            日
+        </span>
+        858
+    </p>
+    <p class="title1">
+        月充电度数
+    </p>
+    <p class="bg-lan">
+        <span class="circle-style">
+            月
+        </span>
+        38，524
+    </p>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var map = new BMap.Map("container");
+    var point = new BMap.Point(120.382029,30.312903);
+    map.centerAndZoom(point,9);
+    //改变icon图标
+    var icon = new BMap.Icon('../bg/elebox.png', new BMap.Size(60, 60));
+    // marker.setIcon(icon);
+    var marker = new BMap.Marker(point);
+    var mapPoints = [
+        {x:30.312903,y:120.382029,branch:"45"},
+        {x:30.215855,y:120.024568,branch:"919"},
+        {x:30.18015,y:120.174968,branch:"616"},
+        {x:30.324994,y:120.164399,branch:"81"},
+        {x:30.24884,y:120.305074,branch:"963"}
+
+        // {x:30.312903,y:120.382029,title:"45",con:"我是A",branch:"45"},
+        // {x:30.215855,y:120.024568,title:"919",con:"我是B",branch:"919"},
+        // {x:30.18015,y:120.174968,title:"616",con:"我是C",branch:"616"},
+        // {x:30.324994,y:120.164399,title:"81",con:"我是D",branch:"81"},
+        // {x:30.24884,y:120.305074,title:"963",con:"我是E",branch:"963"}
+    ];
+    var i = 0;
+    map.addOverlay(marker);
+    map.enableScrollWheelZoom(true);
+    // 函数 创建多个标注
+    function markerFun (points,label,infoWindows) {
+        var myIcon = new BMap.Icon('../bg/charge/biaozhu.png', new BMap.Size(35, 45));
+
+        var markers = new BMap.Marker(points,{icon: myIcon});
+
+        map.addOverlay(markers);
+        markers.setLabel(label);
+        markers.addEventListener("click",function (event) {
+            console.log("0001");
+            // map.openInfoWindow(infoWindows,points);//参数：窗口、点  根据点击的点出现对应的窗口
+        });
+
+    }
+    for (;i<mapPoints.length;i++) {
+        var points = new BMap.Point(mapPoints[i].y,mapPoints[i].x);//创建坐标点
+        var opts = {
+            width:250,
+            height: 100,
+            title:mapPoints[i].title
+        };
+        var label = new BMap.Label(mapPoints[i].branch,{
+            offset:new BMap.Size(0,0)
+        });
+        var infoWindows = new BMap.InfoWindow(mapPoints[i].con,opts);
+        markerFun(points,label,infoWindows);
+    }
+
+    function showInfo(e){
+        $('.right-bar').toggle();
+    }
+    map.addEventListener("click", showInfo);
+</script>

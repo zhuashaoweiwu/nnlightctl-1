@@ -27,7 +27,7 @@
             <input type="text" class="input-text" style="width:250px" placeholder="输入日志内容" id="logContent" name="">
             <button type="submit" class="btn btn-success f-r" id="btnSearch" ><i class="Hui-iconfont">&#xe665;</i> 搜日志</button>
         </div>
-        
+
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                 <thead>
@@ -67,7 +67,6 @@
     <script type="text/javascript" src="../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="../lib/laypage/1.2/laypage.js"></script>
     <script type="text/javascript">
-
         var param = {};
         $(function () {
             param["startDate"] = new Date(new Date().getTime() - 24 * 3600 * 1000);

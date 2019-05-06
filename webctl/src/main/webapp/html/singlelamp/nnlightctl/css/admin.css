@@ -28,6 +28,7 @@
 .Hui-aside .menu_dropdown dd{ display:none}
 .Hui-aside .menu_dropdown dt.selected .menu_dropdown-arrow{transform: rotate(180deg)}
 .Hui-aside .menu_dropdown dd.selected{display:block; margin-left:0px}
+.Hui-aside .menu_dropdown dt>a{ color: #fff;}
 .Hui-aside .menu_dropdown ul{padding:0px}
 .Hui-aside .menu_dropdown li{line-height:35px;overflow:hidden;zoom:1}
 .Hui-aside .menu_dropdown li a{display:block;font-weight: bold; margin:0}
