@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Properties;
@@ -66,7 +67,11 @@ public class OpLogFilter {
         userOpLog.setNnlightctlUserId(user.getId());
         userOpLog.setOperationTime(new Date());
         userOpLog.setOperationType((byte)1);
-        userOpLog.setOperationDesc(opDesc);
+        try {
+            userOpLog.setOperationDesc(new String(opDesc.getBytes("gbk"),"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         userOpLogServer.addUserOpLog(userOpLog);
     }

@@ -36,13 +36,13 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
             log.info("-------------------------------从缓存或者数据库是查询1条以上该UUID的灯具记录--------------------------------");
 
             StringBuilder updateSql = new StringBuilder();
-            updateSql.append("update nnlightctl_lighting set gmt_updated = ?, realtime_uid = ?, lighting_imei = ?, longitude = ?, latitude = ?, fault_tag = ? where id = ?");
+            updateSql.append("update nnlightctl_lighting set gmt_updated = ?, realtime_uid = ?, lighting_imei = ?, fault_tag = ? where id = ?");
             params.clear();
             params.add(new Date());
             params.add(lighting.getRealtimeUid());
             params.add(lighting.getLightingImei());
-            params.add(lighting.getLongitude());
-            params.add(lighting.getLatitude());
+//            params.add(lighting.getLongitude());
+//            params.add(lighting.getLatitude());
             params.add(lighting.getFaultTag());
             params.add(lightingList.get(0).getId());
 
