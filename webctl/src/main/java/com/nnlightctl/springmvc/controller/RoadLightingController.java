@@ -1,24 +1,19 @@
 package com.nnlightctl.springmvc.controller;
 
-import com.nnlight.common.DownloadFileNameUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.*;
+import com.nnlightctl.server.LamppostServer;
 import com.nnlightctl.util.DownloadUtil;
-import com.nnlightctl.vo.EleboxView;
-import com.nnlightctl.vo.GISView;
-import com.nnlightctl.vo.LightingView;
-import com.nnlightctl.vo.RegionView;
-import org.apache.avro.generic.GenericData;
+import com.nnlightctl.vo.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,10 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +54,110 @@ public class RoadLightingController extends BaseController {
     @Autowired
     private AreaServer areaServer;
 
+    @Autowired
+    private PhotoperiodServer photoperiodServer;
+
+    @Autowired
+    private LamppostServer lamppostServer;
+
+
+    @RequestMapping("addorupdatelamppost")
+    public String addOrUpdateLamppost(LamppostRequest Request){
+
+        int flag=lamppostServer.addOrUpdateLamppost(Request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listlamppost")
+    public String listListLamppost(LamppostConditionRequest request){
+
+        Tuple.TwoTuple<List<LamppostView>,Integer> listLamppost=lamppostServer.listLamppost(request);
+
+        JsonResult jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(listLamppost.getSecond());
+
+        jsonResult.setData(listLamppost.getFirst());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("deletelamppost")
+    public String deleteLamppost(LamppostConditionRequest request){
+
+        int flag = lamppostServer.deleteLamppost(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("addorupdatephotoperiod")
+    public String addOrUpdatePhotoperiod(PhotoperiodRequest request){
+
+        int ret=photoperiodServer.addOrUpdatePhotoperiod(request);
+
+        JsonResult jsonResult=null;
+
+        if (ret>0){
+            jsonResult = JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+    @RequestMapping("deletephotoperiod")
+    public String deletePhotoperiod(PhotoperiodConditionRequest request){
+
+        int ret = photoperiodServer.deletePhotoperiod(request);
+
+        JsonResult jsonResult=null;
+
+        if (ret>0){
+             jsonResult= JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+
+        }
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("listpotoperiod")
+    public String listPhotoperiod(PhotoperiodConditionRequest request){
+
+        logger.info("[POST] /api/roadlighting/listpotoperiod");
+
+        Tuple.TwoTuple<List<PhotoperiodView>,Integer> twoTuple=photoperiodServer.listPhotoperiod(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
+
     @RequestMapping("addorupdatemodelloop")
     public String addOrUpdateModelLoop(ModelLoopRequest request) {
         logger.info("[POST] /api/roadlighting/addorupdatemodelloop");
@@ -76,6 +173,8 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+
 
     @RequestMapping("deletemodelloop")
     public String deleteModeLoop(ModelLoopConditionRequest request) {

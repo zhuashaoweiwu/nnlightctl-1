@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.LamppostMapper" >
+    <resultMap id="BaseResultMap" type="com.nnlightctl.po.Lamppost" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="lamppost_model" property="lamppostModel" jdbcType="VARCHAR" />
+        <result column="lampost_name" property="lampostName" jdbcType="VARCHAR" />
+        <result column="high" property="high" jdbcType="DECIMAL" />
+        <result column="lamphead_number" property="lampheadNumber" jdbcType="INTEGER" />
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+        <result column="materima" property="materima" jdbcType="VARCHAR" />
+        <result column="land" property="land" jdbcType="DECIMAL" />
+        <result column="lamphead_color" property="lampheadColor" jdbcType="VARCHAR"/>
+        <result column="mem" property="mem" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insertLamppost" parameterType="com.nnlightctl.po.Lamppost">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into nnlightctl_lamppost
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="lamppostModel != null" >
+                lamppost_model,
+            </if>
+            <if test="lampostName != null" >
+                lampost_name,
+            </if>
+            <if test="high != null" >
+                high,
+            </if>
+            <if test="lampheadNumber != null" >
+                lamphead_number,
+            </if>
+            <if test="longitude != null" >
+                longitude,
+            </if>
+            <if test="latitude != null" >
+                latitude,
+            </if>
+            <if test="materima !=null">
+                materima,
+            </if>
+            <if test="land !=null">
+                land,
+            </if>
+            <if test="lampheadColor !=null">
+                lamphead_color,
+            </if>
+            <if test="mem != null" >
+                mem,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="lamppostModel != null" >
+                lamppost_model=#{lamppostModel,jdbcType=VARCHAR},
+            </if>
+            <if test="lampostName != null" >
+                lampost_name=#{lampostName,jdbcType=VARCHAR},
+            </if>
+            <if test="high != null" >
+                high=#{high,jdbcType=DECIMAL},
+            </if>
+            <if test="lampheadNumber != null" >
+                lamphead_number=#{lampheadNumber,jdbcType=INTEGER},
+            </if>
+            <if test="longitude != null" >
+                longitude=#{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null" >
+                latitude=#{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="materima !=null">
+                materima=#{materima,jdbcType=VARCHAR},
+            </if>
+            <if test="land !=null">
+                land=#{land,jdbcType=DECIMAL},
+            </if>
+            <if test="lampheadColor !=null">
+                lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
+            </if>
+            <if test="mem != null" >
+                mem=#{mem,jdbcType="VARCHAR"},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeyLamppost" parameterType="com.nnlightctl.po.Lamppost">
+         update nnlightctl_lamppost
+         <set>
+             <if test="lamppostModel != null" >
+                 lamppost_model=#{lamppostModel,jdbcType=VARCHAR},
+             </if>
+             <if test="lamppostName != null" >
+                 lampost_name=#{lampostName,jdbcType=VARCHAR},
+             </if>
+             <if test="high != null" >
+                 high=#{high,jdbcType=DECIMAL},
+             </if>
+             <if test="lampheadNumber != null" >
+                 lamphead_number=#{lampheadNumber,jdbcType=INT},
+             </if>
+             <if test="longitude != null" >
+                 longitude=#{longitude,jdbcType=VARCHAR},
+             </if>
+             <if test="latitude != null" >
+                 latitude=#{latitude,jdbcType=VARCHAR},
+             </if>
+             <if test="materima !=null">
+                 materima=#{materima,jdbcType=VARCHAR},
+             </if>
+             <if test="land !=null">
+                 land=#{land,jdbcType=DECIMAL},
+             </if>
+             <if test="lampheadColor !=null">
+                 lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
+             </if>
+             <if test="mem != null" >
+                 mem=#{mem,jdbcType="VARCHAR"},
+             </if>
+         </set>
+           where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+    <delete id="deleteByPrimaryKeyLamppost" parameterType="long">
+    delete from nnlightctl_lamppost
+    where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <select id="selectByCountLamppost" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_photoperiod
+    </select>
+
+    <sql id="Base_Column_List">
+        id,lamppost_model,lampost_name,high,lamphead_number,longitude
+        ,latitude,materima,land,lamphead_color,mem
+    </sql>
+    <select id="selectAllLamppost" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
+        select
+          <include refid="Base_Column_List" />
+         from nnlightctl_lamppost
+    </select>
+
+
+</mapper>

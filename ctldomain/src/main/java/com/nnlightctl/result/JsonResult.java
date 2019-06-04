@@ -6,6 +6,7 @@ public class JsonResult {
     public static JsonResult SUCCESS = new JsonResult("1000", "成功");
     public static JsonResult FAILURE = new JsonResult("1001", "失败");
 
+
     public JsonResult(String code, String msg) {
         this();
         this.code = code;

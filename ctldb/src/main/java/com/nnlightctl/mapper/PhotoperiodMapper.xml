@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.PhotoperiodMapper" >
+    <resultMap id="BaseResultMap" type="com.nnlightctl.po.PhotoPeriod" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="photoperiod_model" property="photoperiodModel" jdbcType="VARCHAR" />
+        <result column="photoperiod_name" property="photoperiodName" jdbcType="VARCHAR" />
+        <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
+        <result column="dimming_mode" property="dimmingMode" jdbcType="DECIMAL" />
+        <result column="accuracy" property="accuracy" jdbcType="DECIMAL" />
+        <result column="work_voltage" property="workVoltage" jdbcType="DECIMAL" />
+        <result column="mem" property="mem" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insert" parameterType="com.nnlightctl.po.PhotoPeriod">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into nnlightctl_photoperiod
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="photoperiodModel != null" >
+                photoperiod_model,
+            </if>
+            <if test="photoperiodName != null" >
+                photoperiod_name,
+            </if>
+            <if test="communicationMode != null" >
+                communication_mode,
+            </if>
+            <if test="dimmingMode != null" >
+                dimming_mode,
+            </if>
+            <if test="workVoltage != null" >
+                work_voltage,
+            </if>
+            <if test="mem != null" >
+                mem,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="photoperiodModel != null" >
+                #{photoperiodModel,jdbcType=VARCHAR},
+            </if>
+            <if test="photoperiodName != null" >
+                #{photoperiodName,jdbcType=VARCHAR},
+            </if>
+            <if test="communicationMode != null" >
+                #{communicationMode,jdbcType=VARCHAR},
+            </if>
+            <if test="dimmingMode != null" >
+                #{dimmingMode,jdbcType=DECIMAL},
+            </if>
+            <if test="workVoltage != null" >
+                #{workVoltage,jdbcType=DECIMAL},
+            </if>
+            <if test="mem != null" >
+                #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="accuracy !=null">
+              #{accuracy,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.PhotoPeriod">
+         update nnlightctl_photoperiod
+         <set>
+             <if test="photoperiodModel != null" >
+                 photoperiod_model= #{photoperiodModel,jdbcType=VARCHAR},
+             </if>
+             <if test="photoperiodName != null" >
+                 photoperiod_name = #{photoperiodName,jdbcType=VARCHAR},
+             </if>
+             <if test="communicationMode != null" >
+                 communication_mode = #{communicationMode,jdbcType=VARCHAR},
+             </if>
+             <if test="dimmingMode != null" >
+                 dimming_mode = #{dimmingMode,jdbcType=DECIMAL},
+             </if>
+             <if test="accuracy !=null">
+                 accuracy = #{accuracy,jdbcType=DECIMAL},
+             </if>
+             <if test="workVoltage != null" >
+                 work_voltage = #{workVoltage,jdbcType=DECIMAL},
+             </if>
+             <if test="mem != null" >
+                 mem = #{mem,jdbcType=VARCHAR},
+             </if>
+         </set>
+           where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+    delete from nnlightctl_photoperiod
+    where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <select id="selectByCount" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_photoperiod
+    </select>
+
+    <sql id="Base_Column_List">
+        id,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
+        ,work_voltage,mem
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod">
+        select
+          <include refid="Base_Column_List" />
+         from nnlightctl_photoperiod
+    </select>
+
+
+</mapper>
