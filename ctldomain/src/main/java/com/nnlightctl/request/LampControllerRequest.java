@@ -15,7 +15,7 @@ public class LampControllerRequest {
 
     private String communicationMode;
 
-    private String dimmingMode;
+    private Integer dimmingMode;
 
     private Double ratedVoltage;
 
@@ -26,6 +26,14 @@ public class LampControllerRequest {
     private String alarmMessage;
 
     private String mem;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getLampName() {
         return lampName;
@@ -42,17 +50,6 @@ public class LampControllerRequest {
     public void setLampModel(String lampModel) {
         this.lampModel = lampModel;
     }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
 
     public String getLongitude() {
         return longitude;
@@ -78,11 +75,11 @@ public class LampControllerRequest {
         this.communicationMode = communicationMode;
     }
 
-    public String getDimmingMode() {
+    public Integer getDimmingMode() {
         return dimmingMode;
     }
 
-    public void setDimmingMode(String dimmingMode) {
+    public void setDimmingMode(Integer dimmingMode) {
         this.dimmingMode = dimmingMode;
     }
 

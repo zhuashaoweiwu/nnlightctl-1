@@ -54,6 +54,17 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
     }
 
     @Override
+    public PhotoPeriod PhotoperiodById(PhotoperiodConditionRequest request) {
+
+        //获取id
+        Long id = request.getId();
+        //通过id到数据库查询数据
+        PhotoPeriod photoPeriod = photoperiodMapper.selectById(id);
+
+        return photoPeriod;
+    }
+
+    @Override
     public Tuple.TwoTuple<List<PhotoperiodView>, Integer> listPhotoperiod(PhotoperiodConditionRequest request) {
         Tuple.TwoTuple<List<PhotoperiodView>,Integer> listPhotoperiod=new Tuple.TwoTuple<>();
 

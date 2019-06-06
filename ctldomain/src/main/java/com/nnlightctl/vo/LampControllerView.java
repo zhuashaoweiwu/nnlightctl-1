@@ -14,7 +14,7 @@ public class LampControllerView {
 
     private String communicationMode;
 
-    private String dimmingMode;
+    private Integer dimmingMode;
 
     private Double ratedVoltage;
 
@@ -25,6 +25,14 @@ public class LampControllerView {
     private String alarmMessage;
 
     private String mem;
+
+    public Integer getDimmingMode() {
+        return dimmingMode;
+    }
+
+    public void setDimmingMode(Integer dimmingMode) {
+        this.dimmingMode = dimmingMode;
+    }
 
     public Long getId() {
         return id;
@@ -74,13 +82,6 @@ public class LampControllerView {
         this.communicationMode = communicationMode;
     }
 
-    public String getDimmingMode() {
-        return dimmingMode;
-    }
-
-    public void setDimmingMode(String dimmingMode) {
-        this.dimmingMode = dimmingMode;
-    }
 
     public Double getRatedVoltage() {
         return ratedVoltage;

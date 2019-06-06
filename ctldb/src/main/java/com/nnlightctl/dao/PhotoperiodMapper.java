@@ -1,7 +1,6 @@
 package com.nnlightctl.dao;
 
 import com.nnlightctl.po.PhotoPeriod;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +16,7 @@ public interface PhotoperiodMapper {
     int selectByCount();
 
     List<PhotoPeriod> selectAll();
+
+    PhotoPeriod selectById(Long id);
 
 }

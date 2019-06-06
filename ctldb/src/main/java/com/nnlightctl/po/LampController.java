@@ -8,9 +8,9 @@ public class LampController implements Serializable {
 
     private Long id;
 
-    private String centralizeModel;
+    private String lampModel;
 
-    private String centralizeName;
+    private String lampName;
 
     private String longitude;
 
@@ -18,7 +18,7 @@ public class LampController implements Serializable {
 
     private String communicationMode;
 
-    private String dimmingMode;
+    private Integer dimmingMode;
 
     private Double ratedVoltage;
 
@@ -42,21 +42,6 @@ public class LampController implements Serializable {
         this.id = id;
     }
 
-    public String getCentralizeModel() {
-        return centralizeModel;
-    }
-
-    public void setCentralizeModel(String centralizeModel) {
-        this.centralizeModel = centralizeModel;
-    }
-
-    public String getCentralizeName() {
-        return centralizeName;
-    }
-
-    public void setCentralizeName(String centralizeName) {
-        this.centralizeName = centralizeName;
-    }
 
     public String getLongitude() {
         return longitude;
@@ -80,14 +65,6 @@ public class LampController implements Serializable {
 
     public void setCommunicationMode(String communicationMode) {
         this.communicationMode = communicationMode;
-    }
-
-    public String getDimmingMode() {
-        return dimmingMode;
-    }
-
-    public void setDimmingMode(String dimmingMode) {
-        this.dimmingMode = dimmingMode;
     }
 
     public Double getRatedVoltage() {
@@ -128,5 +105,29 @@ public class LampController implements Serializable {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getLampModel() {
+        return lampModel;
+    }
+
+    public void setLampModel(String lampModel) {
+        this.lampModel = lampModel;
+    }
+
+    public String getLampName() {
+        return lampName;
+    }
+
+    public void setLampName(String lampName) {
+        this.lampName = lampName;
+    }
+
+    public Integer getDimmingMode() {
+        return dimmingMode;
+    }
+
+    public void setDimmingMode(Integer dimmingMode) {
+        this.dimmingMode = dimmingMode;
     }
 }

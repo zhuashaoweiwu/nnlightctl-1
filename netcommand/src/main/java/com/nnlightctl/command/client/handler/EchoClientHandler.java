@@ -25,7 +25,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<CommandData> 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         context.setChannelHandlerContext(ctx);
-        context.run();
+        //context.run();
 
         //切换客户端类型为命令客户端
         ctx.writeAndFlush(new CommandData("zxx"));
@@ -41,7 +41,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<CommandData> 
         logger.error(cause.getMessage());
         ctx.close();
 
-        context.reConnect();
+        //context.reConnect();
     }
 
     private Context context;

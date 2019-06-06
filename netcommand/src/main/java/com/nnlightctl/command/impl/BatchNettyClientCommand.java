@@ -43,7 +43,7 @@ public class BatchNettyClientCommand implements Command {
                 logger.error(e.getMessage());
 
                 //连接异常，启动定时器定时重连
-                reConnect();
+                //reConnect();
             }
         });
 

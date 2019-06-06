@@ -1,5 +1,6 @@
 package com.nnlightctl.po;
 
+
 import java.io.Serializable;
 
 
