@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql:///nnlightctl
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+
+
+mybatis:
+  mapper-locations: classpath:com/weatherdb/mapper/*.xml
+
+server:
+  port: 8000
+
+tcp:
+  port: 56556
+  url: 192.168.10.210
+
+
+slave:
+  count: 1
+
+thread:
+  number: 1
+
+map:
+  count: 5
+  number: 8
+
+
