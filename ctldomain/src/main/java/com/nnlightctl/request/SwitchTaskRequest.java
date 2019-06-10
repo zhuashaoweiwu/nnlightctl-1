@@ -1,9 +1,11 @@
 package com.nnlightctl.request;
 
+import com.nnlightctl.vo.SwitchTaskInfoView;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 public class SwitchTaskRequest {
     public Long getId() {
@@ -72,6 +74,14 @@ public class SwitchTaskRequest {
 
     private Long id;
 
+    public List<SwitchTaskInfoView> getSwitchTaskInfoArray() {
+        return switchTaskInfoArray;
+    }
+
+    public void setSwitchTaskInfoArray(List<SwitchTaskInfoView> switchTaskInfoArray) {
+        this.switchTaskInfoArray = switchTaskInfoArray;
+    }
+
     @NotBlank(message = "名称不能为空！")
     private String switchName;
 
@@ -87,4 +97,7 @@ public class SwitchTaskRequest {
     private Byte period;
 
     private Byte lightPercent;
+
+    private List<SwitchTaskInfoView>  switchTaskInfoArray;
+
 }

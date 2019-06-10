@@ -13,6 +13,26 @@
     <result column="period" property="period" jdbcType="TINYINT" />
     <result column="light_percent" property="lightPercent" jdbcType="TINYINT" />
   </resultMap>
+
+  <resultMap id="getSwitchTaskInfo"  type="com.nnlightctl.po.SwitchTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+    <result column="switch_name" property="switchName" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="is_lighton" property="isLighton" jdbcType="TINYINT" />
+    <result column="is_usebeam" property="isUsebeam" jdbcType="TINYINT" />
+    <result column="period" property="period" jdbcType="TINYINT" />
+    <result column="light_percent" property="lightPercent" jdbcType="TINYINT" />
+    <collection property="infos" ofType="com.nnlightctl.po.SwitchTaskInfo">
+      <result column="begin_time" property="beginTime"/>
+      <result column="sti_lightPercent" property="lightPercent"/>
+      <result column="sti_id" property="id"/>
+    </collection>
+  </resultMap>
+
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -75,14 +95,20 @@
     id, gmt_created, gmt_updated, switch_name, start_time, end_time, is_lighton, is_usebeam, 
     period, light_percent
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.SwitchTaskExample" >
+  <sql id="Switch_Task_Info" >
+     nst.id, nst.gmt_created, nst.gmt_updated, nst.switch_name, nst.start_time, nst.end_time, nst.is_lighton, nst.is_usebeam,
+     nst.period, nst.light_percent ,nsti.begin_time , nsti.light_percent  as sti_lightPercent,nsti.id as sti_id
+  </sql>
+
+
+  <select id="selectByExample" resultMap="getSwitchTaskInfo" parameterType="com.nnlightctl.po.SwitchTaskExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from nnlightctl_switch_task
+    <include refid="Switch_Task_Info" />
+    from nnlightctl_switch_task nst  LEFT JOIN nnlightctl_switch_task_info nsti on nst.id = nsti.switch_task_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,6 +116,10 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -234,7 +264,6 @@
       gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       switch_name = #{record.switchName,jdbcType=VARCHAR},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      end_time = #{record.endTime,jdbcType=TIMESTAMP},
       is_lighton = #{record.isLighton,jdbcType=TINYINT},
       is_usebeam = #{record.isUsebeam,jdbcType=TINYINT},
       period = #{record.period,jdbcType=TINYINT},

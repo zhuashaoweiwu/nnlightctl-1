@@ -40,11 +40,23 @@
         <property name="maxInMemorySize" value="524288" />
     </bean>
 
+
+
+
+
     <!-- 处理请求返回json字符串的中文乱码问题 -->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="false">
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
                 <constructor-arg value="UTF-8"></constructor-arg>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean id="MappingJackson2HttpMessageConverter"
+                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>application/json;charset=UTF-8</value>
@@ -53,6 +65,9 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+
+
 
     <bean id="userOpLogFilter" class="com.nnlightctl.filter.OpLogFilter" />
 

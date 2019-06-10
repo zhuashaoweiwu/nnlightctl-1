@@ -2,6 +2,7 @@ package com.nnlightctl.po;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class SwitchTask implements Serializable {
     private Long id;
@@ -23,6 +24,17 @@ public class SwitchTask implements Serializable {
     private Byte period;
 
     private Byte lightPercent;
+
+    private List<SwitchTaskInfo> infos;
+
+
+    public List<SwitchTaskInfo> getInfos() {
+        return infos;
+    }
+
+    public void setInfos(List<SwitchTaskInfo> infos) {
+        this.infos = infos;
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -4,12 +4,16 @@ package com.nnlightctl.net;
 import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
+import com.nnlightctl.vo.SwitchTaskInfoView;
 
 import java.io.Serializable;
 import java.security.PublicKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class CommandData implements Serializable {
 
@@ -121,12 +125,12 @@ public class CommandData implements Serializable {
 
         sum += this.start1;
 
-        if( this.logicalArea != 0 ) {
-            sum += this.logicalArea & 0xFF ;
+        if (this.logicalArea != 0) {
+            sum += this.logicalArea & 0xFF;
         }
 
-        if( this.physicsArea != 0 ) {
-            sum += this.physicsArea  & 0xFF;
+        if (this.physicsArea != 0) {
+            sum += this.physicsArea & 0xFF;
         }
 
         for (int i = 0; i < imei.length; i++) {
@@ -156,7 +160,7 @@ public class CommandData implements Serializable {
         this.check = createCheck();
     }
 
-    public static CommandData getTerminalResetCommand(byte[] imei,byte control) {
+    public static CommandData getTerminalResetCommand(byte[] imei, byte control) {
         CommandData commandData = new CommandData();
         commandData.setImei(imei);
         commandData.setControl(control);
@@ -189,7 +193,16 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
-    public static CommandData getConfigTerminalSwitchPolicy(CommandData c7Command,byte [] imei) {
+    public static CommandData getCommandReadTerminalInfo() {
+        CommandData commandData = new CommandData();
+
+        commandData.setControl((byte) 0xe8);
+        commandData.setCheck(commandData.createCheck());
+
+        return commandData;
+    }
+
+    public static CommandData getConfigTerminalSwitchPolicy(CommandData c7Command, byte[] imei) {
         CommandData commandData = new CommandData();
 
 
@@ -207,16 +220,7 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
-    public static CommandData getCommandReadTerminalInfo() {
-        CommandData commandData = new CommandData();
-
-        commandData.setControl((byte) 0xe8);
-        commandData.setCheck(commandData.createCheck());
-
-        return commandData;
-    }
-
-    public static CommandData getCommandConfigTerminalModel(byte model,byte [] imei) {
+    public static CommandData getCommandConfigTerminalModel(byte model, byte[] imei) {
         CommandData commandData = new CommandData();
 
         commandData.setImei(imei);
@@ -267,7 +271,7 @@ public class CommandData implements Serializable {
         return commandData;
     }
 
-    public static CommandData getChangePowerTypeCommandData(byte powerType,byte[] imei) {
+    public static CommandData getChangePowerTypeCommandData(byte powerType, byte[] imei) {
         CommandData commandData = new CommandData();
         commandData.setImei(imei);
         commandData.setControl((byte) 0xEC);
@@ -284,9 +288,9 @@ public class CommandData implements Serializable {
 
     public static CommandData commandGetModelStateByGateway(byte[] modelUUIDBytes) {
         CommandData commandData = new CommandData();
-        commandData.setAddr(new byte[]{0,0,0,0,0,2});
-        commandData.setLogicalArea((byte)0xff);
-        commandData.setPhysicsArea((byte)0xff);
+        commandData.setAddr(new byte[]{0, 0, 0, 0, 0, 2});
+        commandData.setLogicalArea((byte) 0xff);
+        commandData.setPhysicsArea((byte) 0xff);
         commandData.setImei(modelUUIDBytes);
         commandData.setControl((byte) 0xd0);
         commandData.setDataLength((byte) 0);
@@ -295,13 +299,12 @@ public class CommandData implements Serializable {
         commandData.resetCheck();
 
 
-
         return commandData;
     }
 
     public static CommandData commandConfigModelStateByGateway(byte[] modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
-        commandData.setAddr(new byte[]{0,0,0,0,0,2});
+        commandData.setAddr(new byte[]{0, 0, 0, 0, 0, 2});
         commandData.setLogicalArea((byte) 0xff);
         commandData.setPhysicsArea((byte) 0xff);
         commandData.setImei(modelUUID);
@@ -318,13 +321,16 @@ public class CommandData implements Serializable {
         k += 2;
         commandData.setData(data);
         commandData.resetCheck();
-         return commandData;
+        return commandData;
     }
 
-    public static CommandData getConfigSetTimeCommand(byte[] time) {
+    public static CommandData getConfigSetTimeCommand(byte[] time, byte[] imei) {
         CommandData commandData = new CommandData();
+        commandData.setAddr(new byte[]{0, 0, 0, 0, 0, 2});
+        commandData.setLogicalArea((byte) 0xff);
+        commandData.setPhysicsArea((byte) 0xff);
+        commandData.setImei(imei);
         commandData.setControl((byte) 0xd5);
-
         commandData.setDataLength((byte) 6);
         commandData.setData(time);
         commandData.resetCheck();
@@ -629,18 +635,12 @@ public class CommandData implements Serializable {
      * @param realtimeUUID
      * @return
      */
-    public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList, String realtimeUUID) {
+    public static CommandData getC7CommandData(List<SceneView.SwitchTask> switchTaskList, String realtimeUUID, Map<Long, Object> verification) {
         CommandData commandData = new CommandData();
 
         commandData.setControl((byte) 0xc7);
-
-        int dataLength = 14 * switchTaskList.size() + 4;
-        if (dataLength > 255) {
-            throw new RuntimeException("设置开关任务策略大于15条错误");
-        }
-
+        int dataLength = (int) verification.get(0L);
         commandData.setDataLength((byte) dataLength);
-
         byte[] data = new byte[dataLength];
         int k = 0;
 
@@ -649,10 +649,26 @@ public class CommandData implements Serializable {
         System.arraycopy(realtimeUUIDBytes, 0, data, k, 4);
         k += 4;
 
+        DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd-HH-mm");
         for (SceneView.SwitchTask switchTask : switchTaskList) {
+            if (switchTask.getPeriod().equals((byte) 4)) {
+                Iterator<SwitchTaskInfoView> iterator = ((List<SwitchTaskInfoView>) verification.get(switchTask.getId())).iterator();
+                while (iterator.hasNext()) {
+                    SwitchTaskInfoView taskInfo = iterator.next();
+                    data[k++] = iterator.hasNext() ? switchTask.getPeriod() : 0x14;
+                    String[] date = dateFormat.format(iterator.hasNext() ? switchTask.getStartTime() : switchTask.getEndTime() ).split("-");
+                    String[] time = dateFormat.format(taskInfo.getBeginTime()).split("-");
+                    data[k++] = Byte.parseByte(date[0]);
+                    data[k++] = Byte.parseByte(date[1]);
+                    data[k++] = Byte.parseByte(date[2]);
+                    data[k++] = Byte.parseByte(time[3]);
+                    data[k++] = Byte.parseByte(time[4]);
+                    data[k++] = taskInfo.getLightPercent();
+                }
+                continue;
+            }
             //任务开始
             data[k++] = switchTask.getPeriod();
-            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd-HH-mm");
             String[] startDateStrArray = dateFormat.format(switchTask.getStartTime()).split("-");
             data[k++] = Byte.parseByte(startDateStrArray[0]);
             data[k++] = Byte.parseByte(startDateStrArray[1]);
@@ -671,12 +687,11 @@ public class CommandData implements Serializable {
             data[k++] = Byte.parseByte(endDateStrArray[4]);
             data[k++] = (byte) 0;
         }
-
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());
-
         return commandData;
     }
+
 
     /**
      * 命令层C8命令获取终端信息
@@ -839,7 +854,7 @@ public class CommandData implements Serializable {
         byte[] realtimeUUIDBytes = BytesHexStrTranslate.toBytes(gatewayRealtimeUUID);
         byte[] modelUUIDBytes = new byte[modelUUID.length()];
         for (int i = 0; i < modelUUID.length(); i++) {
-            modelUUIDBytes[i] = Byte.parseByte(""+modelUUID.charAt(i));
+            modelUUIDBytes[i] = Byte.parseByte("" + modelUUID.charAt(i));
         }
         int length = realtimeUUIDBytes.length + modelUUIDBytes.length;
         commandData.setDataLength((byte) length);
@@ -854,8 +869,6 @@ public class CommandData implements Serializable {
         commandData.resetCheck();
         return commandData;
     }
-
-
 
 
     /*
@@ -891,9 +904,9 @@ public class CommandData implements Serializable {
      */
     public static CommandData getA1CommandData(String gatewayRealtimeUUID, String modelUUID, short modelLoop, short modelLoopState) {
         CommandData commandData = new CommandData();
-        byte [] modelUUIDBytes = new byte[17];
+        byte[] modelUUIDBytes = new byte[17];
         for (int i = 0; i < modelUUID.length(); i++) {
-            modelUUIDBytes[i] = Byte.parseByte(""+modelUUID.charAt(i));
+            modelUUIDBytes[i] = Byte.parseByte("" + modelUUID.charAt(i));
         }
         commandData.setImei(modelUUIDBytes);
         commandData.setControl((byte) 0xa1);
@@ -936,7 +949,7 @@ public class CommandData implements Serializable {
      *命令层设置0xA3应答指令
      *@return
      * */
-    public static CommandData getA3CommandData(String realtime_id,byte [] imei) {
+    public static CommandData getA3CommandData(String realtime_id, byte[] imei) {
         CommandData commandData = new CommandData();
         commandData.setImei(imei);
         commandData.setControl((byte) 0xa3);

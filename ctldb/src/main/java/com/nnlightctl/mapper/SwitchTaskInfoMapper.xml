@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.dao.SwitchTaskInfoMapper">
+    <resultMap id="BaseResultMap" type="com.nnlightctl.po.SwitchTaskInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="begin_time" property="beginTime" jdbcType="TIME"/>
+        <result column="light_percent" property="lightPercent" jdbcType="TINYINT"/>
+        <result column="switch_task_id" property="switchTaskId" jdbcType="BIGINT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, begin_time, light_percent, switch_task_id, create_date, last_update_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from nnlightctl_switch_task_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectCountByTaskId" resultType="int">
+        SELECT count(*) FROM `nnlightctl_switch_task_info` where switch_task_id in
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="taskIds">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByTaskId"  resultType="com.nnlightctl.vo.SwitchTaskInfoView" parameterType="java.lang.Long">
+        SELECT
+        id, begin_time AS beginTime, light_percent AS lightPercent, switch_task_id as switchTaskId
+        FROM `nnlightctl_switch_task_info` where switch_task_id = #{taskId};
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from nnlightctl_switch_task_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+    <delete id="deleteByTaskId">
+        delete from nnlightctl_switch_task_info
+        where switch_task_id = #{taskId,jdbcType=BIGINT} and id not in
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="taskInfoIds">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.nnlightctl.po.SwitchTaskInfo">
+    insert into nnlightctl_switch_task_info (id, begin_time, light_percent, 
+      switch_task_id, create_date, last_update_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{beginTime,jdbcType=TIME}, #{lightPercent,jdbcType=TINYINT}, 
+      #{switchTaskId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.nnlightctl.po.SwitchTaskInfo">
+        insert into nnlightctl_switch_task_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="beginTime != null">
+                begin_time,
+            </if>
+            <if test="lightPercent != null">
+                light_percent,
+            </if>
+            <if test="switchTaskId != null">
+                switch_task_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="beginTime != null">
+                #{beginTime,jdbcType=TIME},
+            </if>
+            <if test="lightPercent != null">
+                #{lightPercent,jdbcType=TINYINT},
+            </if>
+            <if test="switchTaskId != null">
+                #{switchTaskId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateDate != null">
+                #{lastUpdateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.SwitchTaskInfo">
+        update nnlightctl_switch_task_info
+        <set>
+            <if test="beginTime != null">
+                begin_time = #{beginTime,jdbcType=TIME},
+            </if>
+            <if test="lightPercent != null">
+                light_percent = #{lightPercent,jdbcType=TINYINT},
+            </if>
+            <if test="switchTaskId != null">
+                switch_task_id = #{switchTaskId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.SwitchTaskInfo">
+    update nnlightctl_switch_task_info
+    set begin_time = #{beginTime,jdbcType=TIME},
+      light_percent = #{lightPercent,jdbcType=TINYINT},
+      switch_task_id = #{switchTaskId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -3,6 +3,7 @@ package com.nnlight.netcodec;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.util.ByteConvert;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
@@ -40,7 +41,7 @@ public class CommandDataEncoder extends MessageToByteEncoder<CommandData> {
             data[k++] = commandData.getEnd0();
             //帧识别码
             System.arraycopy(commandData.getEnd1(), 0, data, k, commandData.getEnd1().length);
-
+            System.out.println(ByteBufUtil.hexDump(data));
             byteBuf.writeBytes(data);
         } catch (Exception e) {
             System.err.println("------------------------CommandData 编码错误---------------------");

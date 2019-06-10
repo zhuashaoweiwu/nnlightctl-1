@@ -6,6 +6,7 @@ import com.nnlightctl.net.ModBusResponse;
 import com.nnlightctl.vo.SceneView;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Command {
     void sendMsg(String msg);
@@ -15,7 +16,7 @@ public interface Command {
     void configTerminalSendMsgPeriod(int period);
     void commandTerminalEleboxOn(Boolean eleboxOn);
     void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks);
-    void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID);
+    void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID,Map<Long, Object> verification);
     void commandReadTerminalInfo();
     void receiveMsg(CommandData in);
     void produce(CommandData in);

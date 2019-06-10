@@ -401,8 +401,6 @@ public class EchoServer {
             if (entry.getKey().equalsIgnoreCase(gatewayRealtimeUUID)) {
                 ChannelHandlerContext context = entry.getValue().getContext();
                 CommandData commandData = CommandData.commandGetModelStateByGateway(modelUUIDBytes);
-
-//                test(commandData);
                 context.writeAndFlush(commandData);
                 break;
             }
@@ -502,7 +500,7 @@ public class EchoServer {
     public void batchConfigSetTime(byte[] time){
         for (Map.Entry<String, ChannelWrap> entry : clientChannelMap.entrySet()) {
             ChannelHandlerContext context = entry.getValue().getContext();
-            context.writeAndFlush(CommandData.getConfigSetTimeCommand(time));
+            context.writeAndFlush(CommandData.getConfigSetTimeCommand(time,entry.getValue().getImei().getBytes()));
         }
     }
     /*

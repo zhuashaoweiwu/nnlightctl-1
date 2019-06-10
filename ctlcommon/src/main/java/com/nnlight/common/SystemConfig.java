@@ -83,6 +83,10 @@ public class SystemConfig {
 
     public static class getInfo {
 
+        public interface getConstant {
+            public static final byte HOLIDAYVACATIONS = 4;/**4为策略节假日*/
+        }
+
         protected interface getCacheKey {
 
             public static final Integer DATALENGTHINDEX = 5;

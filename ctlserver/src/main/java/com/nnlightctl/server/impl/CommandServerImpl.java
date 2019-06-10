@@ -1,6 +1,8 @@
 package com.nnlightctl.server.impl;
 
 import cn.hutool.core.io.FileUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.nnlight.common.ArrayUtil;
 import com.nnlight.common.CRCUtil;
 import com.nnlight.common.Constants;
@@ -11,6 +13,7 @@ import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.FirewareUploadRecordMapper;
+import com.nnlightctl.dao.SwitchTaskInfoMapper;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
@@ -19,11 +22,13 @@ import com.nnlightctl.po.FirewareUploadRecord;
 import com.nnlightctl.po.FirewareUploadRecordExample;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SwitchTask;
+import com.nnlightctl.po.SwitchTaskInfo;
 import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.server.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
 import com.nnlightctl.vo.SceneView;
+import com.nnlightctl.vo.SwitchTaskInfoView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +40,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommandServerImpl implements CommandServer {
@@ -49,6 +55,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private EleboxModelLoopMapper eleboxModelLoopMapper;
+
+    @Autowired
+    private SwitchTaskInfoMapper switchTaskInfoMapper;
 
     @Autowired
     private SceneServer sceneServer;
@@ -86,7 +95,7 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public void sendLightAdjustCommandBatch(List<Long> lightIds, int percent) {
         if (lightIds == null || lightIds.size() < 1) {
-             throw new RuntimeException("批量操作的灯具数量为0");
+            throw new RuntimeException("批量操作的灯具数量为0");
         }
 
         List<String> realtime_ids = new ArrayList<>(1);
@@ -164,13 +173,16 @@ public class CommandServerImpl implements CommandServer {
             switchViewList.add(switchTaskView);
         }
 
+        Map<Long, Object> verification = Verification(switchViewList);
+
         for (String terminalUUID : terminalUUIDs) {
             String terminalRealtimeUUID = lightServer.getLightingByUUID(terminalUUID).getRealtimeUid();
             command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
-            command.configTerminalSwitchPolicy(switchViewList, terminalRealtimeUUID);
+            command.configTerminalSwitchPolicy(switchViewList, terminalRealtimeUUID, verification);
             command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
         }
     }
+
 
     @Override
     public void configTerminalAutoModel(int model) {
@@ -185,7 +197,7 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
-    public void commandReadServiceFixedInfo(List<Long> lightIds){
+    public void commandReadServiceFixedInfo(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -232,7 +244,7 @@ public class CommandServerImpl implements CommandServer {
     }
 
     @Override
-    public void configServiceOpenClose(List<Long> lightIds){
+    public void configServiceOpenClose(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -244,8 +256,9 @@ public class CommandServerImpl implements CommandServer {
         }
         command.serviceOpenClose(realtime_ids);
     }
+
     @Override
-    public void batchConfigRestart(List<Long> lightIds){
+    public void batchConfigRestart(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -257,8 +270,9 @@ public class CommandServerImpl implements CommandServer {
         }
         command.batchConfigRestart(realtime_ids);
     }
+
     @Override
-    public void batchCommandReadTimeParameter(List<Long> lightIds){
+    public void batchCommandReadTimeParameter(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -270,8 +284,9 @@ public class CommandServerImpl implements CommandServer {
         }
         command.batchCommandReadTimeParameter(realtime_ids);
     }
+
     @Override
-    public void batchCommandReadSending(List<Long> lightIds){
+    public void batchCommandReadSending(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -283,12 +298,14 @@ public class CommandServerImpl implements CommandServer {
         }
         command.batchCommandReadSending(realtime_ids);
     }
+
     @Override
-    public void batchConfigSetTime(){
+    public void batchConfigSetTime() {
         command.batchConfigSetTime();
     }
+
     @Override
-    public void batchConfigOpenCloseStrategy(List<Long> lightIds){
+    public void batchConfigOpenCloseStrategy(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -300,8 +317,9 @@ public class CommandServerImpl implements CommandServer {
         }
         command.batchConfigOpenCloseStrategy(realtime_ids);
     }
+
     @Override
-    public void batchConfigWorkModel(List<Long> lightIds){
+    public void batchConfigWorkModel(List<Long> lightIds) {
         if (lightIds == null || lightIds.size() < 1) {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
@@ -421,7 +439,7 @@ public class CommandServerImpl implements CommandServer {
                 if (i == number - 1) {
                     //全部CRC32验证
                     randomAccessFile.seek(0);
-                    byte[] totalBuffer = new byte[(int)saveFirewareFile.length()];
+                    byte[] totalBuffer = new byte[(int) saveFirewareFile.length()];
                     int k = randomAccessFile.read(totalBuffer);
                     byte[] crc32Bytes = ArrayUtil.reverse(BytesHexStrTranslate.toBytes(CRCUtil.get32CRC(totalBuffer)));
                     //扩展最后一个包
@@ -449,8 +467,8 @@ public class CommandServerImpl implements CommandServer {
         FirewareUploadRecord firewareUploadRecord = new FirewareUploadRecord();
         firewareUploadRecord.setGmtUpdated(new Date());
         firewareUploadRecord.setFirewareVersion(request.getVersion());
-        firewareUploadRecord.setPackageNumber((short)number);
-        firewareUploadRecord.setLastPackageSize((byte)lastPackageSize);
+        firewareUploadRecord.setPackageNumber((short) number);
+        firewareUploadRecord.setLastPackageSize((byte) lastPackageSize);
         firewareUploadRecord.setPersist1(request.getAspect());
 
         return firewareUploadRecordServer.addOrUpdateFirewareUploadRecord(firewareUploadRecord);
@@ -501,5 +519,26 @@ public class CommandServerImpl implements CommandServer {
     @Override
     public ModBusResponse invokeModbusDirective(String realtimeUUID, byte[] directiveBytes) {
         return command.invokeModbusEM(realtimeUUID, directiveBytes);
+    }
+
+
+    private Map<Long, Object> Verification(List<SceneView.SwitchTask> switchTaskList) {
+        int dataLength = 4;
+        Map<Long, Object> resultMap = Maps.newHashMap();
+        List<Long> parList = Lists.newArrayList();
+        for (SceneView.SwitchTask task : switchTaskList) {
+            if (!task.getPeriod().equals((byte)4))
+                dataLength += 14;
+            else {
+                parList.add(task.getId());
+                List<SwitchTaskInfoView> switchTaskInfos = switchTaskInfoMapper.selectByTaskId(task.getId());
+                dataLength += switchTaskInfos.size() * 7;
+                resultMap.put(task.getId(), switchTaskInfos);
+            }
+            if (dataLength > 255)
+                throw new RuntimeException("设置开关任务策略大于15条错误");
+        }
+        resultMap.put(0L, dataLength);
+        return resultMap;
     }
 }

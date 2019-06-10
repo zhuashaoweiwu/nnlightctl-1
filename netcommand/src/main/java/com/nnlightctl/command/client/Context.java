@@ -6,7 +6,9 @@ import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
 import com.nnlightctl.net.D0Response;
 import com.nnlightctl.net.ModBusResponse;
+import com.nnlightctl.util.ByteConvert;
 import com.nnlightctl.vo.SceneView;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;
@@ -62,7 +64,7 @@ public class Context {
             command.produce(in);
         }
 
-        if (in.getControl() == (byte)0xd0) {
+        if (in.getControl() == (byte) 0xd0) {
             FutureResult futureResult = uuidMapFutureResult.get(getImei(in.getUUID().getBytes()));
             if (futureResult != null) {
                 futureResult.setCommandData(in);
@@ -71,7 +73,7 @@ public class Context {
         }
 
         //modbus回复指令
-        if (in.getControl() == (byte)0x12) {
+        if (in.getControl() == (byte) 0x12) {
             FutureResult futureResult = uuidMapFutureResult.get(MODBUS_UUID);
             if (futureResult != null) {
                 futureResult.setCommandData(in);
@@ -80,10 +82,10 @@ public class Context {
         }
     }
 
-    private  String getImei (byte... bytes) {
+    private String getImei(byte... bytes) {
         String returnS = "";
         for (int i = 0; i < bytes.length; i++) {
-            returnS +=bytes[i];
+            returnS += bytes[i];
         }
         return returnS;
     }
@@ -94,12 +96,12 @@ public class Context {
     }
 
     public void sendLightAdjust(int percent) {
-        channelHandlerContext.writeAndFlush(new CommandData(percent, (byte)0xc2));
+        channelHandlerContext.writeAndFlush(new CommandData(percent, (byte) 0xc2));
     }
 
     public void batchSendLightAdjust(List<String> realtime_ids, int percent) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, percent, (byte)0xc2));
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, percent, (byte) 0xc2));
         }
     }
 
@@ -119,9 +121,10 @@ public class Context {
         channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks));
     }
 
-    public void configTerminalSwitchPolicyBatch(List<SceneView.SwitchTask> switchTasks, String realtimeUUID) {
-        channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks, realtimeUUID));
+    public void configTerminalSwitchPolicyBatch(List<SceneView.SwitchTask> switchTasks, String realtimeUUID, Map<Long, Object> verification) {
+        channelHandlerContext.writeAndFlush(CommandData.getC7CommandData(switchTasks, realtimeUUID, verification));
     }
+
 
     public void commandReadTerminalInfo() {
         channelHandlerContext.writeAndFlush(CommandData.getC8CommandData());
@@ -184,43 +187,49 @@ public class Context {
         this.command = command;
     }
 
-    public void commandReadServiceFixedInfo(List<String> realtime_ids){
+    public void commandReadServiceFixedInfo(List<String> realtime_ids) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa0) );
-        }
-    }
-    public void serviceOpenClose(List<String> realtime_ids){
-        for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa1) );
-        }
-    }
-    public void batchConfigRestart(List<String> realtime_ids){
-        for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa2) );
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa0));
         }
     }
 
-    public void batchCommandReadTimeParameter(List<String> realtime_ids){
+    public void serviceOpenClose(List<String> realtime_ids) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa3) );
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa1));
         }
     }
-    public void batchCommandReadSending(List<String> realtime_ids){
+
+    public void batchConfigRestart(List<String> realtime_ids) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa4) );
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa2));
         }
     }
-    public void batchConfigSetTime(){
+
+    public void batchCommandReadTimeParameter(List<String> realtime_ids) {
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa3));
+        }
+    }
+
+    public void batchCommandReadSending(List<String> realtime_ids) {
+        for (String realtime_id : realtime_ids) {
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa4));
+        }
+    }
+
+    public void batchConfigSetTime() {
         channelHandlerContext.writeAndFlush(CommandData.getA5CommandData());
     }
-    public void batchConfigOpenCloseStrategy(List<String> realtime_ids){
+
+    public void batchConfigOpenCloseStrategy(List<String> realtime_ids) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa6) );
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa6));
         }
     }
-    public void batchConfigWorkModel(List<String> realtime_ids){
+
+    public void batchConfigWorkModel(List<String> realtime_ids) {
         for (String realtime_id : realtime_ids) {
-            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte)0xa7) );
+            channelHandlerContext.writeAndFlush(new CommandData(realtime_id, (byte) 0xa7));
         }
     }
 

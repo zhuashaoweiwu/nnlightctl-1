@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.*;
 
@@ -106,8 +107,8 @@ public class BatchNettyClientCommand implements Command {
     }
 
     @Override
-    public void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID) {
-        context.configTerminalSwitchPolicyBatch(switchTasks, terminalRealtimeUUID);
+    public void configTerminalSwitchPolicy(List<SceneView.SwitchTask> switchTasks, String terminalRealtimeUUID,Map<Long, Object> verification) {
+        context.configTerminalSwitchPolicyBatch(switchTasks, terminalRealtimeUUID,verification);
     }
 
     @Override
