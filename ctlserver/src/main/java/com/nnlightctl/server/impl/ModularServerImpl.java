@@ -11,10 +11,12 @@ import com.nnlightctl.request.ModularRequest;
 import com.nnlightctl.server.ModularServer;
 import com.nnlightctl.vo.ModularView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ModularServerImpl implements ModularServer {
 
 
@@ -27,7 +29,7 @@ public class ModularServerImpl implements ModularServer {
     public int addOrUpdateModular(ModularRequest request) {
 
 
-        if (request!=null){
+        if (request==null){
             throw new RuntimeException("提交信息数据为空");
         }
 
@@ -37,7 +39,7 @@ public class ModularServerImpl implements ModularServer {
 
         if (request.getId()==null){
             //新增
-            flag = modularMapper.insert(modular);
+            flag = modularMapper.insertSelective(modular);
 
         }else {
             //修改
@@ -72,6 +74,8 @@ public class ModularServerImpl implements ModularServer {
         if (request.getId() != null && request.getId() > 0) {
             criteria.andIdEqualTo(request.getId());
         }
+
+
 
         Long example1 = modularMapper.countByExample(example);
 

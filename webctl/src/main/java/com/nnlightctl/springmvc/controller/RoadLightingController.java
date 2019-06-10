@@ -63,6 +63,9 @@ public class RoadLightingController extends BaseController {
     @Autowired
     private LampControllerServer lampControllerServer;
 
+    @Autowired
+    private ModularServer modularServer;
+
 
     /**
      * 开关模块
@@ -72,8 +75,94 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("addorupdatemodular")
     public String addOrUpdateModular(ModularRequest request){
 
+        logger.info("[POST] api/roadlighting/addorupdatemodular");
 
-        return null;
+        JsonResult jsonResult=null;
+
+        int flag = modularServer.addOrUpdateModular(request);
+
+        if (flag>0){
+            jsonResult = JsonResult.getSUCCESS();
+            jsonResult.setTotal(-1);
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deletemodular")
+    public String deleteModular(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/deletemodular");
+
+        JsonResult jsonResult=null;
+
+        int flag = modularServer.deleteModularByPrimaryKey(request);
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectmodularbyid")
+    public String selectModularById(ModularConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/selectmodularbyid");
+
+        JsonResult jsonResult=null;
+
+        Modular modular = modularServer.selectByPrimaryKey(request);
+
+        List<Modular> modulars=new ArrayList<>();
+
+        modulars.add(modular);
+
+        jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setData(modulars);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("selectmodularall")
+    public  String selectModularAll(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectmodularall");
+        Tuple.TwoTuple<List<ModularView>, Integer> twoTuple = modularServer.listModular(request);
+
+        JsonResult jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectbyparams")
+    public String selectByParams(ModularConditionRequest request){
+
+        List<Modular> modulars = modularServer.selectByParams(request);
+
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(modulars.size());
+
+        jsonResult.setData(modulars);
+
+        return toJson(jsonResult);
+
     }
 /**************************开关模块***********************************/
     /**
