@@ -3,32 +3,27 @@
 <mapper namespace="com.nnlightctl.dao.LampControllerMapper" >
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.LampController" >
         <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="lampName" property="lampName" jdbcType="VARCHAR" />
-        <result column="lampModel" property="lampModel" jdbcType="VARCHAR" />
+        <result column="lamp_model" property="lampName" jdbcType="VARCHAR" />
+        <result column="lamp_name" property="lampModel" jdbcType="VARCHAR" />
         <result column="longitude" property="longitude" jdbcType="VARCHAR" />
         <result column="latitude" property="latitude" jdbcType="VARCHAR" />
-        <result column="communicationMode" property="communicationMode" jdbcType="VARCHAR" />
-        <result column="dimmingMode" property="dimmingMode" jdbcType="INTEGER" />
-        <result column="ratedVoltage" property="ratedVoltage" jdbcType="DECIMAL" />
-        <result column="ratedCurrent" property="ratedCurrent" jdbcType="DECIMAL" />
-        <result column="staticPower" property="staticPower" jdbcType="DECIMAL"/>
-        <result column="alarmMessage" property="alarmMessage" jdbcType="VARCHAR" />
+        <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
+        <result column="dimming_mode" property="dimmingMode" jdbcType="INTEGER" />
+        <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL" />
+        <result column="rated_current" property="ratedCurrent" jdbcType="DECIMAL" />
+        <result column="static_power" property="staticPower" jdbcType="DECIMAL"/>
+        <result column="alarm_message" property="alarmMessage" jdbcType="VARCHAR" />
         <result column="mem" property="mem" jdbcType="VARCHAR" />
     </resultMap>
-    <insert id="insert" parameterType="com.nnlightctl.po.Lamppost">
-        insert into nnlightctl_lamppost
+    <insert id="insert" parameterType="com.nnlightctl.po.LampController">
+        insert into nnlightctl_lamp_controller
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="lamppostModel != null" >
-                lamppost_model,
+
+            <if test="lampModel != null" >
+                lamp_model,
             </if>
-            <if test="lampostName != null" >
-                lampost_name,
-            </if>
-            <if test="high != null" >
-                high,
-            </if>
-            <if test="lampheadNumber != null" >
-                lamphead_number,
+            <if test="lampName != null" >
+                lamp_name,
             </if>
             <if test="longitude != null" >
                 longitude,
@@ -36,84 +31,99 @@
             <if test="latitude != null" >
                 latitude,
             </if>
-            <if test="materima !=null">
-                materima,
+            <if test="communicationMode != null" >
+                communication_mode,
             </if>
-            <if test="land !=null">
-                land,
+            <if test="dimmingMode != null" >
+                dimming_mode,
             </if>
-            <if test="lampheadColor !=null">
-                lamphead_color,
+            <if test="ratedVoltage !=null">
+                rated_voltage,
             </if>
-            <if test="mem != null" >
+            <if test="ratedCurrent !=null">
+                rated_current,
+            </if>
+            <if test="staticPower !=null">
+                static_power,
+            </if>
+            <if test="alarmMessage != null" >
+                alarm_message,
+            </if>
+            <if test="mem !=null">
                 mem,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="lamppostModel != null" >
-                lamppost_model=#{lamppostModel,jdbcType=VARCHAR},
+            <if test="lampModel != null" >
+                #{lampModel,jdbcType=VARCHAR},
             </if>
-            <if test="lampostName != null" >
-                lampost_name=#{lampostName,jdbcType=VARCHAR},
-            </if>
-            <if test="high != null" >
-                high=#{high,jdbcType=DECIMAL},
-            </if>
-            <if test="lampheadNumber != null" >
-                lamphead_number=#{lampheadNumber,jdbcType=INTEGER},
+            <if test="lampName != null" >
+                #{lampName,jdbcType=VARCHAR},
             </if>
             <if test="longitude != null" >
-                longitude=#{longitude,jdbcType=VARCHAR},
+                #{longitude,jdbcType=VARCHAR},
             </if>
             <if test="latitude != null" >
-                latitude=#{latitude,jdbcType=VARCHAR},
+                #{latitude,jdbcType=VARCHAR},
             </if>
-            <if test="materima !=null">
-                materima=#{materima,jdbcType=VARCHAR},
+            <if test="communicationMode != null" >
+                #{communicationMode,jdbcType=VARCHAR},
             </if>
-            <if test="land !=null">
-                land=#{land,jdbcType=DECIMAL},
+            <if test="dimmingMode != null" >
+                #{dimmingMode,jdbcType=INTEGER},
             </if>
-            <if test="lampheadColor !=null">
-                lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
+            <if test="ratedVoltage !=null">
+                #{ratedVoltage,jdbcType=DECIMAL},
             </if>
-            <if test="mem != null" >
-                mem=#{mem,jdbcType="VARCHAR"}
+            <if test="ratedCurrent !=null">
+                #{ratedCurrent,jdbcType=DECIMAL},
+            </if>
+            <if test="staticPower !=null">
+                #{staticPower,jdbcType=DECIMAL},
+            </if>
+            <if test="alarmMessage != null" >
+                #{alarmMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="mem !=null">
+                #{mem,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Lamppost">
-         update nnlightctl_lamppost
+    <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.LampController">
+         update nnlightctl_lamp_controller
          <set>
-             <if test="lamppostModel != null" >
-                 lamppost_model=#{lamppostModel,jdbcType=VARCHAR},
+             <if test="lampModel != null" >
+                 lamp_model=#{lampModel,jdbcType=VARCHAR},
              </if>
-             <if test="lamppostName != null" >
-                 lampost_name=#{lampostName,jdbcType=VARCHAR},
-             </if>
-             <if test="high != null" >
-                 high=#{high,jdbcType=DECIMAL},
-             </if>
-             <if test="lampheadNumber != null" >
-                 lamphead_number=#{lampheadNumber,jdbcType=INT},
+             <if test="lampName != null" >
+                 lamp_name=#{lampName,jdbcType=VARCHAR},
              </if>
              <if test="longitude != null" >
                  longitude=#{longitude,jdbcType=VARCHAR},
              </if>
              <if test="latitude != null" >
-                 latitude=#{latitude,jdbcType=VARCHAR},
+                latitude=#{latitude,jdbcType=VARCHAR},
              </if>
-             <if test="materima !=null">
-                 materima=#{materima,jdbcType=VARCHAR},
+             <if test="communicationMode != null" >
+                 communication_mode=#{communicationMode,jdbcType=VARCHAR},
              </if>
-             <if test="land !=null">
-                 land=#{land,jdbcType=DECIMAL},
+             <if test="dimmingMode != null" >
+                 dimming_mode=#{dimmingMode,jdbcType=INTEGER},
              </if>
-             <if test="lampheadColor !=null">
-                 lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
+             <if test="ratedVoltage !=null">
+                 rated_voltage=#{ratedVoltage,jdbcType=DECIMAL},
              </if>
-             <if test="mem != null" >
-                 mem=#{mem,jdbcType="VARCHAR"},
+             <if test="ratedCurrent !=null">
+                 rated_current=#{ratedCurrent,jdbcType=DECIMAL},
+             </if>
+             <if test="staticPower !=null">
+                 static_power=#{staticPower,jdbcType=DECIMAL},
+             </if>
+             <if test="alarmMessage != null" >
+                 alarm_message=#{alarmMessage,jdbcType=VARCHAR},
+             </if>
+             <if test="mem !=null">
+                mem=#{mem,jdbcType=VARCHAR}
              </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
@@ -122,32 +132,57 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="long">
-    delete from nnlightctl_lamppost
+    delete from nnlightctl_lamp_controller
     where id = #{id,jdbcType=BIGINT}
     </delete>
     <select id="selectByCount" resultType="java.lang.Integer">
-        select count(*) from nnlightctl_photoperiod
+        select count(*) from nnlightctl_lamp_controller
     </select>
 
     <sql id="Base_Column_List">
-        id,lamppost_model,lampost_name,high,lamphead_number,longitude
-        ,latitude,materima,land,lamphead_color,mem
+        id,lamp_model,lamp_name,longitude,latitude,
+        communication_mode,dimming_mode,rated_Voltage,
+        rated_current,static_power,alarm_message,mem
     </sql>
-    <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
+    <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
         select
           <include refid="Base_Column_List" />
-         from nnlightctl_lamppost
+         from nnlightctl_lamp_controller
     </select>
 
-    <select id="selectById" resultMap="BaseResultMap" parameterType="long" resultType="com.nnlightctl.po.LampController">
-        select <include refid="Base_Column_List" />
+    <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
+        select  <include refid="Base_Column_List" />
         from nnlightctl_lamp_controller
         <where>
             <if test="id !=null">
-                id=#{id}
+                id=#{id,jdbcType=BIGINT}
             </if>
         </where>
 
+    </select>
+    <select id="selectByParameter" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
+        select <include refid="Base_Column_List" />
+        from nnlightctl_lamp_controller
+        <where>
+            <if test="params.lampModel !=null">
+                lamp_model like concat('%',#{params.lampModel},'%')
+            </if>
+            <if test="params.lampName !=null">
+               AND lamp_name like concat('%',#{params.lampName},'%')
+            </if>
+            <if test="params.longitude !=null">
+               AND longitude like concat('%',#{params.longitude},'%')
+            </if>
+            <if test="params.latitude !=null">
+               AND latitude like concat('%',#{params.latitude},'%')
+            </if>
+            <if test="params.communicationMode !=null">
+               AND communication_mode like concat('%',#{params.communicationMode},'%')
+            </if>
+            <if test="params.dimmingMode !=null">
+              AND dimming_mode like concat('%',#{params.dimmingMode},'%')
+            </if>
+        </where>
     </select>
 
 

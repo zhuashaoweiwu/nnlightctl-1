@@ -1,6 +1,7 @@
 package com.nnlightctl.dao;
 
 import com.nnlightctl.po.Lamppost;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface LamppostMapper {
     int selectByCountLamppost();
 
     List<Lamppost> selectAllLamppost();
+
+    Lamppost selectLampById(@Param("id") Long id);
 }

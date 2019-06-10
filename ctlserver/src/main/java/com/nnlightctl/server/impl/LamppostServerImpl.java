@@ -79,4 +79,13 @@ public class LamppostServerImpl implements LamppostServer {
         listLamppost.setFirst(lamppostViews);
         return listLamppost;
     }
+
+    @Override
+    public Lamppost selectLamppostById(LamppostConditionRequest request) {
+
+        Long id = request.getId();
+
+        Lamppost lamppost = lamppostMapper.selectLampById(id);
+        return lamppost;
+    }
 }

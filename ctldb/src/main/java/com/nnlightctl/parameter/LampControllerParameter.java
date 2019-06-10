@@ -1,19 +1,12 @@
-package com.nnlightctl.request;
+package com.nnlightctl.parameter;
 
-
-import java.util.List;
-
-public class LampControllerConditionRequest extends BaseRequest{
-
-    private List<Long> lampControllerIds;
+public class LampControllerParameter {
 
     private String lampModel;
 
     private String lampName;
 
-    private Long id;
-
-    private String longtitude;
+    private String longitude;
 
     private String latitude;
 
@@ -37,20 +30,12 @@ public class LampControllerConditionRequest extends BaseRequest{
         this.lampName = lampName;
     }
 
-    public Long getId() {
-        return id;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLongtitude() {
-        return longtitude;
-    }
-
-    public void setLongtitude(String longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public String getLatitude() {
@@ -76,14 +61,4 @@ public class LampControllerConditionRequest extends BaseRequest{
     public void setDimmingMode(Integer dimmingMode) {
         this.dimmingMode = dimmingMode;
     }
-
-    public List<Long> getLampControllerIds() {
-        return lampControllerIds;
-    }
-
-    public void setLampControllerIds(List<Long> lampControllerIds) {
-        this.lampControllerIds = lampControllerIds;
-    }
-
-
 }

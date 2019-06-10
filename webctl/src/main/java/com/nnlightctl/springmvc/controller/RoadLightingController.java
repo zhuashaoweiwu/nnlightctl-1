@@ -65,12 +65,26 @@ public class RoadLightingController extends BaseController {
 
 
     /**
+     * 开关模块
+     * @param request
+     * @return
+     */
+    @RequestMapping("addorupdatemodular")
+    public String addOrUpdateModular(ModularRequest request){
+
+
+        return null;
+    }
+/**************************开关模块***********************************/
+    /**
      * 单灯控制器
      * @param request
      * @return
      */
     @RequestMapping("addorupdatelampcontroller")
     public String addOrUpdateLampController(LampControllerRequest request){
+
+        logger.info("[POST]  api/roadlighting/addorupdatelampcontroller");
 
         int ret=lampControllerServer.addOrUpdateLampController(request);
 
@@ -90,14 +104,22 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("deletelampcontroller")
     public String deleteLampController(LampControllerConditionRequest request){
 
+        logger.info("[POST] api/roadlighting/deletelampcontroller");
+
         int ret = lampControllerServer.deleteLampController(request);
 
         JsonResult jsonResult=null;
 
         if (ret>0){
             jsonResult=JsonResult.getSUCCESS();
+            jsonResult.setTotal(null);
         }else {
-            jsonResult=JsonResult.getFAILURE();
+            if (ret==-1){
+                jsonResult = JsonResult.FALLURE_IDS_NULL;
+            }
+            if (ret==-2){
+                jsonResult=JsonResult.FALLURE_IDS_CODEERROR;
+            }
         }
 
         return toJson(jsonResult);
@@ -106,9 +128,16 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("listlampcontroller")
-    public String listLampController(){
+    public String listLampController(LampControllerConditionRequest request){
 
-        Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=lampControllerServer.listLampController();
+        logger.info("[POST] api/roadlighting/listlampcontroller");
+
+        if (request.getPageSize()==0||request.getPageNumber()==0){
+
+            return toJson(JsonResult.FALLURE_NOPAGE);
+        }
+
+        Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=lampControllerServer.listLampController(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
 
@@ -119,11 +148,57 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("selectbyidlampcontroller")
+    public String selectByIdLampController(LampControllerConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbyidlampcontroller ");
+
+        JsonResult jsonResult=null;
 
 
+        List<LampController> lampControllerList=new ArrayList<>();
+
+        LampController lampController = lampControllerServer.selectByIdLampController(request);
+
+        jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(1);
+
+        lampControllerList.add(lampController);
+
+        jsonResult.setData(lampControllerList);
+
+        return toJson(jsonResult);
 
 
+    }
 
+
+    @RequestMapping("selectbyparamslampcontroller")
+    public String selectByParamsLampController(LampControllerConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbyparamslampcontroller");
+
+        List<LampController> lampControllerList = lampControllerServer.SelectByParameter(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setData(lampControllerList);
+
+        int total = lampControllerList.size();
+
+        jsonResult.setTotal(total);
+
+        return toJson(jsonResult);
+
+    }
+
+/*****************************************单灯控制器******************************************/
+    /**
+     * 灯杆
+     * @param Request
+     * @return
+     */
     @RequestMapping("addorupdatelamppost")
     public String addOrUpdateLamppost(LamppostRequest Request){
 
@@ -145,6 +220,8 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("listlamppost")
     public String listListLamppost(LamppostConditionRequest request){
 
+        logger.info("[POST api/roadlighting/listlamppost]");
+
         Tuple.TwoTuple<List<LamppostView>,Integer> listLamppost=lamppostServer.listLamppost(request);
 
         JsonResult jsonResult=JsonResult.getSUCCESS();
@@ -159,6 +236,8 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("deletelamppost")
     public String deleteLamppost(LamppostConditionRequest request){
 
+        logger.info("[POST] api/roadlighting/deletelamppost");
+
         int flag = lamppostServer.deleteLamppost(request);
 
         JsonResult jsonResult=null;
@@ -169,6 +248,45 @@ public class RoadLightingController extends BaseController {
             jsonResult=JsonResult.getFAILURE();
         }
         return toJson(jsonResult);
+    }
+
+    /**
+     * 任意参数查询信息
+     * @param request
+     * @return
+     */
+    @RequestMapping("selectbyparameter")
+    public String selectByParameter(LamppostConditionRequest request){
+
+        return null;
+
+    }
+
+    @RequestMapping("selectlamppostbyid")
+    public String selectLamppostById(LamppostConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectlamppostbyid");
+
+        List<Lamppost> lamppostList=new ArrayList<>();
+
+        Lamppost lamppost = lamppostServer.selectLamppostById(request);
+
+        lamppostList.add(lamppost);
+
+        JsonResult jsonResult=null;
+
+        if (lamppost==null){
+            jsonResult=JsonResult.FALLURE_IDS_CODEERROR;
+        }else {
+            jsonResult=JsonResult.getSUCCESS();
+        }
+
+        jsonResult.setData(lamppostList);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+
     }
 
 
@@ -195,6 +313,8 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("deletephotoperiod")
     public String deletePhotoperiod(PhotoperiodConditionRequest request){
 
+        logger.info("[POST] api/roadlighting/deletephotoperiod");
+
         int ret = photoperiodServer.deletePhotoperiod(request);
 
         JsonResult jsonResult=null;
@@ -202,7 +322,13 @@ public class RoadLightingController extends BaseController {
         if (ret>0){
              jsonResult= JsonResult.getSUCCESS();
         }else {
-            jsonResult=JsonResult.getFAILURE();
+            if (ret<0&&request.getPhotoperiodIds()!=null){
+                jsonResult = JsonResult.FALLURE_IDS_CODEERROR;
+            }
+            if (ret<0&&request.getPhotoperiodIds()==null){
+                jsonResult = JsonResult.FALLURE_IDS_NULL;
+            }
+
 
         }
         return toJson(jsonResult);
@@ -239,6 +365,8 @@ public class RoadLightingController extends BaseController {
 
         jsonResult.setData(list);
 
+        jsonResult.setTotal(1);
+
         return toJson(jsonResult);
 
 
@@ -247,6 +375,7 @@ public class RoadLightingController extends BaseController {
 
     @RequestMapping("addorupdatemodelloop")
     public String addOrUpdateModelLoop(ModelLoopRequest request) {
+
         logger.info("[POST] /api/roadlighting/addorupdatemodelloop");
 
         int ret = modelLoopServer.addOrUpdateModelLoop(request);

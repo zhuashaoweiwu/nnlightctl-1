@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnlightctl.dao.ModularMapper">
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.Modular">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="modular_model" jdbcType="VARCHAR" property="modularModel" />
+    <result column="modular_name" jdbcType="VARCHAR" property="modularName" />
+    <result column="loop_number" jdbcType="INTEGER" property="loopNumber" />
+    <result column="communication_mode" jdbcType="VARCHAR" property="communicationMode" />
+    <result column="max_electric" jdbcType="INTEGER" property="maxElectric" />
+    <result column="load_electric" jdbcType="VARCHAR" property="loadElectric" />
+    <result column="Installation_mode" jdbcType="VARCHAR" property="installationMode" />
+    <result column="mem" jdbcType="VARCHAR" property="mem" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, modular_model, modular_name, loop_number, communication_mode, max_electric, load_electric, 
+    Installation_mode, mem
+  </sql>
+  <select id="selectByExample" parameterType="com.nnlightctl.po.ModularExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_modular
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from nnlightctl_modular
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.ModularExample">
+    delete from nnlightctl_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.Modular">
+    insert into nnlightctl_modular (id, modular_model, modular_name, 
+      loop_number, communication_mode, max_electric, 
+      load_electric, Installation_mode, mem
+      )
+    values (#{id,jdbcType=BIGINT}, #{modularModel,jdbcType=VARCHAR}, #{modularName,jdbcType=VARCHAR}, 
+      #{loopNumber,jdbcType=INTEGER}, #{communicationMode,jdbcType=VARCHAR}, #{maxElectric,jdbcType=INTEGER}, 
+      #{loadElectric,jdbcType=VARCHAR}, #{installationMode,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.Modular">
+    insert into nnlightctl_modular
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="modularModel != null">
+        modular_model,
+      </if>
+      <if test="modularName != null">
+        modular_name,
+      </if>
+      <if test="loopNumber != null">
+        loop_number,
+      </if>
+      <if test="communicationMode != null">
+        communication_mode,
+      </if>
+      <if test="maxElectric != null">
+        max_electric,
+      </if>
+      <if test="loadElectric != null">
+        load_electric,
+      </if>
+      <if test="installationMode != null">
+        Installation_mode,
+      </if>
+      <if test="mem != null">
+        mem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="modularModel != null">
+        #{modularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="modularName != null">
+        #{modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="loopNumber != null">
+        #{loopNumber,jdbcType=INTEGER},
+      </if>
+      <if test="communicationMode != null">
+        #{communicationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="maxElectric != null">
+        #{maxElectric,jdbcType=INTEGER},
+      </if>
+      <if test="loadElectric != null">
+        #{loadElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="installationMode != null">
+        #{installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        #{mem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.ModularExample" resultType="java.lang.Long">
+    select count(*) from nnlightctl_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByParams" resultType="com.nnlightctl.po.Modular">
+
+    select <include refid="Base_Column_List" />
+    from nnlightctl_modular
+    <where>
+      <if test="params.modularModel !=null">
+        AND modular_model like concat('%',#{params.modularModel},'%')
+      </if>
+      <if test="params.modularName !=null">
+        AND modular_name like concat('%',#{params.modularName},'%')
+      </if>
+      <if test="params.loopNumber !=null">
+        AND loop_number like concat('%',#{params.loopNumber},'%')
+      </if>
+      <if test="params.communicationMode !=null">
+        AND communication_mode like concat('%',#{params.commicationMode},'%')
+      </if>
+      <if test="params.maxElectric !=null">
+
+      </if>
+    </where>
+
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update nnlightctl_modular
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.modularModel != null">
+        modular_model = #{record.modularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modularName != null">
+        modular_name = #{record.modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loopNumber != null">
+        loop_number = #{record.loopNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.communicationMode != null">
+        communication_mode = #{record.communicationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxElectric != null">
+        max_electric = #{record.maxElectric,jdbcType=INTEGER},
+      </if>
+      <if test="record.loadElectric != null">
+        load_electric = #{record.loadElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="record.installationMode != null">
+        Installation_mode = #{record.installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mem != null">
+        mem = #{record.mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update nnlightctl_modular
+    set id = #{record.id,jdbcType=BIGINT},
+      modular_model = #{record.modularModel,jdbcType=VARCHAR},
+      modular_name = #{record.modularName,jdbcType=VARCHAR},
+      loop_number = #{record.loopNumber,jdbcType=INTEGER},
+      communication_mode = #{record.communicationMode,jdbcType=VARCHAR},
+      max_electric = #{record.maxElectric,jdbcType=INTEGER},
+      load_electric = #{record.loadElectric,jdbcType=VARCHAR},
+      Installation_mode = #{record.installationMode,jdbcType=VARCHAR},
+      mem = #{record.mem,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Modular">
+    update nnlightctl_modular
+    <set>
+      <if test="modularModel != null">
+        modular_model = #{modularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="modularName != null">
+        modular_name = #{modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="loopNumber != null">
+        loop_number = #{loopNumber,jdbcType=INTEGER},
+      </if>
+      <if test="communicationMode != null">
+        communication_mode = #{communicationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="maxElectric != null">
+        max_electric = #{maxElectric,jdbcType=INTEGER},
+      </if>
+      <if test="loadElectric != null">
+        load_electric = #{loadElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="installationMode != null">
+        Installation_mode = #{installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Modular">
+    update nnlightctl_modular
+    set modular_model = #{modularModel,jdbcType=VARCHAR},
+      modular_name = #{modularName,jdbcType=VARCHAR},
+      loop_number = #{loopNumber,jdbcType=INTEGER},
+      communication_mode = #{communicationMode,jdbcType=VARCHAR},
+      max_electric = #{maxElectric,jdbcType=INTEGER},
+      load_electric = #{loadElectric,jdbcType=VARCHAR},
+      Installation_mode = #{installationMode,jdbcType=VARCHAR},
+      mem = #{mem,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,9 +1,12 @@
 package com.nnlightctl.dao;
 
+import com.nnlightctl.parameter.LampControllerParameter;
 import com.nnlightctl.po.LampController;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface LampControllerMapper {
 
@@ -17,7 +20,9 @@ public interface LampControllerMapper {
 
     List<LampController> selectAll();
 
-    LampController selectById(Long id);
+    LampController selectById(@Param("id") Long id);
+
+    List<LampController> selectByParameter(@Param("params")LampControllerParameter parameter);
 
 
 }

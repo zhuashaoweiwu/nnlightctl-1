@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnlightctl.dao.ElectricityMeterMapper">
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.ElectricityMeter">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="electricity_model" jdbcType="VARCHAR" property="electricityModel" />
+    <result column="electricity_name" jdbcType="VARCHAR" property="electricityName" />
+    <result column="electric_standards" jdbcType="VARCHAR" property="electricStandards" />
+    <result column="voltage_test" jdbcType="VARCHAR" property="voltageTest" />
+    <result column="active_energy" jdbcType="DECIMAL" property="activeEnergy" />
+    <result column="Installation_mode" jdbcType="VARCHAR" property="installationMode" />
+    <result column="community_mode" jdbcType="VARCHAR" property="communityMode" />
+    <result column="measure_mode" jdbcType="VARCHAR" property="measureMode" />
+    <result column="power_factor" jdbcType="VARCHAR" property="powerFactor" />
+    <result column="power_waste" jdbcType="VARCHAR" property="powerWaste" />
+    <result column="mem" jdbcType="VARCHAR" property="mem" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, electricity_model, electricity_name, electric_standards, voltage_test, active_energy, 
+    Installation_mode, community_mode, measure_mode, power_factor, power_waste, mem
+  </sql>
+  <select id="selectByExample" parameterType="com.nnlightctl.po.ElectricityMeterExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_electricity_meter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_electricity_meter
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from nnlightctl_electricity_meter
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.ElectricityMeterExample">
+    delete from nnlightctl_electricity_meter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.ElectricityMeter">
+    insert into nnlightctl_electricity_meter (id, electricity_model, electricity_name, 
+      electric_standards, voltage_test, active_energy, 
+      Installation_mode, community_mode, measure_mode, 
+      power_factor, power_waste, mem
+      )
+    values (#{id,jdbcType=BIGINT}, #{electricityModel,jdbcType=VARCHAR}, #{electricityName,jdbcType=VARCHAR}, 
+      #{electricStandards,jdbcType=VARCHAR}, #{voltageTest,jdbcType=VARCHAR}, #{activeEnergy,jdbcType=DECIMAL}, 
+      #{installationMode,jdbcType=VARCHAR}, #{communityMode,jdbcType=VARCHAR}, #{measureMode,jdbcType=VARCHAR}, 
+      #{powerFactor,jdbcType=VARCHAR}, #{powerWaste,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.ElectricityMeter">
+    insert into nnlightctl_electricity_meter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="electricityModel != null">
+        electricity_model,
+      </if>
+      <if test="electricityName != null">
+        electricity_name,
+      </if>
+      <if test="electricStandards != null">
+        electric_standards,
+      </if>
+      <if test="voltageTest != null">
+        voltage_test,
+      </if>
+      <if test="activeEnergy != null">
+        active_energy,
+      </if>
+      <if test="installationMode != null">
+        Installation_mode,
+      </if>
+      <if test="communityMode != null">
+        community_mode,
+      </if>
+      <if test="measureMode != null">
+        measure_mode,
+      </if>
+      <if test="powerFactor != null">
+        power_factor,
+      </if>
+      <if test="powerWaste != null">
+        power_waste,
+      </if>
+      <if test="mem != null">
+        mem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="electricityModel != null">
+        #{electricityModel,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityName != null">
+        #{electricityName,jdbcType=VARCHAR},
+      </if>
+      <if test="electricStandards != null">
+        #{electricStandards,jdbcType=VARCHAR},
+      </if>
+      <if test="voltageTest != null">
+        #{voltageTest,jdbcType=VARCHAR},
+      </if>
+      <if test="activeEnergy != null">
+        #{activeEnergy,jdbcType=DECIMAL},
+      </if>
+      <if test="installationMode != null">
+        #{installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityMode != null">
+        #{communityMode,jdbcType=VARCHAR},
+      </if>
+      <if test="measureMode != null">
+        #{measureMode,jdbcType=VARCHAR},
+      </if>
+      <if test="powerFactor != null">
+        #{powerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="powerWaste != null">
+        #{powerWaste,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        #{mem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.ElectricityMeterExample" resultType="java.lang.Long">
+    select count(*) from nnlightctl_electricity_meter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update nnlightctl_electricity_meter
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.electricityModel != null">
+        electricity_model = #{record.electricityModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electricityName != null">
+        electricity_name = #{record.electricityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electricStandards != null">
+        electric_standards = #{record.electricStandards,jdbcType=VARCHAR},
+      </if>
+      <if test="record.voltageTest != null">
+        voltage_test = #{record.voltageTest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeEnergy != null">
+        active_energy = #{record.activeEnergy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.installationMode != null">
+        Installation_mode = #{record.installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communityMode != null">
+        community_mode = #{record.communityMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.measureMode != null">
+        measure_mode = #{record.measureMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.powerFactor != null">
+        power_factor = #{record.powerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.powerWaste != null">
+        power_waste = #{record.powerWaste,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mem != null">
+        mem = #{record.mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update nnlightctl_electricity_meter
+    set id = #{record.id,jdbcType=BIGINT},
+      electricity_model = #{record.electricityModel,jdbcType=VARCHAR},
+      electricity_name = #{record.electricityName,jdbcType=VARCHAR},
+      electric_standards = #{record.electricStandards,jdbcType=VARCHAR},
+      voltage_test = #{record.voltageTest,jdbcType=VARCHAR},
+      active_energy = #{record.activeEnergy,jdbcType=DECIMAL},
+      Installation_mode = #{record.installationMode,jdbcType=VARCHAR},
+      community_mode = #{record.communityMode,jdbcType=VARCHAR},
+      measure_mode = #{record.measureMode,jdbcType=VARCHAR},
+      power_factor = #{record.powerFactor,jdbcType=VARCHAR},
+      power_waste = #{record.powerWaste,jdbcType=VARCHAR},
+      mem = #{record.mem,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.ElectricityMeter">
+    update nnlightctl_electricity_meter
+    <set>
+      <if test="electricityModel != null">
+        electricity_model = #{electricityModel,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityName != null">
+        electricity_name = #{electricityName,jdbcType=VARCHAR},
+      </if>
+      <if test="electricStandards != null">
+        electric_standards = #{electricStandards,jdbcType=VARCHAR},
+      </if>
+      <if test="voltageTest != null">
+        voltage_test = #{voltageTest,jdbcType=VARCHAR},
+      </if>
+      <if test="activeEnergy != null">
+        active_energy = #{activeEnergy,jdbcType=DECIMAL},
+      </if>
+      <if test="installationMode != null">
+        Installation_mode = #{installationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityMode != null">
+        community_mode = #{communityMode,jdbcType=VARCHAR},
+      </if>
+      <if test="measureMode != null">
+        measure_mode = #{measureMode,jdbcType=VARCHAR},
+      </if>
+      <if test="powerFactor != null">
+        power_factor = #{powerFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="powerWaste != null">
+        power_waste = #{powerWaste,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.ElectricityMeter">
+    update nnlightctl_electricity_meter
+    set electricity_model = #{electricityModel,jdbcType=VARCHAR},
+      electricity_name = #{electricityName,jdbcType=VARCHAR},
+      electric_standards = #{electricStandards,jdbcType=VARCHAR},
+      voltage_test = #{voltageTest,jdbcType=VARCHAR},
+      active_energy = #{activeEnergy,jdbcType=DECIMAL},
+      Installation_mode = #{installationMode,jdbcType=VARCHAR},
+      community_mode = #{communityMode,jdbcType=VARCHAR},
+      measure_mode = #{measureMode,jdbcType=VARCHAR},
+      power_factor = #{powerFactor,jdbcType=VARCHAR},
+      power_waste = #{powerWaste,jdbcType=VARCHAR},
+      mem = #{mem,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

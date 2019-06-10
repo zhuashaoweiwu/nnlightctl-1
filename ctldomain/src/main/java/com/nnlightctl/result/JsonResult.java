@@ -5,6 +5,15 @@ import java.util.List;
 public class JsonResult {
     public static JsonResult SUCCESS = new JsonResult("1000", "成功");
     public static JsonResult FAILURE = new JsonResult("1001", "失败");
+    //通过id查询或者删除
+    public static  JsonResult FALLURE_IDS_NULL=new JsonResult("4001","传入id为空");
+
+    public static JsonResult FALLURE_IDS_CODEERROR=new JsonResult("4002","传入的id有误");
+
+    //校验是否传递当前页，和每页显示多少条
+    public static JsonResult FALLURE_NOPAGE=new JsonResult("4101","没有传入页码");
+
+
 
 
     public JsonResult(String code, String msg) {
@@ -49,15 +58,16 @@ public class JsonResult {
         this.data = data;
     }
 
-    public int getTotal() {
+    private Integer total;
+
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
-    private int total;
     private String code;
     private String msg;
     private List<?> data;

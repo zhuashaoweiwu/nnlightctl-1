@@ -50,34 +50,34 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="lamppostModel != null" >
-                lamppost_model=#{lamppostModel,jdbcType=VARCHAR},
+                #{lamppostModel,jdbcType=VARCHAR},
             </if>
             <if test="lampostName != null" >
-                lampost_name=#{lampostName,jdbcType=VARCHAR},
+                #{lampostName,jdbcType=VARCHAR},
             </if>
             <if test="high != null" >
-                high=#{high,jdbcType=DECIMAL},
+                #{high,jdbcType=DECIMAL},
             </if>
             <if test="lampheadNumber != null" >
-                lamphead_number=#{lampheadNumber,jdbcType=INTEGER},
+                #{lampheadNumber,jdbcType=INTEGER},
             </if>
             <if test="longitude != null" >
-                longitude=#{longitude,jdbcType=VARCHAR},
+                #{longitude,jdbcType=VARCHAR},
             </if>
             <if test="latitude != null" >
-                latitude=#{latitude,jdbcType=VARCHAR},
+                #{latitude,jdbcType=VARCHAR},
             </if>
             <if test="materima !=null">
-                materima=#{materima,jdbcType=VARCHAR},
+                #{materima,jdbcType=VARCHAR},
             </if>
             <if test="land !=null">
-                land=#{land,jdbcType=DECIMAL},
+                #{land,jdbcType=DECIMAL},
             </if>
             <if test="lampheadColor !=null">
-                lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
+                #{lampheadColor,jdbcType=VARCHAR},
             </if>
             <if test="mem != null" >
-                mem=#{mem,jdbcType="VARCHAR"},
+                #{mem,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -112,7 +112,7 @@
                  lamphead_color=#{lampheadColor,jdbcType=VARCHAR},
              </if>
              <if test="mem != null" >
-                 mem=#{mem,jdbcType="VARCHAR"},
+                 mem=#{mem,jdbcType=VARCHAR},
              </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
@@ -136,6 +136,15 @@
         select
           <include refid="Base_Column_List" />
          from nnlightctl_lamppost
+    </select>
+    <select id="selectLampById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
+        select <include refid="Base_Column_List" />
+        from nnlightctl_lamppost
+        <where>
+            <if test="id !=null">
+                id=#{id,jdbcType=BIGINT}
+            </if>
+        </where>
     </select>
 
 
