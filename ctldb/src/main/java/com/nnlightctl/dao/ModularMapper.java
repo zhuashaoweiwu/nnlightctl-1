@@ -33,5 +33,7 @@ public interface ModularMapper {
 
     List<Modular> selectByParams(@Param("params") ModularParameter modularParameter);
 
+    List<Modular> selectModularAll();
+
 
 }

@@ -3,6 +3,7 @@
 <mapper namespace="com.nnlightctl.dao.LamppostMapper" >
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.Lamppost" >
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
         <result column="lamppost_model" property="lamppostModel" jdbcType="VARCHAR" />
         <result column="lampost_name" property="lampostName" jdbcType="VARCHAR" />
         <result column="high" property="high" jdbcType="DECIMAL" />
@@ -47,6 +48,9 @@
             <if test="mem != null" >
                 mem,
             </if>
+            <if test="equipmentNumber !=null">
+                equipment_number
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="lamppostModel != null" >
@@ -78,6 +82,9 @@
             </if>
             <if test="mem != null" >
                 #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber !=null">
+                #{equipmentNumber,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -114,6 +121,9 @@
              <if test="mem != null" >
                  mem=#{mem,jdbcType=VARCHAR},
              </if>
+             <if test="equipmentNumber !=null">
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
+             </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
   </update>
@@ -132,10 +142,15 @@
         id,lamppost_model,lampost_name,high,lamphead_number,longitude
         ,latitude,materima,land,lamphead_color,mem
     </sql>
-    <select id="selectAllLamppost" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
+    <select id="selectAllLamppost" resultMap="BaseResultMap">
         select
           <include refid="Base_Column_List" />
          from nnlightctl_lamppost
+         <where>
+             <if test="lamppost.equipmentNumber !=null">
+                 equipment_number=#{lamppost.equipmentNumber,jdbcType=VARCHAR}
+             </if>
+         </where>
     </select>
     <select id="selectLampById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
         select <include refid="Base_Column_List" />

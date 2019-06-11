@@ -3,6 +3,7 @@
 <mapper namespace="com.nnlightctl.dao.PhotoperiodMapper" >
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.PhotoPeriod" >
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="equipment_number" property="equipmentNumber" jdbcType="VARCHAR" />
         <result column="photoperiod_model" property="photoperiodModel" jdbcType="VARCHAR" />
         <result column="photoperiod_name" property="photoperiodName" jdbcType="VARCHAR" />
         <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
@@ -35,6 +36,9 @@
             <if test="mem != null" >
                 mem,
             </if>
+            <if test="equipmentNumber !=null" >
+                equipment_number
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="photoperiodModel != null" >
@@ -57,6 +61,9 @@
             </if>
             <if test="mem != null" >
                 #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber !=null">
+                #{equipmentNumber,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -84,6 +91,9 @@
              <if test="mem != null" >
                  mem = #{mem,jdbcType=VARCHAR},
              </if>
+             <if test="equipmentNumber !=null">
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
+             </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
   </update>
@@ -99,13 +109,18 @@
     </select>
 
     <sql id="Base_Column_List">
-        id,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
+        id,equipment_number,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
         ,work_voltage,mem
     </sql>
-    <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod">
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="int">
         select
           <include refid="Base_Column_List" />
          from nnlightctl_photoperiod
+         <where>
+             <if test="params.equipmentNumber!=null">
+                 equipment_number=#{params.equipmentNumber,jdbcType=VARCHAR}
+             </if>
+         </where>
     </select>
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod" parameterType="long">
 

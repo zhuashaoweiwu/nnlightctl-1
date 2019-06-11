@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.ModularMapper;
@@ -69,13 +70,7 @@ public class ModularServerImpl implements ModularServer {
 
         ModularExample example=new ModularExample();
 
-        ModularExample.Criteria criteria = example.createCriteria();
-
-        if (request.getId() != null && request.getId() > 0) {
-            criteria.andIdEqualTo(request.getId());
-        }
-
-
+        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
         Long example1 = modularMapper.countByExample(example);
 
@@ -83,11 +78,11 @@ public class ModularServerImpl implements ModularServer {
 
         listModular.setSecond(total);
 
-        List<Modular> modulars = modularMapper.selectByExample(example);
+        List<Modular> modulars = modularMapper.selectModularAll();
 
-        ModularView modularView=new ModularView();
 
         for (Modular modular : modulars) {
+            ModularView modularView=new ModularView();
 
             ReflectCopyUtil.beanSameFieldCopy(modular,modularView);
 

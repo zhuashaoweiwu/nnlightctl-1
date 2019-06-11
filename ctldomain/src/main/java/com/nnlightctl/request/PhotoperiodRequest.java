@@ -10,6 +10,8 @@ public class PhotoperiodRequest extends BaseRequest{
 
     private Long id;
 
+    private String equipmentNumber;
+
     @NotBlank(message = "光照计的型号不能为空！")
     private String photoperiodModel;
 
@@ -89,5 +91,13 @@ public class PhotoperiodRequest extends BaseRequest{
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

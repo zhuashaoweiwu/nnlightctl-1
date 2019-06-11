@@ -15,7 +15,7 @@ public interface LamppostMapper {
 
     int selectByCountLamppost();
 
-    List<Lamppost> selectAllLamppost();
+    List<Lamppost> selectAllLamppost(@Param("lamppost") Lamppost lamppost);
 
     Lamppost selectLampById(@Param("id") Long id);
 }

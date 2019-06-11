@@ -18,7 +18,7 @@ public interface LampControllerMapper {
 
     int selectByCount();
 
-    List<LampController> selectAll();
+    List<LampController> selectAll(@Param("params") LampController lampController);
 
     LampController selectById(@Param("id") Long id);
 

@@ -1,8 +1,8 @@
-package com.nnlightctl.po;
+package com.nnlightctl.vo;
 
 import java.io.Serializable;
 
-public class ElectricityMeter implements Serializable {
+public class ElectricityMeterView implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

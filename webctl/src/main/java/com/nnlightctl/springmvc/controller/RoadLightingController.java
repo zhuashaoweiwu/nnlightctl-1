@@ -66,7 +66,110 @@ public class RoadLightingController extends BaseController {
     @Autowired
     private ModularServer modularServer;
 
+    @Autowired
+    private ElectricityMeterServer electricityMeterServer;
 
+
+    @RequestMapping("addorupdateelectricitymeter")
+    public String addOrUpdateElectricityMeter(ElectricityMeter request){
+
+        logger.info("[POST] api/roadlighting/addorupdateelectricitymeter");
+
+        JsonResult jsonResult=null;
+
+        int flag = electricityMeterServer.addOrUpdateElectricityMeter(request);
+
+        if (flag>0){
+            jsonResult = JsonResult.getSUCCESS();
+            jsonResult.setTotal(-1);
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deleteelectricitymeter")
+    public String deleteElectricityMeter(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/deleteelectricitymeter");
+
+        JsonResult jsonResult=null;
+
+        int flag = electricityMeterServer.deleteElectricityMeter(request);
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("delectelectricityById")
+    public String selectElectricityById(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/delectelectricityById");
+
+        JsonResult jsonResult=null;
+
+        ElectricityMeter electricityMeter = electricityMeterServer.selectByPrimarykey(request);
+
+        List<ElectricityMeter> list=new ArrayList<>(7);
+
+        list.add(electricityMeter);
+
+        jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setData(list);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("selectelectricityall")
+    public  String selectElectricityAll(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectelectricityall");
+
+        Tuple.TwoTuple<List<ElectricityMeterView>, Integer> twoTuple = electricityMeterServer.listElectricityMeter(request);
+
+        JsonResult jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectbyelectricityparams")
+    public String selectElectricityByParams(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbyelectricityparams");
+
+        JsonResult jsonResult=null;
+
+        List<ElectricityMeter> listElectricity = electricityMeterServer.selectByParams(request);
+
+        if (listElectricity.size()==0){
+            jsonResult=JsonResult.FALLURE_PARAMSERROR;
+        }else {
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(listElectricity.size());
+
+            jsonResult.setData(listElectricity);
+        }
+
+        return toJson(jsonResult);
+
+    }
+/************************************电表***********************************/
     /**
      * 开关模块
      * @param request
@@ -149,8 +252,10 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
-    @RequestMapping("selectbyparams")
-    public String selectByParams(ModularConditionRequest request){
+    @RequestMapping("selectbymodularparams")
+    public String selectModularByParams(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbymodularparams");
 
         List<Modular> modulars = modularServer.selectByParams(request);
 
@@ -344,7 +449,7 @@ public class RoadLightingController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("selectbyparameter")
+    @RequestMapping("selectbylamppostparameter")
     public String selectByParameter(LamppostConditionRequest request){
 
         return null;
@@ -378,6 +483,7 @@ public class RoadLightingController extends BaseController {
 
     }
 
+    /*****************************灯杆*****************************/
 
     @RequestMapping("addorupdatephotoperiod")
     public String addOrUpdatePhotoperiod(PhotoperiodRequest request){
@@ -460,6 +566,7 @@ public class RoadLightingController extends BaseController {
 
 
     }
+    /********************************光照计*********************************/
 
 
     @RequestMapping("addorupdatemodelloop")

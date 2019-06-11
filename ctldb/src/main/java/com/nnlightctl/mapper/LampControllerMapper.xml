@@ -148,6 +148,11 @@
         select
           <include refid="Base_Column_List" />
          from nnlightctl_lamp_controller
+         <where>
+             <if test="params.equipmentNumber !=null">
+                equipment_number like concat('%',#{params.equipmentNumber},'%')
+             </if>
+         </where>
     </select>
 
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">

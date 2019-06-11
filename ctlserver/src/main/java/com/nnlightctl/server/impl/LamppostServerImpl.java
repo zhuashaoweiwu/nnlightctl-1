@@ -64,14 +64,20 @@ public class LamppostServerImpl implements LamppostServer {
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
-        List<Lamppost> lampposts = lamppostMapper.selectAllLamppost();
+        String equipmentNumber = request.getEquipmentNumber();
+
+        Lamppost lamppost=new Lamppost();
+
+        lamppost.setEquipmentNumber(equipmentNumber);
+
+        List<Lamppost> lampposts = lamppostMapper.selectAllLamppost(lamppost);
 
         List<LamppostView> lamppostViews=new ArrayList<>();
 
-        for (Lamppost lamppost : lampposts) {
+        for (Lamppost lamppostNew : lampposts) {
             LamppostView lamppostView=new LamppostView();
 
-            ReflectCopyUtil.beanSameFieldCopy(lamppost,lamppostView);
+            ReflectCopyUtil.beanSameFieldCopy(lamppostNew,lamppostView);
 
             lamppostViews.add(lamppostView);
         }

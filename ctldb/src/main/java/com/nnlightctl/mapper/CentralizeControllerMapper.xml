@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnlightctl.dao.CentralizeControllerMapper">
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.CentralizeController">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="centralize_model" jdbcType="VARCHAR" property="centralizeModel" />
+    <result column="centralize_name" jdbcType="VARCHAR" property="centralizeName" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="do_channel" jdbcType="BIGINT" property="doChannel" />
+    <result column="di_channel" jdbcType="BIGINT" property="diChannel" />
+    <result column="switch_channel" jdbcType="BIGINT" property="switchChannel" />
+    <result column="voltage_channel" jdbcType="BIGINT" property="voltageChannel" />
+    <result column="electric_channel" jdbcType="BIGINT" property="electricChannel" />
+    <result column="test_channel" jdbcType="BIGINT" property="testChannel" />
+    <result column="up_channel" jdbcType="VARCHAR" property="upChannel" />
+    <result column="down_channel" jdbcType="VARCHAR" property="downChannel" />
+    <result column="mem" jdbcType="VARCHAR" property="mem" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, centralize_model, centralize_name, longitude, latitude, do_channel, di_channel, 
+    switch_channel, voltage_channel, electric_channel, test_channel, up_channel, down_channel, 
+    mem
+  </sql>
+  <select id="selectByExample" parameterType="com.nnlightctl.po.CentralizeControllerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from nnlightctl_centralize_controller
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_centralize_controller
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from nnlightctl_centralize_controller
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.CentralizeControllerExample">
+    delete from nnlightctl_centralize_controller
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.CentralizeController">
+    insert into nnlightctl_centralize_controller (id, centralize_model, centralize_name, 
+      longitude, latitude, do_channel, 
+      di_channel, switch_channel, voltage_channel, 
+      electric_channel, test_channel, up_channel, 
+      down_channel, mem)
+    values (#{id,jdbcType=BIGINT}, #{centralizeModel,jdbcType=VARCHAR}, #{centralizeName,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{doChannel,jdbcType=BIGINT}, 
+      #{diChannel,jdbcType=BIGINT}, #{switchChannel,jdbcType=BIGINT}, #{voltageChannel,jdbcType=BIGINT}, 
+      #{electricChannel,jdbcType=BIGINT}, #{testChannel,jdbcType=BIGINT}, #{upChannel,jdbcType=VARCHAR}, 
+      #{downChannel,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.CentralizeController">
+    insert into nnlightctl_centralize_controller
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="centralizeModel != null">
+        centralize_model,
+      </if>
+      <if test="centralizeName != null">
+        centralize_name,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="doChannel != null">
+        do_channel,
+      </if>
+      <if test="diChannel != null">
+        di_channel,
+      </if>
+      <if test="switchChannel != null">
+        switch_channel,
+      </if>
+      <if test="voltageChannel != null">
+        voltage_channel,
+      </if>
+      <if test="electricChannel != null">
+        electric_channel,
+      </if>
+      <if test="testChannel != null">
+        test_channel,
+      </if>
+      <if test="upChannel != null">
+        up_channel,
+      </if>
+      <if test="downChannel != null">
+        down_channel,
+      </if>
+      <if test="mem != null">
+        mem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="centralizeModel != null">
+        #{centralizeModel,jdbcType=VARCHAR},
+      </if>
+      <if test="centralizeName != null">
+        #{centralizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="doChannel != null">
+        #{doChannel,jdbcType=BIGINT},
+      </if>
+      <if test="diChannel != null">
+        #{diChannel,jdbcType=BIGINT},
+      </if>
+      <if test="switchChannel != null">
+        #{switchChannel,jdbcType=BIGINT},
+      </if>
+      <if test="voltageChannel != null">
+        #{voltageChannel,jdbcType=BIGINT},
+      </if>
+      <if test="electricChannel != null">
+        #{electricChannel,jdbcType=BIGINT},
+      </if>
+      <if test="testChannel != null">
+        #{testChannel,jdbcType=BIGINT},
+      </if>
+      <if test="upChannel != null">
+        #{upChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="downChannel != null">
+        #{downChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        #{mem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nnlightctl.po.CentralizeControllerExample" resultType="java.lang.Long">
+    select count(*) from nnlightctl_centralize_controller
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update nnlightctl_centralize_controller
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.centralizeModel != null">
+        centralize_model = #{record.centralizeModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.centralizeName != null">
+        centralize_name = #{record.centralizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doChannel != null">
+        do_channel = #{record.doChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.diChannel != null">
+        di_channel = #{record.diChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.switchChannel != null">
+        switch_channel = #{record.switchChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.voltageChannel != null">
+        voltage_channel = #{record.voltageChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.electricChannel != null">
+        electric_channel = #{record.electricChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.testChannel != null">
+        test_channel = #{record.testChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.upChannel != null">
+        up_channel = #{record.upChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downChannel != null">
+        down_channel = #{record.downChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mem != null">
+        mem = #{record.mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update nnlightctl_centralize_controller
+    set id = #{record.id,jdbcType=BIGINT},
+      centralize_model = #{record.centralizeModel,jdbcType=VARCHAR},
+      centralize_name = #{record.centralizeName,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      do_channel = #{record.doChannel,jdbcType=BIGINT},
+      di_channel = #{record.diChannel,jdbcType=BIGINT},
+      switch_channel = #{record.switchChannel,jdbcType=BIGINT},
+      voltage_channel = #{record.voltageChannel,jdbcType=BIGINT},
+      electric_channel = #{record.electricChannel,jdbcType=BIGINT},
+      test_channel = #{record.testChannel,jdbcType=BIGINT},
+      up_channel = #{record.upChannel,jdbcType=VARCHAR},
+      down_channel = #{record.downChannel,jdbcType=VARCHAR},
+      mem = #{record.mem,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.CentralizeController">
+    update nnlightctl_centralize_controller
+    <set>
+      <if test="centralizeModel != null">
+        centralize_model = #{centralizeModel,jdbcType=VARCHAR},
+      </if>
+      <if test="centralizeName != null">
+        centralize_name = #{centralizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="doChannel != null">
+        do_channel = #{doChannel,jdbcType=BIGINT},
+      </if>
+      <if test="diChannel != null">
+        di_channel = #{diChannel,jdbcType=BIGINT},
+      </if>
+      <if test="switchChannel != null">
+        switch_channel = #{switchChannel,jdbcType=BIGINT},
+      </if>
+      <if test="voltageChannel != null">
+        voltage_channel = #{voltageChannel,jdbcType=BIGINT},
+      </if>
+      <if test="electricChannel != null">
+        electric_channel = #{electricChannel,jdbcType=BIGINT},
+      </if>
+      <if test="testChannel != null">
+        test_channel = #{testChannel,jdbcType=BIGINT},
+      </if>
+      <if test="upChannel != null">
+        up_channel = #{upChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="downChannel != null">
+        down_channel = #{downChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.CentralizeController">
+    update nnlightctl_centralize_controller
+    set centralize_model = #{centralizeModel,jdbcType=VARCHAR},
+      centralize_name = #{centralizeName,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      do_channel = #{doChannel,jdbcType=BIGINT},
+      di_channel = #{diChannel,jdbcType=BIGINT},
+      switch_channel = #{switchChannel,jdbcType=BIGINT},
+      voltage_channel = #{voltageChannel,jdbcType=BIGINT},
+      electric_channel = #{electricChannel,jdbcType=BIGINT},
+      test_channel = #{testChannel,jdbcType=BIGINT},
+      up_channel = #{upChannel,jdbcType=VARCHAR},
+      down_channel = #{downChannel,jdbcType=VARCHAR},
+      mem = #{mem,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

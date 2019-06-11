@@ -1,10 +1,6 @@
-package com.nnlightctl.po;
+package com.nnlightctl.request;
 
-import java.io.Serializable;
-
-public class ElectricityMeter implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ElectricityMeterRequest {
 
     private Long id;
 

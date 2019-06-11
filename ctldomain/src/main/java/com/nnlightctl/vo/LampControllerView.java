@@ -26,6 +26,16 @@ public class LampControllerView {
 
     private String mem;
 
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
     public Integer getDimmingMode() {
         return dimmingMode;
     }

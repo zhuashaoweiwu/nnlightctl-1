@@ -30,6 +30,16 @@ public class LampController implements Serializable {
 
     private String mem;
 
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
