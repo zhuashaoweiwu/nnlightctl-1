@@ -33,7 +33,7 @@ public class LightModelServerImpl implements LightModelServer {
             ret = this.lightingModelMapper.updateByPrimaryKeySelective(lightingModel);
         } else {
             //添加
-            lightingModel.setGmtCreated(new Date());
+            //lightingModel.setGmtCreated(new Date());
             ret = this.lightingModelMapper.insertSelective(lightingModel);
         }
 

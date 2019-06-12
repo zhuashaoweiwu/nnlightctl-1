@@ -74,7 +74,6 @@ public class LampControllerImpl implements LampControllerServer {
 
         List<LampControllerView> lampControllerList=new ArrayList<>(8);
 
-        LampControllerView lampControllerView=new LampControllerView();
 
         int total = lampControllerMapper.selectByCount();
 
@@ -91,6 +90,8 @@ public class LampControllerImpl implements LampControllerServer {
         List<LampController> lampControllers = lampControllerMapper.selectAll(lampController);
 
         for (LampController lampControllerNew : lampControllers) {
+
+            LampControllerView lampControllerView=new LampControllerView();
 
             ReflectCopyUtil.beanSameFieldCopy(lampControllerNew,lampControllerView);
 

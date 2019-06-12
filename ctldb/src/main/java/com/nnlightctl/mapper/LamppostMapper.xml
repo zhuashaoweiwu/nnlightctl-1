@@ -140,7 +140,7 @@
 
     <sql id="Base_Column_List">
         id,lamppost_model,lampost_name,high,lamphead_number,longitude
-        ,latitude,materima,land,lamphead_color,mem
+        ,latitude,materima,land,lamphead_color,mem,equipment_number
     </sql>
     <select id="selectAllLamppost" resultMap="BaseResultMap">
         select
@@ -148,7 +148,7 @@
          from nnlightctl_lamppost
          <where>
              <if test="lamppost.equipmentNumber !=null">
-                 equipment_number=#{lamppost.equipmentNumber,jdbcType=VARCHAR}
+                 equipment_number like concat('%',#{lamppost.equipmentNumber},'%')
              </if>
          </where>
     </select>

@@ -11,6 +11,7 @@
     <result column="load_electric" jdbcType="VARCHAR" property="loadElectric" />
     <result column="installation_mode" jdbcType="VARCHAR" property="installationMode" />
     <result column="mem" jdbcType="VARCHAR" property="mem" />
+    <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, modular_model, modular_name, loop_number, communication_mode, max_electric, load_electric, 
-    installation_mode, mem
+    installation_mode, mem,equipment_number
   </sql>
   <select id="selectByExample" parameterType="com.nnlightctl.po.ModularExample" resultMap="BaseResultMap">
     select
@@ -145,6 +146,9 @@
       <if test="mem != null">
         mem,
       </if>
+      <if test="equipmentNumber !=null">
+        equipment_number
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -173,6 +177,9 @@
       </if>
       <if test="mem != null">
         #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber !=null">
+        #{equipmentNumber,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -239,6 +246,9 @@
       <if test="record.mem != null">
         mem = #{record.mem,jdbcType=VARCHAR},
       </if>
+      <if test="equipmentNumber !=null">
+        equipment_number=#{record.equipmentNumber,jdbcType=VARCHAR}
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -285,6 +295,9 @@
       </if>
       <if test="mem != null">
         mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber !=null">
+        equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

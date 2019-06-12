@@ -3,6 +3,7 @@
 <mapper namespace="com.nnlightctl.dao.LampControllerMapper" >
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.LampController" >
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="equipment_number" property="equipmentNumber" jdbcType="VARCHAR"/>
         <result column="lamp_model" property="lampName" jdbcType="VARCHAR" />
         <result column="lamp_name" property="lampModel" jdbcType="VARCHAR" />
         <result column="longitude" property="longitude" jdbcType="VARCHAR" />
@@ -18,7 +19,6 @@
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
         insert into nnlightctl_lamp_controller
         <trim prefix="(" suffix=")" suffixOverrides="," >
-
             <if test="lampModel != null" >
                 lamp_model,
             </if>
@@ -51,6 +51,9 @@
             </if>
             <if test="mem !=null">
                 mem,
+            </if>
+            <if test="equipmentNumber !=null">
+                equipment_number,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -85,7 +88,10 @@
                 #{alarmMessage,jdbcType=VARCHAR},
             </if>
             <if test="mem !=null">
-                #{mem,jdbcType=VARCHAR}
+                #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber !=null">
+                #{equipmentNumber,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -125,6 +131,9 @@
              <if test="mem !=null">
                 mem=#{mem,jdbcType=VARCHAR}
              </if>
+             <if test="equipmentNumber !=null">
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
+             </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
   </update>
@@ -142,7 +151,7 @@
     <sql id="Base_Column_List">
         id,lamp_model,lamp_name,longitude,latitude,
         communication_mode,dimming_mode,rated_Voltage,
-        rated_current,static_power,alarm_message,mem
+        rated_current,static_power,alarm_message,mem,equipment_number
     </sql>
     <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
         select

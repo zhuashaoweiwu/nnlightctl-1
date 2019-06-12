@@ -8,6 +8,7 @@ import com.nnlightctl.parameter.ElectricityMeterParameter;
 import com.nnlightctl.po.ElectricityMeter;
 import com.nnlightctl.po.ElectricityMeterExample;
 import com.nnlightctl.request.ElectricityMeterConditionRequest;
+import com.nnlightctl.request.ElectricityMeterRequest;
 import com.nnlightctl.server.ElectricityMeterServer;
 import com.nnlightctl.vo.ElectricityMeterView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
     private int flag=-1;
 
     @Override
-    public int addOrUpdateElectricityMeter(ElectricityMeter request) {
+    public int addOrUpdateElectricityMeter(ElectricityMeterRequest request) {
 
         if (request==null){
             throw new RuntimeException("提交信息数据为空");
@@ -43,7 +44,7 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
         }else {
             //修改
-            flag=electricityMeterMapper.updateByPrimaryKey(electricityMeter);
+            flag=electricityMeterMapper.updateByPrimaryKeySelective(electricityMeter);
         }
 
         return flag;

@@ -75,4 +75,67 @@ public class LightModelRequest {
     private Byte ledCount;
 
     private String mem;
+
+    /**
+     * 新添加字段
+     */
+    private String chip;
+
+    private String beanAngle;
+
+    private String controllerMode;
+
+    private String grade;
+
+    private int index;
+
+    private int flux;
+
+    public String getChip() {
+        return chip;
+    }
+
+    public void setChip(String chip) {
+        this.chip = chip;
+    }
+
+    public String getBeanAngle() {
+        return beanAngle;
+    }
+
+    public void setBeanAngle(String beanAngle) {
+        this.beanAngle = beanAngle;
+    }
+
+    public String getControllerMode() {
+        return controllerMode;
+    }
+
+    public void setControllerMode(String controllerMode) {
+        this.controllerMode = controllerMode;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getFlux() {
+        return flux;
+    }
+
+    public void setFlux(int flux) {
+        this.flux = flux;
+    }
 }

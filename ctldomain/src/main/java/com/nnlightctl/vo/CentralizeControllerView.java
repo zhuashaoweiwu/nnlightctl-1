@@ -1,11 +1,6 @@
-package com.nnlightctl.po;
+package com.nnlightctl.vo;
 
-import java.io.Serializable;
-
-public class CentralizeController implements Serializable {
-
-
-    private static final long serialVersionUID = 1L;
+public class CentralizeControllerView {
 
     private Long id;
 
@@ -36,14 +31,6 @@ public class CentralizeController implements Serializable {
     private String mem;
 
     private String equipmentNumber;
-
-    public String getEquipmentNumber() {
-        return equipmentNumber;
-    }
-
-    public void setEquipmentNumber(String equipmentNumber) {
-        this.equipmentNumber = equipmentNumber;
-    }
 
     public Long getId() {
         return id;
@@ -155,5 +142,13 @@ public class CentralizeController implements Serializable {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

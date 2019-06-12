@@ -69,9 +69,101 @@ public class RoadLightingController extends BaseController {
     @Autowired
     private ElectricityMeterServer electricityMeterServer;
 
+    @Autowired
+    private CentralizeControllerServer centralizeControllerServer;
 
+
+    @RequestMapping("addorupdatecentralizecontroller")
+    public String addOrUpdateCentralizeController(CentralizeControllerRquester request){
+
+        logger.info("[POST] api/roadlighting/addorupdatecentralizecontroller");
+
+        int flag = centralizeControllerServer.addOrUpdateCentralizeController(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("deleteCentralizeController")
+    public String deleteCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/deleteCentralizeController" );
+
+        JsonResult jsonResult=null;
+
+        int flag = centralizeControllerServer.deleteCentralizeController(request);
+
+        if (flag>0){
+
+            jsonResult=JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("listCentralizeController")
+    public String listCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/listCentralizeController");
+
+        Tuple.TwoTuple<List<CentralizeControllerView>, Integer> twoTuple = centralizeControllerServer.listCentralizeController(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("selectbyidcentralizecontroller")
+    public String selectByIdCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST  api/roadlighting/selectbyidcentralizecontroller]");
+
+        CentralizeController centralizeController = centralizeControllerServer.selectByPrimaryKey(request);
+
+        List<CentralizeController> centralizeControllers=new ArrayList<>();
+
+        centralizeControllers.add(centralizeController);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(1);
+
+        jsonResult.setData(centralizeControllers);
+
+        return toJson(jsonResult);
+
+    }
+/******************************************电表**********************************/
     @RequestMapping("addorupdateelectricitymeter")
-    public String addOrUpdateElectricityMeter(ElectricityMeter request){
+    public String addOrUpdateElectricityMeter(ElectricityMeterRequest request){
 
         logger.info("[POST] api/roadlighting/addorupdateelectricitymeter");
 
@@ -90,10 +182,10 @@ public class RoadLightingController extends BaseController {
     }
 
 
-    @RequestMapping("deleteelectricitymeter")
+    @RequestMapping("delectelectricitymeter")
     public String deleteElectricityMeter(ElectricityMeterConditionRequest request){
 
-        logger.info("[POST] api/roadlighting/deleteelectricitymeter");
+        logger.info("[POST] api/roadlighting/delectelectricitymeter");
 
         JsonResult jsonResult=null;
 
@@ -108,10 +200,10 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
-    @RequestMapping("delectelectricityById")
+    @RequestMapping("selectelectricityById")
     public String selectElectricityById(ElectricityMeterConditionRequest request){
 
-        logger.info("[POST]  api/roadlighting/delectelectricityById");
+        logger.info("[POST]  api/roadlighting/selectelectricityById");
 
         JsonResult jsonResult=null;
 

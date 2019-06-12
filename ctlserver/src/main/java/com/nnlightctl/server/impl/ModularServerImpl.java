@@ -70,6 +70,10 @@ public class ModularServerImpl implements ModularServer {
 
         ModularExample example=new ModularExample();
 
+        ModularExample.Criteria criteria = example.createCriteria();
+
+        criteria.andequipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
         Long example1 = modularMapper.countByExample(example);
@@ -78,7 +82,7 @@ public class ModularServerImpl implements ModularServer {
 
         listModular.setSecond(total);
 
-        List<Modular> modulars = modularMapper.selectModularAll();
+        List<Modular> modulars = modularMapper.selectByExample(example);
 
 
         for (Modular modular : modulars) {

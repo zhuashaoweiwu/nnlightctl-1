@@ -209,6 +209,12 @@ public class CentralizeControllerExample {
             return (Criteria) this;
         }
 
+        public Criteria addEquipmentNumber(String value){
+            addCriterion("equipment_number like",value,"equipmentNumber");
+
+            return (Criteria)this;
+        }
+
         public Criteria andCentralizeModelNotLike(String value) {
             addCriterion("centralize_model not like", value, "centralizeModel");
             return (Criteria) this;

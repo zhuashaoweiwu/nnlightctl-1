@@ -11,6 +11,12 @@
     <result column="rated_power" property="ratedPower" jdbcType="DECIMAL" />
     <result column="led_count" property="ledCount" jdbcType="TINYINT" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
+    <result column="chip" jdbcType="VARCHAR" property="chip" />
+    <result column="flux" jdbcType="INTEGER" property="flux" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="controller_mode" jdbcType="VARCHAR" property="controllerMode" />
+    <result column="bean_angle" jdbcType="VARCHAR" property="beanAngle" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

@@ -16,6 +16,7 @@
     <result column="up_channel" jdbcType="VARCHAR" property="upChannel" />
     <result column="down_channel" jdbcType="VARCHAR" property="downChannel" />
     <result column="mem" jdbcType="VARCHAR" property="mem" />
+    <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,7 +79,7 @@
   <sql id="Base_Column_List">
     id, centralize_model, centralize_name, longitude, latitude, do_channel, di_channel, 
     switch_channel, voltage_channel, electric_channel, test_channel, up_channel, down_channel, 
-    mem
+    mem,equipment_number
   </sql>
   <select id="selectByExample" parameterType="com.nnlightctl.po.CentralizeControllerExample" resultMap="BaseResultMap">
     select
@@ -168,6 +169,9 @@
       <if test="mem != null">
         mem,
       </if>
+      <if test="equipmentNumber">
+        equipment_number,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -211,6 +215,9 @@
       </if>
       <if test="mem != null">
         #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber">
+        #{equipmentNumber,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -331,6 +338,9 @@
       </if>
       <if test="mem != null">
         mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber !=null">
+        equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
