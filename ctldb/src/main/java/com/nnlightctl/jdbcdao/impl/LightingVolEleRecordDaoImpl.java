@@ -55,6 +55,7 @@ public class LightingVolEleRecordDaoImpl implements LightingVolEleRecordDao {
         sql.append("`in_active_energy` varchar(14) DEFAULT NULL,");
         sql.append("`in_reactive_energy` varchar(14) DEFAULT NULL,");
         sql.append("`in_seen_energy` varchar(14) DEFAULT NULL,");
+        sql.append("`deviceId` varchar(36) DEFAULT NULL,");
         sql.append("PRIMARY KEY (`id`)");
         sql.append(") ENGINE=InnoDB AUTO_INCREMENT=159029 DEFAULT CHARSET=utf8;");
 
