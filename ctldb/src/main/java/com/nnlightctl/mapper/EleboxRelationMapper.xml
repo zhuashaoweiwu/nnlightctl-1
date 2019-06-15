@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nnlightctl.mapper.EleboxRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.EleboxRelation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="elebox_model_id" property="eleboxModelId" jdbcType="BIGINT" />
+    <result column="elebox_id" property="eleboxId" jdbcType="BIGINT" />
+    <result column="elebox_model_type" property="eleboxModelType" jdbcType="TINYINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, elebox_model_id, elebox_id, elebox_model_type, gmt_created, gmt_updated
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from nnlightctl_elebox_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nnlightctl_elebox_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nnlightctl.po.EleboxRelation" >
+    insert into nnlightctl_elebox_relation (id, elebox_model_id, elebox_id, 
+      elebox_model_type, gmt_created, gmt_updated
+      )
+    values (#{id,jdbcType=BIGINT}, #{eleboxModelId,jdbcType=BIGINT}, #{eleboxId,jdbcType=BIGINT}, 
+      #{eleboxModelType,jdbcType=TINYINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.EleboxRelation" >
+    insert into nnlightctl_elebox_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eleboxModelId != null" >
+        elebox_model_id,
+      </if>
+      <if test="eleboxId != null" >
+        elebox_id,
+      </if>
+      <if test="eleboxModelType != null" >
+        elebox_model_type,
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="eleboxModelId != null" >
+        #{eleboxModelId,jdbcType=BIGINT},
+      </if>
+      <if test="eleboxId != null" >
+        #{eleboxId,jdbcType=BIGINT},
+      </if>
+      <if test="eleboxModelType != null" >
+        #{eleboxModelType,jdbcType=TINYINT},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.EleboxRelation" >
+    update nnlightctl_elebox_relation
+    <set >
+      <if test="eleboxModelId != null" >
+        elebox_model_id = #{eleboxModelId,jdbcType=BIGINT},
+      </if>
+      <if test="eleboxId != null" >
+        elebox_id = #{eleboxId,jdbcType=BIGINT},
+      </if>
+      <if test="eleboxModelType != null" >
+        elebox_model_type = #{eleboxModelType,jdbcType=TINYINT},
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.EleboxRelation" >
+    update nnlightctl_elebox_relation
+    set elebox_model_id = #{eleboxModelId,jdbcType=BIGINT},
+      elebox_id = #{eleboxId,jdbcType=BIGINT},
+      elebox_model_type = #{eleboxModelType,jdbcType=TINYINT},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

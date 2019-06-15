@@ -27,7 +27,7 @@
         <mvc:cache-control max-age="3600" cache-public="true"/>
     </mvc:resources>
 
-    <context:component-scan base-package="com.nnlightctl" />
+    <context:component-scan base-package="com.nnlightctl.springmvc.controller" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">

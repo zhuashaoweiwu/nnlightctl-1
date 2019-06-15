@@ -1,6 +1,7 @@
 package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
@@ -230,7 +231,8 @@ public class EleboxServerImpl implements EleboxServer {
     public Tuple.TwoTuple<List<EleboxModel>, Integer> listEleboxModel(EleboxConditionRequest request) {
         Tuple.TwoTuple<List<EleboxModel>, Integer> twoTuple = new Tuple.TwoTuple<>();
         EleboxModelExample eleboxModelExample = new EleboxModelExample();
-        eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
+        if (!PubMethod.isEmpty(request.getEleboxId()))
+            eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
         int total = eleboxModelMapper.countByExample(eleboxModelExample);
         twoTuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
