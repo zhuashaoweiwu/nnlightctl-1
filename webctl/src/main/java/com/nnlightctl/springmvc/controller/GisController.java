@@ -35,7 +35,7 @@ public class GisController extends BaseController {
     public String listElebox(EleboxConditionRequest request) {
         logger.info("[POST] /api/gis/listElebox");
 
-        Tuple.TwoTuple<List<EleboxView>, Integer> tuple = this.eleboxServer.listElebox(request);
+        Tuple.TwoTuple<List<Elebox>, Integer> tuple = this.eleboxServer.listElebox(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());

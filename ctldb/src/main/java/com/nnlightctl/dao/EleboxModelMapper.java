@@ -26,5 +26,7 @@ public interface EleboxModelMapper {
 
     int updateByPrimaryKeySelective(EleboxModel record);
 
+    int modifyEleboxId(@Param("nnlightctlEleboxId") Long nnlightctlEleboxId);
+
     int updateByPrimaryKey(EleboxModel record);
 }

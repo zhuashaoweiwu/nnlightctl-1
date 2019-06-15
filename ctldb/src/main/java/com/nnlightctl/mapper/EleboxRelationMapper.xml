@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nnlightctl.mapper.EleboxRelationMapper" >
+<mapper namespace="com.nnlightctl.dao.EleboxRelationMapper" >
   <resultMap id="BaseResultMap" type="com.nnlightctl.po.EleboxRelation" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="elebox_model_id" property="eleboxModelId" jdbcType="BIGINT" />
@@ -21,6 +21,10 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from nnlightctl_elebox_relation
     where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByEleboxId" parameterType="java.lang.Long" >
+    delete from nnlightctl_elebox_relation
+    where elebox_id = #{eleboxId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.nnlightctl.po.EleboxRelation" >
     insert into nnlightctl_elebox_relation (id, elebox_model_id, elebox_id, 

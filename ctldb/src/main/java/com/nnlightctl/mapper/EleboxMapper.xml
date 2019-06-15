@@ -23,9 +23,9 @@
         <result column="nnlightctl_elebox_gis_id" property="nnlightctlEleboxGisId" jdbcType="BIGINT"/>
         <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT"/>
         <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT"/>
-        <result column="elebox_mode" property="eleboxMode" jdbcType="VARCHAR"/>
+        <result column="elebox_model" property="eleboxModel" jdbcType="VARCHAR"/>
         <result column="elebox_name" property="eleboxName" jdbcType="VARCHAR"/>
-        <result column="elebox_material" property="eleboxMaterial" jdbcType="VARCHAR"/>
+        <result column="material_quality" property="materialQuality" jdbcType="VARCHAR"/>
         <result column="elebox_size" property="eleboxSize" jdbcType="VARCHAR"/>
         <result column="mem" property="mem" jdbcType="VARCHAR"/>
         <result column="elebox_colors" property="eleboxColors" jdbcType="VARCHAR"/>
@@ -94,7 +94,7 @@
     id, gmt_created, gmt_updated, uid, network_addr, realtime_uid, code_number, manufacture, 
     longitude, latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time, 
     spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id,
-    elebox_mode,elebox_name,elebox_material,elebox_size,mem,elebox_colors
+    elebox_model,elebox_name,material_quality,elebox_size,mem,elebox_colors
   </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample">
         select

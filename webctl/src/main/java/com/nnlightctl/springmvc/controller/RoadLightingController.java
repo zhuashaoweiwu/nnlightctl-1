@@ -677,7 +677,7 @@ public class RoadLightingController extends BaseController {
     public String listElebox(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/listelebox");
 
-        Tuple.TwoTuple<List<EleboxView>, Integer> tuple = eleboxServer.listElebox(request);
+        Tuple.TwoTuple<List<Elebox>, Integer> tuple = eleboxServer.listElebox(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
