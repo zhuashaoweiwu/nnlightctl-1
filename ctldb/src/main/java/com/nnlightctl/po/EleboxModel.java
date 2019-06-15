@@ -35,6 +35,72 @@ public class EleboxModel implements Serializable {
 
     private BigDecimal loopElectricity;
 
+
+    private String communicationMethods;// 通讯方式
+
+    private String maxElectric;//单回路最大电流
+
+    private String loadElectric;//最大负载电流
+
+    private String installationMethods;//安装方式
+
+    private String mem;//备注
+
+    private String modelType;//模块类型
+
+
+    public String getMaxElectric() {
+        return maxElectric;
+    }
+
+    public void setMaxElectric(String maxElectric) {
+        this.maxElectric = maxElectric;
+    }
+
+    public String getLoadElectric() {
+        return loadElectric;
+    }
+
+    public void setLoadElectric(String loadElectric) {
+        this.loadElectric = loadElectric;
+    }
+
+    public String getInstallationMethods() {
+        return installationMethods;
+    }
+
+    public void setInstallationMethods(String installationMethods) {
+        this.installationMethods = installationMethods;
+    }
+
+    public String getMem() {
+        return mem;
+    }
+
+    public void setMem(String mem) {
+        this.mem = mem;
+    }
+
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getCommunicationMethods() {
+        return communicationMethods;
+    }
+
+    public void setCommunicationMethods(String communicationMethods) {
+        this.communicationMethods = communicationMethods;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

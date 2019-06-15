@@ -47,6 +47,19 @@ public class Elebox implements Serializable {
 
     private Long nnlightctlProjectId;
 
+    private String eleboxModel; //控制柜型号
+
+    private String eleboxName; //控制柜名称
+
+    private String materialQuality;//材质
+
+    private String eleboxColors;//外观颜色
+
+    private String eleboxSize;//尺寸
+
+    private String mem;//备注
+
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -215,6 +228,55 @@ public class Elebox implements Serializable {
 
     public void setNnlightctlProjectId(Long nnlightctlProjectId) {
         this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
+
+    public String getEleboxModel() {
+        return eleboxModel;
+    }
+
+    public void setEleboxModel(String eleboxModel) {
+        this.eleboxModel = eleboxModel;
+    }
+
+    public String getEleboxName() {
+        return eleboxName;
+    }
+
+    public void setEleboxName(String eleboxName) {
+        this.eleboxName = eleboxName;
+    }
+
+    public String getMaterialQuality() {
+        return materialQuality;
+    }
+
+    public void setMaterialQuality(String materialQuality) {
+        this.materialQuality = materialQuality;
+    }
+
+    public String getEleboxColors() {
+        return eleboxColors;
+    }
+
+    public void setEleboxColors(String eleboxColors) {
+        this.eleboxColors = eleboxColors;
+    }
+
+    public String getEleboxSize() {
+        return eleboxSize;
+    }
+
+    public void setEleboxSize(String eleboxSize) {
+        this.eleboxSize = eleboxSize;
+    }
+
+    public String getMem() {
+        return mem;
+    }
+
+    public void setMem(String mem) {
+        this.mem = mem;
     }
 
     @Override

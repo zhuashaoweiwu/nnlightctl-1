@@ -1,8 +1,12 @@
 package com.nnlightctl.springmvc.controller.deploy.controller;
 
+import com.nnlight.common.PubMethod;
+import com.nnlightctl.request.deployRequest.DeployEleboxModelRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
+import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
 import com.nnlightctl.result.JsonResult;
-import com.nnlightctl.server.EleboxServer;
+import com.nnlightctl.server.deploy.service.DeployEleboxModelServer;
+import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.springmvc.controller.BaseController;
 import com.nnlightctl.springmvc.controller.RoadLightingController;
 import org.slf4j.Logger;
@@ -22,13 +26,16 @@ import java.util.List;
 public class DeployEleboxController extends BaseController {
 
     @Autowired
-    private EleboxServer eleboxServer;
+    private DeployEleboxServer deployEleboxServer;
+
+    @Autowired
+    private DeployEleboxModelServer eleboxModelServer;
 
     private static final Logger logger = LoggerFactory.getLogger(RoadLightingController.class);
 
-    @RequestMapping("addelebox")
-    public String addEleBox(@Valid DeployEleboxRequest request, BindingResult bindingResult) {
-        logger.info("[POST] /api/roadlighting/addelebox");
+    @RequestMapping("deployAddOrModifyElebox")
+    public String deployAddOrModifyElebox(@Valid DeployEleboxRequest request, BindingResult bindingResult) {
+        logger.info("[POST] deployElebox/deployAddElebox");
 
         //参数检验
         if (bindingResult.hasErrors()) {
@@ -42,8 +49,12 @@ public class DeployEleboxController extends BaseController {
             jsonResult.setMsg(stringBuilder.toString());
             return toJson(jsonResult);
         }
-
-        int ret = eleboxServer.insertElebox(request);
+        int ret = 0;
+        if (PubMethod.isEmpty(request.getId())) {
+            ret = deployEleboxServer.insertElebox(request);
+        } else {
+            ret = deployEleboxServer.updateElebox(request);
+        }
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -55,4 +66,63 @@ public class DeployEleboxController extends BaseController {
     }
 
 
+    @RequestMapping("deployAddOrModifyEleboxModel")
+    public String deployAddOrModifyEleboxModel(@Valid DeployEleboxModelRequest request, BindingResult bindingResult) {
+        logger.info("[POST] deployElebox/deployAddOrModifyEleboxModel");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+        int ret = 0;
+        if (PubMethod.isEmpty(request.getId())) {
+            ret = eleboxModelServer.insertEleboxModel(request);
+        } else {
+            ret = eleboxModelServer.updateEleboxModel(request);
+        }
+        JsonResult jsonResult = null;
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deployExleboxArrange")
+    public String deployExleboxArrange(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+        logger.info("[POST] deployElebox/deployExleboxArrange");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+        Boolean arrangeRequest = this.deployEleboxServer.deployExleboxArrange(request);
+        JsonResult jsonResult = null;
+        if (arrangeRequest) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
 }
