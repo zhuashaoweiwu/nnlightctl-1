@@ -1,4 +1,4 @@
-package com.nnlightctl.mapper;
+package com.nnlightctl.dao;
 
 import com.nnlightctl.po.EleboxRelation;
 

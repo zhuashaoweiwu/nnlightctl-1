@@ -146,6 +146,9 @@
       <if test="loopCode != null" >
         loop_code,
       </if>
+      <if test="mem != null" >
+        mem,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -171,6 +174,9 @@
       </if>
       <if test="loopCode != null" >
         #{loopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mem!= null" >
+        #{mem,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
