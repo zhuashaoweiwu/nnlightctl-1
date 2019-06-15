@@ -73,6 +73,118 @@ public class RoadLightingController extends BaseController {
     private CentralizeControllerServer centralizeControllerServer;
 
 
+
+
+
+
+
+
+    @RequestMapping("addorupdateelebox")
+    public String addOrUpdateElebox(EleboxRequest request){
+
+        logger.info("[POST] api/roadlighting/addorupdateelebox");
+
+        int flag= eleboxServer.addOrUpdateElebox(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult = JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deleteeleboxbyids")
+    public String deleteEleboxByIds(EleboxConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/deleteeleboxbyids");
+
+        JsonResult jsonResult=null;
+
+        int flag = eleboxServer.deleteEleboxPrimaryKey(request);
+
+        if (flag>0){
+
+            jsonResult=JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+             jsonResult= JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("selecteleboxbyid")
+    public String selectEleboxById(EleboxConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/selecteleboxbyid");
+
+        Elebox elebox = eleboxServer.selectEleboxById(request);
+
+        List<Elebox> eleboxList=new ArrayList<>(8);
+
+        eleboxList.add(elebox);
+
+        List<EleboxViewCopy> eleboxViewCopy = getEleboxViewCopy(eleboxList);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(1);
+
+        jsonResult.setData(eleboxViewCopy);
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("listeleboxmessage")
+    public String listEleboxMessage(EleboxConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/listeleboxmessage");
+
+        Tuple.TwoTuple<List<Elebox>, Integer> twoTuple = eleboxServer.listEleboxMessage(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        List<EleboxViewCopy> eleboxViewCopy = getEleboxViewCopy(twoTuple.getFirst());
+
+        jsonResult.setData(eleboxViewCopy);
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("selectalleleboxcode")
+    public String selectAllEleboxCode(){
+
+
+
+        return null;
+
+    }
+
+
+
+    /*************************************集中控制器***************************/
     @RequestMapping("addorupdatecentralizecontroller")
     public String addOrUpdateCentralizeController(CentralizeControllerRquester request){
 
@@ -417,11 +529,6 @@ public class RoadLightingController extends BaseController {
     public String listLampController(LampControllerConditionRequest request){
 
         logger.info("[POST] api/roadlighting/listlampcontroller");
-
-        if (request.getPageSize()==0||request.getPageNumber()==0){
-
-            return toJson(JsonResult.FALLURE_NOPAGE);
-        }
 
         Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=lampControllerServer.listLampController(request);
 
@@ -973,6 +1080,8 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+
 
     @RequestMapping("listmodel")
     public String listEleboxModel(EleboxConditionRequest request) {
@@ -1632,6 +1741,7 @@ public class RoadLightingController extends BaseController {
 
     @RequestMapping("updateLightPriority")
     public String updateLightPriority(LightConditionRequest request) {
+
         logger.info("[POST] /api/roadlighting/updateLightPriority");
 
         int ret = lightServer.updateLightPriority(request);
@@ -1644,5 +1754,39 @@ public class RoadLightingController extends BaseController {
         }
 
         return toJson(jsonResult);
+    }
+
+
+    public List<EleboxViewCopy> getEleboxViewCopy(List<Elebox> eleboxList){
+
+        List<EleboxViewCopy> eleboxViewCopies=new ArrayList<>(6);
+
+        for (Elebox elebox : eleboxList) {
+
+            EleboxViewCopy eleboxViewCopy=new EleboxViewCopy();
+
+            eleboxViewCopy.setId(elebox.getId());
+
+            eleboxViewCopy.setEleboxColors(elebox.getEleboxColors());
+
+            eleboxViewCopy.setEleboxMaterial(elebox.getEleboxMaterial());
+
+            eleboxViewCopy.setEquipmentNumber(elebox.getEquipmentNumber());
+
+            eleboxViewCopy.setEleboxMode(elebox.getEleboxMode());
+
+            eleboxViewCopy.setEleboxName(elebox.getEleboxName());
+
+            eleboxViewCopy.setMem(elebox.getMem());
+
+
+
+            eleboxViewCopies.add(eleboxViewCopy);
+
+
+        }
+
+        return eleboxViewCopies;
+
     }
 }

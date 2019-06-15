@@ -55,6 +55,95 @@ public class Lighting implements Serializable {
 
     private Byte faultTag;
 
+    /**
+     * 新添加字段
+     */
+
+    private String communicationMode;
+
+    private Integer dimmingMode;
+
+    private Double ratedVoltage;
+
+    private Double ratedCurrent;
+
+    private Double staticPower;
+
+    private String alarmMessage;
+
+    private String lampModel;
+
+    private String lampName;
+
+    public String getLampModel() {
+        return lampModel;
+    }
+
+    public void setLampModel(String lampModel) {
+        this.lampModel = lampModel;
+    }
+
+    public String getLampName() {
+        return lampName;
+    }
+
+    public void setLampName(String lampName) {
+        this.lampName = lampName;
+    }
+
+    public String getCommunicationMode() {
+        return communicationMode;
+    }
+
+    public void setCommunicationMode(String communicationMode) {
+        this.communicationMode = communicationMode;
+    }
+
+    public Integer getDimmingMode() {
+        return dimmingMode;
+    }
+
+    public void setDimmingMode(Integer dimmingMode) {
+        this.dimmingMode = dimmingMode;
+    }
+
+    public Double getRatedVoltage() {
+        return ratedVoltage;
+    }
+
+    public void setRatedVoltage(Double ratedVoltage) {
+        this.ratedVoltage = ratedVoltage;
+    }
+
+    public Double getRatedCurrent() {
+        return ratedCurrent;
+    }
+
+    public void setRatedCurrent(Double ratedCurrent) {
+        this.ratedCurrent = ratedCurrent;
+    }
+
+    public Double getStaticPower() {
+        return staticPower;
+    }
+
+    public void setStaticPower(Double staticPower) {
+        this.staticPower = staticPower;
+    }
+
+    public String getAlarmMessage() {
+        return alarmMessage;
+    }
+
+    public void setAlarmMessage(String alarmMessage) {
+        this.alarmMessage = alarmMessage;
+    }
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

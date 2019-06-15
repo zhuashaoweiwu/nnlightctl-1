@@ -70,6 +70,10 @@ public class LamppostServerImpl implements LamppostServer {
 
         lamppost.setEquipmentNumber(equipmentNumber);
 
+        lamppost.setLamppostModel(request.getLamppostModel());
+
+        lamppost.setLampostName(request.getLampostName());
+
         List<Lamppost> lampposts = lamppostMapper.selectAllLamppost(lamppost);
 
         List<LamppostView> lamppostViews=new ArrayList<>();

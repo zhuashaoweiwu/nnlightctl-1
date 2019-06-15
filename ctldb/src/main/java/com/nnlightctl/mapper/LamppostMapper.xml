@@ -148,7 +148,13 @@
          from nnlightctl_lamppost
          <where>
              <if test="lamppost.equipmentNumber !=null">
-                 equipment_number like concat('%',#{lamppost.equipmentNumber},'%')
+                AND equipment_number like concat('%',#{lamppost.equipmentNumber},'%')
+             </if>
+             <if test="lamppost.lampostName !=null">
+               AND  lampost_name like concat('%',#{lamppost.lampostName},'%')
+             </if>
+             <if test="lamppost.lamppostModel !=null">
+               AND  lamppost_model like concat('%',#{lamppost.lamppostModel},'%')
              </if>
          </where>
     </select>

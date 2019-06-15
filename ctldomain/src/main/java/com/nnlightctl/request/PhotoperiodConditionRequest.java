@@ -10,6 +10,26 @@ public class PhotoperiodConditionRequest extends BaseRequest{
 
     private Long id;
 
+    private String photoperiodModel;
+
+    private String photoperiodName;
+
+    public String getPhotoperiodModel() {
+        return photoperiodModel;
+    }
+
+    public void setPhotoperiodModel(String photoperiodModel) {
+        this.photoperiodModel = photoperiodModel;
+    }
+
+    public String getPhotoperiodName() {
+        return photoperiodName;
+    }
+
+    public void setPhotoperiodName(String photoperiodName) {
+        this.photoperiodName = photoperiodName;
+    }
+
     public Long getId() {
         return id;
     }

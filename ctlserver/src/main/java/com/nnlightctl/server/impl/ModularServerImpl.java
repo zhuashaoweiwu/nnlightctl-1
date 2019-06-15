@@ -13,6 +13,7 @@ import com.nnlightctl.server.ModularServer;
 import com.nnlightctl.vo.ModularView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ModularServerImpl implements ModularServer {
 
         }else {
             //修改
-            flag=modularMapper.updateByPrimaryKey(modular);
+            flag=modularMapper.updateByPrimaryKeySelective(modular);
 
         }
 
@@ -72,15 +73,29 @@ public class ModularServerImpl implements ModularServer {
 
         ModularExample.Criteria criteria = example.createCriteria();
 
-        criteria.andequipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+        if (!StringUtils.isEmpty(request.getEquipmentNumber())){
 
-        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+            criteria.andequipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+        }
+
+        if (!StringUtils.isEmpty(request.getModularModel())){
+
+            criteria.andModularModelLike("%"+request.getModularModel()+"%");
+
+        }
+
+        if (!StringUtils.isEmpty(request.getModularName())){
+
+            criteria.andModularNameLike("%"+request.getModularName()+"%");
+        }
 
         Long example1 = modularMapper.countByExample(example);
 
         int total=example1.intValue();
 
         listModular.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
         List<Modular> modulars = modularMapper.selectByExample(example);
 

@@ -33,7 +33,7 @@ public class LightModelServerImpl implements LightModelServer {
             ret = this.lightingModelMapper.updateByPrimaryKeySelective(lightingModel);
         } else {
             //添加
-            //lightingModel.setGmtCreated(new Date());
+            lightingModel.setGmtCreated(new Date());
             ret = this.lightingModelMapper.insertSelective(lightingModel);
         }
 
@@ -53,8 +53,13 @@ public class LightModelServerImpl implements LightModelServer {
     public Tuple.TwoTuple<List<LightingModel>, Integer> listLightModel(LightModelConditionRequest request) {
         LightingModelExample lightingModelExample = new LightingModelExample();
 
-        if (!StringUtils.isEmpty(request.getModelName())) {
-            lightingModelExample.createCriteria().andModelNameLike("%" + request.getModelName() + "%");
+        if (!StringUtils.isEmpty(request.getEquipmentNumber())) {
+            lightingModelExample.createCriteria().andEquipmentNumberLike("%" + request.getEquipmentNumber() + "%");
+        }
+
+        if (!StringUtils.isEmpty(request.getModelName())){
+
+            lightingModelExample.createCriteria().andModelNameLike("%"+request.getModelName()+"%");
         }
 
         int total = this.lightingModelMapper.countByExample(lightingModelExample);

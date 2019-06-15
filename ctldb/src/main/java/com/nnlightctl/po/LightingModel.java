@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class LightingModel implements Serializable {
+
     private Long id;
 
     private Date gmtCreated;
@@ -12,6 +13,7 @@ public class LightingModel implements Serializable {
     private Date gmtUpdated;
 
     private String modelName;
+
 
     private BigDecimal ratedVoltage;
 
@@ -35,9 +37,29 @@ public class LightingModel implements Serializable {
 
     private String grade;
 
-    private int index;
+    private int indexMode;
 
     private int flux;
+
+    private String equipmentNumber;
+
+    private String colorMode;
+
+    public String getColorMode() {
+        return colorMode;
+    }
+
+    public void setColorMode(String colorMode) {
+        this.colorMode = colorMode;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 
     public int getFlux() {
         return flux;
@@ -80,13 +102,6 @@ public class LightingModel implements Serializable {
         this.grade = grade;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -160,6 +175,14 @@ public class LightingModel implements Serializable {
 
     public void setMem(String mem) {
         this.mem = mem == null ? null : mem.trim();
+    }
+
+    public int getIndexMode() {
+        return indexMode;
+    }
+
+    public void setIndexMode(int indexMode) {
+        this.indexMode = indexMode;
     }
 
     @Override

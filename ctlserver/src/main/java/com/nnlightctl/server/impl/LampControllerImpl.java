@@ -74,7 +74,6 @@ public class LampControllerImpl implements LampControllerServer {
 
         List<LampControllerView> lampControllerList=new ArrayList<>(8);
 
-
         int total = lampControllerMapper.selectByCount();
 
         twoTuple.setSecond(total);

@@ -23,6 +23,13 @@
     <result column="nnlightctl_elebox_gis_id" property="nnlightctlEleboxGisId" jdbcType="BIGINT" />
     <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT" />
     <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT" />
+    <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber" />
+    <result column="elebox_mode" jdbcType="VARCHAR" property="eleboxMode" />
+    <result column="elebox_name" jdbcType="VARCHAR" property="eleboxName" />
+    <result column="elebox_size" jdbcType="VARCHAR" property="eleboxSize" />
+    <result column="elebox_colors" jdbcType="VARCHAR" property="eleboxColors" />
+    <result column="elebox_material" jdbcType="VARCHAR" property="eleboxMaterial" />
+    <result column="mem" jdbcType="VARCHAR" property="mem" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -85,7 +92,9 @@
   <sql id="Base_Column_List" >
     id, gmt_created, gmt_updated, uid, network_addr, realtime_uid, code_number, manufacture, 
     longitude, latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time, 
-    spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
+    spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id,
+    equipment_number, elebox_mode, elebox_name, elebox_size, elebox_colors, elebox_material,
+    mem
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample" >
     select
@@ -203,6 +212,27 @@
       <if test="nnlightctlProjectId != null" >
         nnlightctl_project_id,
       </if>
+      <if test="equipmentNumber != null">
+        equipment_number,
+      </if>
+      <if test="eleboxMode != null">
+        elebox_mode,
+      </if>
+      <if test="eleboxName != null">
+        elebox_name,
+      </if>
+      <if test="eleboxSize != null">
+        elebox_size,
+      </if>
+      <if test="eleboxColors != null">
+        elebox_colors,
+      </if>
+      <if test="eleboxMaterial != null">
+        elebox_material,
+      </if>
+      <if test="mem != null">
+        mem,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -264,6 +294,27 @@
       </if>
       <if test="nnlightctlProjectId != null" >
         #{nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="equipmentNumber != null">
+        #{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxMode != null">
+        #{eleboxMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxName != null">
+        #{eleboxName,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxSize != null">
+        #{eleboxSize,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxColors != null">
+        #{eleboxColors,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxMaterial != null">
+        #{eleboxMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        #{mem,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -433,6 +484,27 @@
       </if>
       <if test="nnlightctlProjectId != null" >
         nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="equipmentNumber != null">
+        equipment_number = #{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxMode != null">
+        elebox_mode = #{eleboxMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxName != null">
+        elebox_name = #{eleboxName,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxSize != null">
+        elebox_size = #{eleboxSize,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxColors != null">
+        elebox_colors = #{eleboxColors,jdbcType=VARCHAR},
+      </if>
+      <if test="eleboxMaterial != null">
+        elebox_material = #{eleboxMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null">
+        mem = #{mem,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

@@ -12,6 +12,25 @@ public class LamppostConditionRequest extends BaseRequest{
 
     private String equipmentNumber;
 
+    private String lamppostModel;
+
+    public String getLamppostModel() {
+        return lamppostModel;
+    }
+
+    public void setLamppostModel(String lamppostModel) {
+        this.lamppostModel = lamppostModel;
+    }
+
+    private String lampostName;
+
+    public String getLampostName() {
+        return lampostName;
+    }
+
+    public void setLampostName(String lampostName) {
+        this.lampostName = lampostName;
+    }
 
     public List<Long> getLamppostIds() {
         return lamppostIds;

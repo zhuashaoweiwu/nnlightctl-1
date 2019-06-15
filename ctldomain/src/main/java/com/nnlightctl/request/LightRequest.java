@@ -164,6 +164,92 @@ public class LightRequest {
     private String longitude;
     private String latitude;
     private Long nnlightctlRegionId;
+
+    /**
+     * 新添加字段
+     */
+
+    private String communicationMode;
+
+    private Integer dimmingMode;
+
+    private Double ratedVoltage;
+
+    private Double ratedCurrent;
+
+    private Double staticPower;
+
+    private String alarmMessage;
+
+    private String lightMode;
+
+    private String lightName;
+
+
+    public String getCommunicationMode() {
+        return communicationMode;
+    }
+
+    public void setCommunicationMode(String communicationMode) {
+        this.communicationMode = communicationMode;
+    }
+
+    public Integer getDimmingMode() {
+        return dimmingMode;
+    }
+
+    public void setDimmingMode(Integer dimmingMode) {
+        this.dimmingMode = dimmingMode;
+    }
+
+    public Double getRatedVoltage() {
+        return ratedVoltage;
+    }
+
+    public void setRatedVoltage(Double ratedVoltage) {
+        this.ratedVoltage = ratedVoltage;
+    }
+
+    public Double getRatedCurrent() {
+        return ratedCurrent;
+    }
+
+    public void setRatedCurrent(Double ratedCurrent) {
+        this.ratedCurrent = ratedCurrent;
+    }
+
+    public Double getStaticPower() {
+        return staticPower;
+    }
+
+    public void setStaticPower(Double staticPower) {
+        this.staticPower = staticPower;
+    }
+
+    public String getAlarmMessage() {
+        return alarmMessage;
+    }
+
+    public void setAlarmMessage(String alarmMessage) {
+        this.alarmMessage = alarmMessage;
+    }
+
+    public String getLightMode() {
+        return lightMode;
+    }
+
+    public void setLightMode(String lightMode) {
+        this.lightMode = lightMode;
+    }
+
+    public String getLightName() {
+        return lightName;
+    }
+
+    public void setLightName(String lightName) {
+        this.lightName = lightName;
+    }
+
     public static class BatchLightRequest {
         public List<LightRequest> getAddLightings() {
             return addLightings;

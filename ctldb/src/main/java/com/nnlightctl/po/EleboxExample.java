@@ -1455,6 +1455,497 @@ public class EleboxExample {
             addCriterion("nnlightctl_project_id not between", value1, value2, "nnlightctlProjectId");
             return (Criteria) this;
         }
+
+
+        public Criteria andEquipmentNumberIsNull() {
+            addCriterion("equipment_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberIsNotNull() {
+            addCriterion("equipment_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberEqualTo(String value) {
+            addCriterion("equipment_number =", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberNotEqualTo(String value) {
+            addCriterion("equipment_number <>", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberGreaterThan(String value) {
+            addCriterion("equipment_number >", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("equipment_number >=", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberLessThan(String value) {
+            addCriterion("equipment_number <", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberLessThanOrEqualTo(String value) {
+            addCriterion("equipment_number <=", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberLike(String value) {
+            addCriterion("equipment_number like", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberNotLike(String value) {
+            addCriterion("equipment_number not like", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberIn(List<String> values) {
+            addCriterion("equipment_number in", values, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberNotIn(List<String> values) {
+            addCriterion("equipment_number not in", values, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberBetween(String value1, String value2) {
+            addCriterion("equipment_number between", value1, value2, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEquipmentNumberNotBetween(String value1, String value2) {
+            addCriterion("equipment_number not between", value1, value2, "equipmentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeIsNull() {
+            addCriterion("elebox_mode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeIsNotNull() {
+            addCriterion("elebox_mode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeEqualTo(String value) {
+            addCriterion("elebox_mode =", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeNotEqualTo(String value) {
+            addCriterion("elebox_mode <>", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeGreaterThan(String value) {
+            addCriterion("elebox_mode >", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeGreaterThanOrEqualTo(String value) {
+            addCriterion("elebox_mode >=", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeLessThan(String value) {
+            addCriterion("elebox_mode <", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeLessThanOrEqualTo(String value) {
+            addCriterion("elebox_mode <=", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeLike(String value) {
+            addCriterion("elebox_mode like", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeNotLike(String value) {
+            addCriterion("elebox_mode not like", value, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeIn(List<String> values) {
+            addCriterion("elebox_mode in", values, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeNotIn(List<String> values) {
+            addCriterion("elebox_mode not in", values, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeBetween(String value1, String value2) {
+            addCriterion("elebox_mode between", value1, value2, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxModeNotBetween(String value1, String value2) {
+            addCriterion("elebox_mode not between", value1, value2, "eleboxMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameIsNull() {
+            addCriterion("elebox_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameIsNotNull() {
+            addCriterion("elebox_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameEqualTo(String value) {
+            addCriterion("elebox_name =", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameNotEqualTo(String value) {
+            addCriterion("elebox_name <>", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameGreaterThan(String value) {
+            addCriterion("elebox_name >", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameGreaterThanOrEqualTo(String value) {
+            addCriterion("elebox_name >=", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameLessThan(String value) {
+            addCriterion("elebox_name <", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameLessThanOrEqualTo(String value) {
+            addCriterion("elebox_name <=", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameLike(String value) {
+            addCriterion("elebox_name like", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameNotLike(String value) {
+            addCriterion("elebox_name not like", value, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameIn(List<String> values) {
+            addCriterion("elebox_name in", values, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameNotIn(List<String> values) {
+            addCriterion("elebox_name not in", values, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameBetween(String value1, String value2) {
+            addCriterion("elebox_name between", value1, value2, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxNameNotBetween(String value1, String value2) {
+            addCriterion("elebox_name not between", value1, value2, "eleboxName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeIsNull() {
+            addCriterion("elebox_size is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeIsNotNull() {
+            addCriterion("elebox_size is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeEqualTo(String value) {
+            addCriterion("elebox_size =", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeNotEqualTo(String value) {
+            addCriterion("elebox_size <>", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeGreaterThan(String value) {
+            addCriterion("elebox_size >", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeGreaterThanOrEqualTo(String value) {
+            addCriterion("elebox_size >=", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeLessThan(String value) {
+            addCriterion("elebox_size <", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeLessThanOrEqualTo(String value) {
+            addCriterion("elebox_size <=", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeLike(String value) {
+            addCriterion("elebox_size like", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeNotLike(String value) {
+            addCriterion("elebox_size not like", value, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeIn(List<String> values) {
+            addCriterion("elebox_size in", values, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeNotIn(List<String> values) {
+            addCriterion("elebox_size not in", values, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeBetween(String value1, String value2) {
+            addCriterion("elebox_size between", value1, value2, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxSizeNotBetween(String value1, String value2) {
+            addCriterion("elebox_size not between", value1, value2, "eleboxSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsIsNull() {
+            addCriterion("elebox_colors is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsIsNotNull() {
+            addCriterion("elebox_colors is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsEqualTo(String value) {
+            addCriterion("elebox_colors =", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsNotEqualTo(String value) {
+            addCriterion("elebox_colors <>", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsGreaterThan(String value) {
+            addCriterion("elebox_colors >", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsGreaterThanOrEqualTo(String value) {
+            addCriterion("elebox_colors >=", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsLessThan(String value) {
+            addCriterion("elebox_colors <", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsLessThanOrEqualTo(String value) {
+            addCriterion("elebox_colors <=", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsLike(String value) {
+            addCriterion("elebox_colors like", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsNotLike(String value) {
+            addCriterion("elebox_colors not like", value, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsIn(List<String> values) {
+            addCriterion("elebox_colors in", values, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsNotIn(List<String> values) {
+            addCriterion("elebox_colors not in", values, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsBetween(String value1, String value2) {
+            addCriterion("elebox_colors between", value1, value2, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxColorsNotBetween(String value1, String value2) {
+            addCriterion("elebox_colors not between", value1, value2, "eleboxColors");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialIsNull() {
+            addCriterion("elebox_material is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialIsNotNull() {
+            addCriterion("elebox_material is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialEqualTo(String value) {
+            addCriterion("elebox_material =", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialNotEqualTo(String value) {
+            addCriterion("elebox_material <>", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialGreaterThan(String value) {
+            addCriterion("elebox_material >", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialGreaterThanOrEqualTo(String value) {
+            addCriterion("elebox_material >=", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialLessThan(String value) {
+            addCriterion("elebox_material <", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialLessThanOrEqualTo(String value) {
+            addCriterion("elebox_material <=", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialLike(String value) {
+            addCriterion("elebox_material like", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialNotLike(String value) {
+            addCriterion("elebox_material not like", value, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialIn(List<String> values) {
+            addCriterion("elebox_material in", values, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialNotIn(List<String> values) {
+            addCriterion("elebox_material not in", values, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialBetween(String value1, String value2) {
+            addCriterion("elebox_material between", value1, value2, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andEleboxMaterialNotBetween(String value1, String value2) {
+            addCriterion("elebox_material not between", value1, value2, "eleboxMaterial");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemIsNull() {
+            addCriterion("mem is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemIsNotNull() {
+            addCriterion("mem is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemEqualTo(String value) {
+            addCriterion("mem =", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotEqualTo(String value) {
+            addCriterion("mem <>", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemGreaterThan(String value) {
+            addCriterion("mem >", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemGreaterThanOrEqualTo(String value) {
+            addCriterion("mem >=", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLessThan(String value) {
+            addCriterion("mem <", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLessThanOrEqualTo(String value) {
+            addCriterion("mem <=", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemLike(String value) {
+            addCriterion("mem like", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotLike(String value) {
+            addCriterion("mem not like", value, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemIn(List<String> values) {
+            addCriterion("mem in", values, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotIn(List<String> values) {
+            addCriterion("mem not in", values, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemBetween(String value1, String value2) {
+            addCriterion("mem between", value1, value2, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemNotBetween(String value1, String value2) {
+            addCriterion("mem not between", value1, value2, "mem");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1548,5 +2039,9 @@ public class EleboxExample {
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
         }
+
+
     }
+
+
 }

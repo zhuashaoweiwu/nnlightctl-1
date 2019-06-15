@@ -118,7 +118,13 @@
          from nnlightctl_photoperiod
          <where>
              <if test="params.equipmentNumber!=null">
-                 equipment_number=#{params.equipmentNumber,jdbcType=VARCHAR}
+               AND equipment_number like concat('%',#{params.equipmentNumber},'%')
+             </if>
+             <if test="params.photoperiodModel !=null">
+               AND photoperiod_model like concat('%',#{params.photoperiodModel},'%')
+             </if>
+             <if test="params.photoperiodName !=null">
+                AND photoperiod_name like concat('%',#{params.photoperiodName},'%')
              </if>
          </where>
     </select>

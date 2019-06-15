@@ -9,8 +9,27 @@ public class CentralizeControllerConditionRequest extends BaseRequest{
 
     private Long id;
 
-
     private String equipmentNumber;
+
+    private String centralizeModel;
+
+    private String centralizeName;
+
+    public String getCentralizeModel() {
+        return centralizeModel;
+    }
+
+    public void setCentralizeModel(String centralizeModel) {
+        this.centralizeModel = centralizeModel;
+    }
+
+    public String getCentralizeName() {
+        return centralizeName;
+    }
+
+    public void setCentralizeName(String centralizeName) {
+        this.centralizeName = centralizeName;
+    }
 
     public List<Long> getCentralizeControllerIds() {
         return centralizeControllerIds;

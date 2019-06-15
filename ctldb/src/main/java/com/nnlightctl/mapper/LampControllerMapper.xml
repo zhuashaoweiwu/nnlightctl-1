@@ -129,7 +129,7 @@
                  alarm_message=#{alarmMessage,jdbcType=VARCHAR},
              </if>
              <if test="mem !=null">
-                mem=#{mem,jdbcType=VARCHAR}
+                mem=#{mem,jdbcType=VARCHAR},
              </if>
              <if test="equipmentNumber !=null">
                  equipment_number=#{equipmentNumber,jdbcType=VARCHAR}

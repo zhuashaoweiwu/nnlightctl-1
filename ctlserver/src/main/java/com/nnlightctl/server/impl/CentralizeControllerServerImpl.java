@@ -89,6 +89,17 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
             criteria.addEquipmentNumber("%"+request.getEquipmentNumber()+"%");
         }
 
+        if (!StringUtils.isEmpty(request.getCentralizeModel())){
+
+            criteria.andCentralizeModelLike("%"+request.getCentralizeModel()+"%");
+
+        }
+
+        if (!StringUtils.isEmpty(request.getCentralizeName())){
+
+            criteria.andCentralizeNameLike("%"+request.getEquipmentNumber()+"%");
+        }
+
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 

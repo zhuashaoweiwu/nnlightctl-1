@@ -47,6 +47,81 @@ public class Elebox implements Serializable {
 
     private Long nnlightctlProjectId;
 
+    private String eleboxMode;
+
+    private String eleboxName;
+
+    private String eleboxMaterial;
+
+    private String eleboxColors;
+
+    private String equipmentNumber;
+
+    private String eleboxSize;
+
+    private String mem;
+
+    public String getMem() {
+        return mem;
+    }
+
+    public void setMem(String mem) {
+        this.mem = mem;
+    }
+
+
+    public String getEleboxMode() {
+        return eleboxMode;
+    }
+
+    public void setEleboxMode(String eleboxMode) {
+        this.eleboxMode = eleboxMode;
+    }
+
+    public String getEleboxName() {
+        return eleboxName;
+    }
+
+    public void setEleboxName(String eleboxName) {
+        this.eleboxName = eleboxName;
+    }
+
+    public String getEleboxMaterial() {
+        return eleboxMaterial;
+    }
+
+    public void setEleboxMaterial(String eleboxMaterial) {
+        this.eleboxMaterial = eleboxMaterial;
+    }
+
+    public String getEleboxColors() {
+        return eleboxColors;
+    }
+
+    public void setEleboxColors(String eleboxColors) {
+        this.eleboxColors = eleboxColors;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
+    public String getEleboxSize() {
+        return eleboxSize;
+    }
+
+    public void setEleboxSize(String eleboxSize) {
+        this.eleboxSize = eleboxSize;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

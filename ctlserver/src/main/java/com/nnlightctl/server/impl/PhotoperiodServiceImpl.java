@@ -82,6 +82,10 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
         photoPeriodNew.setEquipmentNumber(equipmentNumber);
 
+        photoPeriodNew.setPhotoperiodName(request.getPhotoperiodName());
+
+        photoPeriodNew.setPhotoperiodModel(request.getPhotoperiodModel());
+
         List<PhotoPeriod> photoPeriods = photoperiodMapper.selectAll(photoPeriodNew);
 
         for (PhotoPeriod photoPeriod : photoPeriods) {

@@ -27,6 +27,16 @@
     <result column="nnlightctl_elebox_id" property="nnlightctlEleboxId" jdbcType="BIGINT" />
     <result column="loop_priority" property="loopPriority" jdbcType="TINYINT" />
     <result column="fault_tag" property="faultTag" jdbcType="TINYINT" />
+    <!--新添加字段-->
+    <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
+    <result column="dimming_mode" property="dimmingMode" jdbcType="INTEGER" />
+    <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL" />
+    <result column="rated_current" property="ratedCurrent" jdbcType="DECIMAL" />
+    <result column="static_power" property="staticPower" jdbcType="DECIMAL"/>
+    <result column="alarm_message" property="alarmMessage" jdbcType="VARCHAR" />
+    <result column="mem" property="mem" jdbcType="VARCHAR" />
+    <result column="lamp_model" property="lampName" jdbcType="VARCHAR" />
+    <result column="lamp_name" property="lampModel" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,7 +101,9 @@
     use_date, lamppost, lamphead, nnlightctl_lighting_model_id, nnlightctl_lighting_gis_id, 
     longitude, latitude, property_serial_number, decay, max_use_time, mem, nnlightctl_elebox_model_loop_id, 
     nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, 
-    fault_tag
+    fault_tag,lamp_model,lamp_name,
+        communication_mode,dimming_mode,rated_Voltage,
+        rated_current,static_power,alarm_message
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingExample" >
     select
@@ -225,6 +237,31 @@
       <if test="faultTag != null" >
         fault_tag,
       </if>
+      /*新添加字段*/
+      <if test="lampModel != null" >
+        lamp_model,
+      </if>
+      <if test="lampName != null" >
+        lamp_name,
+      </if>
+      <if test="communicationMode != null" >
+        communication_mode,
+      </if>
+      <if test="dimmingMode != null" >
+        dimming_mode,
+      </if>
+      <if test="ratedVoltage !=null">
+        rated_voltage,
+      </if>
+      <if test="ratedCurrent !=null">
+        rated_current,
+      </if>
+      <if test="staticPower !=null">
+        static_power,
+      </if>
+      <if test="alarmMessage != null" >
+        alarm_message,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -298,6 +335,31 @@
       </if>
       <if test="faultTag != null" >
         #{faultTag,jdbcType=TINYINT},
+      </if>
+      /*新添加字段*/
+      <if test="lampModel != null" >
+        #{lampModel,jdbcType=VARCHAR},
+      </if>
+      <if test="lampName != null" >
+        #{lampName,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationMode != null" >
+        #{communicationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="dimmingMode != null" >
+        #{dimmingMode,jdbcType=INTEGER},
+      </if>
+      <if test="ratedVoltage !=null">
+        #{ratedVoltage,jdbcType=DECIMAL},
+      </if>
+      <if test="ratedCurrent !=null">
+        #{ratedCurrent,jdbcType=DECIMAL},
+      </if>
+      <if test="staticPower !=null">
+        #{staticPower,jdbcType=DECIMAL},
+      </if>
+      <if test="alarmMessage != null" >
+        #{alarmMessage,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -495,6 +557,31 @@
       </if>
       <if test="faultTag != null" >
         fault_tag = #{faultTag,jdbcType=TINYINT},
+      </if>
+      /*新添加字段*/
+      <if test="lampModel != null" >
+        lamp_model=#{lampModel,jdbcType=VARCHAR},
+      </if>
+      <if test="lampName != null" >
+        lamp_name=#{lampName,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationMode != null" >
+        communication_mode=#{communicationMode,jdbcType=VARCHAR},
+      </if>
+      <if test="dimmingMode != null" >
+        dimming_mode=#{dimmingMode,jdbcType=INTEGER},
+      </if>
+      <if test="ratedVoltage !=null">
+        rated_voltage=#{ratedVoltage,jdbcType=DECIMAL},
+      </if>
+      <if test="ratedCurrent !=null">
+        rated_current=#{ratedCurrent,jdbcType=DECIMAL},
+      </if>
+      <if test="staticPower !=null">
+        static_power=#{staticPower,jdbcType=DECIMAL},
+      </if>
+      <if test="alarmMessage != null" >
+        alarm_message=#{alarmMessage,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

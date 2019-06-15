@@ -79,6 +79,17 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
             criteria.andequipmentNumberLike("%" + request.getEquipmentNumber() + "%");
         }
 
+         if (!StringUtils.isEmpty(request.getElectricityModel())){
+
+             criteria.andElectricityModelLike("%"+request.getElectricityModel()+"%");
+
+         }
+
+         if (!StringUtils.isEmpty(request.getElectricityName())){
+
+             criteria.andElectricityNameLike("%"+request.getEquipmentNumber()+"%");
+         }
+
         List<ElectricityMeterView> electricityMeterViews=new ArrayList<>(7);
 
         Long countByExample = electricityMeterMapper.countByExample(electricityMeterExample);

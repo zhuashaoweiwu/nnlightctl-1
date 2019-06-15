@@ -22,4 +22,16 @@ public class LightModelConditionRequest extends BaseRequest {
 
     private String modelName;
     private List<Long> deleteLightModelList;
+
+    private String equipmentNumber;
+
+
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 }

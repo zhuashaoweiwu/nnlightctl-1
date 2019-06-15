@@ -87,9 +87,29 @@ public class LightModelRequest {
 
     private String grade;
 
-    private int index;
+    private int indexMode;
 
     private int flux;
+
+    private String equipmentNumber;
+
+    private String colorMode;
+
+    public String getColorMode() {
+        return colorMode;
+    }
+
+    public void setColorMode(String colorMode) {
+        this.colorMode = colorMode;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 
     public String getChip() {
         return chip;
@@ -123,13 +143,6 @@ public class LightModelRequest {
         this.grade = grade;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
     public int getFlux() {
         return flux;
@@ -137,5 +150,13 @@ public class LightModelRequest {
 
     public void setFlux(int flux) {
         this.flux = flux;
+    }
+
+    public int getIndexMode() {
+        return indexMode;
+    }
+
+    public void setIndexMode(int indexMode) {
+        this.indexMode = indexMode;
     }
 }
