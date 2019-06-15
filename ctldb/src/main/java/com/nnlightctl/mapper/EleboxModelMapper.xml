@@ -175,6 +175,24 @@
       <if test="loopElectricity != null" >
         loop_electricity,
       </if>
+      <if test="communicationMethods != null" >
+        communication_methods,
+      </if>
+      <if test="maxElectric != null" >
+        max_electric,
+      </if>
+      <if test="loadElectric != null" >
+        load_electric,
+      </if>
+      <if test="installationMethods != null" >
+        Installation_methods,
+      </if>
+      <if test="mem != null" >
+        mem,
+      </if>
+      <if test="modelType != null" >
+        model_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -218,6 +236,24 @@
       </if>
       <if test="loopElectricity != null" >
         #{loopElectricity,jdbcType=DECIMAL},
+      </if>
+      <if test="communicationMethods != null" >
+        #{communicationMethods,jdbcType=VARCHAR},
+      </if>
+      <if test="maxElectric != null" >
+        #{maxElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="loadElectric != null" >
+        #{loadElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="installationMethods != null" >
+        #{installationMethods,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null" >
+        #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null" >
+        #{modelType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -345,6 +381,24 @@
       </if>
       <if test="loopElectricity != null" >
         loop_electricity = #{loopElectricity,jdbcType=DECIMAL},
+      </if>
+      <if test="communicationMethods != null" >
+        communication_methods =  #{communicationMethods,jdbcType=VARCHAR},
+      </if>
+      <if test="maxElectric != null" >
+        max_electric = #{maxElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="loadElectric != null" >
+        load_electric = #{loadElectric,jdbcType=VARCHAR},
+      </if>
+      <if test="installationMethods != null" >
+        installation_methods = #{installationMethods,jdbcType=VARCHAR},
+      </if>
+      <if test="mem != null" >
+        mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null" >
+        model_type = #{modelType,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

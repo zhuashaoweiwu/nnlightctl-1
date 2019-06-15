@@ -85,7 +85,16 @@ public class SystemConfig {
 
         public interface getConstant {
             public static final byte HOLIDAYVACATIONS = 4;/**4为策略节假日*/
+
+            public static final byte  SwitchModle = (byte) 1;/**开关模块*/
+
+            public static final byte  FocusControl = (byte) 2;/**集中控制器*/
+
+            public static final byte  WattHour = (byte) 3;/**电表*/
+
+            public static final byte  Illumination = (byte) 4;/**光照计*/
         }
+
 
         protected interface getCacheKey {
 

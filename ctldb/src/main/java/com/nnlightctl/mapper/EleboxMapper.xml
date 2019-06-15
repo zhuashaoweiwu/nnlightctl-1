@@ -1,443 +1,506 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nnlightctl.dao.EleboxMapper" >
-  <resultMap id="BaseResultMap" type="com.nnlightctl.po.Elebox" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
-    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
-    <result column="uid" property="uid" jdbcType="VARCHAR" />
-    <result column="network_addr" property="networkAddr" jdbcType="VARCHAR" />
-    <result column="realtime_uid" property="realtimeUid" jdbcType="VARCHAR" />
-    <result column="code_number" property="codeNumber" jdbcType="VARCHAR" />
-    <result column="manufacture" property="manufacture" jdbcType="TIMESTAMP" />
-    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
-    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
-    <result column="use_date" property="useDate" jdbcType="TIMESTAMP" />
-    <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL" />
-    <result column="rated_electricty" property="ratedElectricty" jdbcType="DECIMAL" />
-    <result column="power_rating" property="powerRating" jdbcType="DECIMAL" />
-    <result column="max_use_time" property="maxUseTime" jdbcType="BIGINT" />
-    <result column="spd" property="spd" jdbcType="VARCHAR" />
-    <result column="modbus_EM" property="modbusEm" jdbcType="VARCHAR" />
-    <result column="main_switch" property="mainSwitch" jdbcType="VARCHAR" />
-    <result column="nnlightctl_elebox_gis_id" property="nnlightctlEleboxGisId" jdbcType="BIGINT" />
-    <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT" />
-    <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="com.nnlightctl.dao.EleboxMapper">
+    <resultMap id="BaseResultMap" type="com.nnlightctl.po.Elebox">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="network_addr" property="networkAddr" jdbcType="VARCHAR"/>
+        <result column="realtime_uid" property="realtimeUid" jdbcType="VARCHAR"/>
+        <result column="code_number" property="codeNumber" jdbcType="VARCHAR"/>
+        <result column="manufacture" property="manufacture" jdbcType="TIMESTAMP"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="use_date" property="useDate" jdbcType="TIMESTAMP"/>
+        <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL"/>
+        <result column="rated_electricty" property="ratedElectricty" jdbcType="DECIMAL"/>
+        <result column="power_rating" property="powerRating" jdbcType="DECIMAL"/>
+        <result column="max_use_time" property="maxUseTime" jdbcType="BIGINT"/>
+        <result column="spd" property="spd" jdbcType="VARCHAR"/>
+        <result column="modbus_EM" property="modbusEm" jdbcType="VARCHAR"/>
+        <result column="main_switch" property="mainSwitch" jdbcType="VARCHAR"/>
+        <result column="nnlightctl_elebox_gis_id" property="nnlightctlEleboxGisId" jdbcType="BIGINT"/>
+        <result column="nnlightctl_region_id" property="nnlightctlRegionId" jdbcType="BIGINT"/>
+        <result column="nnlightctl_project_id" property="nnlightctlProjectId" jdbcType="BIGINT"/>
+        <result column="elebox_mode" property="eleboxMode" jdbcType="VARCHAR"/>
+        <result column="elebox_name" property="eleboxName" jdbcType="VARCHAR"/>
+        <result column="elebox_material" property="eleboxMaterial" jdbcType="VARCHAR"/>
+        <result column="elebox_size" property="eleboxSize" jdbcType="VARCHAR"/>
+        <result column="mem" property="mem" jdbcType="VARCHAR"/>
+        <result column="elebox_colors" property="eleboxColors" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     id, gmt_created, gmt_updated, uid, network_addr, realtime_uid, code_number, manufacture, 
     longitude, latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time, 
-    spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id
+    spd, modbus_EM, main_switch, nnlightctl_elebox_gis_id, nnlightctl_region_id, nnlightctl_project_id,
+    elebox_mode,elebox_name,elebox_material,elebox_size,mem,elebox_colors
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from nnlightctl_elebox
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from nnlightctl_elebox
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from nnlightctl_elebox
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from nnlightctl_elebox
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from nnlightctl_elebox
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.nnlightctl.po.EleboxExample" >
-    delete from nnlightctl_elebox
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.nnlightctl.po.Elebox" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into nnlightctl_elebox (gmt_created, gmt_updated, uid, 
-      network_addr, realtime_uid, code_number, 
-      manufacture, longitude, latitude, 
-      use_date, rated_voltage, rated_electricty, 
-      power_rating, max_use_time, spd, 
-      modbus_EM, main_switch, nnlightctl_elebox_gis_id, 
-      nnlightctl_region_id, nnlightctl_project_id)
-    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, 
-      #{networkAddr,jdbcType=VARCHAR}, #{realtimeUid,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR}, 
-      #{manufacture,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
-      #{useDate,jdbcType=TIMESTAMP}, #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectricty,jdbcType=DECIMAL}, 
-      #{powerRating,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{spd,jdbcType=VARCHAR}, 
-      #{modbusEm,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT}, 
-      #{nnlightctlRegionId,jdbcType=BIGINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.nnlightctl.po.Elebox" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into nnlightctl_elebox
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="gmtCreated != null" >
-        gmt_created,
-      </if>
-      <if test="gmtUpdated != null" >
-        gmt_updated,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="networkAddr != null" >
-        network_addr,
-      </if>
-      <if test="realtimeUid != null" >
-        realtime_uid,
-      </if>
-      <if test="codeNumber != null" >
-        code_number,
-      </if>
-      <if test="manufacture != null" >
-        manufacture,
-      </if>
-      <if test="longitude != null" >
-        longitude,
-      </if>
-      <if test="latitude != null" >
-        latitude,
-      </if>
-      <if test="useDate != null" >
-        use_date,
-      </if>
-      <if test="ratedVoltage != null" >
-        rated_voltage,
-      </if>
-      <if test="ratedElectricty != null" >
-        rated_electricty,
-      </if>
-      <if test="powerRating != null" >
-        power_rating,
-      </if>
-      <if test="maxUseTime != null" >
-        max_use_time,
-      </if>
-      <if test="spd != null" >
-        spd,
-      </if>
-      <if test="modbusEm != null" >
-        modbus_EM,
-      </if>
-      <if test="mainSwitch != null" >
-        main_switch,
-      </if>
-      <if test="nnlightctlEleboxGisId != null" >
-        nnlightctl_elebox_gis_id,
-      </if>
-      <if test="nnlightctlRegionId != null" >
-        nnlightctl_region_id,
-      </if>
-      <if test="nnlightctlProjectId != null" >
-        nnlightctl_project_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="gmtCreated != null" >
-        #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtUpdated != null" >
-        #{gmtUpdated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="networkAddr != null" >
-        #{networkAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="realtimeUid != null" >
-        #{realtimeUid,jdbcType=VARCHAR},
-      </if>
-      <if test="codeNumber != null" >
-        #{codeNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="manufacture != null" >
-        #{manufacture,jdbcType=TIMESTAMP},
-      </if>
-      <if test="longitude != null" >
-        #{longitude,jdbcType=VARCHAR},
-      </if>
-      <if test="latitude != null" >
-        #{latitude,jdbcType=VARCHAR},
-      </if>
-      <if test="useDate != null" >
-        #{useDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="ratedVoltage != null" >
-        #{ratedVoltage,jdbcType=DECIMAL},
-      </if>
-      <if test="ratedElectricty != null" >
-        #{ratedElectricty,jdbcType=DECIMAL},
-      </if>
-      <if test="powerRating != null" >
-        #{powerRating,jdbcType=DECIMAL},
-      </if>
-      <if test="maxUseTime != null" >
-        #{maxUseTime,jdbcType=BIGINT},
-      </if>
-      <if test="spd != null" >
-        #{spd,jdbcType=VARCHAR},
-      </if>
-      <if test="modbusEm != null" >
-        #{modbusEm,jdbcType=VARCHAR},
-      </if>
-      <if test="mainSwitch != null" >
-        #{mainSwitch,jdbcType=VARCHAR},
-      </if>
-      <if test="nnlightctlEleboxGisId != null" >
-        #{nnlightctlEleboxGisId,jdbcType=BIGINT},
-      </if>
-      <if test="nnlightctlRegionId != null" >
-        #{nnlightctlRegionId,jdbcType=BIGINT},
-      </if>
-      <if test="nnlightctlProjectId != null" >
-        #{nnlightctlProjectId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.nnlightctl.po.EleboxExample" resultType="java.lang.Integer" >
-    select count(*) from nnlightctl_elebox
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update nnlightctl_elebox
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.gmtCreated != null" >
+    <delete id="deleteByExample" parameterType="com.nnlightctl.po.EleboxExample">
+        delete from nnlightctl_elebox
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.nnlightctl.po.Elebox">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into nnlightctl_elebox (gmt_created, gmt_updated, uid,
+        network_addr, realtime_uid, code_number,
+        manufacture, longitude, latitude,
+        use_date, rated_voltage, rated_electricty,
+        power_rating, max_use_time, spd,
+        modbus_EM, main_switch, nnlightctl_elebox_gis_id,
+        nnlightctl_region_id, nnlightctl_project_id)
+        values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR},
+        #{networkAddr,jdbcType=VARCHAR}, #{realtimeUid,jdbcType=VARCHAR}, #{codeNumber,jdbcType=VARCHAR},
+        #{manufacture,jdbcType=TIMESTAMP}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR},
+        #{useDate,jdbcType=TIMESTAMP}, #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectricty,jdbcType=DECIMAL},
+        #{powerRating,jdbcType=DECIMAL}, #{maxUseTime,jdbcType=BIGINT}, #{spd,jdbcType=VARCHAR},
+        #{modbusEm,jdbcType=VARCHAR}, #{mainSwitch,jdbcType=VARCHAR}, #{nnlightctlEleboxGisId,jdbcType=BIGINT},
+        #{nnlightctlRegionId,jdbcType=BIGINT}, #{nnlightctlProjectId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.nnlightctl.po.Elebox">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into nnlightctl_elebox
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gmtCreated != null">
+                gmt_created,
+            </if>
+            <if test="gmtUpdated != null">
+                gmt_updated,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="networkAddr != null">
+                network_addr,
+            </if>
+            <if test="realtimeUid != null">
+                realtime_uid,
+            </if>
+            <if test="codeNumber != null">
+                code_number,
+            </if>
+            <if test="manufacture != null">
+                manufacture,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="useDate != null">
+                use_date,
+            </if>
+            <if test="ratedVoltage != null">
+                rated_voltage,
+            </if>
+            <if test="ratedElectricty != null">
+                rated_electricty,
+            </if>
+            <if test="powerRating != null">
+                power_rating,
+            </if>
+            <if test="maxUseTime != null">
+                max_use_time,
+            </if>
+            <if test="spd != null">
+                spd,
+            </if>
+            <if test="modbusEm != null">
+                modbus_EM,
+            </if>
+            <if test="mainSwitch != null">
+                main_switch,
+            </if>
+            <if test="nnlightctlEleboxGisId != null">
+                nnlightctl_elebox_gis_id,
+            </if>
+            <if test="nnlightctlRegionId != null">
+                nnlightctl_region_id,
+            </if>
+            <if test="nnlightctlProjectId != null">
+                nnlightctl_project_id,
+            </if>
+            <if test="eleboxModel != null">
+                elebox_model,
+            </if>
+            <if test="eleboxName!= null">
+                elebox_name,
+            </if>
+            <if test="materialQuality != null">
+                material_quality,
+            </if>
+            <if test="eleboxColors != null">
+                elebox_colors,
+            </if>
+            <if test="eleboxSize != null">
+                elebox_size,
+            </if>
+            <if test="mem != null">
+                mem,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gmtCreated != null">
+                #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtUpdated != null">
+                #{gmtUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="networkAddr != null">
+                #{networkAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="realtimeUid != null">
+                #{realtimeUid,jdbcType=VARCHAR},
+            </if>
+            <if test="codeNumber != null">
+                #{codeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacture != null">
+                #{manufacture,jdbcType=TIMESTAMP},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="useDate != null">
+                #{useDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ratedVoltage != null">
+                #{ratedVoltage,jdbcType=DECIMAL},
+            </if>
+            <if test="ratedElectricty != null">
+                #{ratedElectricty,jdbcType=DECIMAL},
+            </if>
+            <if test="powerRating != null">
+                #{powerRating,jdbcType=DECIMAL},
+            </if>
+            <if test="maxUseTime != null">
+                #{maxUseTime,jdbcType=BIGINT},
+            </if>
+            <if test="spd != null">
+                #{spd,jdbcType=VARCHAR},
+            </if>
+            <if test="modbusEm != null">
+                #{modbusEm,jdbcType=VARCHAR},
+            </if>
+            <if test="mainSwitch != null">
+                #{mainSwitch,jdbcType=VARCHAR},
+            </if>
+            <if test="nnlightctlEleboxGisId != null">
+                #{nnlightctlEleboxGisId,jdbcType=BIGINT},
+            </if>
+            <if test="nnlightctlRegionId != null">
+                #{nnlightctlRegionId,jdbcType=BIGINT},
+            </if>
+            <if test="nnlightctlProjectId != null">
+                #{nnlightctlProjectId,jdbcType=BIGINT},
+            </if>
+            <if test="eleboxModel != null">
+                #{eleboxModel,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxName!= null">
+                #{eleboxName,jdbcType=VARCHAR},
+            </if>
+            <if test="materialQuality != null">
+                #{materialQuality,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxColors != null">
+                #{eleboxColors,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxSize != null">
+                #{eleboxSize,jdbcType=VARCHAR},
+            </if>
+            <if test="mem != null">
+                #{mem,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.nnlightctl.po.EleboxExample" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_elebox
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update nnlightctl_elebox
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.gmtCreated != null">
+                gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.gmtUpdated != null">
+                gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.networkAddr != null">
+                network_addr = #{record.networkAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="record.realtimeUid != null">
+                realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.codeNumber != null">
+                code_number = #{record.codeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.manufacture != null">
+                manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.longitude != null">
+                longitude = #{record.longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="record.latitude != null">
+                latitude = #{record.latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="record.useDate != null">
+                use_date = #{record.useDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.ratedVoltage != null">
+                rated_voltage = #{record.ratedVoltage,jdbcType=DECIMAL},
+            </if>
+            <if test="record.ratedElectricty != null">
+                rated_electricty = #{record.ratedElectricty,jdbcType=DECIMAL},
+            </if>
+            <if test="record.powerRating != null">
+                power_rating = #{record.powerRating,jdbcType=DECIMAL},
+            </if>
+            <if test="record.maxUseTime != null">
+                max_use_time = #{record.maxUseTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.spd != null">
+                spd = #{record.spd,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modbusEm != null">
+                modbus_EM = #{record.modbusEm,jdbcType=VARCHAR},
+            </if>
+            <if test="record.mainSwitch != null">
+                main_switch = #{record.mainSwitch,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nnlightctlEleboxGisId != null">
+                nnlightctl_elebox_gis_id = #{record.nnlightctlEleboxGisId,jdbcType=BIGINT},
+            </if>
+            <if test="record.nnlightctlRegionId != null">
+                nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
+            </if>
+            <if test="record.nnlightctlProjectId != null">
+                nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update nnlightctl_elebox
+        set id = #{record.id,jdbcType=BIGINT},
         gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtUpdated != null" >
         gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.networkAddr != null" >
         network_addr = #{record.networkAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="record.realtimeUid != null" >
         realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.codeNumber != null" >
         code_number = #{record.codeNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.manufacture != null" >
         manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.longitude != null" >
         longitude = #{record.longitude,jdbcType=VARCHAR},
-      </if>
-      <if test="record.latitude != null" >
         latitude = #{record.latitude,jdbcType=VARCHAR},
-      </if>
-      <if test="record.useDate != null" >
         use_date = #{record.useDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.ratedVoltage != null" >
         rated_voltage = #{record.ratedVoltage,jdbcType=DECIMAL},
-      </if>
-      <if test="record.ratedElectricty != null" >
         rated_electricty = #{record.ratedElectricty,jdbcType=DECIMAL},
-      </if>
-      <if test="record.powerRating != null" >
         power_rating = #{record.powerRating,jdbcType=DECIMAL},
-      </if>
-      <if test="record.maxUseTime != null" >
         max_use_time = #{record.maxUseTime,jdbcType=BIGINT},
-      </if>
-      <if test="record.spd != null" >
         spd = #{record.spd,jdbcType=VARCHAR},
-      </if>
-      <if test="record.modbusEm != null" >
         modbus_EM = #{record.modbusEm,jdbcType=VARCHAR},
-      </if>
-      <if test="record.mainSwitch != null" >
         main_switch = #{record.mainSwitch,jdbcType=VARCHAR},
-      </if>
-      <if test="record.nnlightctlEleboxGisId != null" >
         nnlightctl_elebox_gis_id = #{record.nnlightctlEleboxGisId,jdbcType=BIGINT},
-      </if>
-      <if test="record.nnlightctlRegionId != null" >
         nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
-      </if>
-      <if test="record.nnlightctlProjectId != null" >
-        nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update nnlightctl_elebox
-    set id = #{record.id,jdbcType=BIGINT},
-      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
-      gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
-      uid = #{record.uid,jdbcType=VARCHAR},
-      network_addr = #{record.networkAddr,jdbcType=VARCHAR},
-      realtime_uid = #{record.realtimeUid,jdbcType=VARCHAR},
-      code_number = #{record.codeNumber,jdbcType=VARCHAR},
-      manufacture = #{record.manufacture,jdbcType=TIMESTAMP},
-      longitude = #{record.longitude,jdbcType=VARCHAR},
-      latitude = #{record.latitude,jdbcType=VARCHAR},
-      use_date = #{record.useDate,jdbcType=TIMESTAMP},
-      rated_voltage = #{record.ratedVoltage,jdbcType=DECIMAL},
-      rated_electricty = #{record.ratedElectricty,jdbcType=DECIMAL},
-      power_rating = #{record.powerRating,jdbcType=DECIMAL},
-      max_use_time = #{record.maxUseTime,jdbcType=BIGINT},
-      spd = #{record.spd,jdbcType=VARCHAR},
-      modbus_EM = #{record.modbusEm,jdbcType=VARCHAR},
-      main_switch = #{record.mainSwitch,jdbcType=VARCHAR},
-      nnlightctl_elebox_gis_id = #{record.nnlightctlEleboxGisId,jdbcType=BIGINT},
-      nnlightctl_region_id = #{record.nnlightctlRegionId,jdbcType=BIGINT},
-      nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Elebox" >
-    update nnlightctl_elebox
-    <set >
-      <if test="gmtCreated != null" >
-        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtUpdated != null" >
-        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="networkAddr != null" >
-        network_addr = #{networkAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="realtimeUid != null" >
-        realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
-      </if>
-      <if test="codeNumber != null" >
-        code_number = #{codeNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="manufacture != null" >
-        manufacture = #{manufacture,jdbcType=TIMESTAMP},
-      </if>
-      <if test="longitude != null" >
-        longitude = #{longitude,jdbcType=VARCHAR},
-      </if>
-      <if test="latitude != null" >
-        latitude = #{latitude,jdbcType=VARCHAR},
-      </if>
-      <if test="useDate != null" >
-        use_date = #{useDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="ratedVoltage != null" >
-        rated_voltage = #{ratedVoltage,jdbcType=DECIMAL},
-      </if>
-      <if test="ratedElectricty != null" >
-        rated_electricty = #{ratedElectricty,jdbcType=DECIMAL},
-      </if>
-      <if test="powerRating != null" >
-        power_rating = #{powerRating,jdbcType=DECIMAL},
-      </if>
-      <if test="maxUseTime != null" >
-        max_use_time = #{maxUseTime,jdbcType=BIGINT},
-      </if>
-      <if test="spd != null" >
-        spd = #{spd,jdbcType=VARCHAR},
-      </if>
-      <if test="modbusEm != null" >
-        modbus_EM = #{modbusEm,jdbcType=VARCHAR},
-      </if>
-      <if test="mainSwitch != null" >
-        main_switch = #{mainSwitch,jdbcType=VARCHAR},
-      </if>
-      <if test="nnlightctlEleboxGisId != null" >
-        nnlightctl_elebox_gis_id = #{nnlightctlEleboxGisId,jdbcType=BIGINT},
-      </if>
-      <if test="nnlightctlRegionId != null" >
-        nnlightctl_region_id = #{nnlightctlRegionId,jdbcType=BIGINT},
-      </if>
-      <if test="nnlightctlProjectId != null" >
-        nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Elebox" >
+        nnlightctl_project_id = #{record.nnlightctlProjectId,jdbcType=BIGINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.Elebox">
+        update nnlightctl_elebox
+        <set>
+            <if test="gmtCreated != null">
+                gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtUpdated != null">
+                gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="networkAddr != null">
+                network_addr = #{networkAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="realtimeUid != null">
+                realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
+            </if>
+            <if test="codeNumber != null">
+                code_number = #{codeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacture != null">
+                manufacture = #{manufacture,jdbcType=TIMESTAMP},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="useDate != null">
+                use_date = #{useDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ratedVoltage != null">
+                rated_voltage = #{ratedVoltage,jdbcType=DECIMAL},
+            </if>
+            <if test="ratedElectricty != null">
+                rated_electricty = #{ratedElectricty,jdbcType=DECIMAL},
+            </if>
+            <if test="powerRating != null">
+                power_rating = #{powerRating,jdbcType=DECIMAL},
+            </if>
+            <if test="maxUseTime != null">
+                max_use_time = #{maxUseTime,jdbcType=BIGINT},
+            </if>
+            <if test="spd != null">
+                spd = #{spd,jdbcType=VARCHAR},
+            </if>
+            <if test="modbusEm != null">
+                modbus_EM = #{modbusEm,jdbcType=VARCHAR},
+            </if>
+            <if test="mainSwitch != null">
+                main_switch = #{mainSwitch,jdbcType=VARCHAR},
+            </if>
+            <if test="nnlightctlEleboxGisId != null">
+                nnlightctl_elebox_gis_id = #{nnlightctlEleboxGisId,jdbcType=BIGINT},
+            </if>
+            <if test="nnlightctlRegionId != null">
+                nnlightctl_region_id = #{nnlightctlRegionId,jdbcType=BIGINT},
+            </if>
+            <if test="nnlightctlProjectId != null">
+                nnlightctl_project_id = #{nnlightctlProjectId,jdbcType=BIGINT},
+            </if>
+            <if test="eleboxModel != null">
+                elebox_model = #{eleboxModel,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxName!= null">
+                elebox_name = #{eleboxName,jdbcType=VARCHAR},
+            </if>
+            <if test="materialQuality != null">
+                material_quality = #{materialQuality,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxColors != null">
+                elebox_colors = #{eleboxColors,jdbcType=VARCHAR},
+            </if>
+            <if test="eleboxSize != null">
+                elebox_size = #{eleboxSize,jdbcType=VARCHAR},
+            </if>
+            <if test="mem != null">
+                mem = #{mem,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.Elebox">
     update nnlightctl_elebox
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
