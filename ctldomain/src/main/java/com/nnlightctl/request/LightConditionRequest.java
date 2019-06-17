@@ -153,4 +153,10 @@ public class LightConditionRequest extends BaseRequest {
     private List<Long> deleteLightIdList;
 
     private Long projectId;
+
+
+
+
+
+
 }

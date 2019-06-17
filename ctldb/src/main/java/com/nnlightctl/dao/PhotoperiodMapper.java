@@ -21,4 +21,8 @@ public interface PhotoperiodMapper {
 
     PhotoPeriod selectById(Long id);
 
+
+
+
+
 }

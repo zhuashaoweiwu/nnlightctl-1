@@ -31,6 +31,8 @@ public class LamppostServerImpl implements LamppostServer {
         int sign=-1;
 
         if (request.getId()==null){
+
+            request.setState(0);
             //新增灯杆
             sign=lamppostMapper.insertLamppost(lamppost);
         }else {

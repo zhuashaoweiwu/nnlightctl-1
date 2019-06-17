@@ -8,4 +8,5 @@ public interface DeployEleboxModelServer {
 
     int updateEleboxModel(DeployEleboxModelRequest deployEleboxModelRequest);
 
+
 }

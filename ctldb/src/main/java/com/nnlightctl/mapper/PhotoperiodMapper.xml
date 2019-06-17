@@ -11,6 +11,7 @@
         <result column="accuracy" property="accuracy" jdbcType="DECIMAL" />
         <result column="work_voltage" property="workVoltage" jdbcType="DECIMAL" />
         <result column="mem" property="mem" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
     </resultMap>
     <insert id="insert" parameterType="com.nnlightctl.po.PhotoPeriod">
         insert into nnlightctl_photoperiod
@@ -37,7 +38,10 @@
                 mem,
             </if>
             <if test="equipmentNumber !=null" >
-                equipment_number
+                equipment_number,
+            </if>
+            <if test="state !=null">
+                state,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -63,7 +67,10 @@
                 #{mem,jdbcType=VARCHAR},
             </if>
             <if test="equipmentNumber !=null">
-                #{equipmentNumber,jdbcType=VARCHAR}
+                #{equipmentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="state !=null">
+                #{state,jdbcType=INTEGER}
             </if>
         </trim>
     </insert>
@@ -92,7 +99,10 @@
                  mem = #{mem,jdbcType=VARCHAR},
              </if>
              <if test="equipmentNumber !=null">
-                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR},
+             </if>
+             <if test="state !=null">
+                 state=#{state,jdbcType=INTEGER}
              </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
@@ -110,9 +120,9 @@
 
     <sql id="Base_Column_List">
         id,equipment_number,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
-        ,work_voltage,mem
+        ,work_voltage,mem,state
     </sql>
-    <select id="selectAll" resultMap="BaseResultMap" parameterType="int">
+    <select id="selectAll" resultMap="BaseResultMap" >
         select
           <include refid="Base_Column_List" />
          from nnlightctl_photoperiod
@@ -127,6 +137,7 @@
                 AND photoperiod_name like concat('%',#{params.photoperiodName},'%')
              </if>
          </where>
+         order by id desc
     </select>
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod" parameterType="long">
 

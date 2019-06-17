@@ -15,6 +15,26 @@ public class CentralizeControllerConditionRequest extends BaseRequest{
 
     private String centralizeName;
 
+    private int deployFlag;
+
+    private Long eleboxId;
+
+    public int getDeployFlag() {
+        return deployFlag;
+    }
+
+    public void setDeployFlag(int deployFlag) {
+        this.deployFlag = deployFlag;
+    }
+
+    public Long getEleboxId() {
+        return eleboxId;
+    }
+
+    public void setEleboxId(Long eleboxId) {
+        this.eleboxId = eleboxId;
+    }
+
     public String getCentralizeModel() {
         return centralizeModel;
     }
@@ -38,8 +58,6 @@ public class CentralizeControllerConditionRequest extends BaseRequest{
     public void setCentralizeControllerIds(List<Long> centralizeControllerIds) {
         this.centralizeControllerIds = centralizeControllerIds;
     }
-
-
 
     public String getEquipmentNumber() {
         return equipmentNumber;

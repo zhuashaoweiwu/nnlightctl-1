@@ -15,7 +15,6 @@ import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
-import com.nnlightctl.vo.EleboxView;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -215,10 +214,8 @@ public class EleboxServerImpl implements EleboxServer {
         if (!StringUtils.isEmpty(request.getEleboxName())) {
             criteria.andEleboxName("%" + request.getEleboxName() + "%");
         }
-
         int total = eleboxMapper.countByExample(eleboxExample);
         tuple.setSecond(total);
-
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         eleboxExample.setOrderByClause("id DESC");
@@ -490,14 +487,7 @@ public class EleboxServerImpl implements EleboxServer {
         return elebox;
     }
 
-    @Override
-    public List<String> selectEquipment() {
 
-
-        
-
-        return null;
-    }
 
     public void uploadImageElebox(MultipartFile eleboxGisIcon, String imagePath) {
 

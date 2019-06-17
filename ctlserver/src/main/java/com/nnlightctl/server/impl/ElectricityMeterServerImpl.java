@@ -2,13 +2,19 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
+import com.nnlight.common.SystemConfig;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.EleboxMapper;
+import com.nnlightctl.dao.EleboxRelationMapper;
 import com.nnlightctl.dao.ElectricityMeterMapper;
 import com.nnlightctl.parameter.ElectricityMeterParameter;
+import com.nnlightctl.po.EleboxRelation;
 import com.nnlightctl.po.ElectricityMeter;
 import com.nnlightctl.po.ElectricityMeterExample;
+
 import com.nnlightctl.request.ElectricityMeterConditionRequest;
 import com.nnlightctl.request.ElectricityMeterRequest;
+import com.nnlightctl.request.deployRequest.DeployElectricityMeter;
 import com.nnlightctl.server.ElectricityMeterServer;
 import com.nnlightctl.vo.ElectricityMeterView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +31,9 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
     @Autowired
     private ElectricityMeterMapper electricityMeterMapper;
+
+    @Autowired
+    private EleboxRelationMapper eleboxRelationMapper;
 
     private int flag=-1;
 
@@ -39,11 +49,15 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
         ReflectCopyUtil.beanSameFieldCopy(request,electricityMeter);
 
         if (request.getId()==null){
+
+            //未部署
+            electricityMeter.setState(0);
             //新增
             flag = electricityMeterMapper.insertSelective(electricityMeter);
 
         }else {
             //修改
+
             flag=electricityMeterMapper.updateByPrimaryKeySelective(electricityMeter);
         }
 
@@ -147,4 +161,55 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
         return electricityMeters;
     }
+
+    @Override
+    public Boolean deployElectricityMeter(DeployElectricityMeter request) {
+
+        try {
+            for (ElectricityMeterRequest electricityMeterRequest : request.getMeterRequestList()) {
+
+                /**
+                 * 更新电表信息
+                 */
+                ElectricityMeter electricityMeter=new ElectricityMeter();
+
+                electricityMeter.setState(1);
+
+                electricityMeter.setElectricityModel(electricityMeterRequest.getElectricityModel());
+
+                electricityMeter.setElectricityModel(electricityMeterRequest.getElectricityName());
+
+                electricityMeter.setMem(electricityMeterRequest.getMem());
+
+                electricityMeter.setId(electricityMeterRequest.getId());
+
+                electricityMeterMapper.updateByPrimaryKeySelective(electricityMeter);
+
+                /**
+                 * 保存到关联表
+                 */
+                EleboxRelation eleboxRelation=new EleboxRelation();
+
+                eleboxRelation.setEleboxId(request.getEleboxId());
+
+                eleboxRelation.setEleboxModelId(electricityMeterRequest.getId());
+
+                eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.WattHour);
+
+                eleboxRelation.setGmtUpdated(new Date());
+
+                eleboxRelationMapper.insertSelective(eleboxRelation);
+
+                return Boolean.TRUE;
+
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Boolean.FALSE;
+    }
+
+
 }

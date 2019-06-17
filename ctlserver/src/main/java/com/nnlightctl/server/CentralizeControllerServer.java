@@ -4,6 +4,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.po.CentralizeController;
 import com.nnlightctl.request.CentralizeControllerConditionRequest;
 import com.nnlightctl.request.CentralizeControllerRquester;
+import com.nnlightctl.request.deployRequest.DeployCentralizeControllerRequest;
 import com.nnlightctl.vo.CentralizeControllerView;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface CentralizeControllerServer {
     CentralizeController selectByPrimaryKey(CentralizeControllerConditionRequest request);
 
     Tuple.TwoTuple<List<CentralizeControllerView>,Integer> listCentralizeController(CentralizeControllerConditionRequest request);
+
+    Boolean deployCentralizeController(DeployCentralizeControllerRequest request);
 
 
 

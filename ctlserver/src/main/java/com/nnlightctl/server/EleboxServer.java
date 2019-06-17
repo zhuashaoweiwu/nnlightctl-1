@@ -43,12 +43,5 @@ public interface EleboxServer {
 
     Elebox selectEleboxById(EleboxConditionRequest request);
 
-    /**
-     * 查询所有的设备编号
-     */
-    List<String> selectEquipment();
 
-    /**
-     * 展示
-     */
 }

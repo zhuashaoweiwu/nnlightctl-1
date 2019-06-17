@@ -74,11 +74,6 @@ public class RoadLightingController extends BaseController {
 
 
 
-
-
-
-
-
     @RequestMapping("addorupdateelebox")
     public String addOrUpdateElebox(EleboxRequest request){
 
@@ -128,60 +123,6 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
 
     }
-
-
-    @RequestMapping("selecteleboxbyid")
-    public String selectEleboxById(EleboxConditionRequest request){
-
-        logger.info("[POST]  api/roadlighting/selecteleboxbyid");
-
-        Elebox elebox = eleboxServer.selectEleboxById(request);
-
-        List<Elebox> eleboxList=new ArrayList<>(8);
-
-        eleboxList.add(elebox);
-
-        List<EleboxViewCopy> eleboxViewCopy = getEleboxViewCopy(eleboxList);
-
-        JsonResult jsonResult = JsonResult.getSUCCESS();
-
-        jsonResult.setTotal(1);
-
-        jsonResult.setData(eleboxViewCopy);
-
-        return toJson(jsonResult);
-    }
-
-
-    @RequestMapping("listeleboxmessage")
-    public String listEleboxMessage(EleboxConditionRequest request){
-
-        logger.info("[POST] api/roadlighting/listeleboxmessage");
-
-        Tuple.TwoTuple<List<Elebox>, Integer> twoTuple = eleboxServer.listEleboxMessage(request);
-
-        JsonResult jsonResult = JsonResult.getSUCCESS();
-
-        List<EleboxViewCopy> eleboxViewCopy = getEleboxViewCopy(twoTuple.getFirst());
-
-        jsonResult.setData(eleboxViewCopy);
-
-        jsonResult.setTotal(twoTuple.getSecond());
-
-        return toJson(jsonResult);
-
-    }
-
-
-    @RequestMapping("selectalleleboxcode")
-    public String selectAllEleboxCode(){
-
-
-
-        return null;
-
-    }
-
 
 
     /*************************************集中控制器***************************/
@@ -1314,7 +1255,7 @@ public class RoadLightingController extends BaseController {
         LightingModel lightingModel = lightModelServer.getLightModelById(id);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
-        List<LightingModel> lightingModels = new ArrayList<>(1);
+        List<LightingModel> lightingModels = new ArrayList<>(6);
         lightingModels.add(lightingModel);
         jsonResult.setData(lightingModels);
 
@@ -1757,36 +1698,5 @@ public class RoadLightingController extends BaseController {
     }
 
 
-    public List<EleboxViewCopy> getEleboxViewCopy(List<Elebox> eleboxList){
 
-        List<EleboxViewCopy> eleboxViewCopies=new ArrayList<>(6);
-
-        for (Elebox elebox : eleboxList) {
-
-            EleboxViewCopy eleboxViewCopy=new EleboxViewCopy();
-
-            eleboxViewCopy.setId(elebox.getId());
-
-            eleboxViewCopy.setEleboxColors(elebox.getEleboxColors());
-
-            eleboxViewCopy.setEleboxMaterial(elebox.getEleboxMaterial());
-
-            eleboxViewCopy.setEquipmentNumber(elebox.getEquipmentNumber());
-
-            eleboxViewCopy.setEleboxMode(elebox.getEleboxMode());
-
-            eleboxViewCopy.setEleboxName(elebox.getEleboxName());
-
-            eleboxViewCopy.setMem(elebox.getMem());
-
-
-
-            eleboxViewCopies.add(eleboxViewCopy);
-
-
-        }
-
-        return eleboxViewCopies;
-
-    }
 }

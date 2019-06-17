@@ -145,13 +145,13 @@ public class LightRequest {
 
     private Long id;
     private String uid;
-    @NotEmpty(message = "灯具唯一编码不能为空！")
+    //@NotEmpty(message = "灯具唯一编码不能为空！")
     private String lightingCode;
     private Date manufacture;
     private Date useDate;
-    @NotEmpty(message = "灯杆不能为空！")
+    //@NotEmpty(message = "灯杆不能为空！")
     private String lamppost;
-    @NotEmpty(message = "灯头号不能为空！")
+    //@NotEmpty(message = "灯头号不能为空！")
     private String lamphead;
     private Long nnlightctlLightingModelId;
     private Long nnlightctlLightingGisId;
@@ -159,7 +159,7 @@ public class LightRequest {
     private String decay;
     private Long maxUseTime;
     private String mem;
-    @NotNull(message = "灯具必须选择所属项目")
+    //@NotNull(message = "灯具必须选择所属项目")
     private Long nnlightctlProjectId;
     private String longitude;
     private String latitude;
@@ -181,10 +181,67 @@ public class LightRequest {
 
     private String alarmMessage;
 
-    private String lightMode;
+    private String lampMode;
 
-    private String lightName;
+    private String lampName;
 
+    /**
+     * 灯具的外键iid
+     */
+    private Long nnlightctlLightModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightctlLamppostId;
+
+    /**
+     * 单灯控制器的外键id
+     */
+    private Long nnlightctlLampControllerIds;
+
+    public Long getNnlightctlLampControllerIds() {
+        return nnlightctlLampControllerIds;
+    }
+
+    public void setNnlightctlLampControllerIds(Long nnlightctlLampControllerIds) {
+        this.nnlightctlLampControllerIds = nnlightctlLampControllerIds;
+    }
+
+
+
+    public Long getNnlightctlLightModelId() {
+        return nnlightctlLightModelId;
+    }
+
+    public void setNnlightctlLightModelId(Long nnlightctlLightModelId) {
+        this.nnlightctlLightModelId = nnlightctlLightModelId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+
+    public String getLampMode() {
+        return lampMode;
+    }
+
+    public void setLampMode(String lampMode) {
+        this.lampMode = lampMode;
+    }
+
+    public String getLampName() {
+        return lampName;
+    }
+
+    public void setLampName(String lampName) {
+        this.lampName = lampName;
+    }
 
     public String getCommunicationMode() {
         return communicationMode;
@@ -232,22 +289,6 @@ public class LightRequest {
 
     public void setAlarmMessage(String alarmMessage) {
         this.alarmMessage = alarmMessage;
-    }
-
-    public String getLightMode() {
-        return lightMode;
-    }
-
-    public void setLightMode(String lightMode) {
-        this.lightMode = lightMode;
-    }
-
-    public String getLightName() {
-        return lightName;
-    }
-
-    public void setLightName(String lightName) {
-        this.lightName = lightName;
     }
 
     public static class BatchLightRequest {

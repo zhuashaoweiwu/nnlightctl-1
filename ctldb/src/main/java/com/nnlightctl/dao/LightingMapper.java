@@ -27,4 +27,6 @@ public interface LightingMapper {
     int updateByPrimaryKeySelective(Lighting record);
 
     int updateByPrimaryKey(Lighting record);
+
+    List<Lighting> selectByExampleDeploy(LightingExample example);
 }

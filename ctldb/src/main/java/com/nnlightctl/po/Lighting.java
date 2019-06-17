@@ -51,6 +51,22 @@ public class Lighting implements Serializable {
 
     private Long nnlightctlEleboxId;
 
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLightModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightLamppostId;
+
+    /**
+     * 单灯控制器的外键id
+     */
+    private Long nnlightctlLampControllerId;
+
+
     private Byte loopPriority;
 
     private Byte faultTag;
@@ -74,6 +90,40 @@ public class Lighting implements Serializable {
     private String lampModel;
 
     private String lampName;
+
+    private int deployState;
+
+    public Long getNnlightctlLightModelId() {
+        return nnlightctlLightModelId;
+    }
+
+    public void setNnlightctlLightModelId(Long nnlightctlLightModelId) {
+        this.nnlightctlLightModelId = nnlightctlLightModelId;
+    }
+
+    public Long getNnlightLamppostId() {
+        return nnlightLamppostId;
+    }
+
+    public void setNnlightLamppostId(Long nnlightLamppostId) {
+        this.nnlightLamppostId = nnlightLamppostId;
+    }
+
+    public Long getNnlightctlLampControllerId() {
+        return nnlightctlLampControllerId;
+    }
+
+    public void setNnlightctlLampControllerId(Long nnlightctlLampControllerId) {
+        this.nnlightctlLampControllerId = nnlightctlLampControllerId;
+    }
+
+    public int getDeployState() {
+        return deployState;
+    }
+
+    public void setDeployState(int deployState) {
+        this.deployState = deployState;
+    }
 
     public String getLampModel() {
         return lampModel;

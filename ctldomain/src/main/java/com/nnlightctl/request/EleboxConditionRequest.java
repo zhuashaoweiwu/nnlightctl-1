@@ -125,7 +125,7 @@ public class EleboxConditionRequest extends BaseRequest {
 
     private String eleboxMode;
 
-    private String eleboxName;
+
 
     public String getEleboxMode() {
         return eleboxMode;
@@ -135,13 +135,7 @@ public class EleboxConditionRequest extends BaseRequest {
         this.eleboxMode = eleboxMode;
     }
 
-    public String getEleboxName() {
-        return eleboxName;
-    }
 
-    public void setEleboxName(String eleboxName) {
-        this.eleboxName = eleboxName;
-    }
 
     public String getEquipmentNumber() {
         return equipmentNumber;

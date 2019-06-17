@@ -29,6 +29,26 @@ public class PhotoperiodRequest extends BaseRequest{
 
     private String mem;
 
+    private int deployFlag;
+
+    private Long eleboxId;
+
+    public Long getEleboxId() {
+        return eleboxId;
+    }
+
+    public void setEleboxId(Long eleboxId) {
+        this.eleboxId = eleboxId;
+    }
+
+    public int getDeployFlag() {
+        return deployFlag;
+    }
+
+    public void setDeployFlag(int deployFlag) {
+        this.deployFlag = deployFlag;
+    }
+
     public Long getId() {
         return id;
     }

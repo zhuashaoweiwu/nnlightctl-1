@@ -2,12 +2,17 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
+import com.nnlight.common.SystemConfig;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.CentralizeControllerMapper;
+import com.nnlightctl.dao.EleboxRelationMapper;
 import com.nnlightctl.po.CentralizeController;
 import com.nnlightctl.po.CentralizeControllerExample;
+import com.nnlightctl.po.EleboxRelation;
 import com.nnlightctl.request.CentralizeControllerConditionRequest;
 import com.nnlightctl.request.CentralizeControllerRquester;
+import com.nnlightctl.request.deployRequest.DeployCentralizeControllerLoopRequest;
+import com.nnlightctl.request.deployRequest.DeployCentralizeControllerRequest;
 import com.nnlightctl.server.CentralizeControllerServer;
 import com.nnlightctl.vo.CentralizeControllerView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +20,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class CentralizeControllerServerImpl implements CentralizeControllerServer {
 
     @Autowired
     private CentralizeControllerMapper centralizeControllerMapper;
+
+
+    @Autowired
+    private EleboxRelationMapper eleboxRelationMapper;
 
     private int flag=-1;
 
@@ -35,9 +45,28 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
         if (request.getId()==null){
 
             //增加
+            centralizeController.setState(0);
             flag=centralizeControllerMapper.insertSelective(centralizeController);
 
         }else {
+            if (request.getDeployFlag()==1){
+
+                centralizeController.setState(1);
+
+                flag=centralizeControllerMapper.updateByPrimaryKeySelective(centralizeController);
+
+                EleboxRelation eleboxRelation=new EleboxRelation();
+
+                eleboxRelation.setGmtUpdated(new Date());
+
+                eleboxRelation.setEleboxId(request.getEleboxId());
+
+                eleboxRelation.setEleboxModelId(request.getId());
+
+                eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.FocusControl);
+
+                eleboxRelationMapper.insertSelective(eleboxRelation);
+            }
 
             flag=centralizeControllerMapper.updateByPrimaryKeySelective(centralizeController);
 
@@ -119,6 +148,34 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
 
         twoTuple.setFirst(viewList);
         return twoTuple;
+    }
+
+    @Override
+    public Boolean deployCentralizeController(DeployCentralizeControllerRequest request) {
+
+        try {
+            List<DeployCentralizeControllerLoopRequest> loopRequests = request.getLoopRequests();
+
+            for (DeployCentralizeControllerLoopRequest loopRequest : loopRequests) {
+
+                    CentralizeController centralizeController=new CentralizeController();
+
+                    centralizeController.setState(1);
+
+                    centralizeController.setCentralizeName(loopRequest.getCentralizeName());
+
+                    centralizeController.setCentralizeModel(loopRequest.getCentralizeModel());
+
+
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
 

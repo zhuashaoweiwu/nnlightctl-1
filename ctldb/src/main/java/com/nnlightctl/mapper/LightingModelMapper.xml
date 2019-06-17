@@ -365,7 +365,7 @@
         equipment_number=#{equipmentNumber,jdbcType=VARCHAR},
       </if>
       <if test="colorMode !=null">
-        color_mode=#{colorMode,jdbcType=VARCHAR}
+        color_mode=#{colorMode,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
