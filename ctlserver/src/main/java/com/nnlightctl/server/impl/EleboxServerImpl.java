@@ -7,6 +7,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.EleboxModelMapper;
+import com.nnlightctl.dao.EleboxRelationMapper;
 import com.nnlightctl.jdbcdao.EleboxDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
@@ -36,6 +37,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private EleboxMapper eleboxMapper;
+
+    @Autowired
+    private EleboxRelationMapper eleboxRelationMapper;
 
     @Autowired
     private EleboxModelServer eleboxModelServer;
@@ -167,19 +171,22 @@ public class EleboxServerImpl implements EleboxServer {
         List<Long> deleteEleboxIdList = request.getEleboxIdList();
         for (Long deleteEleboxId : deleteEleboxIdList) {
             //先删除控制柜对应的设备
-            EleboxModelExample eleboxModelExample = new EleboxModelExample();
-            eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(deleteEleboxId);
-            List<EleboxModel> eleboxModelList = eleboxModelMapper.selectByExample(eleboxModelExample);
+//            EleboxModelExample eleboxModelExample = new EleboxModelExample();
+//            eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(deleteEleboxId);
+//            List<EleboxModel> eleboxModelList = eleboxModelMapper.selectByExample(eleboxModelExample);
+//
+//            List<Long> eleboxModelIdList = new ArrayList<>(10);
+//            for (EleboxModel eleboxModel : eleboxModelList) {
+//                eleboxModelIdList.add(eleboxModel.getId());
+//            }
+//            EleboxModelConditionRequest eleboxModelConditionRequest = new EleboxModelConditionRequest();
+//            eleboxModelConditionRequest.setEleboxModelIdList(eleboxModelIdList);
 
-            List<Long> eleboxModelIdList = new ArrayList<>(10);
-            for (EleboxModel eleboxModel : eleboxModelList) {
-                eleboxModelIdList.add(eleboxModel.getId());
-            }
-            EleboxModelConditionRequest eleboxModelConditionRequest = new EleboxModelConditionRequest();
-            eleboxModelConditionRequest.setEleboxModelIdList(eleboxModelIdList);
-
-            eleboxModelServer.deleteEleboxModel(eleboxModelConditionRequest);
-
+//            eleboxModelServer.deleteEleboxModel(eleboxModelConditionRequest);
+            //删除关联表数据
+            this.eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
+            //取消box关联
+            this.eleboxModelMapper.modifyEleboxId(deleteEleboxId);
             //再删除控制柜本身
             this.eleboxMapper.deleteByPrimaryKey(deleteEleboxId);
         }
@@ -187,8 +194,8 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<EleboxView>, Integer> listElebox(EleboxConditionRequest request) {
-        Tuple.TwoTuple<List<EleboxView>, Integer> tuple = new Tuple.TwoTuple<>();
+    public Tuple.TwoTuple<List<Elebox>, Integer> listElebox(EleboxConditionRequest request) {
+        Tuple.TwoTuple<List<Elebox>, Integer> tuple = new Tuple.TwoTuple<>();
 
         EleboxExample eleboxExample = new EleboxExample();
         EleboxExample.Criteria criteria = eleboxExample.createCriteria();
@@ -205,6 +212,9 @@ public class EleboxServerImpl implements EleboxServer {
         if (!StringUtils.isEmpty(request.getCodeNumber())) {
             criteria.andCodeNumberLike("%" + request.getCodeNumber() + "%");
         }
+        if (!StringUtils.isEmpty(request.getEleboxName())) {
+            criteria.andEleboxName("%" + request.getEleboxName() + "%");
+        }
 
         int total = eleboxMapper.countByExample(eleboxExample);
         tuple.setSecond(total);
@@ -213,17 +223,17 @@ public class EleboxServerImpl implements EleboxServer {
 
         eleboxExample.setOrderByClause("id DESC");
         List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
-        List<EleboxView> eleboxViewList = new ArrayList<>(8);
-        for (Elebox elebox : eleboxList) {
-            EleboxView eleboxView = new EleboxView();
-            ReflectCopyUtil.beanSameFieldCopy(elebox, eleboxView);
-            if (elebox.getNnlightctlRegionId() != null && elebox.getNnlightctlRegionId() > 0) {
-                eleboxView.setRegionLevelDesc(areaServer.getLevelRegionDesc(elebox.getNnlightctlRegionId()));
-            }
-            eleboxViewList.add(eleboxView);
-        }
+//        List<EleboxView> eleboxViewList = new ArrayList<>(8);
+//        for (Elebox elebox : eleboxList) {
+//            EleboxView eleboxView = new EleboxView();
+//            ReflectCopyUtil.beanSameFieldCopy(elebox, eleboxView);
+//            if (elebox.getNnlightctlRegionId() != null && elebox.getNnlightctlRegionId() > 0) {
+//                eleboxView.setRegionLevelDesc(areaServer.getLevelRegionDesc(elebox.getNnlightctlRegionId()));
+//            }
+//            eleboxViewList.add(eleboxView);
+//        }
 
-        tuple.setFirst(eleboxViewList);
+        tuple.setFirst(eleboxList);
         return tuple;
     }
 
@@ -233,6 +243,9 @@ public class EleboxServerImpl implements EleboxServer {
         EleboxModelExample eleboxModelExample = new EleboxModelExample();
         if (!PubMethod.isEmpty(request.getEleboxId()))
             eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
+        if (!PubMethod.isEmpty(request.getModelName()))
+            eleboxModelExample.createCriteria().andModelNameLike("%" + request.getModelName() + "%");
+
         int total = eleboxModelMapper.countByExample(eleboxModelExample);
         twoTuple.setSecond(total);
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());

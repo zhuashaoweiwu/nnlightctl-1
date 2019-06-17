@@ -83,11 +83,31 @@ public class EleboxConditionRequest extends BaseRequest {
         this.codeNumber = codeNumber;
     }
 
+    public String getEleboxName() {
+        return eleboxName;
+    }
+
+    public void setEleboxName(String eleboxName) {
+        this.eleboxName = eleboxName;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
     private String uid;
 
     private String codeNumber;
 
     private Long eleboxId;
+
+    private String eleboxName;
+
+    private String modelName;
 
     private Long id;
 

@@ -28,13 +28,13 @@ public class DeployEleboxModelRequest  extends BaseRequest {
     @NotNull(message = "回路数量不能为空！")
     private Byte loopCount;
 
-    private String CommunicationMethods;// 通讯方式
+    private String communicationMethods;// 通讯方式
 
     private String maxElectric;//单回路最大电流
 
     private String loadElectric;//最大负载电流
 
-    private String InstallationMethods;//安装方式
+    private String installationMethods;//安装方式
 
     private String mem;//备注
 
@@ -84,6 +84,7 @@ public class DeployEleboxModelRequest  extends BaseRequest {
     }
 
     public void setModelCode(String modelCode) {
+        this.uid       = modelCode;
         this.modelCode = modelCode;
     }
 
@@ -112,11 +113,11 @@ public class DeployEleboxModelRequest  extends BaseRequest {
     }
 
     public String getCommunicationMethods() {
-        return CommunicationMethods;
+        return communicationMethods;
     }
 
     public void setCommunicationMethods(String communicationMethods) {
-        CommunicationMethods = communicationMethods;
+        this.communicationMethods = communicationMethods;
     }
 
     public String getMaxElectric() {
@@ -136,11 +137,11 @@ public class DeployEleboxModelRequest  extends BaseRequest {
     }
 
     public String getInstallationMethods() {
-        return InstallationMethods;
+        return installationMethods;
     }
 
     public void setInstallationMethods(String installationMethods) {
-        InstallationMethods = installationMethods;
+        this.installationMethods = installationMethods;
     }
 
     public String getMem() {

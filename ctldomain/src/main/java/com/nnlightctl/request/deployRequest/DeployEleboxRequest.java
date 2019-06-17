@@ -9,7 +9,7 @@ public class DeployEleboxRequest extends BaseRequest {
 
     private Long id;
 
-    private String network_addr;
+    private String networkAddr;
 
     private String uid;
 
@@ -91,12 +91,12 @@ public class DeployEleboxRequest extends BaseRequest {
         this.mem = mem;
     }
 
-    public String getNetwork_addr() {
-        return network_addr;
+    public String getNetworkAddr() {
+        return networkAddr;
     }
 
-    public void setNetwork_addr(String network_addr) {
-        this.network_addr = network_addr;
+    public void setNetworkAddr(String networkAddr) {
+        this.networkAddr = networkAddr;
     }
 
     public String getUid() {

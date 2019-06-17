@@ -541,6 +541,11 @@ public class EleboxExample {
             return (Criteria) this;
         }
 
+        public Criteria andEleboxName(String value) {
+            addCriterion("elebox_name like", value, "eleboxName");
+            return (Criteria) this;
+        }
+
         public Criteria andCodeNumberNotLike(String value) {
             addCriterion("code_number not like", value, "codeNumber");
             return (Criteria) this;

@@ -48,17 +48,17 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     @Override
     public int insertElebox(DeployEleboxRequest request) {
         Elebox elebox = new Elebox();
+        ReflectCopyUtil.beanSameFieldCopy(request, elebox);
         elebox.setGmtCreated(new Date());
         elebox.setGmtUpdated(new Date());
-        ReflectCopyUtil.beanSameFieldCopy(request, elebox);
         return eleboxMapper.insertSelective(elebox);
     }
 
     @Override
     public int updateElebox(DeployEleboxRequest request) {
         Elebox elebox = new Elebox();
-        elebox.setGmtUpdated(new Date());
         ReflectCopyUtil.beanSameFieldCopy(request, elebox);
+        elebox.setGmtUpdated(new Date());
         return eleboxMapper.updateByPrimaryKeySelective(elebox);
     }
 
