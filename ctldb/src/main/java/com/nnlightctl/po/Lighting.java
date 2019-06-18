@@ -490,7 +490,6 @@ public class Lighting implements Serializable {
         sb.append(", nnlightctlEleboxId=").append(nnlightctlEleboxId);
         sb.append(", loopPriority=").append(loopPriority);
         sb.append(", faultTag=").append(faultTag);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
