@@ -243,10 +243,18 @@ public class EleboxServerImpl implements EleboxServer {
     public Tuple.TwoTuple<List<EleboxModel>, Integer> listEleboxModel(EleboxConditionRequest request) {
         Tuple.TwoTuple<List<EleboxModel>, Integer> twoTuple = new Tuple.TwoTuple<>();
         EleboxModelExample eleboxModelExample = new EleboxModelExample();
-        if (!PubMethod.isEmpty(request.getEleboxId()))
-            eleboxModelExample.createCriteria().andNnlightctlEleboxIdEqualTo(request.getEleboxId());
+        EleboxModelExample.Criteria criteria = eleboxModelExample.createCriteria();
+
+
+        if (!PubMethod.isEmpty(request.getEleboxId())) {
+            criteria.andNnlightctlEleboxIdEqualTo(request.getEleboxId());
+            criteria.andNnlightctlDeployStatusEqualTo((byte) 1);
+        } else {
+            criteria.andNnlightctlDeployStatusEqualTo((byte) 0);
+        }
+
         if (!PubMethod.isEmpty(request.getModelName()))
-            eleboxModelExample.createCriteria().andModelNameLike("%" + request.getModelName() + "%");
+            criteria.andModelNameLike("%" + request.getModelName() + "%");
 
         int total = eleboxModelMapper.countByExample(eleboxModelExample);
         twoTuple.setSecond(total);

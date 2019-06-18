@@ -55,7 +55,18 @@ public class Lighting implements Serializable {
 
     private Byte faultTag;
 
+    private Byte deployState;
+
     private static final long serialVersionUID = 1L;
+
+
+    public Byte getDeployState() {
+        return deployState;
+    }
+
+    public void setDeployState(Byte deployState) {
+        this.deployState = deployState;
+    }
 
     public Long getId() {
         return id;

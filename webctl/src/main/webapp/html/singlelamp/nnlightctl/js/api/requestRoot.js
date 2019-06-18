@@ -1,5 +1,5 @@
 //const BASE_ROOT = "http://103.48.232.119:9002/nnlightctl";
-const BASE_ROOT = "http://127.0.0.1:8090/nnlightctl";
+const BASE_ROOT = "http://192.168.9.51:8080/nnlightctl";
 const PAGE_SIZE = 10;
 
 const SEX = {

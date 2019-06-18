@@ -496,6 +496,9 @@
       <if test="faultTag != null" >
         fault_tag = #{faultTag,jdbcType=TINYINT},
       </if>
+      <if test="deployState != null" >
+        deploy_state = #{deployState,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>

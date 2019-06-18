@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl.deploy.service.impl;
 
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.SystemConfig;
 import com.nnlightctl.dao.EleboxMapper;
@@ -63,48 +64,70 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     }
 
     @Override
-    public Boolean deployExleboxArrange(DeployExleboxArrangeRequest request) {
+    public Boolean deployExleboxArrange(DeployExleboxArrangeRequest request) throws RuntimeException {
 
         try {
-            List<DeployEleboxModelLoopRequest> loopRequestList = request.getLoopRequest();
-            for (DeployEleboxModelLoopRequest loopRequest : loopRequestList) {
-                EleboxModelLoop eleboxModelLoop = new EleboxModelLoop();
-                eleboxModelLoop.setState((byte) 1);
-                eleboxModelLoop.setLoopCode(loopRequest.getLoopCode());
-                eleboxModelLoop.setNnlightctlEleboxModelId(request.getExleboxModelId());
-                eleboxModelLoop.setGmtCreated(new Date());
-                eleboxModelLoop.setGmtUpdated(new Date());
-                eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
-                List<Long> lightingList = loopRequest.getLightingList();
-                for (Long lightId : lightingList) {
-                    Lighting lighting = new Lighting();
-                    lighting.setId(lightId);
-                    lighting.setNnlightctlEleboxId(request.getExleboxId());
-                    lighting.setNnlightctlEleboxModelLoopId(eleboxModelLoop.getId());
-                    lightingMapper.updateByPrimaryKeySelective(lighting);
-                }
-            }
-            EleboxModel eleboxModel = new EleboxModel();
-            eleboxModel.setId(request.getExleboxModelId());
-            eleboxModel.setNnlightctlEleboxId(request.getExleboxId());
-            eleboxModel.setGmtUpdated(new Date());
-            eleboxModelMapper.updateByPrimaryKeySelective(eleboxModel);
-            EleboxRelation  eleboxRelation = new EleboxRelation();
-            eleboxRelation.setEleboxId(request.getExleboxId());
-            eleboxRelation.setEleboxModelId(request.getExleboxModelId());
-            eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.SwitchModle);
-            eleboxRelation.setGmtCreated(new Date());
-            eleboxRelation.setGmtUpdated(new Date());
-            eleboxRelationMapper.insertSelective(eleboxRelation);
-            return Boolean.TRUE;
+            if (!PubMethod.isEmpty(request.getExleboxModelIds())) /**部署开关*/
+                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
+            if (!PubMethod.isEmpty(request.getElectricityMeterIds())) {
+            }/**部署电表*/
+//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
+            if (!PubMethod.isEmpty(request.getPhotoperiodIds())) {
+            }/**部署光照计*/
+//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
+            if (!PubMethod.isEmpty(request.getCentralizeControllerIds())) {
+            }/**部署集中控制器*/
+//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
+
         } catch (Exception e) {
             logger.error("部署失败.");
             e.printStackTrace();
             logger.error(e.getMessage());
+            throw new RuntimeException("服务忙,部署控制柜失败请稍后再试。");
         }
 
-        return Boolean.FALSE;
+        return Boolean.TRUE;
     }
 
 
+    private void modelDeploy(Long exleboxId, List<Long> exleboxModelIds, List<DeployEleboxModelLoopRequest> modelLoopRequests) {
+
+        for (Long exleboxModelId : exleboxModelIds) {
+            for (DeployEleboxModelLoopRequest loopRequest : modelLoopRequests) {
+                if (loopRequest.getExleboxModelId().equals(exleboxModelId)) {
+                    EleboxModelLoop eleboxModelLoop = new EleboxModelLoop();
+                    eleboxModelLoop.setState((byte) 1);
+                    eleboxModelLoop.setLoopCode(loopRequest.getLoopCode());
+                    eleboxModelLoop.setNnlightctlEleboxModelId(exleboxModelId);
+                    eleboxModelLoop.setGmtCreated(new Date());
+                    eleboxModelLoop.setGmtUpdated(new Date());
+                    eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
+                    List<Long> lightingList = loopRequest.getLightingList();
+                    for (Long lightId : lightingList) {
+                        Lighting lighting = new Lighting();
+                        lighting.setId(lightId);
+                        lighting.setNnlightctlEleboxId(exleboxId);
+                        lighting.setNnlightctlEleboxModelLoopId(eleboxModelLoop.getId());
+                        lighting.setGmtUpdated(new Date());
+                        lighting.setDeployState((byte) 1);
+                        lightingMapper.updateByPrimaryKeySelective(lighting);
+                    }
+                }
+            }
+
+            EleboxModel eleboxModel = new EleboxModel();
+            eleboxModel.setId(exleboxModelId);
+            eleboxModel.setNnlightctlEleboxId(exleboxId);
+            eleboxModel.setGmtUpdated(new Date());
+            eleboxModel.setDeployStatus((byte) 1);
+            eleboxModelMapper.updateByPrimaryKeySelective(eleboxModel);
+            EleboxRelation eleboxRelation = new EleboxRelation();
+            eleboxRelation.setEleboxId(exleboxId);
+            eleboxRelation.setEleboxModelId(exleboxModelId);
+            eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.SwitchModle);
+            eleboxRelation.setGmtCreated(new Date());
+            eleboxRelation.setGmtUpdated(new Date());
+            eleboxRelationMapper.insertSelective(eleboxRelation);
+        }
+    }
 }

@@ -10,6 +10,8 @@ public class DeployEleboxModelLoopRequest  extends BaseRequest {
 
     private String mem;
 
+    private Long exleboxModelId;
+
     private List<Long> lightingList;
 
     public String getLoopCode() {
@@ -34,5 +36,13 @@ public class DeployEleboxModelLoopRequest  extends BaseRequest {
 
     public void setLightingList(List<Long> lightingList) {
         this.lightingList = lightingList;
+    }
+
+    public Long getExleboxModelId() {
+        return exleboxModelId;
+    }
+
+    public void setExleboxModelId(Long exleboxModelId) {
+        this.exleboxModelId = exleboxModelId;
     }
 }

@@ -1,6 +1,7 @@
 package com.nnlightctl.springmvc.controller.deploy.controller;
 
 import com.nnlight.common.PubMethod;
+import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxModelRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -115,6 +117,23 @@ public class DeployEleboxController extends BaseController {
             jsonResult.setMsg(stringBuilder.toString());
             return toJson(jsonResult);
         }
+
+//        request.setExleboxId(45L);
+//        request.setExleboxModelIds(new ArrayList<Long>(){{add(40L);}});
+//
+//
+//        DeployEleboxModelLoopRequest deployEleboxModelLoopRequest = new DeployEleboxModelLoopRequest();
+//        deployEleboxModelLoopRequest.setMem("lxwTest");
+//        deployEleboxModelLoopRequest.setExleboxModelId(40L);
+//        deployEleboxModelLoopRequest.setLoopCode("1");
+//
+//        List<Long>  lightingList = new ArrayList();
+//        lightingList.add(110L);
+//        deployEleboxModelLoopRequest.setLightingList(lightingList);
+//        List p = new ArrayList<DeployEleboxModelLoopRequest>();
+//        p.add(deployEleboxModelLoopRequest);
+//        request.setModelLoopRequests(p);
+
         Boolean arrangeRequest = this.deployEleboxServer.deployExleboxArrange(request);
         JsonResult jsonResult = null;
         if (arrangeRequest) {

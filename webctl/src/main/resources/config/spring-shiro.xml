@@ -44,7 +44,7 @@
                 /html/** = anon
                 /api/** = anon
                 /hardware/** = anon
-                /** = user
+                /** = anon
             </value>
         </property>
     </bean>

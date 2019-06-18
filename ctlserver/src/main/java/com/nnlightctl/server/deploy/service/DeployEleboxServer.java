@@ -9,7 +9,7 @@ public interface DeployEleboxServer {
 
     int updateElebox(DeployEleboxRequest request);
 
-    Boolean deployExleboxArrange(DeployExleboxArrangeRequest request);
+    Boolean deployExleboxArrange(DeployExleboxArrangeRequest request) throws  RuntimeException;
 
 
 }

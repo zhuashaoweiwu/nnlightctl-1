@@ -93,6 +93,11 @@ public class SystemConfig {
             public static final byte  WattHour = (byte) 3;/**电表*/
 
             public static final byte  Illumination = (byte) 4;/**光照计*/
+
+            public static final byte  NotDeploy = (byte) 0;/**未部署*/
+
+            public static final byte  YesDeploy = (byte) 1;/**部署*/
+
         }
 
 

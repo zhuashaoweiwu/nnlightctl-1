@@ -571,6 +571,22 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+
+    @RequestMapping("getEleboxModel")
+    public String getEleboxModel(Long id) {
+        logger.info("[POST] /api/roadlighting/getEleboxModel");
+
+        EleboxModel elebox = modelServer.getEleboxModelById(id);
+
+        List<EleboxModel> data = new ArrayList<>(1);
+        data.add(elebox);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(data);
+
+        return toJson(jsonResult);
+    }
+
     @RequestMapping("getLoopLight")
     public String getLoopLight(Long id) {
         logger.info("[POST] /api/roadlighting/getLoopLight");

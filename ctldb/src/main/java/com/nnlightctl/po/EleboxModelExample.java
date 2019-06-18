@@ -891,6 +891,11 @@ public class EleboxModelExample {
             return (Criteria) this;
         }
 
+        public Criteria andNnlightctlDeployStatusEqualTo(Byte value) {
+            addCriterion("deploy_status =", value, "deployStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andNnlightctlEleboxIdNotEqualTo(Long value) {
             addCriterion("nnlightctl_elebox_id <>", value, "nnlightctlEleboxId");
             return (Criteria) this;

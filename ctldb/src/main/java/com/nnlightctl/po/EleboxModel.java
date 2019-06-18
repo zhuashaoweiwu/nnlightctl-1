@@ -48,6 +48,16 @@ public class EleboxModel implements Serializable {
 
     private String modelType;//模块类型
 
+    private Byte   deployStatus;//模块是否部署
+
+
+    public Byte getDeployStatus() {
+        return deployStatus;
+    }
+
+    public void setDeployStatus(Byte deployStatus) {
+        this.deployStatus = deployStatus;
+    }
 
     public String getMaxElectric() {
         return maxElectric;
