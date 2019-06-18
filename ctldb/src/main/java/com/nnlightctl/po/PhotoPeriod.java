@@ -10,6 +10,8 @@ public class PhotoPeriod implements Serializable {
 
     private Long id;
 
+    private String equipmentNumber;
+
     private String photoperiodModel;
 
     private String photoperiodName;
@@ -24,6 +26,15 @@ public class PhotoPeriod implements Serializable {
 
     private String mem;
 
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
@@ -87,4 +98,16 @@ public class PhotoPeriod implements Serializable {
     public void setMem(String mem) {
         this.mem = mem;
     }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
+
+
+
 }

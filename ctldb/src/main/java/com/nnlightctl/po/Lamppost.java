@@ -8,6 +8,8 @@ public class Lamppost implements Serializable {
 
     private Long id;
 
+    private String equipmentNumber;
+
     private String lamppostModel;
 
     private String lampostName;
@@ -27,6 +29,16 @@ public class Lamppost implements Serializable {
     private  String lampheadColor;
 
     private String mem;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
@@ -114,5 +126,17 @@ public class Lamppost implements Serializable {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

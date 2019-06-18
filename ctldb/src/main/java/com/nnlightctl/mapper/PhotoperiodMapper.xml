@@ -3,6 +3,7 @@
 <mapper namespace="com.nnlightctl.dao.PhotoperiodMapper" >
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.PhotoPeriod" >
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="equipment_number" property="equipmentNumber" jdbcType="VARCHAR" />
         <result column="photoperiod_model" property="photoperiodModel" jdbcType="VARCHAR" />
         <result column="photoperiod_name" property="photoperiodName" jdbcType="VARCHAR" />
         <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
@@ -10,6 +11,7 @@
         <result column="accuracy" property="accuracy" jdbcType="DECIMAL" />
         <result column="work_voltage" property="workVoltage" jdbcType="DECIMAL" />
         <result column="mem" property="mem" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
     </resultMap>
     <insert id="insert" parameterType="com.nnlightctl.po.PhotoPeriod">
         insert into nnlightctl_photoperiod
@@ -35,6 +37,12 @@
             <if test="mem != null" >
                 mem,
             </if>
+            <if test="equipmentNumber !=null" >
+                equipment_number,
+            </if>
+            <if test="state !=null">
+                state,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="photoperiodModel != null" >
@@ -57,6 +65,12 @@
             </if>
             <if test="mem != null" >
                 #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber !=null">
+                #{equipmentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="state !=null">
+                #{state,jdbcType=INTEGER}
             </if>
         </trim>
     </insert>
@@ -84,6 +98,12 @@
              <if test="mem != null" >
                  mem = #{mem,jdbcType=VARCHAR},
              </if>
+             <if test="equipmentNumber !=null">
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR},
+             </if>
+             <if test="state !=null">
+                 state=#{state,jdbcType=INTEGER}
+             </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
   </update>
@@ -99,13 +119,25 @@
     </select>
 
     <sql id="Base_Column_List">
-        id,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
-        ,work_voltage,mem
+        id,equipment_number,photoperiod_model,photoperiod_name,communication_mode,dimming_mode,accuracy
+        ,work_voltage,mem,state
     </sql>
-    <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod">
+    <select id="selectAll" resultMap="BaseResultMap" >
         select
           <include refid="Base_Column_List" />
          from nnlightctl_photoperiod
+         <where>
+             <if test="params.equipmentNumber!=null">
+               AND equipment_number like concat('%',#{params.equipmentNumber},'%')
+             </if>
+             <if test="params.photoperiodModel !=null">
+               AND photoperiod_model like concat('%',#{params.photoperiodModel},'%')
+             </if>
+             <if test="params.photoperiodName !=null">
+                AND photoperiod_name like concat('%',#{params.photoperiodName},'%')
+             </if>
+         </where>
+         order by id desc
     </select>
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.PhotoPeriod" parameterType="long">
 

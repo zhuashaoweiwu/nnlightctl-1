@@ -51,22 +51,46 @@ public class Lighting implements Serializable {
 
     private Long nnlightctlEleboxId;
 
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLightModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightLamppostId;
+
+    /**
+     * 单灯控制器的外键id
+     */
+    private Long nnlightctlLampControllerId;
+
+
     private Byte loopPriority;
 
     private Byte faultTag;
+    /**
+     * 新添加字段
+     */
 
-    private Byte deployState;
+    private String communicationMode;
 
-    private static final long serialVersionUID = 1L;
+    private Integer dimmingMode;
 
+    private Double ratedVoltage;
 
-    public Byte getDeployState() {
-        return deployState;
-    }
+    private Double ratedCurrent;
 
-    public void setDeployState(Byte deployState) {
-        this.deployState = deployState;
-    }
+    private Double staticPower;
+
+    private String alarmMessage;
+
+    private String lampModel;
+
+    private String lampName;
+
+    private int deployState;
 
     public Long getId() {
         return id;
@@ -97,7 +121,7 @@ public class Lighting implements Serializable {
     }
 
     public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+        this.uid = uid;
     }
 
     public String getLightingCode() {
@@ -105,7 +129,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLightingCode(String lightingCode) {
-        this.lightingCode = lightingCode == null ? null : lightingCode.trim();
+        this.lightingCode = lightingCode;
     }
 
     public String getLightingImei() {
@@ -113,7 +137,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLightingImei(String lightingImei) {
-        this.lightingImei = lightingImei == null ? null : lightingImei.trim();
+        this.lightingImei = lightingImei;
     }
 
     public String getRealtimeUid() {
@@ -121,7 +145,7 @@ public class Lighting implements Serializable {
     }
 
     public void setRealtimeUid(String realtimeUid) {
-        this.realtimeUid = realtimeUid == null ? null : realtimeUid.trim();
+        this.realtimeUid = realtimeUid;
     }
 
     public Date getManufacture() {
@@ -145,7 +169,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLamppost(String lamppost) {
-        this.lamppost = lamppost == null ? null : lamppost.trim();
+        this.lamppost = lamppost;
     }
 
     public String getLamphead() {
@@ -153,7 +177,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLamphead(String lamphead) {
-        this.lamphead = lamphead == null ? null : lamphead.trim();
+        this.lamphead = lamphead;
     }
 
     public Long getNnlightctlLightingModelId() {
@@ -177,7 +201,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
+        this.longitude = longitude;
     }
 
     public String getLatitude() {
@@ -185,7 +209,7 @@ public class Lighting implements Serializable {
     }
 
     public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
+        this.latitude = latitude;
     }
 
     public String getPropertySerialNumber() {
@@ -193,7 +217,7 @@ public class Lighting implements Serializable {
     }
 
     public void setPropertySerialNumber(String propertySerialNumber) {
-        this.propertySerialNumber = propertySerialNumber == null ? null : propertySerialNumber.trim();
+        this.propertySerialNumber = propertySerialNumber;
     }
 
     public BigDecimal getDecay() {
@@ -217,7 +241,7 @@ public class Lighting implements Serializable {
     }
 
     public void setMem(String mem) {
-        this.mem = mem == null ? null : mem.trim();
+        this.mem = mem;
     }
 
     public Long getNnlightctlEleboxModelLoopId() {
@@ -252,6 +276,30 @@ public class Lighting implements Serializable {
         this.nnlightctlEleboxId = nnlightctlEleboxId;
     }
 
+    public Long getNnlightctlLightModelId() {
+        return nnlightctlLightModelId;
+    }
+
+    public void setNnlightctlLightModelId(Long nnlightctlLightModelId) {
+        this.nnlightctlLightModelId = nnlightctlLightModelId;
+    }
+
+    public Long getNnlightLamppostId() {
+        return nnlightLamppostId;
+    }
+
+    public void setNnlightLamppostId(Long nnlightLamppostId) {
+        this.nnlightLamppostId = nnlightLamppostId;
+    }
+
+    public Long getNnlightctlLampControllerId() {
+        return nnlightctlLampControllerId;
+    }
+
+    public void setNnlightctlLampControllerId(Long nnlightctlLampControllerId) {
+        this.nnlightctlLampControllerId = nnlightctlLampControllerId;
+    }
+
     public Byte getLoopPriority() {
         return loopPriority;
     }
@@ -266,6 +314,78 @@ public class Lighting implements Serializable {
 
     public void setFaultTag(Byte faultTag) {
         this.faultTag = faultTag;
+    }
+
+    public String getCommunicationMode() {
+        return communicationMode;
+    }
+
+    public void setCommunicationMode(String communicationMode) {
+        this.communicationMode = communicationMode;
+    }
+
+    public Integer getDimmingMode() {
+        return dimmingMode;
+    }
+
+    public void setDimmingMode(Integer dimmingMode) {
+        this.dimmingMode = dimmingMode;
+    }
+
+    public Double getRatedVoltage() {
+        return ratedVoltage;
+    }
+
+    public void setRatedVoltage(Double ratedVoltage) {
+        this.ratedVoltage = ratedVoltage;
+    }
+
+    public Double getRatedCurrent() {
+        return ratedCurrent;
+    }
+
+    public void setRatedCurrent(Double ratedCurrent) {
+        this.ratedCurrent = ratedCurrent;
+    }
+
+    public Double getStaticPower() {
+        return staticPower;
+    }
+
+    public void setStaticPower(Double staticPower) {
+        this.staticPower = staticPower;
+    }
+
+    public String getAlarmMessage() {
+        return alarmMessage;
+    }
+
+    public void setAlarmMessage(String alarmMessage) {
+        this.alarmMessage = alarmMessage;
+    }
+
+    public String getLampModel() {
+        return lampModel;
+    }
+
+    public void setLampModel(String lampModel) {
+        this.lampModel = lampModel;
+    }
+
+    public String getLampName() {
+        return lampName;
+    }
+
+    public void setLampName(String lampName) {
+        this.lampName = lampName;
+    }
+
+    public int getDeployState() {
+        return deployState;
+    }
+
+    public void setDeployState(int deployState) {
+        this.deployState = deployState;
     }
 
     @Override

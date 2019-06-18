@@ -1,36 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nnlightctl.dao.LightingModelMapper" >
-  <resultMap id="BaseResultMap" type="com.nnlightctl.po.LightingModel" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
-    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
-    <result column="model_name" property="modelName" jdbcType="VARCHAR" />
-    <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL" />
-    <result column="rated_electric" property="ratedElectric" jdbcType="DECIMAL" />
-    <result column="rated_power" property="ratedPower" jdbcType="DECIMAL" />
-    <result column="led_count" property="ledCount" jdbcType="TINYINT" />
-    <result column="mem" property="mem" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnlightctl.dao.LightingModelMapper">
+  <resultMap id="BaseResultMap" type="com.nnlightctl.po.LightingModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_updated" jdbcType="TIMESTAMP" property="gmtUpdated" />
+    <result column="model_name" jdbcType="VARCHAR" property="modelName" />
+    <result column="rated_voltage" jdbcType="DECIMAL" property="ratedVoltage" />
+    <result column="rated_electric" jdbcType="DECIMAL" property="ratedElectric" />
+    <result column="rated_power" jdbcType="DECIMAL" property="ratedPower" />
+    <result column="led_count" jdbcType="TINYINT" property="ledCount" />
+    <result column="mem" jdbcType="VARCHAR" property="mem" />
+    <result column="chip" jdbcType="VARCHAR" property="chip" />
+    <result column="flux" jdbcType="INTEGER" property="flux" />
+    <result column="index_mode" jdbcType="INTEGER" property="indexMode" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="controller_mode" jdbcType="VARCHAR" property="controllerMode" />
+    <result column="bean_angle" jdbcType="VARCHAR" property="beanAngle" />
+    <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
+    <result column="color_mode" jdbcType="VARCHAR" property="colorMode"/>
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -41,25 +49,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -70,152 +78,224 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, gmt_created, gmt_updated, model_name, rated_voltage, rated_electric, rated_power, 
-    led_count, mem
+    led_count, mem, chip, flux, index_mode, grade, controller_mode, bean_angle,equipment_number,color_mode
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.LightingModelExample" >
+  <select id="selectByExample" parameterType="com.nnlightctl.po.LightingModelExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
     from nnlightctl_lighting_model
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from nnlightctl_lighting_model
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from nnlightctl_lighting_model
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.nnlightctl.po.LightingModelExample" >
+  <delete id="deleteByExample" parameterType="com.nnlightctl.po.LightingModelExample">
     delete from nnlightctl_lighting_model
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.nnlightctl.po.LightingModel" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into nnlightctl_lighting_model (gmt_created, gmt_updated, model_name, 
-      rated_voltage, rated_electric, rated_power, 
-      led_count, mem)
-    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, #{modelName,jdbcType=VARCHAR}, 
-      #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectric,jdbcType=DECIMAL}, #{ratedPower,jdbcType=DECIMAL}, 
-      #{ledCount,jdbcType=TINYINT}, #{mem,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.nnlightctl.po.LightingModel">
+    insert into nnlightctl_lighting_model (id, gmt_created, gmt_updated, 
+      model_name, rated_voltage, rated_electric, 
+      rated_power, led_count, mem, 
+      chip, flux, index, 
+      grade, controller_mode, bean_angle
+      )
+    values (#{id,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
+      #{modelName,jdbcType=VARCHAR}, #{ratedVoltage,jdbcType=DECIMAL}, #{ratedElectric,jdbcType=DECIMAL}, 
+      #{ratedPower,jdbcType=DECIMAL}, #{ledCount,jdbcType=TINYINT}, #{mem,jdbcType=VARCHAR}, 
+      #{chip,jdbcType=VARCHAR}, #{flux,jdbcType=INTEGER}, #{index,jdbcType=INTEGER}, 
+      #{grade,jdbcType=VARCHAR}, #{controllerMode,jdbcType=VARCHAR}, #{beanAngle,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingModel" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.nnlightctl.po.LightingModel">
     insert into nnlightctl_lighting_model
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="gmtCreated != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gmtCreated != null">
         gmt_created,
       </if>
-      <if test="gmtUpdated != null" >
+      <if test="gmtUpdated != null">
         gmt_updated,
       </if>
-      <if test="modelName != null" >
+      <if test="modelName != null">
         model_name,
       </if>
-      <if test="ratedVoltage != null" >
+      <if test="ratedVoltage != null">
         rated_voltage,
       </if>
-      <if test="ratedElectric != null" >
+      <if test="ratedElectric != null">
         rated_electric,
       </if>
-      <if test="ratedPower != null" >
+      <if test="ratedPower != null">
         rated_power,
       </if>
-      <if test="ledCount != null" >
+      <if test="ledCount != null">
         led_count,
       </if>
-      <if test="mem != null" >
+      <if test="mem != null">
         mem,
       </if>
+      <if test="chip != null">
+        chip,
+      </if>
+      <if test="flux != null">
+        flux,
+      </if>
+      <if test="indexMode != null">
+        index_mode,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="controllerMode != null">
+        controller_mode,
+      </if>
+      <if test="beanAngle != null">
+        bean_angle,
+      </if>
+      <if test="equipmentNumber !=null">
+        equipment_number,
+      </if>
+      <if test="colorMode !=null">
+        color_mode,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="gmtCreated != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreated != null">
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtUpdated != null" >
+      <if test="gmtUpdated != null">
         #{gmtUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="modelName != null" >
+      <if test="modelName != null">
         #{modelName,jdbcType=VARCHAR},
       </if>
-      <if test="ratedVoltage != null" >
+      <if test="ratedVoltage != null">
         #{ratedVoltage,jdbcType=DECIMAL},
       </if>
-      <if test="ratedElectric != null" >
+      <if test="ratedElectric != null">
         #{ratedElectric,jdbcType=DECIMAL},
       </if>
-      <if test="ratedPower != null" >
+      <if test="ratedPower != null">
         #{ratedPower,jdbcType=DECIMAL},
       </if>
-      <if test="ledCount != null" >
+      <if test="ledCount != null">
         #{ledCount,jdbcType=TINYINT},
       </if>
-      <if test="mem != null" >
+      <if test="mem != null">
         #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="chip != null">
+        #{chip,jdbcType=VARCHAR},
+      </if>
+      <if test="flux != null">
+        #{flux,jdbcType=INTEGER},
+      </if>
+      <if test="indexMode != null">
+        #{indexMode,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="controllerMode != null">
+        #{controllerMode,jdbcType=VARCHAR},
+      </if>
+      <if test="beanAngle != null">
+        #{beanAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber !=null">
+        #{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="colorMode !=null">
+        #{colorMode,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.nnlightctl.po.LightingModelExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.nnlightctl.po.LightingModelExample" resultType="int">
     select count(*) from nnlightctl_lighting_model
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update nnlightctl_lighting_model
-    <set >
-      <if test="record.id != null" >
+    <set>
+      <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.gmtCreated != null" >
+      <if test="record.gmtCreated != null">
         gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.gmtUpdated != null" >
+      <if test="record.gmtUpdated != null">
         gmt_updated = #{record.gmtUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.modelName != null" >
+      <if test="record.modelName != null">
         model_name = #{record.modelName,jdbcType=VARCHAR},
       </if>
-      <if test="record.ratedVoltage != null" >
+      <if test="record.ratedVoltage != null">
         rated_voltage = #{record.ratedVoltage,jdbcType=DECIMAL},
       </if>
-      <if test="record.ratedElectric != null" >
+      <if test="record.ratedElectric != null">
         rated_electric = #{record.ratedElectric,jdbcType=DECIMAL},
       </if>
-      <if test="record.ratedPower != null" >
+      <if test="record.ratedPower != null">
         rated_power = #{record.ratedPower,jdbcType=DECIMAL},
       </if>
-      <if test="record.ledCount != null" >
+      <if test="record.ledCount != null">
         led_count = #{record.ledCount,jdbcType=TINYINT},
       </if>
-      <if test="record.mem != null" >
+      <if test="record.mem != null">
         mem = #{record.mem,jdbcType=VARCHAR},
       </if>
+      <if test="record.chip != null">
+        chip = #{record.chip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flux != null">
+        flux = #{record.flux,jdbcType=INTEGER},
+      </if>
+      <if test="record.index != null">
+        index_mode = #{record.indexMode,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.controllerMode != null">
+        controller_mode = #{record.controllerMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beanAngle != null">
+        bean_angle = #{record.beanAngle,jdbcType=VARCHAR},
+      </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update nnlightctl_lighting_model
     set id = #{record.id,jdbcType=BIGINT},
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
@@ -225,42 +305,72 @@
       rated_electric = #{record.ratedElectric,jdbcType=DECIMAL},
       rated_power = #{record.ratedPower,jdbcType=DECIMAL},
       led_count = #{record.ledCount,jdbcType=TINYINT},
-      mem = #{record.mem,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+      mem = #{record.mem,jdbcType=VARCHAR},
+      chip = #{record.chip,jdbcType=VARCHAR},
+      flux = #{record.flux,jdbcType=INTEGER},
+      index = #{record.index,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      controller_mode = #{record.controllerMode,jdbcType=VARCHAR},
+      bean_angle = #{record.beanAngle,jdbcType=VARCHAR}
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.LightingModel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnlightctl.po.LightingModel">
     update nnlightctl_lighting_model
-    <set >
-      <if test="gmtCreated != null" >
+    <set>
+      <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtUpdated != null" >
+      <if test="gmtUpdated != null">
         gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="modelName != null" >
+      <if test="modelName != null">
         model_name = #{modelName,jdbcType=VARCHAR},
       </if>
-      <if test="ratedVoltage != null" >
+      <if test="ratedVoltage != null">
         rated_voltage = #{ratedVoltage,jdbcType=DECIMAL},
       </if>
-      <if test="ratedElectric != null" >
+      <if test="ratedElectric != null">
         rated_electric = #{ratedElectric,jdbcType=DECIMAL},
       </if>
-      <if test="ratedPower != null" >
+      <if test="ratedPower != null">
         rated_power = #{ratedPower,jdbcType=DECIMAL},
       </if>
-      <if test="ledCount != null" >
+      <if test="ledCount != null">
         led_count = #{ledCount,jdbcType=TINYINT},
       </if>
-      <if test="mem != null" >
+      <if test="mem != null">
         mem = #{mem,jdbcType=VARCHAR},
+      </if>
+      <if test="chip != null">
+        chip = #{chip,jdbcType=VARCHAR},
+      </if>
+      <if test="flux != null">
+        flux = #{flux,jdbcType=INTEGER},
+      </if>
+      <if test="indexMode != null">
+        index_mode = #{indexMode,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="controllerMode != null">
+        controller_mode = #{controllerMode,jdbcType=VARCHAR},
+      </if>
+      <if test="beanAngle != null">
+        bean_angle = #{beanAngle,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber !=null">
+        equipment_number=#{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="colorMode !=null">
+        color_mode=#{colorMode,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.LightingModel" >
+  <update id="updateByPrimaryKey" parameterType="com.nnlightctl.po.LightingModel">
     update nnlightctl_lighting_model
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
@@ -269,7 +379,13 @@
       rated_electric = #{ratedElectric,jdbcType=DECIMAL},
       rated_power = #{ratedPower,jdbcType=DECIMAL},
       led_count = #{ledCount,jdbcType=TINYINT},
-      mem = #{mem,jdbcType=VARCHAR}
+      mem = #{mem,jdbcType=VARCHAR},
+      chip = #{chip,jdbcType=VARCHAR},
+      flux = #{flux,jdbcType=INTEGER},
+      index = #{index,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=VARCHAR},
+      controller_mode = #{controllerMode,jdbcType=VARCHAR},
+      bean_angle = #{beanAngle,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

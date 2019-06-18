@@ -27,6 +27,16 @@ public class LampControllerRequest {
 
     private String mem;
 
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.ModularMapper;
@@ -11,10 +12,13 @@ import com.nnlightctl.request.ModularRequest;
 import com.nnlightctl.server.ModularServer;
 import com.nnlightctl.vo.ModularView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ModularServerImpl implements ModularServer {
 
 
@@ -27,7 +31,7 @@ public class ModularServerImpl implements ModularServer {
     public int addOrUpdateModular(ModularRequest request) {
 
 
-        if (request!=null){
+        if (request==null){
             throw new RuntimeException("提交信息数据为空");
         }
 
@@ -37,11 +41,11 @@ public class ModularServerImpl implements ModularServer {
 
         if (request.getId()==null){
             //新增
-            flag = modularMapper.insert(modular);
+            flag = modularMapper.insertSelective(modular);
 
         }else {
             //修改
-            flag=modularMapper.updateByPrimaryKey(modular);
+            flag=modularMapper.updateByPrimaryKeySelective(modular);
 
         }
 
@@ -69,8 +73,20 @@ public class ModularServerImpl implements ModularServer {
 
         ModularExample.Criteria criteria = example.createCriteria();
 
-        if (request.getId() != null && request.getId() > 0) {
-            criteria.andIdEqualTo(request.getId());
+        if (!StringUtils.isEmpty(request.getEquipmentNumber())){
+
+            criteria.andequipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+        }
+
+        if (!StringUtils.isEmpty(request.getModularModel())){
+
+            criteria.andModularModelLike("%"+request.getModularModel()+"%");
+
+        }
+
+        if (!StringUtils.isEmpty(request.getModularName())){
+
+            criteria.andModularNameLike("%"+request.getModularName()+"%");
         }
 
         Long example1 = modularMapper.countByExample(example);
@@ -79,11 +95,13 @@ public class ModularServerImpl implements ModularServer {
 
         listModular.setSecond(total);
 
+        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+
         List<Modular> modulars = modularMapper.selectByExample(example);
 
-        ModularView modularView=new ModularView();
 
         for (Modular modular : modulars) {
+            ModularView modularView=new ModularView();
 
             ReflectCopyUtil.beanSameFieldCopy(modular,modularView);
 

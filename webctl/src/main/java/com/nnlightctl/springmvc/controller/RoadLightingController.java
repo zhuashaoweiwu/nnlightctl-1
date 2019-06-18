@@ -63,7 +63,258 @@ public class RoadLightingController extends BaseController {
     @Autowired
     private LampControllerServer lampControllerServer;
 
+    @Autowired
+    private ModularServer modularServer;
 
+    @Autowired
+    private ElectricityMeterServer electricityMeterServer;
+
+    @Autowired
+    private CentralizeControllerServer centralizeControllerServer;
+
+
+
+    @RequestMapping("addorupdateelebox")
+    public String addOrUpdateElebox(EleboxRequest request){
+
+        logger.info("[POST] api/roadlighting/addorupdateelebox");
+
+        int flag= eleboxServer.addOrUpdateElebox(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult = JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deleteeleboxbyids")
+    public String deleteEleboxByIds(EleboxConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/deleteeleboxbyids");
+
+        JsonResult jsonResult=null;
+
+        int flag = eleboxServer.deleteEleboxPrimaryKey(request);
+
+        if (flag>0){
+
+            jsonResult=JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+             jsonResult= JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+
+    /*************************************集中控制器***************************/
+    @RequestMapping("addorupdatecentralizecontroller")
+    public String addOrUpdateCentralizeController(CentralizeControllerRquester request){
+
+        logger.info("[POST] api/roadlighting/addorupdatecentralizecontroller");
+
+        int flag = centralizeControllerServer.addOrUpdateCentralizeController(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("deleteCentralizeController")
+    public String deleteCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/deleteCentralizeController" );
+
+        JsonResult jsonResult=null;
+
+        int flag = centralizeControllerServer.deleteCentralizeController(request);
+
+        if (flag>0){
+
+            jsonResult=JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("listCentralizeController")
+    public String listCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/listCentralizeController");
+
+        Tuple.TwoTuple<List<CentralizeControllerView>, Integer> twoTuple = centralizeControllerServer.listCentralizeController(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+
+    }
+
+
+    @RequestMapping("selectbyidcentralizecontroller")
+    public String selectByIdCentralizeController(CentralizeControllerConditionRequest request){
+
+        logger.info("[POST  api/roadlighting/selectbyidcentralizecontroller]");
+
+        CentralizeController centralizeController = centralizeControllerServer.selectByPrimaryKey(request);
+
+        List<CentralizeController> centralizeControllers=new ArrayList<>();
+
+        centralizeControllers.add(centralizeController);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(1);
+
+        jsonResult.setData(centralizeControllers);
+
+        return toJson(jsonResult);
+
+    }
+/******************************************电表**********************************/
+    @RequestMapping("addorupdateelectricitymeter")
+    public String addOrUpdateElectricityMeter(ElectricityMeterRequest request){
+
+        logger.info("[POST] api/roadlighting/addorupdateelectricitymeter");
+
+        JsonResult jsonResult=null;
+
+        int flag = electricityMeterServer.addOrUpdateElectricityMeter(request);
+
+        if (flag>0){
+            jsonResult = JsonResult.getSUCCESS();
+            jsonResult.setTotal(-1);
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("delectelectricitymeter")
+    public String deleteElectricityMeter(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/delectelectricitymeter");
+
+        JsonResult jsonResult=null;
+
+        int flag = electricityMeterServer.deleteElectricityMeter(request);
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectelectricityById")
+    public String selectElectricityById(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/selectelectricityById");
+
+        JsonResult jsonResult=null;
+
+        ElectricityMeter electricityMeter = electricityMeterServer.selectByPrimarykey(request);
+
+        List<ElectricityMeter> list=new ArrayList<>(7);
+
+        list.add(electricityMeter);
+
+        jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setData(list);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("selectelectricityall")
+    public  String selectElectricityAll(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectelectricityall");
+
+        Tuple.TwoTuple<List<ElectricityMeterView>, Integer> twoTuple = electricityMeterServer.listElectricityMeter(request);
+
+        JsonResult jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectbyelectricityparams")
+    public String selectElectricityByParams(ElectricityMeterConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbyelectricityparams");
+
+        JsonResult jsonResult=null;
+
+        List<ElectricityMeter> listElectricity = electricityMeterServer.selectByParams(request);
+
+        if (listElectricity.size()==0){
+            jsonResult=JsonResult.FALLURE_PARAMSERROR;
+        }else {
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(listElectricity.size());
+
+            jsonResult.setData(listElectricity);
+        }
+
+        return toJson(jsonResult);
+
+    }
+/************************************电表***********************************/
     /**
      * 开关模块
      * @param request
@@ -72,8 +323,96 @@ public class RoadLightingController extends BaseController {
     @RequestMapping("addorupdatemodular")
     public String addOrUpdateModular(ModularRequest request){
 
+        logger.info("[POST] api/roadlighting/addorupdatemodular");
 
-        return null;
+        JsonResult jsonResult=null;
+
+        int flag = modularServer.addOrUpdateModular(request);
+
+        if (flag>0){
+            jsonResult = JsonResult.getSUCCESS();
+            jsonResult.setTotal(-1);
+        }else {
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("deletemodular")
+    public String deleteModular(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/deletemodular");
+
+        JsonResult jsonResult=null;
+
+        int flag = modularServer.deleteModularByPrimaryKey(request);
+
+        if (flag>0){
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectmodularbyid")
+    public String selectModularById(ModularConditionRequest request){
+
+        logger.info("[POST]  api/roadlighting/selectmodularbyid");
+
+        JsonResult jsonResult=null;
+
+        Modular modular = modularServer.selectByPrimaryKey(request);
+
+        List<Modular> modulars=new ArrayList<>();
+
+        modulars.add(modular);
+
+        jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setData(modulars);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+    }
+
+
+    @RequestMapping("selectmodularall")
+    public  String selectModularAll(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectmodularall");
+        Tuple.TwoTuple<List<ModularView>, Integer> twoTuple = modularServer.listModular(request);
+
+        JsonResult jsonResult=JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(twoTuple.getSecond());
+
+        jsonResult.setData(twoTuple.getFirst());
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("selectbymodularparams")
+    public String selectModularByParams(ModularConditionRequest request){
+
+        logger.info("[POST] api/roadlighting/selectbymodularparams");
+
+        List<Modular> modulars = modularServer.selectByParams(request);
+
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(modulars.size());
+
+        jsonResult.setData(modulars);
+
+        return toJson(jsonResult);
+
     }
 /**************************开关模块***********************************/
     /**
@@ -131,11 +470,6 @@ public class RoadLightingController extends BaseController {
     public String listLampController(LampControllerConditionRequest request){
 
         logger.info("[POST] api/roadlighting/listlampcontroller");
-
-        if (request.getPageSize()==0||request.getPageNumber()==0){
-
-            return toJson(JsonResult.FALLURE_NOPAGE);
-        }
 
         Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=lampControllerServer.listLampController(request);
 
@@ -255,7 +589,7 @@ public class RoadLightingController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("selectbyparameter")
+    @RequestMapping("selectbylamppostparameter")
     public String selectByParameter(LamppostConditionRequest request){
 
         return null;
@@ -289,6 +623,7 @@ public class RoadLightingController extends BaseController {
 
     }
 
+    /*****************************灯杆*****************************/
 
     @RequestMapping("addorupdatephotoperiod")
     public String addOrUpdatePhotoperiod(PhotoperiodRequest request){
@@ -371,6 +706,7 @@ public class RoadLightingController extends BaseController {
 
 
     }
+    /********************************光照计*********************************/
 
 
     @RequestMapping("addorupdatemodelloop")
@@ -702,6 +1038,8 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+
+
     @RequestMapping("listmodel")
     public String listEleboxModel(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/listmodel");
@@ -933,7 +1271,7 @@ public class RoadLightingController extends BaseController {
         LightingModel lightingModel = lightModelServer.getLightModelById(id);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
-        List<LightingModel> lightingModels = new ArrayList<>(1);
+        List<LightingModel> lightingModels = new ArrayList<>(6);
         lightingModels.add(lightingModel);
         jsonResult.setData(lightingModels);
 
@@ -1360,6 +1698,7 @@ public class RoadLightingController extends BaseController {
 
     @RequestMapping("updateLightPriority")
     public String updateLightPriority(LightConditionRequest request) {
+
         logger.info("[POST] /api/roadlighting/updateLightPriority");
 
         int ret = lightServer.updateLightPriority(request);
@@ -1373,4 +1712,7 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+
+
 }

@@ -8,8 +8,6 @@ import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightSignalRecordDao;
-import com.nnlightctl.po.LightSignalLog;
-import com.nnlightctl.po.LightSignalLogExample;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
@@ -62,6 +60,7 @@ public class LightServerImpl implements LightServer {
         }
         int ret = -1;
         if (request.getId() != null) {  //修改
+
             ret = lightingMapper.updateByPrimaryKeySelective(lighting);
         } else {
             lighting.setGmtCreated(new Date());

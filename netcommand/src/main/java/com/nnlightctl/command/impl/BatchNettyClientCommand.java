@@ -49,11 +49,11 @@ public class BatchNettyClientCommand implements Command {
         });
 
         //阻塞等待连接完成
-        try {
+        /*try {
             this.context.await();
         } catch (InterruptedException e) {
             throw new RuntimeException(e.getMessage());
-        }
+        }*/
 
     }
 

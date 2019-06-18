@@ -1,5 +1,6 @@
 package com.nnlightctl.dao;
 
+import com.nnlightctl.parameter.ElectricityMeterParameter;
 import com.nnlightctl.po.ElectricityMeter;
 import com.nnlightctl.po.ElectricityMeterExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface ElectricityMeterMapper {
     int updateByPrimaryKeySelective(ElectricityMeter record);
 
     int updateByPrimaryKey(ElectricityMeter record);
+
+    List<ElectricityMeter> selectByParams(@Param("params") ElectricityMeterParameter parameter);
 }

@@ -74,19 +74,25 @@ public class LampControllerImpl implements LampControllerServer {
 
         List<LampControllerView> lampControllerList=new ArrayList<>(8);
 
-        LampControllerView lampControllerView=new LampControllerView();
-
         int total = lampControllerMapper.selectByCount();
 
         twoTuple.setSecond(total);
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
-        List<LampController> lampControllers = lampControllerMapper.selectAll();
+        LampController lampController=new LampController();
 
-        for (LampController lampController : lampControllers) {
+        String equipmentNumber = request.getEquipmentNumber();
 
-            ReflectCopyUtil.beanSameFieldCopy(lampController,lampControllerView);
+        lampController.setEquipmentNumber(equipmentNumber);
+
+        List<LampController> lampControllers = lampControllerMapper.selectAll(lampController);
+
+        for (LampController lampControllerNew : lampControllers) {
+
+            LampControllerView lampControllerView=new LampControllerView();
+
+            ReflectCopyUtil.beanSameFieldCopy(lampControllerNew,lampControllerView);
 
             lampControllerList.add(lampControllerView);
 

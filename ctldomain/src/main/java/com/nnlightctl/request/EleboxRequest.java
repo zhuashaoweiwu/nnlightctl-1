@@ -155,7 +155,7 @@ public class EleboxRequest extends BaseRequest{
     private Long projectId;
     private Long id;
     private String uid;
-    @NotBlank(message = "控制柜唯一编码不能为空！")
+   // @NotBlank(message = "控制柜唯一编码不能为空！")
     private String codeNumber;
     private Date manufacture;
     private String longitude;
@@ -171,4 +171,74 @@ public class EleboxRequest extends BaseRequest{
     private Long nnlightctlRegionId;
     private Long nnlightctlProjectId;
 
+
+    private String equipmentNumber;
+
+    private String eleboxMode;
+
+    private String eleboxName;
+
+    private String eleboxSize;
+
+    private String eleboxColors;
+
+    private String eleboxMaterial;
+
+    private String mem;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
+    public String getEleboxMode() {
+        return eleboxMode;
+    }
+
+    public void setEleboxMode(String eleboxMode) {
+        this.eleboxMode = eleboxMode;
+    }
+
+    public String getEleboxName() {
+        return eleboxName;
+    }
+
+    public void setEleboxName(String eleboxName) {
+        this.eleboxName = eleboxName;
+    }
+
+    public String getEleboxSize() {
+        return eleboxSize;
+    }
+
+    public void setEleboxSize(String eleboxSize) {
+        this.eleboxSize = eleboxSize;
+    }
+
+    public String getEleboxColors() {
+        return eleboxColors;
+    }
+
+    public void setEleboxColors(String eleboxColors) {
+        this.eleboxColors = eleboxColors;
+    }
+
+    public String getEleboxMaterial() {
+        return eleboxMaterial;
+    }
+
+    public void setEleboxMaterial(String eleboxMaterial) {
+        this.eleboxMaterial = eleboxMaterial;
+    }
+
+    public String getMem() {
+        return mem;
+    }
+
+    public void setMem(String mem) {
+        this.mem = mem;
+    }
 }

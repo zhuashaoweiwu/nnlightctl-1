@@ -209,6 +209,11 @@ public class ModularExample {
             return (Criteria) this;
         }
 
+        public Criteria andequipmentNumberLike(String value) {
+            addCriterion("equipment_number like", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
         public Criteria andModularModelNotLike(String value) {
             addCriterion("modular_model not like", value, "modularModel");
             return (Criteria) this;

@@ -21,6 +21,16 @@ public class ModularView implements Serializable {
 
     private String mem;
 
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

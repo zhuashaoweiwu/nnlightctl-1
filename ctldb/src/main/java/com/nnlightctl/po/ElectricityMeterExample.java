@@ -209,6 +209,13 @@ public class ElectricityMeterExample {
             return (Criteria) this;
         }
 
+        private String equipmentNumber;
+
+        public Criteria andequipmentNumberLike(String value) {
+            addCriterion("equipment_number like", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
         public Criteria andElectricityModelNotLike(String value) {
             addCriterion("electricity_model not like", value, "electricityModel");
             return (Criteria) this;

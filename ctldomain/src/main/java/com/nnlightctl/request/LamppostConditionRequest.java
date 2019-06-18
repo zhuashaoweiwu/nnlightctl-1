@@ -10,14 +10,26 @@ public class LamppostConditionRequest extends BaseRequest{
 
     private List<Long> lamppostIds;
 
-    private Map parameter;
+    private String equipmentNumber;
 
-    public Map getParameter() {
-        return parameter;
+    private String lamppostModel;
+
+    public String getLamppostModel() {
+        return lamppostModel;
     }
 
-    public void setParameter(Map parameter) {
-        this.parameter = parameter;
+    public void setLamppostModel(String lamppostModel) {
+        this.lamppostModel = lamppostModel;
+    }
+
+    private String lampostName;
+
+    public String getLampostName() {
+        return lampostName;
+    }
+
+    public void setLampostName(String lampostName) {
+        this.lampostName = lampostName;
     }
 
     public List<Long> getLamppostIds() {
@@ -34,5 +46,13 @@ public class LamppostConditionRequest extends BaseRequest{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

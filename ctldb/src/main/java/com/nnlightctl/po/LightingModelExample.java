@@ -331,6 +331,11 @@ public class LightingModelExample {
             return (Criteria) this;
         }
 
+        public Criteria andEquipmentNumberLike(String value) {
+            addCriterion("equipment_number like", value, "equipmentNumber");
+            return (Criteria) this;
+        }
+
         public Criteria andModelNameNotLike(String value) {
             addCriterion("model_name not like", value, "modelName");
             return (Criteria) this;
@@ -663,6 +668,406 @@ public class LightingModelExample {
 
         public Criteria andMemNotBetween(String value1, String value2) {
             addCriterion("mem not between", value1, value2, "mem");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipIsNull() {
+            addCriterion("chip is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipIsNotNull() {
+            addCriterion("chip is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipEqualTo(String value) {
+            addCriterion("chip =", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipNotEqualTo(String value) {
+            addCriterion("chip <>", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipGreaterThan(String value) {
+            addCriterion("chip >", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipGreaterThanOrEqualTo(String value) {
+            addCriterion("chip >=", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipLessThan(String value) {
+            addCriterion("chip <", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipLessThanOrEqualTo(String value) {
+            addCriterion("chip <=", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipLike(String value) {
+            addCriterion("chip like", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipNotLike(String value) {
+            addCriterion("chip not like", value, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipIn(List<String> values) {
+            addCriterion("chip in", values, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipNotIn(List<String> values) {
+            addCriterion("chip not in", values, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipBetween(String value1, String value2) {
+            addCriterion("chip between", value1, value2, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andChipNotBetween(String value1, String value2) {
+            addCriterion("chip not between", value1, value2, "chip");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxIsNull() {
+            addCriterion("flux is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxIsNotNull() {
+            addCriterion("flux is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxEqualTo(Integer value) {
+            addCriterion("flux =", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxNotEqualTo(Integer value) {
+            addCriterion("flux <>", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxGreaterThan(Integer value) {
+            addCriterion("flux >", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxGreaterThanOrEqualTo(Integer value) {
+            addCriterion("flux >=", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxLessThan(Integer value) {
+            addCriterion("flux <", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxLessThanOrEqualTo(Integer value) {
+            addCriterion("flux <=", value, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxIn(List<Integer> values) {
+            addCriterion("flux in", values, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxNotIn(List<Integer> values) {
+            addCriterion("flux not in", values, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxBetween(Integer value1, Integer value2) {
+            addCriterion("flux between", value1, value2, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andFluxNotBetween(Integer value1, Integer value2) {
+            addCriterion("flux not between", value1, value2, "flux");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexIsNull() {
+            addCriterion("index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexIsNotNull() {
+            addCriterion("index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexEqualTo(Integer value) {
+            addCriterion("index =", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexNotEqualTo(Integer value) {
+            addCriterion("index <>", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexGreaterThan(Integer value) {
+            addCriterion("index >", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("index >=", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexLessThan(Integer value) {
+            addCriterion("index <", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexLessThanOrEqualTo(Integer value) {
+            addCriterion("index <=", value, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexIn(List<Integer> values) {
+            addCriterion("index in", values, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexNotIn(List<Integer> values) {
+            addCriterion("index not in", values, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexBetween(Integer value1, Integer value2) {
+            addCriterion("index between", value1, value2, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexNotBetween(Integer value1, Integer value2) {
+            addCriterion("index not between", value1, value2, "index");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIsNull() {
+            addCriterion("grade is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIsNotNull() {
+            addCriterion("grade is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeEqualTo(String value) {
+            addCriterion("grade =", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotEqualTo(String value) {
+            addCriterion("grade <>", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeGreaterThan(String value) {
+            addCriterion("grade >", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeGreaterThanOrEqualTo(String value) {
+            addCriterion("grade >=", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLessThan(String value) {
+            addCriterion("grade <", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLessThanOrEqualTo(String value) {
+            addCriterion("grade <=", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLike(String value) {
+            addCriterion("grade like", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotLike(String value) {
+            addCriterion("grade not like", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIn(List<String> values) {
+            addCriterion("grade in", values, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotIn(List<String> values) {
+            addCriterion("grade not in", values, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeBetween(String value1, String value2) {
+            addCriterion("grade between", value1, value2, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotBetween(String value1, String value2) {
+            addCriterion("grade not between", value1, value2, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeIsNull() {
+            addCriterion("controller_mode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeIsNotNull() {
+            addCriterion("controller_mode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeEqualTo(String value) {
+            addCriterion("controller_mode =", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeNotEqualTo(String value) {
+            addCriterion("controller_mode <>", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeGreaterThan(String value) {
+            addCriterion("controller_mode >", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeGreaterThanOrEqualTo(String value) {
+            addCriterion("controller_mode >=", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeLessThan(String value) {
+            addCriterion("controller_mode <", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeLessThanOrEqualTo(String value) {
+            addCriterion("controller_mode <=", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeLike(String value) {
+            addCriterion("controller_mode like", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeNotLike(String value) {
+            addCriterion("controller_mode not like", value, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeIn(List<String> values) {
+            addCriterion("controller_mode in", values, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeNotIn(List<String> values) {
+            addCriterion("controller_mode not in", values, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeBetween(String value1, String value2) {
+            addCriterion("controller_mode between", value1, value2, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andControllerModeNotBetween(String value1, String value2) {
+            addCriterion("controller_mode not between", value1, value2, "controllerMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleIsNull() {
+            addCriterion("bean_angle is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleIsNotNull() {
+            addCriterion("bean_angle is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleEqualTo(String value) {
+            addCriterion("bean_angle =", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleNotEqualTo(String value) {
+            addCriterion("bean_angle <>", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleGreaterThan(String value) {
+            addCriterion("bean_angle >", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleGreaterThanOrEqualTo(String value) {
+            addCriterion("bean_angle >=", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleLessThan(String value) {
+            addCriterion("bean_angle <", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleLessThanOrEqualTo(String value) {
+            addCriterion("bean_angle <=", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleLike(String value) {
+            addCriterion("bean_angle like", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleNotLike(String value) {
+            addCriterion("bean_angle not like", value, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleIn(List<String> values) {
+            addCriterion("bean_angle in", values, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleNotIn(List<String> values) {
+            addCriterion("bean_angle not in", values, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleBetween(String value1, String value2) {
+            addCriterion("bean_angle between", value1, value2, "beanAngle");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeanAngleNotBetween(String value1, String value2) {
+            addCriterion("bean_angle not between", value1, value2, "beanAngle");
             return (Criteria) this;
         }
     }

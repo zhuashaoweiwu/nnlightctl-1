@@ -31,6 +31,8 @@ public class LamppostServerImpl implements LamppostServer {
         int sign=-1;
 
         if (request.getId()==null){
+
+            request.setState(0);
             //新增灯杆
             sign=lamppostMapper.insertLamppost(lamppost);
         }else {
@@ -64,14 +66,24 @@ public class LamppostServerImpl implements LamppostServer {
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
-        List<Lamppost> lampposts = lamppostMapper.selectAllLamppost();
+        String equipmentNumber = request.getEquipmentNumber();
+
+        Lamppost lamppost=new Lamppost();
+
+        lamppost.setEquipmentNumber(equipmentNumber);
+
+        lamppost.setLamppostModel(request.getLamppostModel());
+
+        lamppost.setLampostName(request.getLampostName());
+
+        List<Lamppost> lampposts = lamppostMapper.selectAllLamppost(lamppost);
 
         List<LamppostView> lamppostViews=new ArrayList<>();
 
-        for (Lamppost lamppost : lampposts) {
+        for (Lamppost lamppostNew : lampposts) {
             LamppostView lamppostView=new LamppostView();
 
-            ReflectCopyUtil.beanSameFieldCopy(lamppost,lamppostView);
+            ReflectCopyUtil.beanSameFieldCopy(lamppostNew,lamppostView);
 
             lamppostViews.add(lamppostView);
         }

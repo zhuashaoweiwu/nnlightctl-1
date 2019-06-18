@@ -10,6 +10,8 @@ public class PhotoperiodRequest extends BaseRequest{
 
     private Long id;
 
+    private String equipmentNumber;
+
     @NotBlank(message = "光照计的型号不能为空！")
     private String photoperiodModel;
 
@@ -26,6 +28,26 @@ public class PhotoperiodRequest extends BaseRequest{
     private Double workVoltage;
 
     private String mem;
+
+    private int deployFlag;
+
+    private Long eleboxId;
+
+    public Long getEleboxId() {
+        return eleboxId;
+    }
+
+    public void setEleboxId(Long eleboxId) {
+        this.eleboxId = eleboxId;
+    }
+
+    public int getDeployFlag() {
+        return deployFlag;
+    }
+
+    public void setDeployFlag(int deployFlag) {
+        this.deployFlag = deployFlag;
+    }
 
     public Long getId() {
         return id;
@@ -89,5 +111,13 @@ public class PhotoperiodRequest extends BaseRequest{
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

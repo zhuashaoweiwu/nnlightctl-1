@@ -2,7 +2,7 @@ package com.nnlightctl.request;
 
 import java.util.List;
 
-public class ModularConditionRequest {
+public class ModularConditionRequest extends BaseRequest{
 
     private List<Long> modularIds;
 
@@ -17,6 +17,16 @@ public class ModularConditionRequest {
     private String communicationMode;
 
     private Integer maxElectric;
+
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 
     public Long getId() {
         return id;

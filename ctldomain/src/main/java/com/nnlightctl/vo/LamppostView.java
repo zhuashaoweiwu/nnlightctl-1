@@ -2,7 +2,7 @@ package com.nnlightctl.vo;
 
 public class LamppostView {
 
-    private int id;
+    private Long id;
 
     private String lamppostModel;
 
@@ -24,11 +24,13 @@ public class LamppostView {
 
     private String mem;
 
-    public int getId() {
+    private String equipmentNumber;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -110,5 +112,13 @@ public class LamppostView {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

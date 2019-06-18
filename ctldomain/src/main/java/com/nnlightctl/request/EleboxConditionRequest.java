@@ -120,4 +120,28 @@ public class EleboxConditionRequest extends BaseRequest {
     private List<Long> addModelIdList;
 
     private Long projectId;
+
+    private String equipmentNumber;
+
+    private String eleboxMode;
+
+
+
+    public String getEleboxMode() {
+        return eleboxMode;
+    }
+
+    public void setEleboxMode(String eleboxMode) {
+        this.eleboxMode = eleboxMode;
+    }
+
+
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 }

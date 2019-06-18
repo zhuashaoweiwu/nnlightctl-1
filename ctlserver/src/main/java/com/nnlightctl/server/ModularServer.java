@@ -1,7 +1,6 @@
 package com.nnlightctl.server;
 
 import com.nnlight.common.Tuple;
-import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Modular;
 import com.nnlightctl.request.ModularConditionRequest;
 import com.nnlightctl.request.ModularRequest;

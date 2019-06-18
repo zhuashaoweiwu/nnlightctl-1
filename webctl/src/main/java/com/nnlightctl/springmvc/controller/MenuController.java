@@ -5,6 +5,7 @@ import com.nnlightctl.request.SaveUserMapRightersRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.MenuServer;
 import com.nnlightctl.vo.GetUserWithRighterView;
+import com.nnlightctl.vo.MenuView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class MenuController extends BaseController{
     @RequestMapping("listMenuLevelSub")
     public String  listMenuLevelSub(Integer parentId){
         logger.info("[POST] /api/menu/listMenuLevelSub");
-        List<Righter> righterList = menuServer.listMenuLevelSub(parentId);
+        List<MenuView> righterList = menuServer.listMenuLevelSub(parentId);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(righterList);
 

@@ -1,6 +1,11 @@
 package com.nnlightctl.po;
 
-public class ElectricityMeter {
+import java.io.Serializable;
+
+public class ElectricityMeter implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     private String electricityModel;
@@ -24,6 +29,26 @@ public class ElectricityMeter {
     private String powerWaste;
 
     private String mem;
+
+    private String equipmentNumber;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
 
     public Long getId() {
         return id;

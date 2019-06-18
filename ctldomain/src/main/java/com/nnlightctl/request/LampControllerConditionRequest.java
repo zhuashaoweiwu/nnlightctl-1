@@ -21,6 +21,16 @@ public class LampControllerConditionRequest extends BaseRequest{
 
     private Integer dimmingMode;
 
+    private String equipmentNumber;
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
     public String getLampModel() {
         return lampModel;
     }

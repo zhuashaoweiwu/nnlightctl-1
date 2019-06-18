@@ -6,7 +6,6 @@ package com.nnlightctl.request;
  */
 public class LamppostRequest extends BaseRequest{
 
-
     private Long id;
 
     private String lamppostModel;
@@ -28,6 +27,18 @@ public class LamppostRequest extends BaseRequest{
     private  String lampheadColor;
 
     private String mem;
+
+    private String equipmentNumber;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
@@ -115,5 +126,13 @@ public class LamppostRequest extends BaseRequest{
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

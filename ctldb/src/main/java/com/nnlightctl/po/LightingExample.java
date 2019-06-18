@@ -12,6 +12,7 @@ public class LightingExample {
 
     protected List<Criteria> oredCriteria;
 
+
     public LightingExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -335,6 +336,19 @@ public class LightingExample {
             addCriterion("uid not like", value, "uid");
             return (Criteria) this;
         }
+
+        public Criteria andLampModelLike(String value){
+
+            addCriterion("lamp_model like",value,"lampModel");
+            return (Criteria)this;
+        }
+
+        public Criteria andLampNameLike(String value){
+
+            addCriterion("lamp_name like",value,"lampName");
+            return (Criteria)this;
+        }
+
 
         public Criteria andUidIn(List<String> values) {
             addCriterion("uid in", values, "uid");

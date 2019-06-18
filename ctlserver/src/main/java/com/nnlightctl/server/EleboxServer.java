@@ -33,4 +33,15 @@ public interface EleboxServer {
     int batchSetLightingArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest);
     int batchSetLightingArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest);
     int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest);
+
+
+    int addOrUpdateElebox(EleboxRequest Request);
+
+    int deleteEleboxPrimaryKey(EleboxConditionRequest request);
+
+    Tuple.TwoTuple<List<Elebox>,Integer> listEleboxMessage(EleboxConditionRequest request);
+
+    Elebox selectEleboxById(EleboxConditionRequest request);
+
+
 }

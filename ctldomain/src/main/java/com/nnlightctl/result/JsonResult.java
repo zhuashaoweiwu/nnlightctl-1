@@ -13,6 +13,10 @@ public class JsonResult {
     //校验是否传递当前页，和每页显示多少条
     public static JsonResult FALLURE_NOPAGE=new JsonResult("4101","没有传入页码");
 
+    //校验查询参数
+    public static JsonResult FALLURE_PARAMSERROR=new JsonResult("4102","您查询的条件有误");
+
+
 
 
 

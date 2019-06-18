@@ -3,6 +3,10 @@ package com.nnlightctl.vo;
 
 public class PhotoperiodView {
 
+    private Long id;
+
+    private String equipmentNumber;
+
     private String photoperiodModel;
 
     private String photoperiodName;
@@ -16,6 +20,24 @@ public class PhotoperiodView {
     private Double workVoltage;
 
     private String mem;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getPhotoperiodModel() {
         return photoperiodModel;
@@ -71,5 +93,13 @@ public class PhotoperiodView {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
     }
 }

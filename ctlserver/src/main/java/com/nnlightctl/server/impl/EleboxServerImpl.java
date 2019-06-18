@@ -15,12 +15,9 @@ import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.ModelLoopServer;
-import com.nnlightctl.vo.EleboxView;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -217,10 +214,8 @@ public class EleboxServerImpl implements EleboxServer {
         if (!StringUtils.isEmpty(request.getEleboxName())) {
             criteria.andEleboxName("%" + request.getEleboxName() + "%");
         }
-
         int total = eleboxMapper.countByExample(eleboxExample);
         tuple.setSecond(total);
-
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         eleboxExample.setOrderByClause("id DESC");
@@ -416,6 +411,91 @@ public class EleboxServerImpl implements EleboxServer {
     public int batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest batchConfigLightsBeEleboxRequest) {
         return eleboxDao.batchConfigLightsBeElebox(batchConfigLightsBeEleboxRequest);
     }
+
+    @Override
+    public int addOrUpdateElebox(EleboxRequest request) {
+
+        Elebox elebox=new Elebox();
+
+        ReflectCopyUtil.beanSameFieldCopy(request,elebox);
+
+        int flag=-1;
+
+        if (request.getId()==null){
+
+            //新增
+            flag = eleboxMapper.insertSelective(elebox);
+
+        }else{
+
+            flag=eleboxMapper.updateByPrimaryKeySelective(elebox);
+        }
+        return flag;
+    }
+
+    @Override
+    public int deleteEleboxPrimaryKey(EleboxConditionRequest request) {
+
+        List<Long> eleboxIdList = request.getEleboxIdList();
+
+        int flag=-1;
+
+        for (Long aLong : eleboxIdList) {
+
+            flag = eleboxMapper.deleteByPrimaryKey(aLong);
+        }
+        return flag;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<Elebox>,Integer> listEleboxMessage(EleboxConditionRequest request) {
+
+        Tuple.TwoTuple<List<Elebox>,Integer> twoTuple=new Tuple.TwoTuple<>();
+
+        List<Elebox> eleboxes=new ArrayList<>(8);
+
+        EleboxExample eleboxExample=new EleboxExample();
+
+        EleboxExample.Criteria criteria = eleboxExample.createCriteria();
+
+        if (!StringUtils.isEmpty(request.getEquipmentNumber())){
+
+            criteria.andEquipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+        }
+
+        if (!StringUtils.isEmpty(request.getEleboxMode())){
+
+            criteria.andEleboxModeLike("%"+request.getEleboxMode()+"%");
+        }
+
+        if (!StringUtils.isEmpty(request.getEleboxName())){
+
+            criteria.andEleboxNameLike("%"+request.getEleboxName()+"%");
+        }
+
+        int total = eleboxMapper.countByExample(eleboxExample);
+
+        twoTuple.setSecond(total);
+
+        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+
+        List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
+
+        twoTuple.setFirst(eleboxList);
+
+        return twoTuple;
+    }
+
+    @Override
+    public Elebox selectEleboxById(EleboxConditionRequest request) {
+
+        Elebox elebox = eleboxMapper.selectByPrimaryKey(request.getId());
+
+
+        return elebox;
+    }
+
+
 
     public void uploadImageElebox(MultipartFile eleboxGisIcon, String imagePath) {
 
