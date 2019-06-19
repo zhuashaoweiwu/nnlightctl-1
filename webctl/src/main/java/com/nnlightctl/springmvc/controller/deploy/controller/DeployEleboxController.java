@@ -132,7 +132,7 @@ public class DeployEleboxController extends BaseController {
 
     @RequestMapping("deployExleboxDelete")
     public String deployExleboxDelete(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
-        logger.info("[POST] deployElebox/deployExleboxArrange");
+        logger.info("[POST] deployElebox/deployExleboxDelete");
 
         //参数检验
         if (bindingResult.hasErrors()) {
@@ -160,7 +160,7 @@ public class DeployEleboxController extends BaseController {
 
     @RequestMapping("deployExleboxModify")
     public String deployExleboxModify(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
-        logger.info("[POST] deployElebox/deployExleboxArrange");
+        logger.info("[POST] deployElebox/deployExleboxModify");
 
         //参数检验
         if (bindingResult.hasErrors()) {
@@ -181,7 +181,7 @@ public class DeployEleboxController extends BaseController {
 
     @RequestMapping("modifyByView")
     public String modifyByView(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
-        logger.info("[POST] deployElebox/deployExleboxArrange");
+        logger.info("[POST] deployElebox/modifyByView");
 
         //参数检验
         if (bindingResult.hasErrors()) {
