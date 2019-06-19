@@ -15,6 +15,8 @@
         <result column="static_power" property="staticPower" jdbcType="DECIMAL"/>
         <result column="alarm_message" property="alarmMessage" jdbcType="VARCHAR" />
         <result column="mem" property="mem" jdbcType="VARCHAR" />
+        <result column="mem" property="mem" jdbcType="VARCHAR" />
+        <result column="model_deploy_state" property="modelDeployState" jdbcType="TINYINT" />
     </resultMap>
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
         insert into nnlightctl_lamp_controller
@@ -134,10 +136,24 @@
              <if test="equipmentNumber !=null">
                  equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
              </if>
+             <if test="modelDeployState !=null">
+                 model_deploy_state=#{modelDeployState,jdbcType=TINYINT}
+             </if>
+             <if test="nnlightctlEleboxId !=null">
+                 nnlightctl_elebox_id=#{nnlightctlEleboxId,jdbcType=BIGINT}
+             </if>
+             <if test="nnlightctlEleboxLoopId !=null">
+                 nnlightctl_elebox_loop_id=#{nnlightctlEleboxLoopId,jdbcType=BIGINT}
+             </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
   </update>
 
+    <update id="updateByEleboxId" parameterType="java.lang.Long">
+         update nnlightctl_lamp_controller set  nnlightctl_elebox_id = null ,nnlightctl_elebox_loop_id = null,model_deploy_state = 0
+         where nnlightctl_elebox_id = #{eleboxId,jdbcType=BIGINT}
+
+    </update>
 
 
     <delete id="deleteByPrimaryKey" parameterType="long">
@@ -147,7 +163,9 @@
     <select id="selectByCount" resultType="java.lang.Integer">
         select count(*) from nnlightctl_lamp_controller
     </select>
-
+    <select id="queryLightingByLoop" resultType="java.lang.String" parameterType="java.lang.Long">
+        select equipment_number as equipmentNumber   from nnlightctl_lamp_controller where nnlightctl_elebox_loop_id  = #{loopId,jdbcType=BIGINT}
+    </select>
     <sql id="Base_Column_List">
         id,lamp_model,lamp_name,longitude,latitude,
         communication_mode,dimming_mode,rated_Voltage,

@@ -27,4 +27,6 @@ public interface EleboxModelLoopMapper {
     int updateByPrimaryKeySelective(EleboxModelLoop record);
 
     int updateByPrimaryKey(EleboxModelLoop record);
+
+    void deleteByEleboxModelIds(@Param("ids")List<Long> ids);
 }

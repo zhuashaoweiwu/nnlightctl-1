@@ -24,5 +24,9 @@ public interface LampControllerMapper {
 
     List<LampController> selectByParameter(@Param("params")LampControllerParameter parameter);
 
+    int updateByEleboxId(@Param("eleboxId") Long eleboxId);
+
+    List<String> queryLightingByLoop(@Param("loopId") Long loopId);
+
 
 }

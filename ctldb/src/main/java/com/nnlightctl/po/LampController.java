@@ -32,6 +32,36 @@ public class LampController implements Serializable {
 
     private String equipmentNumber;
 
+    private Byte   modelDeployState;
+
+    private Long nnlightctlEleboxId;
+
+    private Long nnlightctlEleboxLoopId;
+
+    public Long getNnlightctlEleboxId() {
+        return nnlightctlEleboxId;
+    }
+
+    public void setNnlightctlEleboxId(Long nnlightctlEleboxId) {
+        this.nnlightctlEleboxId = nnlightctlEleboxId;
+    }
+
+    public Long getNnlightctlEleboxLoopId() {
+        return nnlightctlEleboxLoopId;
+    }
+
+    public void setNnlightctlEleboxLoopId(Long nnlightctlEleboxLoopId) {
+        this.nnlightctlEleboxLoopId = nnlightctlEleboxLoopId;
+    }
+
+    public Byte getModelDeployState() {
+        return modelDeployState;
+    }
+
+    public void setModelDeployState(Byte modelDeployState) {
+        this.modelDeployState = modelDeployState;
+    }
+
     public String getEquipmentNumber() {
         return equipmentNumber;
     }

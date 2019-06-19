@@ -11,5 +11,8 @@ public interface DeployEleboxServer {
 
     Boolean deployExleboxArrange(DeployExleboxArrangeRequest request) throws  RuntimeException;
 
+    Boolean deployExleboxDelete(Long exleBoxId) throws  RuntimeException;
+
+    public void deployExleboxModify (DeployExleboxArrangeRequest request) throws RuntimeException;
 
 }

@@ -95,6 +95,15 @@
     from nnlightctl_elebox_model_loop
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <delete id="deleteByEleboxModelIds">
+    delete from nnlightctl_elebox_model_loop
+    where nnlightctl_elebox_model_id  in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from nnlightctl_elebox_model_loop
     where id = #{id,jdbcType=BIGINT}

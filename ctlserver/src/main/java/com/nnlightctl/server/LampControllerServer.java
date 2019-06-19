@@ -25,5 +25,7 @@ public interface LampControllerServer {
 
     LampController selectByIdLampController(LampControllerConditionRequest request);
 
+    List<String> queryLightingByLoop(Long loopId);
+
 
 }

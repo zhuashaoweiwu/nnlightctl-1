@@ -8,6 +8,7 @@ import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.EleboxModelMapper;
 import com.nnlightctl.dao.EleboxRelationMapper;
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.jdbcdao.EleboxDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
@@ -54,6 +55,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private EleboxDao eleboxDao;
+
+    @Autowired
+    private LampControllerMapper lampControllerMapper;
 
     @Autowired
     private AreaServer areaServer;
@@ -182,12 +186,23 @@ public class EleboxServerImpl implements EleboxServer {
 //            eleboxModelConditionRequest.setEleboxModelIdList(eleboxModelIdList);
 
 //            eleboxModelServer.deleteEleboxModel(eleboxModelConditionRequest);
-            //删除关联表数据
-            this.eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
-            //取消box关联
-            this.eleboxModelMapper.modifyEleboxId(deleteEleboxId);
+//            //删除关联表数据
+//            this.eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
+//            //取消box关联
+//            this.eleboxModelMapper.modifyEleboxId(deleteEleboxId);
+
+            //更改所有单灯loop为控部署状态置为0
+            List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(deleteEleboxId);
+            lampControllerMapper.updateByEleboxId(deleteEleboxId);
+            //删除所有回路
+            eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
+            //置空开关模块的控制柜ID
+            eleboxModelMapper.modifyEleboxId(deleteEleboxId);
+            //删除关联表
+            eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
             //再删除控制柜本身
             this.eleboxMapper.deleteByPrimaryKey(deleteEleboxId);
+
         }
         return 1;
     }

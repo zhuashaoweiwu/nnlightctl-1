@@ -73,23 +73,22 @@ public class RoadLightingController extends BaseController {
     private CentralizeControllerServer centralizeControllerServer;
 
 
-
     @RequestMapping("addorupdateelebox")
-    public String addOrUpdateElebox(EleboxRequest request){
+    public String addOrUpdateElebox(EleboxRequest request) {
 
         logger.info("[POST] api/roadlighting/addorupdateelebox");
 
-        int flag= eleboxServer.addOrUpdateElebox(request);
+        int flag = eleboxServer.addOrUpdateElebox(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (flag>0){
+        if (flag > 0) {
 
             jsonResult = JsonResult.getSUCCESS();
 
             jsonResult.setTotal(-1);
 
-        }else {
+        } else {
 
             jsonResult = JsonResult.getFAILURE();
 
@@ -100,23 +99,23 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("deleteeleboxbyids")
-    public String deleteEleboxByIds(EleboxConditionRequest request){
+    public String deleteEleboxByIds(EleboxConditionRequest request) {
 
         logger.info("[POST]  api/roadlighting/deleteeleboxbyids");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = eleboxServer.deleteEleboxPrimaryKey(request);
 
-        if (flag>0){
+        if (flag > 0) {
 
-            jsonResult=JsonResult.getSUCCESS();
+            jsonResult = JsonResult.getSUCCESS();
 
             jsonResult.setTotal(-1);
 
-        }else {
+        } else {
 
-             jsonResult= JsonResult.getFAILURE();
+            jsonResult = JsonResult.getFAILURE();
 
         }
 
@@ -127,23 +126,23 @@ public class RoadLightingController extends BaseController {
 
     /*************************************集中控制器***************************/
     @RequestMapping("addorupdatecentralizecontroller")
-    public String addOrUpdateCentralizeController(CentralizeControllerRquester request){
+    public String addOrUpdateCentralizeController(CentralizeControllerRquester request) {
 
         logger.info("[POST] api/roadlighting/addorupdatecentralizecontroller");
 
         int flag = centralizeControllerServer.addOrUpdateCentralizeController(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (flag>0){
+        if (flag > 0) {
 
             jsonResult = JsonResult.getSUCCESS();
 
             jsonResult.setTotal(-1);
 
-        }else {
+        } else {
 
-            jsonResult=JsonResult.getFAILURE();
+            jsonResult = JsonResult.getFAILURE();
 
         }
 
@@ -153,23 +152,23 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("deleteCentralizeController")
-    public String deleteCentralizeController(CentralizeControllerConditionRequest request){
+    public String deleteCentralizeController(CentralizeControllerConditionRequest request) {
 
-        logger.info("[POST]  api/roadlighting/deleteCentralizeController" );
+        logger.info("[POST]  api/roadlighting/deleteCentralizeController");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = centralizeControllerServer.deleteCentralizeController(request);
 
-        if (flag>0){
+        if (flag > 0) {
 
-            jsonResult=JsonResult.getSUCCESS();
+            jsonResult = JsonResult.getSUCCESS();
 
             jsonResult.setTotal(-1);
 
-        }else {
+        } else {
 
-            jsonResult=JsonResult.getFAILURE();
+            jsonResult = JsonResult.getFAILURE();
         }
 
         return toJson(jsonResult);
@@ -177,7 +176,7 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("listCentralizeController")
-    public String listCentralizeController(CentralizeControllerConditionRequest request){
+    public String listCentralizeController(CentralizeControllerConditionRequest request) {
 
         logger.info("[POST]  api/roadlighting/listCentralizeController");
 
@@ -195,13 +194,13 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("selectbyidcentralizecontroller")
-    public String selectByIdCentralizeController(CentralizeControllerConditionRequest request){
+    public String selectByIdCentralizeController(CentralizeControllerConditionRequest request) {
 
         logger.info("[POST  api/roadlighting/selectbyidcentralizecontroller]");
 
         CentralizeController centralizeController = centralizeControllerServer.selectByPrimaryKey(request);
 
-        List<CentralizeController> centralizeControllers=new ArrayList<>();
+        List<CentralizeController> centralizeControllers = new ArrayList<>();
 
         centralizeControllers.add(centralizeController);
 
@@ -214,21 +213,22 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
 
     }
-/******************************************电表**********************************/
+
+    /******************************************电表**********************************/
     @RequestMapping("addorupdateelectricitymeter")
-    public String addOrUpdateElectricityMeter(ElectricityMeterRequest request){
+    public String addOrUpdateElectricityMeter(ElectricityMeterRequest request) {
 
         logger.info("[POST] api/roadlighting/addorupdateelectricitymeter");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = electricityMeterServer.addOrUpdateElectricityMeter(request);
 
-        if (flag>0){
+        if (flag > 0) {
             jsonResult = JsonResult.getSUCCESS();
             jsonResult.setTotal(-1);
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
         }
 
         return toJson(jsonResult);
@@ -236,37 +236,37 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("delectelectricitymeter")
-    public String deleteElectricityMeter(ElectricityMeterConditionRequest request){
+    public String deleteElectricityMeter(ElectricityMeterConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/delectelectricitymeter");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = electricityMeterServer.deleteElectricityMeter(request);
 
-        if (flag>0){
-            jsonResult=JsonResult.getSUCCESS();
-        }else {
-            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        if (flag > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.FALLURE_IDS_NULL;
         }
 
         return toJson(jsonResult);
     }
 
     @RequestMapping("selectelectricityById")
-    public String selectElectricityById(ElectricityMeterConditionRequest request){
+    public String selectElectricityById(ElectricityMeterConditionRequest request) {
 
         logger.info("[POST]  api/roadlighting/selectelectricityById");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         ElectricityMeter electricityMeter = electricityMeterServer.selectByPrimarykey(request);
 
-        List<ElectricityMeter> list=new ArrayList<>(7);
+        List<ElectricityMeter> list = new ArrayList<>(7);
 
         list.add(electricityMeter);
 
-        jsonResult=JsonResult.getSUCCESS();
+        jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setData(list);
 
@@ -277,13 +277,13 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("selectelectricityall")
-    public  String selectElectricityAll(ElectricityMeterConditionRequest request){
+    public String selectElectricityAll(ElectricityMeterConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectelectricityall");
 
         Tuple.TwoTuple<List<ElectricityMeterView>, Integer> twoTuple = electricityMeterServer.listElectricityMeter(request);
 
-        JsonResult jsonResult=JsonResult.getSUCCESS();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setTotal(twoTuple.getSecond());
 
@@ -293,17 +293,17 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("selectbyelectricityparams")
-    public String selectElectricityByParams(ElectricityMeterConditionRequest request){
+    public String selectElectricityByParams(ElectricityMeterConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectbyelectricityparams");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         List<ElectricityMeter> listElectricity = electricityMeterServer.selectByParams(request);
 
-        if (listElectricity.size()==0){
-            jsonResult=JsonResult.FALLURE_PARAMSERROR;
-        }else {
+        if (listElectricity.size() == 0) {
+            jsonResult = JsonResult.FALLURE_PARAMSERROR;
+        } else {
             jsonResult = JsonResult.getSUCCESS();
 
             jsonResult.setTotal(listElectricity.size());
@@ -317,23 +317,24 @@ public class RoadLightingController extends BaseController {
 /************************************电表***********************************/
     /**
      * 开关模块
+     *
      * @param request
      * @return
      */
     @RequestMapping("addorupdatemodular")
-    public String addOrUpdateModular(ModularRequest request){
+    public String addOrUpdateModular(ModularRequest request) {
 
         logger.info("[POST] api/roadlighting/addorupdatemodular");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = modularServer.addOrUpdateModular(request);
 
-        if (flag>0){
+        if (flag > 0) {
             jsonResult = JsonResult.getSUCCESS();
             jsonResult.setTotal(-1);
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
         }
 
 
@@ -342,37 +343,37 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("deletemodular")
-    public String deleteModular(ModularConditionRequest request){
+    public String deleteModular(ModularConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/deletemodular");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         int flag = modularServer.deleteModularByPrimaryKey(request);
 
-        if (flag>0){
-            jsonResult=JsonResult.getSUCCESS();
-        }else {
-            jsonResult=JsonResult.FALLURE_IDS_NULL;
+        if (flag > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.FALLURE_IDS_NULL;
         }
 
         return toJson(jsonResult);
     }
 
     @RequestMapping("selectmodularbyid")
-    public String selectModularById(ModularConditionRequest request){
+    public String selectModularById(ModularConditionRequest request) {
 
         logger.info("[POST]  api/roadlighting/selectmodularbyid");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
         Modular modular = modularServer.selectByPrimaryKey(request);
 
-        List<Modular> modulars=new ArrayList<>();
+        List<Modular> modulars = new ArrayList<>();
 
         modulars.add(modular);
 
-        jsonResult=JsonResult.getSUCCESS();
+        jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setData(modulars);
 
@@ -383,12 +384,12 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("selectmodularall")
-    public  String selectModularAll(ModularConditionRequest request){
+    public String selectModularAll(ModularConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectmodularall");
         Tuple.TwoTuple<List<ModularView>, Integer> twoTuple = modularServer.listModular(request);
 
-        JsonResult jsonResult=JsonResult.getSUCCESS();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setTotal(twoTuple.getSecond());
 
@@ -398,7 +399,7 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("selectbymodularparams")
-    public String selectModularByParams(ModularConditionRequest request){
+    public String selectModularByParams(ModularConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectbymodularparams");
 
@@ -417,23 +418,24 @@ public class RoadLightingController extends BaseController {
 /**************************开关模块***********************************/
     /**
      * 单灯控制器
+     *
      * @param request
      * @return
      */
     @RequestMapping("addorupdatelampcontroller")
-    public String addOrUpdateLampController(LampControllerRequest request){
+    public String addOrUpdateLampController(LampControllerRequest request) {
 
         logger.info("[POST]  api/roadlighting/addorupdatelampcontroller");
 
-        int ret=lampControllerServer.addOrUpdateLampController(request);
+        int ret = lampControllerServer.addOrUpdateLampController(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (ret>0){
-            jsonResult=JsonResult.getSUCCESS();
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
 
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
         }
 
         return toJson(jsonResult);
@@ -441,23 +443,23 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("deletelampcontroller")
-    public String deleteLampController(LampControllerConditionRequest request){
+    public String deleteLampController(LampControllerConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/deletelampcontroller");
 
         int ret = lampControllerServer.deleteLampController(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (ret>0){
-            jsonResult=JsonResult.getSUCCESS();
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
             jsonResult.setTotal(null);
-        }else {
-            if (ret==-1){
+        } else {
+            if (ret == -1) {
                 jsonResult = JsonResult.FALLURE_IDS_NULL;
             }
-            if (ret==-2){
-                jsonResult=JsonResult.FALLURE_IDS_CODEERROR;
+            if (ret == -2) {
+                jsonResult = JsonResult.FALLURE_IDS_CODEERROR;
             }
         }
 
@@ -467,11 +469,11 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("listlampcontroller")
-    public String listLampController(LampControllerConditionRequest request){
+    public String listLampController(LampControllerConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/listlampcontroller");
 
-        Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=lampControllerServer.listLampController(request);
+        Tuple.TwoTuple<List<LampControllerView>, Integer> twoTuple = lampControllerServer.listLampController(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
 
@@ -483,18 +485,18 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("selectbyidlampcontroller")
-    public String selectByIdLampController(LampControllerConditionRequest request){
+    public String selectByIdLampController(LampControllerConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectbyidlampcontroller ");
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
 
-        List<LampController> lampControllerList=new ArrayList<>();
+        List<LampController> lampControllerList = new ArrayList<>();
 
         LampController lampController = lampControllerServer.selectByIdLampController(request);
 
-        jsonResult=JsonResult.getSUCCESS();
+        jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setTotal(1);
 
@@ -509,7 +511,7 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("selectbyparamslampcontroller")
-    public String selectByParamsLampController(LampControllerConditionRequest request){
+    public String selectByParamsLampController(LampControllerConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectbyparamslampcontroller");
 
@@ -530,35 +532,36 @@ public class RoadLightingController extends BaseController {
 /*****************************************单灯控制器******************************************/
     /**
      * 灯杆
+     *
      * @param Request
      * @return
      */
     @RequestMapping("addorupdatelamppost")
-    public String addOrUpdateLamppost(LamppostRequest Request){
+    public String addOrUpdateLamppost(LamppostRequest Request) {
 
         logger.info("[POST] api/roadlighting/addorupdatelamppost");
 
-        int ret=lamppostServer.addOrUpdateLamppost(Request);
+        int ret = lamppostServer.addOrUpdateLamppost(Request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (ret>0){
-            jsonResult=JsonResult.getSUCCESS();
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
         }
 
         return toJson(jsonResult);
     }
 
     @RequestMapping("listlamppost")
-    public String listListLamppost(LamppostConditionRequest request){
+    public String listListLamppost(LamppostConditionRequest request) {
 
         logger.info("[POST api/roadlighting/listlamppost]");
 
-        Tuple.TwoTuple<List<LamppostView>,Integer> listLamppost=lamppostServer.listLamppost(request);
+        Tuple.TwoTuple<List<LamppostView>, Integer> listLamppost = lamppostServer.listLamppost(request);
 
-        JsonResult jsonResult=JsonResult.getSUCCESS();
+        JsonResult jsonResult = JsonResult.getSUCCESS();
 
         jsonResult.setTotal(listLamppost.getSecond());
 
@@ -568,51 +571,52 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("deletelamppost")
-    public String deleteLamppost(LamppostConditionRequest request){
+    public String deleteLamppost(LamppostConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/deletelamppost");
 
         int flag = lamppostServer.deleteLamppost(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (flag>0){
-            jsonResult=JsonResult.getSUCCESS();
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        if (flag > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
         }
         return toJson(jsonResult);
     }
 
     /**
      * 任意参数查询信息
+     *
      * @param request
      * @return
      */
     @RequestMapping("selectbylamppostparameter")
-    public String selectByParameter(LamppostConditionRequest request){
+    public String selectByParameter(LamppostConditionRequest request) {
 
         return null;
 
     }
 
     @RequestMapping("selectlamppostbyid")
-    public String selectLamppostById(LamppostConditionRequest request){
+    public String selectLamppostById(LamppostConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/selectlamppostbyid");
 
-        List<Lamppost> lamppostList=new ArrayList<>();
+        List<Lamppost> lamppostList = new ArrayList<>();
 
         Lamppost lamppost = lamppostServer.selectLamppostById(request);
 
         lamppostList.add(lamppost);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (lamppost==null){
-            jsonResult=JsonResult.FALLURE_IDS_CODEERROR;
-        }else {
-            jsonResult=JsonResult.getSUCCESS();
+        if (lamppost == null) {
+            jsonResult = JsonResult.FALLURE_IDS_CODEERROR;
+        } else {
+            jsonResult = JsonResult.getSUCCESS();
         }
 
         jsonResult.setData(lamppostList);
@@ -626,18 +630,18 @@ public class RoadLightingController extends BaseController {
     /*****************************灯杆*****************************/
 
     @RequestMapping("addorupdatephotoperiod")
-    public String addOrUpdatePhotoperiod(PhotoperiodRequest request){
+    public String addOrUpdatePhotoperiod(PhotoperiodRequest request) {
 
         logger.info("[ POST] /api/roadlighting/addorupdatephotoperiod");
 
-        int ret=photoperiodServer.addOrUpdatePhotoperiod(request);
+        int ret = photoperiodServer.addOrUpdatePhotoperiod(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (ret>0){
+        if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
-        }else {
-            jsonResult=JsonResult.getFAILURE();
+        } else {
+            jsonResult = JsonResult.getFAILURE();
 
         }
 
@@ -646,21 +650,21 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("deletephotoperiod")
-    public String deletePhotoperiod(PhotoperiodConditionRequest request){
+    public String deletePhotoperiod(PhotoperiodConditionRequest request) {
 
         logger.info("[POST] api/roadlighting/deletephotoperiod");
 
         int ret = photoperiodServer.deletePhotoperiod(request);
 
-        JsonResult jsonResult=null;
+        JsonResult jsonResult = null;
 
-        if (ret>0){
-             jsonResult= JsonResult.getSUCCESS();
-        }else {
-            if (ret<0&&request.getPhotoperiodIds()!=null){
+        if (ret > 0) {
+            jsonResult = JsonResult.getSUCCESS();
+        } else {
+            if (ret < 0 && request.getPhotoperiodIds() != null) {
                 jsonResult = JsonResult.FALLURE_IDS_CODEERROR;
             }
-            if (ret<0&&request.getPhotoperiodIds()==null){
+            if (ret < 0 && request.getPhotoperiodIds() == null) {
                 jsonResult = JsonResult.FALLURE_IDS_NULL;
             }
 
@@ -670,11 +674,11 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("listpotoperiod")
-    public String listPhotoperiod(PhotoperiodConditionRequest request){
+    public String listPhotoperiod(PhotoperiodConditionRequest request) {
 
         logger.info("[POST] /api/roadlighting/listpotoperiod");
 
-        Tuple.TwoTuple<List<PhotoperiodView>,Integer> twoTuple=photoperiodServer.listPhotoperiod(request);
+        Tuple.TwoTuple<List<PhotoperiodView>, Integer> twoTuple = photoperiodServer.listPhotoperiod(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
 
@@ -686,11 +690,11 @@ public class RoadLightingController extends BaseController {
     }
 
     @RequestMapping("photoperiodbyid")
-    public String PhotoperiodById(PhotoperiodConditionRequest request){
+    public String PhotoperiodById(PhotoperiodConditionRequest request) {
 
         logger.info("[POST]  api/roadlighting/photoperiodbyid");
 
-        List<PhotoPeriod> list=new ArrayList<>();
+        List<PhotoPeriod> list = new ArrayList<>();
 
         PhotoPeriod photoPeriod = photoperiodServer.PhotoperiodById(request);
 
@@ -706,6 +710,7 @@ public class RoadLightingController extends BaseController {
 
 
     }
+
     /********************************光照计*********************************/
 
 
@@ -725,7 +730,6 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
-
 
 
     @RequestMapping("deletemodelloop")
@@ -816,24 +820,26 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     /*
      *前端接口-道路照明系统模块
      *一点一、通过UID统计模块的数量（判断模块UID是否重复）
      * */
     @RequestMapping("countModelByUid")
-    public String countModelByUid(String uid){
+    public String countModelByUid(String uid) {
         logger.info("[POST] /api/roadlighting/countModelByUid");
         int total = eleboxServer.getCountModelByUid(uid);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     /*
      *前端接口-道路照明系统模块
      *一点二、通过模块ID和回路编码统计该回路在该模块中的数量（判断回路编码在所在模块中是否重复）
      * */
     @RequestMapping("countModelLoopByLoopCode")
-    public String countModelLoopByLoopCode(ModelLoopByLoopCodeRequest request){
+    public String countModelLoopByLoopCode(ModelLoopByLoopCodeRequest request) {
         logger.info("[POST] /api/roadlighting/countModelLoopByLoopCode");
         int total = eleboxServer.getCountModelLoopByLoopCode(request);
         JsonResult jsonResult = JsonResult.getSUCCESS();
@@ -868,18 +874,20 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     /*
     *前端接口-道路照明系统模块
      *二点零一、通过控制柜UID统计控制柜数量（判断控制柜UID是否重复）
     * */
     @RequestMapping("countEleboxByUid")
-    public String countEleboxByUid(String uid){
+    public String countEleboxByUid(String uid) {
         logger.info("[POST] /api/roadlighting/countEleboxByUid");
         int total = eleboxServer.getCountEleboxByUid(uid);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     /*
      *前端接口-道路照明系统模块
      *二点零二、通过控制柜编码统计控制柜数量（判断控制柜编码是否重复）
@@ -892,6 +900,7 @@ public class RoadLightingController extends BaseController {
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     @RequestMapping("getElebox")
     public String getElebox(Long id) {
         logger.info("[POST] /api/roadlighting/getElebox");
@@ -1039,7 +1048,6 @@ public class RoadLightingController extends BaseController {
     }
 
 
-
     @RequestMapping("listmodel")
     public String listEleboxModel(EleboxConditionRequest request) {
         logger.info("[POST] /api/roadlighting/listmodel");
@@ -1094,42 +1102,46 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     /*
     *前端接口-道路照明系统模块
     *十四点零一、通过UID统计灯具数量（判断灯具UID是否重复）
     * */
     @RequestMapping("countLightingByUId")
-    public String countLightingByUId(String uid){
+    public String countLightingByUId(String uid) {
         logger.info("[POST] /api/roadlighting/countLightingByUId");
         int total = lightServer.getCountLightingByUId(uid);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     /*
      *前端接口-道路照明系统模块
      *十四点零二、通过灯杆号统计灯具数量（判断灯杆号是否重复）
      * */
     @RequestMapping("countLightingByLamppost")
-    public String countLightingByLamppost(String lamppost){
+    public String countLightingByLamppost(String lamppost) {
         logger.info("[POST] /api/roadlighting/countLightingByLamppost");
         int total = lightServer.getCountLightingByLamppost(lamppost);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     /*
      *前端接口-道路照明系统模块
      *十四点零二、通过灯杆号统计灯具数量（判断灯杆号是否重复）
      * */
     @RequestMapping("countLightingByLampHead")
-    public String countLightingByLampHead(String lamphead){
+    public String countLightingByLampHead(String lamphead) {
         logger.info("[POST] /api/roadlighting/countLightingByLampHead");
         int total = lightServer.getCountLightingByLampHead(lamphead);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setTotal(total);
         return toJson(jsonResult);
     }
+
     @RequestMapping("batchAddLighting")
     public String batchAddLight(LightRequest.BatchLightRequest request) {
         logger.info("[POST] /api/roadlighting/batchAddLighting");
@@ -1466,6 +1478,7 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     @RequestMapping("exportElebox")
     public void exportElebox(EleboxConditionRequest request, HttpServletResponse response) {
         logger.info("[POST] /api/roadlighting/exportElebox");
@@ -1530,12 +1543,13 @@ public class RoadLightingController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     /*
       前端接口-道路照明系统模块
     * 三十、通过控制柜id获取该控制柜下全部回路信息
     * */
     @RequestMapping("listEleboxLoop")
-    public String listEleboxLoop(Long id){
+    public String listEleboxLoop(Long id) {
         logger.info("[POST] /api/roadlighting/listEleboxLoop");
         List<EleboxModelLoop> eleboxModelLoopList = modelLoopServer.listEleboxLoop(id);
         JsonResult jsonResult = JsonResult.getSUCCESS();
@@ -1546,9 +1560,9 @@ public class RoadLightingController extends BaseController {
     /*
     *前端接口-道路照明系统模块
     *三十一、批量设置控制柜区域
-    * */ 
+    * */
     @RequestMapping("batchSetEleboxArea")
-    public String batchSetEleboxArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest){
+    public String batchSetEleboxArea(BatchSetEleboxAreaRequest batchSetEleboxAreaRequest) {
 
         logger.info("[POST] /api/roadlighting/batchSetEleboxArea");
 
@@ -1568,12 +1582,12 @@ public class RoadLightingController extends BaseController {
     * 三十三、批量设置灯具所属区域
     * */
     @RequestMapping("batchSetLightArea")
-    public String batchSetLightArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest){
+    public String batchSetLightArea(BatchSetLightingAreaRequest batchSetLightingAreaRequest) {
 
         logger.info("[POST] /api/roadlighting/batchSetLightArea");
 
         JsonResult jsonResult = null;
-        int ret  = eleboxServer.batchSetLightingArea(batchSetLightingAreaRequest);
+        int ret = eleboxServer.batchSetLightingArea(batchSetLightingAreaRequest);
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
@@ -1587,7 +1601,7 @@ public class RoadLightingController extends BaseController {
      * 三十二、上传控制柜地图图标
      * */
     @RequestMapping("uploadEleboxGisIcon")
-    public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon ,HttpServletRequest request){
+    public String uploadEleboxGisIcon(MultipartFile eleboxGisIcon, HttpServletRequest request) {
 
         logger.info("[POST] /api/roadlighting/uploadEleboxGisIcon");
         JsonResult jsonResult = JsonResult.getSUCCESS();
@@ -1596,21 +1610,21 @@ public class RoadLightingController extends BaseController {
             jsonResult = JsonResult.getFAILURE();
             return toJson(jsonResult);
         }
-        String path=null;// 文件路径
-        String type=null;// 文件类型
-        String fileName=eleboxGisIcon.getOriginalFilename();// 文件原名称
+        String path = null;// 文件路径
+        String type = null;// 文件类型
+        String fileName = eleboxGisIcon.getOriginalFilename();// 文件原名称
         // 判断文件类型
-        type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-        if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
+        type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+        if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase())) {
             // 项目在容器中实际发布运行的根路径
-            String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
+            String realPath = request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="\\elebox.png";
+            String trueFileName = "\\elebox.png";
             // 设置存放图片文件的路径
-            path=realPath+trueFileName;
-            System.out.println("存放图片文件的路径:"+path);
-            try{
-                File tempFile = new File( realPath);
+            path = realPath + trueFileName;
+            System.out.println("存放图片文件的路径:" + path);
+            try {
+                File tempFile = new File(realPath);
                 // 判断父级目录是否存在，不存在则创建
                 if (!tempFile.getParentFile().exists()) {
                     tempFile.getParentFile().mkdir();
@@ -1622,10 +1636,10 @@ public class RoadLightingController extends BaseController {
                 // 转存文件到指定的路径
                 eleboxGisIcon.transferTo(new File(path));
                 System.out.println("文件成功上传到指定目录下");
-            }catch (IOException o){
+            } catch (IOException o) {
                 o.printStackTrace();
             }
-        }else {
+        } else {
             logger.info("不是我们想要的文件类型,请按要求重新上传");
         }
         return toJson(jsonResult);
@@ -1636,7 +1650,7 @@ public class RoadLightingController extends BaseController {
      * 三十四、上传灯具在GIS地图上显示的图标
      * */
     @RequestMapping("uploadLightGisIcon")
-    public String uploadLightGisIcon(MultipartFile lightGisIcon ,HttpServletRequest request,HttpServletResponse response){
+    public String uploadLightGisIcon(MultipartFile lightGisIcon, HttpServletRequest request, HttpServletResponse response) {
 
         logger.info("[POST] /api/roadlighting/uploadLightGisIcon");
         JsonResult jsonResult = JsonResult.getSUCCESS();
@@ -1645,21 +1659,21 @@ public class RoadLightingController extends BaseController {
             jsonResult = JsonResult.getFAILURE();
             return toJson(jsonResult);
         }
-        String path=null;// 文件路径
-        String type=null;// 文件类型
-        String fileName=lightGisIcon  .getOriginalFilename();// 文件原名称
+        String path = null;// 文件路径
+        String type = null;// 文件类型
+        String fileName = lightGisIcon.getOriginalFilename();// 文件原名称
         // 判断文件类型
-        type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-        if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
+        type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+        if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase())) {
             // 项目在容器中实际发布运行的根路径
-            String realPath=request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
+            String realPath = request.getSession().getServletContext().getRealPath("/html/image/gisicon/");
             // 自定义的文件名称
-            String trueFileName="\\light.png";
+            String trueFileName = "\\light.png";
             // 设置存放图片文件的路径
-            path=realPath+trueFileName;
-            System.out.println("存放图片文件的路径:"+path);
-            try{
-                File tempFile = new File( realPath);
+            path = realPath + trueFileName;
+            System.out.println("存放图片文件的路径:" + path);
+            try {
+                File tempFile = new File(realPath);
                 // 判断父级目录是否存在，不存在则创建
                 if (!tempFile.getParentFile().exists()) {
                     tempFile.getParentFile().mkdir();
@@ -1671,22 +1685,23 @@ public class RoadLightingController extends BaseController {
                 // 转存文件到指定的路径
                 lightGisIcon.transferTo(new File(path));
                 System.out.println("文件成功上传到指定目录下");
-            }catch (IOException o){
+            } catch (IOException o) {
                 o.printStackTrace();
             }
-        }else {
+        } else {
             logger.info("不是我们想要的文件类型,请按要求重新上传");
         }
         return toJson(jsonResult);
 
     }
+
     /*
      *三十五、批量设置灯具所属控制柜
      * */
     @RequestMapping("batchConfigLightsBeElebox")
-    public String batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest request){
+    public String batchConfigLightsBeElebox(BatchConfigLightsBeEleboxRequest request) {
         logger.info("[POST] /api/roadlighting/batchConfigLightsBeElebox");
-        int ret =eleboxServer.batchConfigLightsBeElebox(request);
+        int ret = eleboxServer.batchConfigLightsBeElebox(request);
         JsonResult jsonResult = null;
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
@@ -1713,6 +1728,15 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+
+    @RequestMapping("queryLightingByLoop")
+    public String queryLightingByLoop(Long loopId) {
+        logger.info("[POST] /api/roadlighting/updateLightPriority");
+        List<String> numbers = lampControllerServer.queryLightingByLoop(loopId);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(numbers);
+        return toJson(jsonResult);
+    }
 
 
 }

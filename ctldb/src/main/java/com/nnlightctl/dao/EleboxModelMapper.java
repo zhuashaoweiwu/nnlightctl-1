@@ -3,6 +3,10 @@ package com.nnlightctl.dao;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelExample;
 import java.util.List;
+
+import com.nnlightctl.request.deployRequest.DeployEleboxModelRequest;
+import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
+import com.nnlightctl.vo.DeployEleboxView;
 import org.apache.ibatis.annotations.Param;
 
 public interface EleboxModelMapper {
@@ -29,4 +33,11 @@ public interface EleboxModelMapper {
     int modifyEleboxId(@Param("nnlightctlEleboxId") Long nnlightctlEleboxId);
 
     int updateByPrimaryKey(EleboxModel record);
+
+    List<DeployEleboxView> deployEleboxList(DeployEleboxRequest request);
+
+    Integer deployEleboxListCount(DeployEleboxRequest request);
+
+    List<Long> selectModelIdByEleboxId(@Param("eleboxId") Long eleboxId);
+
 }

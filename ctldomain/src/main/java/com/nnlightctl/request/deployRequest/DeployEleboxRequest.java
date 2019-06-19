@@ -17,7 +17,6 @@ public class DeployEleboxRequest extends BaseRequest {
 
     private Date gmtCreated;
 
-    @NotEmpty(message = "模块编码不可为空！")
     private String codeNumber;
 
     private String longitude;

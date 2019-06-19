@@ -110,6 +110,46 @@
         from nnlightctl_elebox_model
         where id = #{id,jdbcType=BIGINT}
     </select>
+
+    <select id="selectModelIdByEleboxId"   parameterType="java.lang.Long">
+    select  id from nnlightctl_elebox_model where nnlightctl_elebox_id = #{eleboxId,jdbcType=BIGINT}
+
+    </select>
+
+
+    <select id="deployEleboxListCount" resultType="java.lang.Integer"
+            parameterType="com.nnlightctl.request.deployRequest.DeployEleboxRequest">
+        SELECT sum(ner.count) as count from (SELECT COUNT(*) AS count FROM `nnlightctl_elebox_relation` ner
+        left join nnlightctl_elebox  ne on ner.elebox_id = ne.id where 1=1
+        <if test="id != null">
+            and ne.id = #{id}
+        </if>
+        <if test="codeNumber != null">
+            and ne.code_number = #{codeNumber}
+        </if>
+        GROUP BY elebox_id) ner
+    </select>
+
+    <select id="deployEleboxList" resultType="com.nnlightctl.vo.DeployEleboxView"
+            parameterType="com.nnlightctl.request.deployRequest.DeployEleboxRequest">
+        SELECT
+        sum(if(ner.elebox_model_type = 1, 1, 0)) as modleCount,
+        sum(if(ner.elebox_model_type = 2, 1, 0)) as centralizeControllerCount,
+        sum(if(ner.elebox_model_type = 3, 1, 0)) as electricityMeterCount,
+        sum(if(ner.elebox_model_type = 4, 1, 0)) as photoperiodCount,
+        ne.uid as codeNumber,ne.longitude,ne.latitude,ne.mem,
+        np.project_name projectName,ne.id
+        FROM `nnlightctl_elebox_relation` ner left join nnlightctl_elebox ne on ner.elebox_id = ne.id
+        left join nnlightctl_project np on ne.nnlightctl_project_id = np.id where 1=1
+        <if test="id != null">
+            and ne.id = #{id}
+        </if>
+        <if test="codeNumber != null">
+            and ne.code_number = #{codeNumber}
+        </if>
+        GROUP BY elebox_id ORDER BY ner.gmt_created DESC
+
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from nnlightctl_elebox_model
     where id = #{id,jdbcType=BIGINT}
@@ -273,7 +313,7 @@
     </select>
 
     <update id="modifyEleboxId" parameterType="java.lang.Long">
-       update nnlightctl_elebox_model SET  nnlightctl_elebox_id = null  where nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT};
+       update nnlightctl_elebox_model SET  nnlightctl_elebox_id = null,deploy_status = 0  where nnlightctl_elebox_id = #{nnlightctlEleboxId,jdbcType=BIGINT};
   </update>
 
 

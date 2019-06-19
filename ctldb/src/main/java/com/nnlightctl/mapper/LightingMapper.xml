@@ -637,7 +637,7 @@
         alarm_message=#{alarmMessage,jdbcType=VARCHAR},
       </if>
       <if test="deployState !=null">
-        deploy_state=#{deployState,jdbcType=INTEGER},
+        deploy_state=#{deployState,jdbcType=INTE},
       </if>
       <if test="nnlightctlLamppostId != null">
         nnlightctl_lamppost_id = #{nnlightctlLamppostId,jdbcType=INTEGER},

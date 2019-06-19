@@ -8,7 +8,7 @@ import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.po.EleboxRelation;
-import com.nnlightctl.po.Lighting;
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
@@ -37,10 +37,10 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     private EleboxModelLoopMapper eleboxModelLoopMapper;
 
     @Autowired
-    private LightingMapper lightingMapper;
+    private EleboxRelationMapper eleboxRelationMapper;
 
     @Autowired
-    private EleboxRelationMapper eleboxRelationMapper;
+    private LampControllerMapper lampControllerMapper;
 
     @Override
     public int insertElebox(DeployEleboxRequest request) {
@@ -85,6 +85,33 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
         return Boolean.TRUE;
     }
 
+    @Override
+    public Boolean deployExleboxDelete(Long exleBoxId) throws RuntimeException {
+        try {
+            List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(exleBoxId);
+            //更改所有单灯loop为控部署状态置为0
+            lampControllerMapper.updateByEleboxId(exleBoxId);
+            //删除所有回路
+            eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
+            //置空开关模块的控制柜ID
+            eleboxModelMapper.modifyEleboxId(exleBoxId);
+            //删除关联表
+            eleboxRelationMapper.deleteByEleboxId(exleBoxId);
+        } catch (Exception e) {
+            logger.error("部署失败.");
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            throw new RuntimeException("服务忙,部署控制柜失败请稍后再试。");
+        }
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public void deployExleboxModify (DeployExleboxArrangeRequest request) throws RuntimeException {
+        this.deployExleboxDelete(request.getExleboxId());
+        this.deployExleboxArrange(request);
+    }
+
 
     private void modelDeploy(Long exleboxId, List<Long> exleboxModelIds, List<DeployEleboxModelLoopRequest> modelLoopRequests) {
 
@@ -100,13 +127,19 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                     eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
                     List<Long> lightingList = loopRequest.getLightingList();
                     for (Long lightId : lightingList) {
-                        Lighting lighting = new Lighting();
-                        lighting.setId(lightId);
-                        lighting.setNnlightctlEleboxId(exleboxId);
-                        lighting.setNnlightctlEleboxModelLoopId(eleboxModelLoop.getId());
-                        lighting.setGmtUpdated(new Date());
-                        lighting.setDeployState((byte) 1);
-                        lightingMapper.updateByPrimaryKeySelective(lighting);
+                        LampController lampController = new LampController();
+                        lampController.setId(lightId);
+                        lampController.setModelDeployState(SystemConfig.getInfo.getConstant.YesDeploy);
+                        lampController.setNnlightctlEleboxId(exleboxId);
+                        lampController.setNnlightctlEleboxLoopId(eleboxModelLoop.getId());
+                        lampControllerMapper.updateByPrimaryKey(lampController);
+//                        Lighting lighting = new Lighting();
+//                        lighting.setId(lightId);
+//                        lighting.setNnlightctlEleboxId(exleboxId);
+//                        lighting.setNnlightctlEleboxModelLoopId(eleboxModelLoop.getId());
+//                        lighting.setGmtUpdated(new Date());
+//                        lighting.setDeployState((byte) 1);
+//                        lightingMapper.updateByPrimaryKeySelective(lighting);
                     }
                 }
             }
@@ -126,4 +159,6 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
             eleboxRelationMapper.insertSelective(eleboxRelation);
         }
     }
+
+
 }

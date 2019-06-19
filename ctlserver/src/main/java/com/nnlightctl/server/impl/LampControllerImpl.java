@@ -135,5 +135,10 @@ public class LampControllerImpl implements LampControllerServer {
         return lampController;
     }
 
+    @Override
+    public List<String> queryLightingByLoop(Long loopId) {
+        return lampControllerMapper.queryLightingByLoop(loopId);
+    }
+
 
 }
