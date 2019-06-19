@@ -15,6 +15,7 @@ import com.nnlightctl.request.*;
 import com.nnlightctl.server.AreaServer;
 import com.nnlightctl.server.EleboxModelServer;
 import com.nnlightctl.server.EleboxServer;
+import com.nnlightctl.server.ElectricityMeterServer;
 import com.nnlightctl.server.ModelLoopServer;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -61,6 +62,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private AreaServer areaServer;
+
+    @Autowired
+    private ElectricityMeterServer meterServer;
 
     @Override
     public int insertElebox(EleboxAddModelRequest request) {
@@ -198,6 +202,10 @@ public class EleboxServerImpl implements EleboxServer {
             eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
             //置空开关模块的控制柜ID
             eleboxModelMapper.modifyEleboxId(deleteEleboxId);
+            //删除关照计
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId,(byte) 4);
+            //删除电表
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId,(byte)3);
             //删除关联表
             eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
             //再删除控制柜本身

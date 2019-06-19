@@ -13,7 +13,10 @@ import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.PhotoPeriod;
 import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
+import com.nnlightctl.request.deployRequest.DeployElectricityMeter;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
+import com.nnlightctl.request.deployRequest.DeployPhotoperiodRequest;
+import com.nnlightctl.server.ElectricityMeterServer;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.vo.DeployEleboxModifyForView;
 import org.apache.commons.beanutils.BeanUtils;
@@ -56,6 +59,9 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     @Autowired
     ElectricityMeterMapper electricityMeterMapper;
 
+    @Autowired
+    private ElectricityMeterServer meterServer;
+
     @Override
     public int insertElebox(DeployEleboxRequest request) {
         Elebox elebox = new Elebox();
@@ -79,16 +85,26 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
         try {
             if (!PubMethod.isEmpty(request.getExleboxModelIds())) /**部署开关*/
                 modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
-            if (!PubMethod.isEmpty(request.getElectricityMeterIds())) {
-            }/**部署电表*/
-//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
-            if (!PubMethod.isEmpty(request.getPhotoperiodIds())) {
+            if (!PubMethod.isEmpty(request.getElectricityMeterIds())) { /**部署电表*/
+                DeployElectricityMeter deployElectricityMeter=new DeployElectricityMeter();
+
+                deployElectricityMeter.setEleboxId(request.getExleboxId());
+
+                deployElectricityMeter.setElectricityMeterIds(request.getElectricityMeterIds());
+
+                meterServer.deployElectricityMeter(deployElectricityMeter);
+
             }/**部署光照计*/
-//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
+            if (!PubMethod.isEmpty(request.getPhotoperiodIds())) {
+
+                DeployPhotoperiodRequest photoperiodRequest=new DeployPhotoperiodRequest();
+
+                photoperiodRequest.setEleboxId(request.getExleboxId());
+
+                photoperiodRequest.setPhotoperiodIds(request.getPhotoperiodIds());
+            }
             if (!PubMethod.isEmpty(request.getCentralizeControllerIds())) {
             }/**部署集中控制器*/
-//                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
-
         } catch (Exception e) {
             logger.error("部署失败.");
             e.printStackTrace();
@@ -109,6 +125,10 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
             eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
             //置空开关模块的控制柜ID
             eleboxModelMapper.modifyEleboxId(exleBoxId);
+            //删除关照计
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte) 4);
+            //删除电表
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte)3);
             //删除关联表
             eleboxRelationMapper.deleteByEleboxId(exleBoxId);
         } catch (Exception e) {
