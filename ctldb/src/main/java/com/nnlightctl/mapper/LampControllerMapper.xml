@@ -15,6 +15,12 @@
         <result column="static_power" property="staticPower" jdbcType="DECIMAL"/>
         <result column="alarm_message" property="alarmMessage" jdbcType="VARCHAR" />
         <result column="mem" property="mem" jdbcType="VARCHAR" />
+        <result column="deploy_state" property="deployState" jdbcType="INTEGER" />
+
+        <!--维护的外键-->
+        <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightctlLamppostId" />
+        <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLampModelId" />
+        <result column="nnlightctl_project_id" jdbcType="INTEGER" property="nnlightctlProjectId"/>
     </resultMap>
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
         insert into nnlightctl_lamp_controller
@@ -55,6 +61,19 @@
             <if test="equipmentNumber !=null">
                 equipment_number,
             </if>
+            <if test="deployState">
+                deploy_state,
+            </if>
+            /*维护的外键*/
+            <if test="nnlightctlLamppostId != null">
+                nnlightctl_lamppost_id,
+            </if>
+            <if test="nnlightctlLampModelId != null">
+                nnlightctl_lamp_model_id,
+            </if>
+            <if test="nnlightctlProjectId !=null">
+                nnlightctl_project_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="lampModel != null" >
@@ -91,7 +110,20 @@
                 #{mem,jdbcType=VARCHAR},
             </if>
             <if test="equipmentNumber !=null">
-                #{equipmentNumber,jdbcType=VARCHAR}
+                #{equipmentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="deployState !=null">
+                #{deployState,jdbcType=INTEGER},
+            </if>
+            /*维护的外键*/
+            <if test="nnlightctlLamppostId != null">
+                #{nnlightctlLamppostId,jdbcType=INTEGER},
+            </if>
+            <if test="nnlightctlLampModelId != null">
+                #{nnlightctlLampModelId,jdbcType=INTEGER},
+            </if>
+            <if test="nnlightctlProjectId !=null">
+                #{nnlightctlProjectId,jdbcType=INTEGER}
             </if>
         </trim>
     </insert>
@@ -132,7 +164,20 @@
                 mem=#{mem,jdbcType=VARCHAR},
              </if>
              <if test="equipmentNumber !=null">
-                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
+                 equipment_number=#{equipmentNumber,jdbcType=VARCHAR},
+             </if>
+             <if test="deployState !=null">
+                 deploy_state=#{deployState,jdbcType=INTEGER},
+             </if>
+             /*维护的外键*/
+             <if test="nnlightctlLamppostId != null">
+                 nnlightctl_lamppost_id = #{nnlightctlLamppostId,jdbcType=INTEGER},
+             </if>
+             <if test="nnlightctlLampModelId != null">
+                 nnlightctl_lamp_model_id = #{nnlightctlLampModelId,jdbcType=INTEGER},
+             </if>
+             <if test="nnlightctlProjectId !=null">
+                 nnlightctl_project_id=#{nnlightctlProjectId,jdbcType=INTEGER}
              </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
@@ -146,12 +191,18 @@
     </delete>
     <select id="selectByCount" resultType="java.lang.Integer">
         select count(*) from nnlightctl_lamp_controller
+        <!--<where>
+            <if test="deployState !=null">
+                deploy_state=#{deployState,jdbcType=INTEGER}
+            </if>
+        </where>-->
     </select>
 
     <sql id="Base_Column_List">
         id,lamp_model,lamp_name,longitude,latitude,
         communication_mode,dimming_mode,rated_Voltage,
-        rated_current,static_power,alarm_message,mem,equipment_number
+        rated_current,static_power,alarm_message,mem
+        ,deploy_state,equipment_number
     </sql>
     <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
         select
@@ -195,6 +246,31 @@
             </if>
             <if test="params.dimmingMode !=null">
               AND dimming_mode like concat('%',#{params.dimmingMode},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectByExampleDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView" parameterType="java.lang.String">
+        select
+        controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
+        controller.static_power as staticPower,controller.mem as mem,lamppost.lamppost_model as lamppostModel,
+        lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as equipmentNumber
+        from
+        nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
+        lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
+        left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
+
+        where  controller.deploy_state=1
+        <if test="equipmentNumber !=null">
+            equipment_number like concat('%',#{equipmentNumber},'%')
+        </if>
+        order by controller.id DESC
+    </select>
+    <select id="selectByLampModel" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
+
+        select id,equipment_number from nnlightctl_lamp_controller
+        <where>
+            <if test="lampModel !=null">
+                lamp_model=#{lampModel,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

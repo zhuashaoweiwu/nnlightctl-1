@@ -20,4 +20,5 @@ public interface LightingControllerServer {
     Lighting selectLightingController(LightingConditionRequest request);
 
     DeployLighting selectLightDeploy();
+
 }

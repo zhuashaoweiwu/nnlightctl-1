@@ -1,12 +1,12 @@
 package com.nnlightctl.vo;
 
+import java.util.List;
+
 public class LampControllerView {
 
     private Long id;
 
     private String lampName;
-
-    private String lampModel;
 
     private String longitude;
 
@@ -20,13 +20,28 @@ public class LampControllerView {
 
     private Double ratedCurrent;
 
+    private String alarmMessage;
+
+    /**
+     * 单灯控制器
+     */
     private Double staticPower;
 
-    private String alarmMessage;
+    private String equipmentNumber;
 
     private String mem;
 
-    private String equipmentNumber;
+    private String lampModel;
+
+    private List imeiList;
+
+    public List getImeiList() {
+        return imeiList;
+    }
+
+    public void setImeiList(List imeiList) {
+        this.imeiList = imeiList;
+    }
 
     public String getEquipmentNumber() {
         return equipmentNumber;

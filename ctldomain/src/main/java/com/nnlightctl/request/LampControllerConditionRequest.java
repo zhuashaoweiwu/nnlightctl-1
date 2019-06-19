@@ -23,6 +23,17 @@ public class LampControllerConditionRequest extends BaseRequest{
 
     private String equipmentNumber;
 
+    private int deployState;
+
+
+    public int getDeployState() {
+        return deployState;
+    }
+
+    public void setDeployState(int deployState) {
+        this.deployState = deployState;
+    }
+
     public String getEquipmentNumber() {
         return equipmentNumber;
     }

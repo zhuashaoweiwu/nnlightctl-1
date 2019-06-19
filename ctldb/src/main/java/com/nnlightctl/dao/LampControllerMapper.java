@@ -2,6 +2,10 @@ package com.nnlightctl.dao;
 
 import com.nnlightctl.parameter.LampControllerParameter;
 import com.nnlightctl.po.LampController;
+import com.nnlightctl.po.Lighting;
+import com.nnlightctl.request.LampControllerConditionRequest;
+import com.nnlightctl.vo.DeployLightingView;
+import com.nnlightctl.vo.LampControllerView;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -23,6 +27,12 @@ public interface LampControllerMapper {
     LampController selectById(@Param("id") Long id);
 
     List<LampController> selectByParameter(@Param("params")LampControllerParameter parameter);
+
+    List<DeployLightingView> selectByExampleDeployLighting(@Param("equipmentNumber") String equipmentNumber);
+
+    List<LampController> selectByLampModel(@Param("lampModel") String lampModel);
+
+
 
 
 }

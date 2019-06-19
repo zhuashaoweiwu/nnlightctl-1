@@ -32,6 +32,54 @@ public class LampController implements Serializable {
 
     private String equipmentNumber;
 
+    private int deployState;
+
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLampModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightctlLamppostId;
+
+    private Long nnlightctlProjectId;
+
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+    public Long getNnlightctlLampModelId() {
+        return nnlightctlLampModelId;
+    }
+
+    public void setNnlightctlLampModelId(Long nnlightctlLampModelId) {
+        this.nnlightctlLampModelId = nnlightctlLampModelId;
+    }
+
+
+
+    public int getDeployState() {
+        return deployState;
+    }
+
+    public void setDeployState(int deployState) {
+        this.deployState = deployState;
+    }
+
     public String getEquipmentNumber() {
         return equipmentNumber;
     }

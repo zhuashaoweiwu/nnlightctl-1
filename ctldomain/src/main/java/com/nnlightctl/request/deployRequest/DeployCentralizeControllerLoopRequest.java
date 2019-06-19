@@ -16,6 +16,8 @@ public class DeployCentralizeControllerLoopRequest {
 
 
 
+
+
     public String getCentralizeModel() {
         return centralizeModel;
     }

@@ -29,4 +29,8 @@ public interface LightingMapper {
     int updateByPrimaryKey(Lighting record);
 
     List<Lighting> selectByExampleDeploy(LightingExample example);
+
+
+
+
 }

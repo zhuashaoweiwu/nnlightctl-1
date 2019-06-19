@@ -22,9 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class LightingControllerServerImpl implements LightingControllerServer {
@@ -138,53 +136,12 @@ public class LightingControllerServerImpl implements LightingControllerServer {
     @Override
     public DeployLighting selectLightDeploy() {
 
-        Map<String,List> deployLightMap=new HashMap<>();
-
-        Tuple.TwoTuple<List<LightingModel>, Integer> listIntegerTwoTuple = lightModelServer.listLightModel(new LightModelConditionRequest());
-
-        List<LightingModel> first = listIntegerTwoTuple.getFirst();
-
+        /**
+         * 单灯控制器
+         * 型号   id
+         */
         DeployLighting deployLighting=new DeployLighting();
 
-        List<LightingView> lightingViews = new ArrayList<>();
-
-        for (LightingModel lightingModel : first) {
-
-            LightingView lightingView=new LightingView();
-
-            lightingView.setId(lightingModel.getId());
-
-            lightingView.setLightingImei(lightingModel.getEquipmentNumber());
-
-            lightingView.setLightingCode(lightingModel.getModelName());
-
-            lightingViews.add(lightingView);
-        }
-
-
-        deployLighting.setLightingViews(lightingViews);
-
-        //灯杆信息
-        Tuple.TwoTuple<List<LamppostView>, Integer> listIntegerTwoTuple1 = lamppostServer.listLamppost(new LamppostConditionRequest());
-
-        List<LamppostView> lamppostViews = new ArrayList<>();
-
-        for (LamppostView lamppostViewNew : listIntegerTwoTuple1.getFirst()) {
-
-            LamppostView lamppostView=new LamppostView();
-
-            lamppostView.setId(lamppostViewNew.getId());
-
-            lamppostView.setLamppostModel(lamppostViewNew.getLamppostModel());
-
-            lamppostView.setLampheadNumber(lamppostViewNew.getLampheadNumber());
-
-            lamppostViews.add(lamppostView);
-        }
-
-        deployLighting.setLamppostViews(lamppostViews);
-
-        //集中器
         Tuple.TwoTuple<List<LampControllerView>, Integer> twoTuple = lampControllerServer.listLampController(new LampControllerConditionRequest());
 
         List<LampControllerView> first1 = twoTuple.getFirst();
@@ -195,9 +152,22 @@ public class LightingControllerServerImpl implements LightingControllerServer {
 
             LampControllerView lampControllerView1=new LampControllerView();
 
+
             lampControllerView1.setId(lampControllerView.getId());
 
-            lampControllerView1.setLampModel(lampControllerView.getLampModel());
+            String lampModel = lampControllerView.getLampModel();
+
+            //单灯控制器的型号
+            lampControllerView1.setLampModel(lampModel);
+
+            //灯具的编号
+            //lampControllerView1.setEquipmentNumber(lampControllerView.getEquipmentNumber());
+
+            //功率
+            lampControllerView1.setStaticPower(lampControllerView.getStaticPower());
+
+            //备注
+            lampControllerView1.setMem(lampControllerView.getMem());
 
             lampControllerViews.add(lampControllerView1);
 
@@ -206,6 +176,59 @@ public class LightingControllerServerImpl implements LightingControllerServer {
         deployLighting.setLampControllerViews(lampControllerViews);
 
 
+        /**
+         * 灯具
+         * 灯具的型号
+         */
+        Tuple.TwoTuple<List<LightingModel>, Integer> listIntegerTwoTuple = lightModelServer.listLightModel(new LightModelConditionRequest());
+
+        List<LightingModel> first = listIntegerTwoTuple.getFirst();
+
+        List<LightingView> lightingViews = new ArrayList<>();
+
+        for (LightingModel lightingModel : first) {
+
+            LightingView lightingView=new LightingView();
+
+            lightingView.setId(lightingModel.getId());
+            //灯具的型号
+            lightingView.setLightingCode(lightingModel.getModelName());
+
+            lightingViews.add(lightingView);
+        }
+
+        deployLighting.setLightingViews(lightingViews);
+
+
+        /**
+         *
+         * 灯杆
+         * 灯杆型号
+         *  灯头数
+         */
+        Tuple.TwoTuple<List<LamppostView>, Integer> listIntegerTwoTuple1 = lamppostServer.listLamppost(new LamppostConditionRequest());
+
+        List<LamppostView> lamppostViews = new ArrayList<>();
+
+        for (LamppostView lamppostViewNew : listIntegerTwoTuple1.getFirst()) {
+
+            LamppostView lamppostView=new LamppostView();
+
+            lamppostView.setId(lamppostViewNew.getId());
+
+            //灯杆的型号
+            lamppostView.setLamppostModel(lamppostViewNew.getLamppostModel());
+            //灯头数
+            lamppostView.setLampheadNumber(lamppostViewNew.getLampheadNumber());
+
+            lamppostViews.add(lamppostView);
+        }
+
+        deployLighting.setLamppostViews(lamppostViews);
+
+        /**
+         * 项目
+         */
         List<ProjectView> projectViewList = new ArrayList<>();
 
         Tuple.TwoTuple<List<ProjectView>, Integer> listIntegerTwoTuple2 = projectServer.listProject(new ProjectRequest());
@@ -224,4 +247,8 @@ public class LightingControllerServerImpl implements LightingControllerServer {
         deployLighting.setProjectViewList(projectViewList);
         return deployLighting;
     }
+
+
+
+
 }

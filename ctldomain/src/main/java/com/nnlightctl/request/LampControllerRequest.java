@@ -29,6 +29,47 @@ public class LampControllerRequest {
 
     private String equipmentNumber;
 
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLampModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightctlLamppostId;
+
+    /**
+     *
+     * 所属项目id
+     */
+    private Long nnlightctlProjectId;
+
+
+    public Long getNnlightctlLampModelId() {
+        return nnlightctlLampModelId;
+    }
+
+    public void setNnlightctlLampModelId(Long nnlightctlLampModelId) {
+        this.nnlightctlLampModelId = nnlightctlLampModelId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
     public String getEquipmentNumber() {
         return equipmentNumber;
     }

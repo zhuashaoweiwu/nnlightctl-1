@@ -166,6 +166,7 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
 
                     centralizeController.setCentralizeModel(loopRequest.getCentralizeModel());
 
+                    centralizeController.setMem(loopRequest.getMem());
 
 
 

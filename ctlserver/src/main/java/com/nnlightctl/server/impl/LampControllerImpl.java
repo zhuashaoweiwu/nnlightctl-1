@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
@@ -9,7 +10,9 @@ import com.nnlightctl.po.LampController;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
 import com.nnlightctl.server.LampControllerServer;
+import com.nnlightctl.vo.DeployLightingView;
 import com.nnlightctl.vo.LampControllerView;
+import com.nnlightctl.vo.LightingView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,25 +27,26 @@ public class LampControllerImpl implements LampControllerServer {
     private LampControllerMapper lampControllerMapper;
 
     //判断标志位
-    private Integer flag=null;
+    private Integer flag = null;
 
     @Override
     public int addOrUpdateLampController(LampControllerRequest request) {
 
-        LampController lampController=new LampController();
+        LampController lampController = new LampController();
 
-        ReflectCopyUtil.beanSameFieldCopy(request,lampController);
+        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
 
-        int ret=-1;
+        int ret = -1;
 
-        if (request.getId()==null){
+        if (request.getId() == null) {
 
             //新增用户
-            ret= lampControllerMapper.insert(lampController);
-        }else {
+            ret = lampControllerMapper.insert(lampController);
+        } else {
+
 
             //修改用户
-            ret= lampControllerMapper.updateByPrimaryKey(lampController);
+            ret = lampControllerMapper.updateByPrimaryKey(lampController);
 
         }
         return ret;
@@ -54,13 +58,13 @@ public class LampControllerImpl implements LampControllerServer {
         //得到id
         List<Long> lampControllerIds = request.getLampControllerIds();
 
-        if (lampControllerIds==null){
-            flag=-1;
-        }else {
+        if (lampControllerIds == null) {
+            flag = -1;
+        } else {
             for (Long lampControllerId : lampControllerIds) {
-                flag= lampControllerMapper.deleteByPrimaryKey(lampControllerId);
-                if (flag<0){
-                    flag=-2;
+                flag = lampControllerMapper.deleteByPrimaryKey(lampControllerId);
+                if (flag < 0) {
+                    flag = -2;
                 }
             }
         }
@@ -70,17 +74,17 @@ public class LampControllerImpl implements LampControllerServer {
 
     @Override
     public Tuple.TwoTuple<List<LampControllerView>, Integer> listLampController(LampControllerConditionRequest request) {
-        Tuple.TwoTuple<List<LampControllerView>,Integer> twoTuple=new Tuple.TwoTuple<>();
+        Tuple.TwoTuple<List<LampControllerView>, Integer> twoTuple = new Tuple.TwoTuple<>();
 
-        List<LampControllerView> lampControllerList=new ArrayList<>(8);
+        List<LampControllerView> lampControllerList = new ArrayList<>(8);
 
         int total = lampControllerMapper.selectByCount();
 
         twoTuple.setSecond(total);
 
-        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
-        LampController lampController=new LampController();
+        LampController lampController = new LampController();
 
         String equipmentNumber = request.getEquipmentNumber();
 
@@ -90,9 +94,9 @@ public class LampControllerImpl implements LampControllerServer {
 
         for (LampController lampControllerNew : lampControllers) {
 
-            LampControllerView lampControllerView=new LampControllerView();
+            LampControllerView lampControllerView = new LampControllerView();
 
-            ReflectCopyUtil.beanSameFieldCopy(lampControllerNew,lampControllerView);
+            ReflectCopyUtil.beanSameFieldCopy(lampControllerNew, lampControllerView);
 
             lampControllerList.add(lampControllerView);
 
@@ -106,7 +110,7 @@ public class LampControllerImpl implements LampControllerServer {
     @Override
     public List<LampController> SelectByParameter(LampControllerConditionRequest request) {
 
-        LampControllerParameter parameter=new LampControllerParameter();
+        LampControllerParameter parameter = new LampControllerParameter();
 
         parameter.setLampModel(request.getLampModel());
 
@@ -133,6 +137,43 @@ public class LampControllerImpl implements LampControllerServer {
 
 
         return lampController;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
+
+        Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
+        // int total = lampControllerMapper.selectByCount();
+
+        Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+        List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(request.getEquipmentNumber());
+        listDeployLighting.setSecond((int) page.getTotal());
+        listDeployLighting.setFirst(deployLightingViews);
+        return listDeployLighting;
+    }
+
+    @Override
+    public int deployUpdateLighting(LampControllerRequest request) {
+
+        LampController lampController = new LampController();
+
+        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
+
+        lampController.setDeployState(1);
+
+        int flag = lampControllerMapper.updateByPrimaryKey(lampController);
+
+        return flag;
+    }
+
+    @Override
+    public List<LampController> selectByLampModel(LampControllerRequest request) {
+
+        String lampModel = request.getLampModel();
+
+        List<LampController> lampControllerList = lampControllerMapper.selectByLampModel(lampModel);
+
+        return lampControllerList;
     }
 
 
