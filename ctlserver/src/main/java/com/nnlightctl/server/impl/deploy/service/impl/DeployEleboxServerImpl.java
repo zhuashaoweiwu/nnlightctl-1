@@ -8,17 +8,21 @@ import com.nnlightctl.po.Elebox;
 import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.po.EleboxRelation;
+import com.nnlightctl.po.ElectricityMeter;
 import com.nnlightctl.po.LampController;
+import com.nnlightctl.po.PhotoPeriod;
 import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.vo.DeployEleboxModifyForView;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,6 +49,12 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
 
     @Autowired
     private LampControllerMapper lampControllerMapper;
+
+    @Autowired
+    private PhotoperiodMapper photoperiodMapper;
+
+    @Autowired
+    ElectricityMeterMapper electricityMeterMapper;
 
     @Override
     public int insertElebox(DeployEleboxRequest request) {
@@ -111,7 +121,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     }
 
     @Override
-    public void deployExleboxModify (DeployExleboxArrangeRequest request) throws RuntimeException {
+    public void deployExleboxModify(DeployExleboxArrangeRequest request) throws RuntimeException {
         this.deployExleboxDelete(request.getExleboxId());
         this.deployExleboxArrange(request);
     }
@@ -127,8 +137,10 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                     reslutList.add(getEleboxModel(eleboxRelation.getEleboxModelId()));
                     break;
                 case SystemConfig.getInfo.getConstant.WattHour:
+                    reslutList.add(getElectricityMeterModel(eleboxRelation.getEleboxModelId()));
                     break;
                 case SystemConfig.getInfo.getConstant.Illumination:
+                    reslutList.add(getPhotoperiodModel(eleboxRelation.getEleboxModelId()));
                     break;
             }
         }
@@ -136,30 +148,68 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     }
 
 
+    private DeployEleboxModifyForView getElectricityMeterModel(Long eleboxModelId) {
+        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
+        ElectricityMeter electricityMeter = electricityMeterMapper.selectByPrimaryKey(eleboxModelId);
+        if (PubMethod.isEmpty(electricityMeter)) return new DeployEleboxModifyForView();
+        deployEleboxModifyForView.setId(electricityMeter.getId());
+        deployEleboxModifyForView.setModelCode(electricityMeter.getEquipmentNumber());
+        deployEleboxModifyForView.setModelName(electricityMeter.getElectricityName());
+        deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.WattHour);
+        deployEleboxModifyForView.setModelType(electricityMeter.getElectricityModel());
+        deployEleboxModifyForView.setExleboxModel(getMap(electricityMeter));
+        return deployEleboxModifyForView;
+    }
 
-    private DeployEleboxModifyForView getEleboxModel (Long eleboxModelId) {
-        DeployEleboxModifyForView  deployEleboxModifyForView = new DeployEleboxModifyForView();
+
+    private DeployEleboxModifyForView getPhotoperiodModel(Long eleboxModelId) {
+        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
+        PhotoPeriod photoPeriod = photoperiodMapper.selectById(eleboxModelId);
+        if (PubMethod.isEmpty(photoPeriod)) return new DeployEleboxModifyForView();
+        deployEleboxModifyForView.setId(photoPeriod.getId());
+        deployEleboxModifyForView.setModelCode(photoPeriod.getEquipmentNumber());
+        deployEleboxModifyForView.setModelName(photoPeriod.getPhotoperiodName());
+        deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.Illumination);
+        deployEleboxModifyForView.setModelType(photoPeriod.getPhotoperiodModel());
+        deployEleboxModifyForView.setExleboxModel(getMap(photoPeriod));
+        return deployEleboxModifyForView;
+    }
+
+    private Map<String, Object> getMap(Object o) {
+        try {
+            return BeanUtils.describe(o);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return new HashMap<>();
+    }
+
+    private DeployEleboxModifyForView getEleboxModel(Long eleboxModelId) {
+        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
         EleboxModel eleboxModel = eleboxModelMapper.selectByPrimaryKey(eleboxModelId);
-        if(PubMethod.isEmpty(eleboxModel)) return  new DeployEleboxModifyForView();
+        if (PubMethod.isEmpty(eleboxModel)) return new DeployEleboxModifyForView();
         deployEleboxModifyForView.setId(eleboxModel.getId());
         deployEleboxModifyForView.setModelCode(eleboxModel.getModelCode());
         deployEleboxModifyForView.setModelName(eleboxModel.getModelName());
         deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.SwitchModle);
         deployEleboxModifyForView.setModelType(eleboxModel.getModelType());
-        List<Map<String,Object>>  reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
-        Map<String ,Object> resltMap = new HashMap<String, Object>() {{
-            put("loopInfo",reList);
-            put("loopCount",eleboxModel.getLoopCount());
-            put("communicationMethods",eleboxModel.getCommunicationMethods());
-            put("maxElectric",eleboxModel.getMaxElectric());
-            put("loadElectric",eleboxModel.getLoadElectric());
-            put("installationMethods",eleboxModel.getInstallationMethods());
-            put("mem",eleboxModel.getMem());
+        List<Map<String, Object>> reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
+        Map<String, Object> resltMap = new HashMap<String, Object>() {{
+            put("loopInfo", reList);
+            put("loopCount", eleboxModel.getLoopCount());
+            put("communicationMethods", eleboxModel.getCommunicationMethods());
+            put("maxElectric", eleboxModel.getMaxElectric());
+            put("loadElectric", eleboxModel.getLoadElectric());
+            put("installationMethods", eleboxModel.getInstallationMethods());
+            put("mem", eleboxModel.getMem());
         }};
         deployEleboxModifyForView.setExleboxModel(resltMap);
         return deployEleboxModifyForView;
     }
-
 
 
     private void modelDeploy(Long exleboxId, List<Long> exleboxModelIds, List<DeployEleboxModelLoopRequest> modelLoopRequests) {
