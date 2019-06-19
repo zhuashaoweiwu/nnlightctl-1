@@ -36,9 +36,7 @@
     <result column="alarm_message" property="alarmMessage" jdbcType="VARCHAR" />
     <result column="lamp_model" property="lampName" jdbcType="VARCHAR" />
     <result column="deploy_state" property="deployState" jdbcType="INTEGER"/>
-    <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightLamppostId" />
-    <result column="nnlightctl_lamp_controller_id" jdbcType="INTEGER" property="nnlightctlLampControllerId" />
-    <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLightingModelId" />
+
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -106,8 +104,7 @@
     fault_tag,lamp_model,lamp_name,
         communication_mode,dimming_mode,rated_Voltage,
         rated_current,static_power,alarm_message,deploy_state,
-        nnlightctl_lamppost_id,
-    nnlightctl_lamp_controller_id, nnlightctl_lamp_model_id
+
   </sql>
 
   <sql id="Base_Column_Listdeploy" >
@@ -277,15 +274,7 @@
       <if test="deployState !=null">
         deploy_state,
       </if>
-      <if test="nnlightctlLamppostId != null">
-        nnlightctl_lamppost_id,
-      </if>
-      <if test="nnlightctlLampControllerId != null">
-        nnlightctl_lamp_controller_id,
-      </if>
-      <if test="nnlightctlLampModelId != null">
-        nnlightctl_lamp_model_id,
-      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gmtCreated != null" >
@@ -388,15 +377,7 @@
       <if test="deployState !=null">
         #{deployState,jdbcType=INTEGER},
       </if>
-      <if test="nnlightctlLamppostId != null">
-        #{nnlightctlLamppostId,jdbcType=INTEGER},
-      </if>
-      <if test="nnlightctlLampControllerId != null">
-        #{nnlightctlLampControllerId,jdbcType=INTEGER},
-      </if>
-      <if test="nnlightctlLampModelId != null">
-        #{nnlightctlLampModelId,jdbcType=INTEGER},
-      </if>
+
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.nnlightctl.po.LightingExample" resultType="java.lang.Integer" >
@@ -638,15 +619,7 @@
       <if test="deployState !=null">
         deploy_state=#{deployState,jdbcType=INTEGER},
       </if>
-      <if test="nnlightctlLamppostId != null">
-        nnlightctl_lamppost_id = #{nnlightctlLamppostId,jdbcType=INTEGER},
-      </if>
-      <if test="nnlightctlLampControllerId != null">
-        nnlightctl_lamp_controller_id = #{nnlightctlLampControllerId,jdbcType=INTEGER},
-      </if>
-      <if test="nnlightctlLampModelId != null">
-        nnlightctl_lamp_model_id = #{nnlightctlLampModelId,jdbcType=INTEGER},
-      </if>
+
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
