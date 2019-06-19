@@ -12,6 +12,13 @@
   <sql id="Base_Column_List" >
     id, elebox_model_id, elebox_id, elebox_model_type, gmt_created, gmt_updated
   </sql>
+  <select id="selectByEleboxId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from nnlightctl_elebox_relation
+    where elebox_id = #{eleboxId,jdbcType=BIGINT}
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

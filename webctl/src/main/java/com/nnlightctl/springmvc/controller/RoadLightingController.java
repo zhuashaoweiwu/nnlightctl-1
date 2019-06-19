@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/roadlighting")
@@ -1730,11 +1731,11 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("queryLightingByLoop")
-    public String queryLightingByLoop(Long loopId) {
-        logger.info("[POST] /api/roadlighting/updateLightPriority");
-        List<String> numbers = lampControllerServer.queryLightingByLoop(loopId);
+    public String queryLightingByLoop() {
+        logger.info("[POST] /api/roadlighting/queryLightingByLoop");
+        List<Map<String, Object>> maps = lampControllerServer.queryLightingUnLoop();
         JsonResult jsonResult = JsonResult.getSUCCESS();
-        jsonResult.setData(numbers);
+        jsonResult.setData(maps);
         return toJson(jsonResult);
     }
 

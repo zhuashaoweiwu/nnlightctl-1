@@ -12,6 +12,18 @@
     <result column="nnlightctl_elebox_model_id" property="nnlightctlEleboxModelId" jdbcType="BIGINT" />
     <result column="loop_code" property="loopCode" jdbcType="VARCHAR" />
   </resultMap>
+
+
+  <resultMap id="LoopResultMap" type="com.nnlightctl.vo.DeployLoopByView" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="loop_code" property="loopCode" jdbcType="VARCHAR" />
+    <result column="mem" property="mem" jdbcType="VARCHAR" />
+    <collection property="lightctlList" ofType="com.nnlightctl.vo.DeployLoopLightctlByView">
+      <result column="LcId" property="id"/>
+      <result column="equipment_number" property="equipmentNumber"/>
+    </collection>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -74,6 +86,13 @@
     id, gmt_created, gmt_updated, voltage, electricity, light_count, state, nnlightctl_elebox_model_id, 
     loop_code
   </sql>
+
+  <select id="selectModelLoopAndLigh" resultMap="LoopResultMap" parameterType="java.lang.Long" >
+    select  ml.id  ,ml.loop_code ,ml.mem  ,lc.id as LcId ,lc.equipment_number
+    from nnlightctl_elebox_model_loop ml LEFT join nnlightctl_lamp_controller lc on ml.id = lc.nnlightctl_elebox_loop_id
+    where  ml.nnlightctl_elebox_model_id = #{modelId,jdbcType=BIGINT} ORDER by ml.loop_code ASC
+  </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nnlightctl.po.EleboxModelLoopExample" >
     select
     <if test="distinct" >

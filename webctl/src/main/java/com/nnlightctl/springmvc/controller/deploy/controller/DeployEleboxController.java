@@ -10,6 +10,7 @@ import com.nnlightctl.server.deploy.service.DeployEleboxModelServer;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.springmvc.controller.BaseController;
 import com.nnlightctl.springmvc.controller.RoadLightingController;
+import com.nnlightctl.vo.DeployEleboxModifyForView;
 import com.nnlightctl.vo.DeployEleboxView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,6 +179,32 @@ public class DeployEleboxController extends BaseController {
     }
 
 
+    @RequestMapping("modifyByView")
+    public String modifyByView(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+        logger.info("[POST] deployElebox/deployExleboxArrange");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
+
+        List<DeployEleboxModifyForView> deployEleboxModifyForViews = this.deployEleboxServer.modifyByView(request.getExleboxId());
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(deployEleboxModifyForViews);
+        jsonResult.setTotal(1);
+        return toJson(jsonResult);
+    }
+
+
+
+
 
     @RequestMapping("deployExleboxArrange")
     public String deployExleboxArrange(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
@@ -222,6 +249,8 @@ public class DeployEleboxController extends BaseController {
 
         return toJson(jsonResult);
     }
+
+
 
 
 }

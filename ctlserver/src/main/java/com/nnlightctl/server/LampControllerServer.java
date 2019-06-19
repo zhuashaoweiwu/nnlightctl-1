@@ -37,6 +37,10 @@ public interface LampControllerServer {
 
     List<LampController> selectByLampModel(LampControllerRequest request);
 
+    public List<Map<String,Object>> queryLightingUnLoop();
+
+
+
 
 
 }

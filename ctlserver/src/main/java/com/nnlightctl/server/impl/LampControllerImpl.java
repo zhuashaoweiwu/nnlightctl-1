@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LampControllerImpl implements LampControllerServer {
@@ -143,6 +144,15 @@ public class LampControllerImpl implements LampControllerServer {
     public List<String> queryLightingByLoop(Long loopId) {
         return lampControllerMapper.queryLightingByLoop(loopId);
     }
+
+
+    @Override
+    public List<Map<String,Object>> queryLightingUnLoop() {
+        return lampControllerMapper.queryLightingUnLoop();
+    }
+
+
+
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 
         Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();

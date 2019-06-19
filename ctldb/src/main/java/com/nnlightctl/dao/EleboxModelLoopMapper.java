@@ -3,6 +3,8 @@ package com.nnlightctl.dao;
 import com.nnlightctl.po.EleboxModelLoop;
 import com.nnlightctl.po.EleboxModelLoopExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface EleboxModelLoopMapper {
@@ -29,4 +31,6 @@ public interface EleboxModelLoopMapper {
     int updateByPrimaryKey(EleboxModelLoop record);
 
     void deleteByEleboxModelIds(@Param("ids")List<Long> ids);
+
+    List<Map<String,Object>> selectModelLoopAndLigh(@Param("modelId")Long modelId);
 }

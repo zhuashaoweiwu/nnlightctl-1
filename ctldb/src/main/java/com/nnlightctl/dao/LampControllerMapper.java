@@ -32,6 +32,8 @@ public interface LampControllerMapper {
 
     List<String> queryLightingByLoop(@Param("loopId") Long loopId);
 
+    List<Map<String,Object>> queryLightingUnLoop();
+
     List<DeployLightingView> selectByExampleDeployLighting(@Param("equipmentNumber") String equipmentNumber);
 
     List<LampController> selectByLampModel(@Param("lampModel") String lampModel);

@@ -281,6 +281,11 @@
         </if>
         order by controller.id DESC
     </select>
+    <select id="queryLightingUnLoop"  resultType="java.util.Map">
+        select equipment_number as equipmentNumber ,id   from nnlightctl_lamp_controller  where deploy_state=1 and model_deploy_state = 0  ORDER BY  id DESC
+    </select>
+
+
     <select id="selectByLampModel" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
 
         select id,equipment_number from nnlightctl_lamp_controller

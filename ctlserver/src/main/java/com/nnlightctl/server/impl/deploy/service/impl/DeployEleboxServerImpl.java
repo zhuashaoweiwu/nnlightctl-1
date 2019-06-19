@@ -13,13 +13,17 @@ import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
+import com.nnlightctl.vo.DeployEleboxModifyForView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DeployEleboxServerImpl implements DeployEleboxServer {
@@ -111,6 +115,51 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
         this.deployExleboxDelete(request.getExleboxId());
         this.deployExleboxArrange(request);
     }
+
+    @Override
+    public List<DeployEleboxModifyForView> modifyByView(Long eleboxId) throws RuntimeException {
+        List<DeployEleboxModifyForView> reslutList = new ArrayList<DeployEleboxModifyForView>();
+
+        List<EleboxRelation> eleboxRelations = eleboxRelationMapper.selectByEleboxId(eleboxId);
+        for (EleboxRelation eleboxRelation : eleboxRelations) {
+            switch (eleboxRelation.getEleboxModelType()) {
+                case SystemConfig.getInfo.getConstant.SwitchModle:
+                    reslutList.add(getEleboxModel(eleboxRelation.getEleboxModelId()));
+                    break;
+                case SystemConfig.getInfo.getConstant.WattHour:
+                    break;
+                case SystemConfig.getInfo.getConstant.Illumination:
+                    break;
+            }
+        }
+        return reslutList;
+    }
+
+
+
+    private DeployEleboxModifyForView getEleboxModel (Long eleboxModelId) {
+        DeployEleboxModifyForView  deployEleboxModifyForView = new DeployEleboxModifyForView();
+        EleboxModel eleboxModel = eleboxModelMapper.selectByPrimaryKey(eleboxModelId);
+        if(PubMethod.isEmpty(eleboxModel)) return  new DeployEleboxModifyForView();
+        deployEleboxModifyForView.setId(eleboxModel.getId());
+        deployEleboxModifyForView.setModelCode(eleboxModel.getModelCode());
+        deployEleboxModifyForView.setModelName(eleboxModel.getModelName());
+        deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.SwitchModle);
+        deployEleboxModifyForView.setModelType(eleboxModel.getModelType());
+        List<Map<String,Object>>  reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
+        Map<String ,Object> resltMap = new HashMap<String, Object>() {{
+            put("loopInfo",reList);
+            put("loopCount",eleboxModel.getLoopCount());
+            put("communicationMethods",eleboxModel.getCommunicationMethods());
+            put("maxElectric",eleboxModel.getMaxElectric());
+            put("loadElectric",eleboxModel.getLoadElectric());
+            put("installationMethods",eleboxModel.getInstallationMethods());
+            put("mem",eleboxModel.getMem());
+        }};
+        deployEleboxModifyForView.setExleboxModel(resltMap);
+        return deployEleboxModifyForView;
+    }
+
 
 
     private void modelDeploy(Long exleboxId, List<Long> exleboxModelIds, List<DeployEleboxModelLoopRequest> modelLoopRequests) {
