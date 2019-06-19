@@ -164,10 +164,10 @@ public class LightingControllerServerImpl implements LightingControllerServer {
             //lampControllerView1.setEquipmentNumber(lampControllerView.getEquipmentNumber());
 
             //功率
-            lampControllerView1.setStaticPower(lampControllerView.getStaticPower());
+            //lampControllerView1.setStaticPower(lampControllerView.getStaticPower());
 
             //备注
-            lampControllerView1.setMem(lampControllerView.getMem());
+            //lampControllerView1.setMem(lampControllerView.getMem());
 
             lampControllerViews.add(lampControllerView1);
 

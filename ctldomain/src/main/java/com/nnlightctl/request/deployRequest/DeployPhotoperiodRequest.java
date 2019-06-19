@@ -1,6 +1,5 @@
 package com.nnlightctl.request.deployRequest;
 
-import com.nnlightctl.request.PhotoperiodRequest;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class DeployPhotoperiodRequest {
     private Long eleboxId;
 
 
-    private List<PhotoperiodRequest> photoperiodRequestList;
+    private List<Long> photoperiodIds;
 
     public Long getEleboxId() {
         return eleboxId;
@@ -19,11 +18,11 @@ public class DeployPhotoperiodRequest {
         this.eleboxId = eleboxId;
     }
 
-    public List<PhotoperiodRequest> getPhotoperiodRequestList() {
-        return photoperiodRequestList;
+    public List<Long> getPhotoperiodIds() {
+        return photoperiodIds;
     }
 
-    public void setPhotoperiodRequestList(List<PhotoperiodRequest> photoperiodRequestList) {
-        this.photoperiodRequestList = photoperiodRequestList;
+    public void setPhotoperiodIds(List<Long> photoperiodIds) {
+        this.photoperiodIds = photoperiodIds;
     }
 }

@@ -118,38 +118,37 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
 
         try {
-            for (PhotoperiodRequest photoperiodRequest : request.getPhotoperiodRequestList()) {
+            List<Long> photoperiodIds = request.getPhotoperiodIds();
 
+            for (Long photoperiodId : photoperiodIds) {
+                /**
+                 * 修改光照计
+                 */
                 PhotoPeriod photoPeriod=new PhotoPeriod();
 
                 photoPeriod.setState(1);
 
-                photoPeriod.setPhotoperiodModel(photoperiodRequest.getPhotoperiodModel());
-
-                photoPeriod.setPhotoperiodName(photoperiodRequest.getPhotoperiodName());
-
-                photoPeriod.setId(photoperiodRequest.getId());
+                photoPeriod.setId(photoperiodId);
 
                 photoperiodMapper.updateByPrimaryKey(photoPeriod);
                 /**
                  * 修改关联表
                  */
-
                 EleboxRelation eleboxRelation=new EleboxRelation();
 
                 eleboxRelation.setGmtUpdated(new Date());
 
                 eleboxRelation.setEleboxId(request.getEleboxId());
 
-                eleboxRelation.setEleboxModelId(photoperiodRequest.getId());
+                eleboxRelation.setEleboxModelId(photoperiodId);
 
                 eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.Illumination);
 
                 eleboxRelationMapper.insertSelective(eleboxRelation);
 
                 return Boolean.TRUE;
-
             }
+
         } catch (Exception e) {
             logger.info("部署失败");
             e.printStackTrace();

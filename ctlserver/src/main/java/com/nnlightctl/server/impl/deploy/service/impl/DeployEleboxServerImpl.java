@@ -4,25 +4,16 @@ import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.SystemConfig;
 import com.nnlightctl.dao.*;
-import com.nnlightctl.po.Elebox;
-import com.nnlightctl.po.EleboxModel;
-import com.nnlightctl.po.EleboxModelLoop;
-import com.nnlightctl.po.EleboxRelation;
-import com.nnlightctl.po.ElectricityMeter;
-import com.nnlightctl.po.LampController;
-import com.nnlightctl.po.PhotoPeriod;
-import com.nnlightctl.request.deployRequest.DeployEleboxModelLoopRequest;
-import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
-import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
+import com.nnlightctl.po.*;
+import com.nnlightctl.request.deployRequest.*;
+import com.nnlightctl.server.ElectricityMeterServer;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.vo.DeployEleboxModifyForView;
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,10 +42,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     private LampControllerMapper lampControllerMapper;
 
     @Autowired
-    private PhotoperiodMapper photoperiodMapper;
-
-    @Autowired
-    ElectricityMeterMapper electricityMeterMapper;
+    private ElectricityMeterServer meterServer;
 
     @Override
     public int insertElebox(DeployEleboxRequest request) {
@@ -80,10 +68,26 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
             if (!PubMethod.isEmpty(request.getExleboxModelIds())) /**部署开关*/
                 modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
             if (!PubMethod.isEmpty(request.getElectricityMeterIds())) {
+                DeployElectricityMeter deployElectricityMeter=new DeployElectricityMeter();
+
+                deployElectricityMeter.setEleboxId(request.getExleboxId());
+
+                deployElectricityMeter.setElectricityMeterIds(request.getElectricityMeterIds());
+
+                meterServer.deployElectricityMeter(deployElectricityMeter);
+
             }/**部署电表*/
+
 //                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
             if (!PubMethod.isEmpty(request.getPhotoperiodIds())) {
+
+                DeployPhotoperiodRequest photoperiodRequest=new DeployPhotoperiodRequest();
+
+                photoperiodRequest.setEleboxId(request.getExleboxId());
+
+                photoperiodRequest.setPhotoperiodIds(request.getPhotoperiodIds());
             }/**部署光照计*/
+
 //                modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
             if (!PubMethod.isEmpty(request.getCentralizeControllerIds())) {
             }/**部署集中控制器*/
@@ -103,12 +107,19 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     public Boolean deployExleboxDelete(Long exleBoxId) throws RuntimeException {
         try {
             List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(exleBoxId);
+
             //更改所有单灯loop为控部署状态置为0
             lampControllerMapper.updateByEleboxId(exleBoxId);
+
             //删除所有回路
             eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
             //置空开关模块的控制柜ID
             eleboxModelMapper.modifyEleboxId(exleBoxId);
+
+            //删除关照计
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte) 4);
+            //删除电表
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte)3);
             //删除关联表
             eleboxRelationMapper.deleteByEleboxId(exleBoxId);
         } catch (Exception e) {
@@ -121,7 +132,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     }
 
     @Override
-    public void deployExleboxModify(DeployExleboxArrangeRequest request) throws RuntimeException {
+    public void deployExleboxModify (DeployExleboxArrangeRequest request) throws RuntimeException {
         this.deployExleboxDelete(request.getExleboxId());
         this.deployExleboxArrange(request);
     }
@@ -137,10 +148,8 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                     reslutList.add(getEleboxModel(eleboxRelation.getEleboxModelId()));
                     break;
                 case SystemConfig.getInfo.getConstant.WattHour:
-                    reslutList.add(getElectricityMeterModel(eleboxRelation.getEleboxModelId()));
                     break;
                 case SystemConfig.getInfo.getConstant.Illumination:
-                    reslutList.add(getPhotoperiodModel(eleboxRelation.getEleboxModelId()));
                     break;
             }
         }
@@ -148,68 +157,30 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     }
 
 
-    private DeployEleboxModifyForView getElectricityMeterModel(Long eleboxModelId) {
-        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
-        ElectricityMeter electricityMeter = electricityMeterMapper.selectByPrimaryKey(eleboxModelId);
-        if (PubMethod.isEmpty(electricityMeter)) return new DeployEleboxModifyForView();
-        deployEleboxModifyForView.setId(electricityMeter.getId());
-        deployEleboxModifyForView.setModelCode(electricityMeter.getEquipmentNumber());
-        deployEleboxModifyForView.setModelName(electricityMeter.getElectricityName());
-        deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.WattHour);
-        deployEleboxModifyForView.setModelType(electricityMeter.getElectricityModel());
-        deployEleboxModifyForView.setExleboxModel(getMap(electricityMeter));
-        return deployEleboxModifyForView;
-    }
 
-
-    private DeployEleboxModifyForView getPhotoperiodModel(Long eleboxModelId) {
-        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
-        PhotoPeriod photoPeriod = photoperiodMapper.selectById(eleboxModelId);
-        if (PubMethod.isEmpty(photoPeriod)) return new DeployEleboxModifyForView();
-        deployEleboxModifyForView.setId(photoPeriod.getId());
-        deployEleboxModifyForView.setModelCode(photoPeriod.getEquipmentNumber());
-        deployEleboxModifyForView.setModelName(photoPeriod.getPhotoperiodName());
-        deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.Illumination);
-        deployEleboxModifyForView.setModelType(photoPeriod.getPhotoperiodModel());
-        deployEleboxModifyForView.setExleboxModel(getMap(photoPeriod));
-        return deployEleboxModifyForView;
-    }
-
-    private Map<String, Object> getMap(Object o) {
-        try {
-            return BeanUtils.describe(o);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return new HashMap<>();
-    }
-
-    private DeployEleboxModifyForView getEleboxModel(Long eleboxModelId) {
-        DeployEleboxModifyForView deployEleboxModifyForView = new DeployEleboxModifyForView();
+    private DeployEleboxModifyForView getEleboxModel (Long eleboxModelId) {
+        DeployEleboxModifyForView  deployEleboxModifyForView = new DeployEleboxModifyForView();
         EleboxModel eleboxModel = eleboxModelMapper.selectByPrimaryKey(eleboxModelId);
-        if (PubMethod.isEmpty(eleboxModel)) return new DeployEleboxModifyForView();
+        if(PubMethod.isEmpty(eleboxModel)) return  new DeployEleboxModifyForView();
         deployEleboxModifyForView.setId(eleboxModel.getId());
         deployEleboxModifyForView.setModelCode(eleboxModel.getModelCode());
         deployEleboxModifyForView.setModelName(eleboxModel.getModelName());
         deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.SwitchModle);
         deployEleboxModifyForView.setModelType(eleboxModel.getModelType());
-        List<Map<String, Object>> reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
-        Map<String, Object> resltMap = new HashMap<String, Object>() {{
-            put("loopInfo", reList);
-            put("loopCount", eleboxModel.getLoopCount());
-            put("communicationMethods", eleboxModel.getCommunicationMethods());
-            put("maxElectric", eleboxModel.getMaxElectric());
-            put("loadElectric", eleboxModel.getLoadElectric());
-            put("installationMethods", eleboxModel.getInstallationMethods());
-            put("mem", eleboxModel.getMem());
+        List<Map<String,Object>>  reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
+        Map<String ,Object> resltMap = new HashMap<String, Object>() {{
+            put("loopInfo",reList);
+            put("loopCount",eleboxModel.getLoopCount());
+            put("communicationMethods",eleboxModel.getCommunicationMethods());
+            put("maxElectric",eleboxModel.getMaxElectric());
+            put("loadElectric",eleboxModel.getLoadElectric());
+            put("installationMethods",eleboxModel.getInstallationMethods());
+            put("mem",eleboxModel.getMem());
         }};
         deployEleboxModifyForView.setExleboxModel(resltMap);
         return deployEleboxModifyForView;
     }
+
 
 
     private void modelDeploy(Long exleboxId, List<Long> exleboxModelIds, List<DeployEleboxModelLoopRequest> modelLoopRequests) {

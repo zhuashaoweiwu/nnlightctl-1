@@ -25,4 +25,7 @@ public interface ElectricityMeterServer {
     Boolean deployElectricityMeter(DeployElectricityMeter request);
 
 
+    Boolean deleteDeployEletricityMeterAndPhotoriod(Long eleboxId,byte EleboxModelType);
+
+
 }

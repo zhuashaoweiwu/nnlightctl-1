@@ -30,4 +30,8 @@ public interface ElectricityMeterMapper {
     int updateByPrimaryKey(ElectricityMeter record);
 
     List<ElectricityMeter> selectByParams(@Param("params") ElectricityMeterParameter parameter);
+
+    Boolean updateDeployElectricity(@Param("eleboxId") Long eleboxId,@Param("eleboxModelType") byte eleboxModelType);
+
+    Boolean updateDeployPhotoriod(@Param("eleboxId") Long eleboxId,@Param("eleboxModelType") byte eleboxModelType);
 }

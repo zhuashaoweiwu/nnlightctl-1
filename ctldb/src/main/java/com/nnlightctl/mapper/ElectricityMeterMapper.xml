@@ -110,7 +110,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.nnlightctl.po.ElectricityMeter">
+
+    <insert id="insert" parameterType="com.nnlightctl.po.ElectricityMeter">
     insert into nnlightctl_electricity_meter (id, electricity_model, electricity_name, 
       electric_standards, voltage_test, active_energy, 
       Installation_mode, community_mode, measure_mode, 
@@ -360,5 +361,18 @@
       mem = #{mem,jdbcType=VARCHAR}
       equipment_number=#{equipmentNumber,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateDeployElectricity">
+     update nnlightctl_electricity_meter set state = 0  where id in
+    (
+    select elebox_model_id from nnlightctl_elebox_relation where elebox_id = #{eleboxId} and elebox_model_type = #{eleboxModelType}
+    )
+  </update>
+  <update id="updateDeployPhotoriod">
+
+    update nnlightctl_photoperiod set state = 0  where id in
+    (
+    select elebox_model_id from nnlightctl_elebox_relation where elebox_id = #{eleboxId} and elebox_model_type = #{eleboxModelType}
+    )
   </update>
 </mapper>

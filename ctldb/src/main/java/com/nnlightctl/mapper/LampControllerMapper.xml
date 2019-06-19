@@ -297,7 +297,7 @@
 
     <select id="selectByLampModel" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
 
-        select id,equipment_number from nnlightctl_lamp_controller
+        select id,equipment_number,mem,static_power from nnlightctl_lamp_controller
         <where>
             <if test="lampModel !=null">
                 lamp_model=#{lampModel,jdbcType=VARCHAR}

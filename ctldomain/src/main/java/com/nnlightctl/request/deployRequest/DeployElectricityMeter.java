@@ -8,7 +8,7 @@ public class DeployElectricityMeter {
 
     private Long eleboxId;
 
-    private List<ElectricityMeterRequest> meterRequestList;
+    private List<Long> electricityMeterIds;
 
     public Long getEleboxId() {
         return eleboxId;
@@ -18,11 +18,11 @@ public class DeployElectricityMeter {
         this.eleboxId = eleboxId;
     }
 
-    public List<ElectricityMeterRequest> getMeterRequestList() {
-        return meterRequestList;
+    public List<Long> getElectricityMeterIds() {
+        return electricityMeterIds;
     }
 
-    public void setMeterRequestList(List<ElectricityMeterRequest> meterRequestList) {
-        this.meterRequestList = meterRequestList;
+    public void setElectricityMeterIds(List<Long> electricityMeterIds) {
+        this.electricityMeterIds = electricityMeterIds;
     }
 }

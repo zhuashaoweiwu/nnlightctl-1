@@ -7,6 +7,7 @@ import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.EleboxMapper;
 import com.nnlightctl.dao.EleboxRelationMapper;
 import com.nnlightctl.dao.ElectricityMeterMapper;
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.parameter.ElectricityMeterParameter;
 import com.nnlightctl.po.EleboxRelation;
 import com.nnlightctl.po.ElectricityMeter;
@@ -24,6 +25,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ElectricityMeterServerImpl implements ElectricityMeterServer {
@@ -166,7 +168,9 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
     public Boolean deployElectricityMeter(DeployElectricityMeter request) {
 
         try {
-            for (ElectricityMeterRequest electricityMeterRequest : request.getMeterRequestList()) {
+            List<Long> electricityMeterIds = request.getElectricityMeterIds();
+
+            for (Long electricityMeterId : electricityMeterIds) {
 
                 /**
                  * 更新电表信息
@@ -175,13 +179,7 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
                 electricityMeter.setState(1);
 
-                electricityMeter.setElectricityModel(electricityMeterRequest.getElectricityModel());
-
-                electricityMeter.setElectricityModel(electricityMeterRequest.getElectricityName());
-
-                electricityMeter.setMem(electricityMeterRequest.getMem());
-
-                electricityMeter.setId(electricityMeterRequest.getId());
+                electricityMeter.setId(electricityMeterId);
 
                 electricityMeterMapper.updateByPrimaryKeySelective(electricityMeter);
 
@@ -192,7 +190,7 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
                 eleboxRelation.setEleboxId(request.getEleboxId());
 
-                eleboxRelation.setEleboxModelId(electricityMeterRequest.getId());
+                eleboxRelation.setEleboxModelId(electricityMeterId);
 
                 eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.WattHour);
 
@@ -201,12 +199,25 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
                 eleboxRelationMapper.insertSelective(eleboxRelation);
 
                 return Boolean.TRUE;
-
-
-
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean deleteDeployEletricityMeterAndPhotoriod(Long eleboxId, byte EleboxModelType) {
+
+        if (EleboxModelType==(byte) 4){
+            electricityMeterMapper.updateDeployElectricity(eleboxId,EleboxModelType);
+
+            return Boolean.TRUE;
+        }
+        if (EleboxModelType==(byte) 3){
+            electricityMeterMapper.updateDeployPhotoriod(eleboxId,EleboxModelType);
+
+            return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
