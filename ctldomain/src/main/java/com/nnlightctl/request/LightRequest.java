@@ -177,6 +177,7 @@ public class LightRequest {
 
     private Double ratedCurrent;
 
+
     private Double staticPower;
 
     private String alarmMessage;
@@ -198,14 +199,16 @@ public class LightRequest {
     /**
      * 单灯控制器的外键id
      */
-    private Long nnlightctlLampControllerIds;
+    private Long nnlightctlLampControllerId;
 
-    public Long getNnlightctlLampControllerIds() {
-        return nnlightctlLampControllerIds;
+
+
+    public Long getNnlightctlLampControllerId() {
+        return nnlightctlLampControllerId;
     }
 
-    public void setNnlightctlLampControllerIds(Long nnlightctlLampControllerIds) {
-        this.nnlightctlLampControllerIds = nnlightctlLampControllerIds;
+    public void setNnlightctlLampControllerId(Long nnlightctlLampControllerId) {
+        this.nnlightctlLampControllerId = nnlightctlLampControllerId;
     }
 
 

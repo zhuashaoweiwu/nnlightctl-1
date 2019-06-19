@@ -1,14 +1,20 @@
 package com.nnlightctl.springmvc.controller.deploy.controller;
 
 import com.nnlight.common.Tuple;
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.SystemParam;
+import com.nnlightctl.request.LampControllerConditionRequest;
+import com.nnlightctl.request.LampControllerRequest;
+import com.nnlightctl.request.LamppostConditionRequest;
 import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.request.deployRequest.DeployLighting;
 import com.nnlightctl.request.deployRequest.LightingConditionRequest;
 import com.nnlightctl.result.JsonResult;
+import com.nnlightctl.server.LampControllerServer;
 import com.nnlightctl.server.deploy.service.LightingControllerServer;
 import com.nnlightctl.springmvc.controller.BaseController;
+import com.nnlightctl.vo.DeployLightingView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +35,10 @@ public class DeployLightingController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(DeployLightingController.class);
 
     @Autowired
-    private LightingControllerServer lightingController;
+    private LightingControllerServer lightingControllerServer;
+
+    @Autowired
+    private LampControllerServer lampControllerServer;
 
 
     @RequestMapping("addorupdatelightingcontroller")
@@ -49,7 +58,7 @@ public class DeployLightingController extends BaseController {
             return toJson(jsonResult);
         }
 
-        int flag=lightingController.addOrUpdateLightingController(request);
+        int flag=lightingControllerServer.addOrUpdateLightingController(request);
 
         JsonResult jsonResult=null;
 
@@ -72,7 +81,7 @@ public class DeployLightingController extends BaseController {
 
         logger.info("[POST] api/roadlighting/deletelightingcontroller");
 
-        int ret = lightingController.deteleLightingController(request);
+        int ret = lightingControllerServer.deteleLightingController(request);
 
         JsonResult jsonResult=null;
 
@@ -93,7 +102,7 @@ public class DeployLightingController extends BaseController {
 
         logger.info("[POST] api/roadlighting/listlightingcontroller");
 
-        Tuple.TwoTuple<List<Lighting>,Integer> twoTuple=lightingController.listLightingController(request);
+        Tuple.TwoTuple<List<Lighting>,Integer> twoTuple=lightingControllerServer.listLightingController(request);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
 
@@ -112,7 +121,7 @@ public class DeployLightingController extends BaseController {
 
         List<Lighting> lightings=new ArrayList<>(7);
 
-        Lighting lighting = lightingController.selectLightingController(request);
+        Lighting lighting = lightingControllerServer.selectLightingController(request);
 
         lightings.add(lighting);
 
@@ -131,9 +140,9 @@ public class DeployLightingController extends BaseController {
 
         logger.info("[POST]  api/deploy/selectdeploylighting");
 
-        DeployLighting deployLighting = lightingController.selectLightDeploy();
+        DeployLighting deployLighting = lightingControllerServer.selectLightDeploy();
 
-        List<DeployLighting> systemParamList = new ArrayList<>(1);
+        List<DeployLighting> systemParamList = new ArrayList<>(7);
 
         systemParamList.add(deployLighting);
 
@@ -144,17 +153,64 @@ public class DeployLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
+    @RequestMapping("selectByLampModel")
+    public String selectByLampModel(LampControllerRequest request){
+
+        logger.info("[POST] api/deploy/selectByLampModel");
+
+        List<LampController> lampControllerList = lampControllerServer.selectByLampModel(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setData(lampControllerList);
+
+        jsonResult.setTotal(lampControllerList.size());
+
+        return toJson(jsonResult);
+
+
+    }
+
     /**
      * 修改单灯的部署
      */
     @RequestMapping("updatedeploylighting")
-    public String updateDeployLighting(){
+    public String updateDeployLighting(LampControllerRequest request){
 
         logger.info("[POST]  api/deploy/updatedeploylighting");
 
+        int flag = lampControllerServer.deployUpdateLighting(request);
 
+        JsonResult jsonResult=null;
 
-        return null;
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult = JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+    }
+
+    @RequestMapping("showdeploylighting")
+    public String ShowDeploylighting(LampControllerConditionRequest request){
+
+        logger.info("[POST]  api/deploy/showdeploylighting");
+
+        Tuple.TwoTuple<List<DeployLightingView>, Integer> showDeployLighting = lampControllerServer.selectByExampleDeployLighting(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setTotal(showDeployLighting.getSecond());
+
+        jsonResult.setData(showDeployLighting.getFirst());
+
+        return toJson(jsonResult);
     }
 
 

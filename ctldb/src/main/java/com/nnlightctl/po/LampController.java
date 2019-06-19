@@ -38,6 +38,29 @@ public class LampController implements Serializable {
 
     private Long nnlightctlEleboxLoopId;
 
+    private int deployState;
+
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLampModelId;
+
+    /**
+     * 灯头的外键id
+     */
+    private Long nnlightctlLamppostId;
+
+    private Long nnlightctlProjectId;
+
+
+    public Byte getModelDeployState() {
+        return modelDeployState;
+    }
+
+    public void setModelDeployState(Byte modelDeployState) {
+        this.modelDeployState = modelDeployState;
+    }
+
     public Long getNnlightctlEleboxId() {
         return nnlightctlEleboxId;
     }
@@ -54,12 +77,36 @@ public class LampController implements Serializable {
         this.nnlightctlEleboxLoopId = nnlightctlEleboxLoopId;
     }
 
-    public Byte getModelDeployState() {
-        return modelDeployState;
+    public int getDeployState() {
+        return deployState;
     }
 
-    public void setModelDeployState(Byte modelDeployState) {
-        this.modelDeployState = modelDeployState;
+    public void setDeployState(int deployState) {
+        this.deployState = deployState;
+    }
+
+    public Long getNnlightctlLampModelId() {
+        return nnlightctlLampModelId;
+    }
+
+    public void setNnlightctlLampModelId(Long nnlightctlLampModelId) {
+        this.nnlightctlLampModelId = nnlightctlLampModelId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
     }
 
     public String getEquipmentNumber() {
