@@ -8,6 +8,7 @@ import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
 import com.nnlightctl.request.LamppostConditionRequest;
+import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.vo.DeployLightingView;
 import com.nnlightctl.vo.LampControllerView;
 import com.nnlightctl.vo.LightingView;
@@ -37,10 +38,14 @@ public interface LampControllerServer {
 
     List<LampController> selectByLampModel(LampControllerRequest request);
 
-    public List<Map<String,Object>> queryLightingUnLoop();
+    List<DeployLightingView> selectByIdDeployLighting(LampControllerRequest request);
+
+    int deleteDeployLighting(LampControllerConditionRequest request);
 
 
+    Boolean updateShowDeployLighting(DeployLightingRequest request);
 
+    List<Map<String,Object>> queryLightingUnLoop();
 
 
 }

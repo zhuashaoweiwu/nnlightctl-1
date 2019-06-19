@@ -3,12 +3,11 @@ package com.nnlightctl.springmvc.controller.deploy.controller;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
-import com.nnlightctl.po.SystemParam;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
-import com.nnlightctl.request.LamppostConditionRequest;
 import com.nnlightctl.request.LightRequest;
 import com.nnlightctl.request.deployRequest.DeployLighting;
+import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.request.deployRequest.LightingConditionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.LampControllerServer;
@@ -210,6 +209,88 @@ public class DeployLightingController extends BaseController {
 
         jsonResult.setData(showDeployLighting.getFirst());
 
+        return toJson(jsonResult);
+    }
+
+    /**
+     * 修改部署的灯具
+     */
+    @RequestMapping("showupdatedeploylighting")
+    public String showUpdateDeployLighting(DeployLightingRequest request){
+
+        logger.info("[POST] api/deploy/showupdatedeploylighting");
+
+
+        Boolean flag= lampControllerServer.updateShowDeployLighting(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag==true){
+
+            jsonResult=JsonResult.getSUCCESS();
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+        }
+
+        return toJson(jsonResult);
+
+    }
+
+    /**
+     * 通过主键id查询部署的灯具
+     */
+    @RequestMapping("selectbyiddeploylighting")
+    public String selectByIdDeployLighting(LampControllerRequest request){
+
+        logger.info("[POST]  api/deploy/selectbyiddeploylighting");
+
+        List<DeployLightingView> deployLightingViews = lampControllerServer.selectByIdDeployLighting(request);
+
+        JsonResult jsonResult=null;
+
+        if (deployLightingViews==null){
+
+            jsonResult = JsonResult.getFAILURE();
+        }else {
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(1);
+
+            jsonResult.setData(deployLightingViews);
+
+        }
+
+
+
+        return toJson(jsonResult);
+
+    }
+
+    /**
+     * 删除部署部署的灯具
+     */
+    @RequestMapping("deletedeploylighting")
+    public String deleteDeployLighting(LampControllerConditionRequest request){
+
+        logger.info("[POST] api/deploy/deletedeploylighting");
+
+        int flag = lampControllerServer.deleteDeployLighting(request);
+
+        JsonResult jsonResult=null;
+
+        if (flag>0){
+
+            jsonResult = JsonResult.getSUCCESS();
+
+            jsonResult.setTotal(-1);
+
+        }else {
+
+            jsonResult=JsonResult.getFAILURE();
+
+        }
         return toJson(jsonResult);
     }
 

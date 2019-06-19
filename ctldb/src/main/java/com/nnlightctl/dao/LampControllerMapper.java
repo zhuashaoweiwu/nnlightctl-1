@@ -38,5 +38,13 @@ public interface LampControllerMapper {
 
     List<LampController> selectByLampModel(@Param("lampModel") String lampModel);
 
+    DeployLightingView selectByIdDeployLighting(@Param("id") Long id);
+
+    /**
+     * 通过id修改状态
+     */
+    int updateByDeployLightingState(@Param("id") Long id);
+
+
 
 }

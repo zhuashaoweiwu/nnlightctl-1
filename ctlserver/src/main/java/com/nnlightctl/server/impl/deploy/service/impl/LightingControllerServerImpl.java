@@ -192,7 +192,7 @@ public class LightingControllerServerImpl implements LightingControllerServer {
 
             lightingView.setId(lightingModel.getId());
             //灯具的型号
-            lightingView.setLightingCode(lightingModel.getModelName());
+            lightingView.setModelType(lightingModel.getEquipmentNumber());
 
             lightingViews.add(lightingView);
         }

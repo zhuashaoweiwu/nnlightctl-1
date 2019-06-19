@@ -157,6 +157,13 @@ public class LightingView extends BaseView {
         this.nnlightctlEleboxModelLoopId = nnlightctlEleboxModelLoopId;
     }
 
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
+    }
 
     private Long nnlightctlEleboxModelLoopId;
 
@@ -195,5 +202,7 @@ public class LightingView extends BaseView {
     private String regionLevelDesc;
 
     private Long nnlightctlRegionId;
+
+    private String modelType;
 
 }

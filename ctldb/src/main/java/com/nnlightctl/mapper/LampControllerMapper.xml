@@ -197,6 +197,15 @@
          where nnlightctl_elebox_id = #{eleboxId,jdbcType=BIGINT}
 
     </update>
+    <update id="updateByDeployLightingState" parameterType="java.lang.Long">
+        update nnlightctl_lamp_controller set nnlightctl_lamp_model_id=null ,
+
+        nnlightctl_lamppost_id=null,nnlightctl_project_id=null ,deploy_state=0
+
+        where id=#{id,jdbcType=INTEGER}
+
+
+    </update>
 
 
     <delete id="deleteByPrimaryKey" parameterType="long">
@@ -269,7 +278,7 @@
         select
         controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
         controller.static_power as staticPower,controller.mem as mem,lamppost.lamppost_model as lamppostModel,
-        lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as equipmentNumber
+        lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as modelType
         from
         nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
         lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
@@ -295,6 +304,25 @@
             </if>
         </where>
     </select>
+
+    <select id="selectByIdDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView">
+          select
+          controller.id as id,
+		  controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
+		  controller.static_power as staticPower,controller.mem as mem,lamppost.lamppost_model as lamppostModel,
+          lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as modelType
+          from
+            nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
+			lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
+			left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
+
+        where  controller.deploy_state=1 and controller.id=#{id,jdbcType=INTEGER}
+
+
+
+    </select>
+
+
 
 
 </mapper>

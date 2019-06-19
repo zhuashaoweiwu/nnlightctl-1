@@ -35,7 +35,7 @@ public class LampControllerRequest {
     private Long nnlightctlLampModelId;
 
     /**
-     * 灯头的外键id
+     * 灯杆的外键id
      */
     private Long nnlightctlLamppostId;
 

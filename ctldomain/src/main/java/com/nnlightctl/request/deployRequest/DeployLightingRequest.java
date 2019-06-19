@@ -1,22 +1,27 @@
-package com.nnlightctl.vo;
+package com.nnlightctl.request.deployRequest;
 
-public class DeployLightingView {
-
-    private Long id;
+public class DeployLightingRequest {
     /**
      * 单灯控制器的型号
      */
+    private Long lampControllerId;
+
     private String lampModel;
 
     /**
-     * 灯具的类型
+     * 灯具的型号
      */
-    private String modelType;
+    private Long nnlightctlLampModelId;
+
+    private String ModelType;
 
     /**
      * 灯具的imei
      */
     private String equipmentNumber;
+
+
+    private Long nnlightctlLamppostId;
 
     /**
      * 灯杆的型号
@@ -31,6 +36,8 @@ public class DeployLightingView {
     /**
      * 项目
      */
+    private Long nnlightctlProjectId;
+
     private String projectName;
 
     /**
@@ -43,12 +50,12 @@ public class DeployLightingView {
      */
     private Double staticPower;
 
-    public Long getId() {
-        return id;
+    public String getModelType() {
+        return ModelType;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setModelType(String modelType) {
+        ModelType = modelType;
     }
 
     public String getLampModel() {
@@ -59,13 +66,46 @@ public class DeployLightingView {
         this.lampModel = lampModel;
     }
 
-    public String getModelType() {
-        return modelType;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setModelType(String modelType) {
-        this.modelType = modelType;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
+
+    public Long getLampControllerId() {
+        return lampControllerId;
+    }
+
+    public void setLampControllerId(Long lampControllerId) {
+        this.lampControllerId = lampControllerId;
+    }
+
+    public Long getNnlightctlLampModelId() {
+        return nnlightctlLampModelId;
+    }
+
+    public void setNnlightctlLampModelId(Long nnlightctlLampModelId) {
+        this.nnlightctlLampModelId = nnlightctlLampModelId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
+
 
     public String getEquipmentNumber() {
         return equipmentNumber;
@@ -91,13 +131,6 @@ public class DeployLightingView {
         this.lamppostNumber = lamppostNumber;
     }
 
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
 
     public String getMem() {
         return mem;

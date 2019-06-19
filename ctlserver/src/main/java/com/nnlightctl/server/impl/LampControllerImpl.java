@@ -5,14 +5,22 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LampControllerMapper;
+import com.nnlightctl.dao.LamppostMapper;
+import com.nnlightctl.dao.LightingModelMapper;
+import com.nnlightctl.dao.ProjectMapper;
 import com.nnlightctl.parameter.LampControllerParameter;
 import com.nnlightctl.po.LampController;
+import com.nnlightctl.po.Lamppost;
+import com.nnlightctl.po.LightingModel;
+import com.nnlightctl.po.Project;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
+import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.server.LampControllerServer;
 import com.nnlightctl.vo.DeployLightingView;
 import com.nnlightctl.vo.LampControllerView;
-import com.nnlightctl.vo.LightingView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +31,22 @@ import java.util.Map;
 @Service
 public class LampControllerImpl implements LampControllerServer {
 
+    private static final Logger logger= LoggerFactory.getLogger(LampControllerImpl.class);
+
 
     @Autowired
     private LampControllerMapper lampControllerMapper;
+
+    @Autowired
+    private LamppostMapper lamppostMapper;
+
+    @Autowired
+    private ProjectMapper projectMapper;
+
+    @Autowired
+    private LightingModelMapper lightingModelMapper;
+
+
 
     //判断标志位
     private Integer flag = null;
@@ -187,6 +208,106 @@ public class LampControllerImpl implements LampControllerServer {
         List<LampController> lampControllerList = lampControllerMapper.selectByLampModel(lampModel);
 
         return lampControllerList;
+    }
+
+    @Override
+    public List<DeployLightingView> selectByIdDeployLighting(LampControllerRequest request) {
+
+        Long id = request.getId();
+
+        List<DeployLightingView> lightingViews=new ArrayList<>(7);
+
+        DeployLightingView deployLightingView = lampControllerMapper.selectByIdDeployLighting(id);
+
+        lightingViews.add(deployLightingView);
+
+        return lightingViews;
+    }
+
+    @Override
+    public int deleteDeployLighting(LampControllerConditionRequest request) {
+
+        List<Long> lampControllerIds = request.getLampControllerIds();
+
+        int flag=-1;
+
+        for (Long lampControllerId : lampControllerIds) {
+
+            flag = lampControllerMapper.updateByDeployLightingState(lampControllerId);
+
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean updateShowDeployLighting(DeployLightingRequest request) {
+
+        try {
+            LampController lampController=new LampController();
+
+            lampController.setId(request.getLampControllerId());
+
+            lampController.setEquipmentNumber(request.getEquipmentNumber());
+
+            lampController.setLampModel(request.getLampModel());
+
+            lampController.setMem(request.getMem());
+
+            lampController.setStaticPower(request.getStaticPower());
+
+            /**
+             * 修改单灯控制器的数据
+             */
+            lampControllerMapper.updateByPrimaryKey(lampController);
+
+            Lamppost lamppost=new Lamppost();
+
+            lamppost.setId(request.getNnlightctlLamppostId());
+
+            lamppost.setLamppostModel(request.getLamppostModel());
+
+            lamppost.setLampheadNumber(request.getLamppostNumber());
+
+            /**
+             * 灯杆
+             */
+
+            lamppostMapper.updateByPrimaryKeyLamppost(lamppost);
+
+            Project project=new Project();
+
+            project.setId(request.getNnlightctlProjectId());
+
+            /**
+             * 项目
+             */
+
+            project.setProjectName(request.getProjectName());
+
+            projectMapper.updateByPrimaryKeySelective(project);
+
+            /**
+             * 灯具类型
+             */
+            LightingModel lightingModel=new LightingModel();
+
+            lightingModel.setId(request.getNnlightctlLampModelId());
+
+            lightingModel.setEquipmentNumber(request.getModelType());
+
+            lightingModelMapper.updateByPrimaryKeySelective(lightingModel);
+
+            return Boolean.TRUE;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            logger.info("修改失败");
+        }
+
+
+        return Boolean.FALSE;
     }
 
 
