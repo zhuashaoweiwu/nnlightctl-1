@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.nnlightctl.po.ProjectCountry;
 import com.nnlightctl.result.JsonResult;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 public class BaseController {
     /**
      * 对象返回json字符串
+     *
      * @param jsonResult
      * @return
      */
@@ -46,8 +48,8 @@ public class BaseController {
         body.put("total", jsonResult.getTotal());
 
         jsonObject.put("body", body);
-
-        return jsonObject.toJSONString();
+        return JSONObject.toJSONString(jsonObject, SerializerFeature.WriteMapNullValue);
+//        return jsonObject.toJSONString();
     }
 
     @ExceptionHandler(RuntimeException.class)

@@ -10,7 +10,7 @@ public class DeployLoopByView {
 
     private String mem;
 
-    private List<DeployLoopLightctlByView> lightctlList;
+    private List<DeployLoopLightctlByView> lightingList;
 
     public Long getId() {
         return id;
@@ -36,11 +36,11 @@ public class DeployLoopByView {
         this.mem = mem;
     }
 
-    public List<DeployLoopLightctlByView> getLightctlList() {
-        return lightctlList;
+    public List<DeployLoopLightctlByView> getLightingList() {
+        return lightingList;
     }
 
-    public void setLightctlList(List<DeployLoopLightctlByView> lightctlList) {
-        this.lightctlList = lightctlList;
+    public void setLightingList(List<DeployLoopLightctlByView> lightingList) {
+        this.lightingList = lightingList;
     }
 }

@@ -18,7 +18,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="loop_code" property="loopCode" jdbcType="VARCHAR" />
     <result column="mem" property="mem" jdbcType="VARCHAR" />
-    <collection property="lightctlList" ofType="com.nnlightctl.vo.DeployLoopLightctlByView">
+    <collection property="lightingList" ofType="com.nnlightctl.vo.DeployLoopLightctlByView">
       <result column="LcId" property="id"/>
       <result column="equipment_number" property="equipmentNumber"/>
     </collection>
