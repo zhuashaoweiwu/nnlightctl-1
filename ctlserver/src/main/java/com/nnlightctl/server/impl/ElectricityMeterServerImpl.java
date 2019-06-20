@@ -209,12 +209,12 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
     @Override
     public Boolean deleteDeployEletricityMeterAndPhotoriod(Long eleboxId, byte EleboxModelType) {
 
-        if (EleboxModelType==(byte) 4){
+        if (EleboxModelType==(byte) 3){
             electricityMeterMapper.updateDeployElectricity(eleboxId,EleboxModelType);
 
             return Boolean.TRUE;
         }
-        if (EleboxModelType==(byte) 3){
+        if (EleboxModelType==(byte) 4){
             electricityMeterMapper.updateDeployPhotoriod(eleboxId,EleboxModelType);
 
             return Boolean.TRUE;

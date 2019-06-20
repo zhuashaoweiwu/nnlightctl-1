@@ -46,6 +46,7 @@ public class LampControllerRequest {
     private Long nnlightctlProjectId;
 
 
+
     public Long getNnlightctlLampModelId() {
         return nnlightctlLampModelId;
     }

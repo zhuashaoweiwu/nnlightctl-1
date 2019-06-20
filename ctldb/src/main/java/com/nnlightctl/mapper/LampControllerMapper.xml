@@ -4,8 +4,8 @@
     <resultMap id="BaseResultMap" type="com.nnlightctl.po.LampController" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="equipment_number" property="equipmentNumber" jdbcType="VARCHAR"/>
-        <result column="lamp_model" property="lampName" jdbcType="VARCHAR" />
-        <result column="lamp_name" property="lampModel" jdbcType="VARCHAR" />
+        <result column="lamp_model" property="lampModel" jdbcType="VARCHAR" />
+        <result column="lamp_name" property="lampName" jdbcType="VARCHAR" />
         <result column="longitude" property="longitude" jdbcType="VARCHAR" />
         <result column="latitude" property="latitude" jdbcType="VARCHAR" />
         <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
         <result column="mem" property="mem" jdbcType="VARCHAR" />
         <result column="model_deploy_state" property="modelDeployState" jdbcType="TINYINT" />
         <result column="deploy_state" property="deployState" jdbcType="INTEGER" />
-        <!--维护的外键-->
+
         <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightctlLamppostId" />
         <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLampModelId" />
         <result column="nnlightctl_project_id" jdbcType="INTEGER" property="nnlightctlProjectId"/>
@@ -64,7 +64,7 @@
             <if test="deployState">
                 deploy_state,
             </if>
-            /*维护的外键*/
+
             <if test="nnlightctlLamppostId != null">
                 nnlightctl_lamppost_id,
             </if>
@@ -115,7 +115,7 @@
             <if test="deployState !=null">
                 #{deployState,jdbcType=INTEGER},
             </if>
-            /*维护的外键*/
+
             <if test="nnlightctlLamppostId != null">
                 #{nnlightctlLamppostId,jdbcType=INTEGER},
             </if>
@@ -169,24 +169,23 @@
              <if test="deployState !=null">
                  deploy_state=#{deployState,jdbcType=INTEGER},
              </if>
-             /*维护的外键*/
-             <if test="nnlightctlLamppostId != null">
+             <if test="nnlightctlLamppostId != null " >
                  nnlightctl_lamppost_id = #{nnlightctlLamppostId,jdbcType=INTEGER},
              </if>
-             <if test="nnlightctlLampModelId != null">
+             <if test="nnlightctlLampModelId != null " >
                  nnlightctl_lamp_model_id = #{nnlightctlLampModelId,jdbcType=INTEGER},
              </if>
-             <if test="nnlightctlProjectId !=null">
-                 nnlightctl_project_id=#{nnlightctlProjectId,jdbcType=INTEGER}
+             <if test="nnlightctlProjectId !=null " >
+                 nnlightctl_project_id=#{nnlightctlProjectId,jdbcType=INTEGER},
              </if>
-             <if test="modelDeployState !=null">
-                 model_deploy_state=#{modelDeployState,jdbcType=TINYINT}
+             <if test="modelDeployState !=null " >
+                 model_deploy_state=#{modelDeployState,jdbcType=TINYINT},
              </if>
-             <if test="nnlightctlEleboxId !=null">
-                 nnlightctl_elebox_id=#{nnlightctlEleboxId,jdbcType=BIGINT}
+             <if test="nnlightctlEleboxId !=null " >
+                 nnlightctl_elebox_id=#{nnlightctlEleboxId,jdbcType=BIGINT},
              </if>
-             <if test="nnlightctlEleboxLoopId !=null">
-                 nnlightctl_elebox_loop_id=#{nnlightctlEleboxLoopId,jdbcType=BIGINT}
+             <if test="nnlightctlEleboxLoopId !=null " >
+                 nnlightctl_elebox_loop_id=#{nnlightctlEleboxLoopId,jdbcType=BIGINT},
              </if>
          </set>
            where id = #{id,jdbcType=BIGINT}
@@ -214,11 +213,7 @@
     </delete>
     <select id="selectByCount" resultType="java.lang.Integer">
         select count(*) from nnlightctl_lamp_controller
-        <!--<where>
-            <if test="deployState !=null">
-                deploy_state=#{deployState,jdbcType=INTEGER}
-            </if>
-        </where>-->
+
     </select>
     <select id="queryLightingByLoop" resultType="java.lang.String" parameterType="java.lang.Long">
         select equipment_number as equipmentNumber   from nnlightctl_lamp_controller where nnlightctl_elebox_loop_id  = #{loopId,jdbcType=BIGINT}
@@ -300,9 +295,11 @@
         select id,equipment_number,mem,static_power from nnlightctl_lamp_controller
         <where>
             <if test="lampModel !=null">
-                lamp_model=#{lampModel,jdbcType=VARCHAR}
+               lamp_model=#{lampModel,jdbcType=VARCHAR}
             </if>
+            and nnlightctl_lamp_controller.deploy_state=0
         </where>
+
     </select>
 
     <select id="selectByIdDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView">
@@ -316,7 +313,7 @@
 			lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
 			left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
 
-        where  controller.deploy_state=1 and controller.id=#{id,jdbcType=INTEGER}
+            where  controller.deploy_state=1 and controller.id=#{id,jdbcType=INTEGER}
 
 
 

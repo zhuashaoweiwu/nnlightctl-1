@@ -35,6 +35,7 @@ public class LampControllerView {
 
     private List imeiList;
 
+
     public List getImeiList() {
         return imeiList;
     }
