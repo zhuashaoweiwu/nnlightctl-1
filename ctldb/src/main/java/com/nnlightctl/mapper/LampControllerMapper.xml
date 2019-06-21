@@ -306,10 +306,10 @@
 
         where  controller.deploy_state=1
         <if test="equipmentNumber !=null">
-            controller.equipment_number like concat('%',#{equipmentNumber},'%')
+            controller.equipment_number like concat('%',#{params.equipmentNumber},'%')
         </if>
         <if test="lampModel !=null">
-            controller.lamp_model like concat('%',#{lampModel},'%')
+            controller.lamp_model like concat('%',#{params.lampModel},'%')
         </if>
         order by controller.id DESC
     </select>
