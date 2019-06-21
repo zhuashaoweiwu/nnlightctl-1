@@ -126,7 +126,7 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
 
         if (!StringUtils.isEmpty(request.getCentralizeName())){
 
-            criteria.andCentralizeNameLike("%"+request.getEquipmentNumber()+"%");
+            criteria.andCentralizeNameLike("%"+request.getCentralizeName()+"%");
         }
 
 

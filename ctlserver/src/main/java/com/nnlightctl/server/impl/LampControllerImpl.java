@@ -108,9 +108,8 @@ public class LampControllerImpl implements LampControllerServer {
 
         LampController lampController = new LampController();
 
-        String equipmentNumber = request.getEquipmentNumber();
+        ReflectCopyUtil.beanSameFieldCopy(request,lampController);
 
-        lampController.setEquipmentNumber(equipmentNumber);
 
         List<LampController> lampControllers = lampControllerMapper.selectAll(lampController);
 

@@ -103,7 +103,7 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
          if (!StringUtils.isEmpty(request.getElectricityName())){
 
-             criteria.andElectricityNameLike("%"+request.getEquipmentNumber()+"%");
+             criteria.andElectricityNameLike("%"+request.getElectricityName()+"%");
          }
 
         List<ElectricityMeterView> electricityMeterViews=new ArrayList<>(7);

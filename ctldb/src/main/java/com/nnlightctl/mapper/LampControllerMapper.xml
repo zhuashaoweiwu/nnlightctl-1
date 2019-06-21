@@ -248,6 +248,12 @@
              <if test="params.equipmentNumber !=null">
                 equipment_number like concat('%',#{params.equipmentNumber},'%')
              </if>
+             <if test="params.lampModel !=null">
+               AND  lamp_model like concat('%',#{params.lampModel},'%')
+             </if>
+             <if test="params.lampName !=null">
+               AND lamp_name like concat('%',#{params.lampName},'%')
+             </if>
          </where>
     </select>
 
@@ -289,10 +295,10 @@
         select
         controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
         controller.static_power as staticPower,controller.mem as mem,
-        lamppost.id as nnlightctlLamppostId,lamppost.lamppost_model as lamppostModel,
+        lamppost.lamppost_model as lamppostModel,
         lamppost.lamphead_number as lamppostNumber ,
-        p.id as nnlightctlProjectId,p.project_name as projectName,
-        model.id as nnlightctlLampModelId,model.equipment_number as modelType
+        p.project_name as projectName,
+        model.equipment_number as modelType
         from
         nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
         lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
@@ -300,7 +306,10 @@
 
         where  controller.deploy_state=1
         <if test="equipmentNumber !=null">
-            equipment_number like concat('%',#{equipmentNumber},'%')
+            controller.equipment_number like concat('%',#{equipmentNumber},'%')
+        </if>
+        <if test="lampModel !=null">
+            controller.lamp_model like concat('%',#{lampModel},'%')
         </if>
         order by controller.id DESC
     </select>
