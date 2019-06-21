@@ -25,6 +25,29 @@ public class LampControllerConditionRequest extends BaseRequest{
 
     private int deployState;
 
+    private int pageNumber;
+
+    private int pageSize;
+
+    @Override
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    @Override
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    @Override
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public int getDeployState() {
         return deployState;
