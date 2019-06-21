@@ -263,6 +263,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                     eleboxModelLoop.setState((byte) 1);
                     eleboxModelLoop.setLoopCode(loopRequest.getLoopCode());
                     eleboxModelLoop.setNnlightctlEleboxModelId(exleboxModelId);
+                    eleboxModelLoop.setMem(loopRequest.getMem());
                     eleboxModelLoop.setGmtCreated(new Date());
                     eleboxModelLoop.setGmtUpdated(new Date());
                     eleboxModelLoopMapper.insertSelective(eleboxModelLoop);
