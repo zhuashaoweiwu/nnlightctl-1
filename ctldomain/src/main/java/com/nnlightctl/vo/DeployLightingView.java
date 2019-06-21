@@ -11,6 +11,8 @@ public class DeployLightingView {
     /**
      * 灯具的类型
      */
+
+
     private String modelType;
 
     /**
@@ -42,6 +44,46 @@ public class DeployLightingView {
      * 灯具的功率
      */
     private Double staticPower;
+
+    /**
+     * 灯具的外键id
+     */
+    private Long nnlightctlLampModelId;
+
+    /**
+     * 灯杆的外键id
+     */
+    private Long nnlightctlLamppostId;
+
+    /**
+     *
+     * 所属项目id
+     */
+    private Long nnlightctlProjectId;
+
+    public Long getNnlightctlLampModelId() {
+        return nnlightctlLampModelId;
+    }
+
+    public void setNnlightctlLampModelId(Long nnlightctlLampModelId) {
+        this.nnlightctlLampModelId = nnlightctlLampModelId;
+    }
+
+    public Long getNnlightctlLamppostId() {
+        return nnlightctlLamppostId;
+    }
+
+    public void setNnlightctlLamppostId(Long nnlightctlLamppostId) {
+        this.nnlightctlLamppostId = nnlightctlLamppostId;
+    }
+
+    public Long getNnlightctlProjectId() {
+        return nnlightctlProjectId;
+    }
+
+    public void setNnlightctlProjectId(Long nnlightctlProjectId) {
+        this.nnlightctlProjectId = nnlightctlProjectId;
+    }
 
     public Long getId() {
         return id;

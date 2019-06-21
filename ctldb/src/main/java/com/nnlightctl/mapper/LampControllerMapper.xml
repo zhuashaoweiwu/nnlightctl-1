@@ -272,8 +272,11 @@
     <select id="selectByExampleDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView" parameterType="java.lang.String">
         select
         controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
-        controller.static_power as staticPower,controller.mem as mem,lamppost.lamppost_model as lamppostModel,
-        lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as modelType
+        controller.static_power as staticPower,controller.mem as mem,
+        lamppost.id as nnlightctlLamppostId,lamppost.lamppost_model as lamppostModel,
+        lamppost.lamphead_number as lamppostNumber ,
+        p.id as nnlightctlProjectId,p.project_name as projectName,
+        model.id as nnlightctlLampModelId,model.equipment_number as modelType
         from
         nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
         lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
@@ -303,15 +306,17 @@
     </select>
 
     <select id="selectByIdDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView">
-          select
-          controller.id as id,
-		  controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
-		  controller.static_power as staticPower,controller.mem as mem,lamppost.lamppost_model as lamppostModel,
-          lamppost.lamphead_number as lampheadNumber ,p.project_name as projectName,model.equipment_number as modelType
-          from
-            nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
-			lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
-			left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
+         select
+        controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
+        controller.static_power as staticPower,controller.mem as mem,
+        lamppost.id as nnlightctlLamppostId,lamppost.lamppost_model as lamppostModel,
+        lamppost.lamphead_number as lamppostNumber ,
+        p.id as nnlightctlProjectId,p.project_name as projectName,
+        model.id as nnlightctlLampModelId,model.equipment_number as modelType
+        from
+        nnlightctl_lamp_controller  controller left join nnlightctl_lamppost  lamppost on  controller.nnlightctl_lamppost_id =
+        lamppost.id  left join  nnlightctl_lighting_model  model on  model.id  = controller.nnlightctl_lamp_model_id
+        left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
 
             where  controller.deploy_state=1 and controller.id=#{id,jdbcType=INTEGER}
 

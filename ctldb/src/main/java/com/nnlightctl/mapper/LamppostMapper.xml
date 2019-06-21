@@ -167,6 +167,7 @@
                AND  lamppost_model like concat('%',#{lamppost.lamppostModel},'%')
              </if>
          </where>
+         order by id desc
     </select>
     <select id="selectLampById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.Lamppost">
         select <include refid="Base_Column_List" />

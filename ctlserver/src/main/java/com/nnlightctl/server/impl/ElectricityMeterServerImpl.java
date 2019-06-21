@@ -116,6 +116,8 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
+        electricityMeterExample.setOrderByClause("id DESC");
+
         List<ElectricityMeter> electricityMeters = electricityMeterMapper.selectByExample(electricityMeterExample);
 
         for (ElectricityMeter electricityMeter : electricityMeters) {
@@ -195,6 +197,8 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
                 eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.WattHour);
 
                 eleboxRelation.setGmtUpdated(new Date());
+
+                eleboxRelation.setGmtCreated(new Date());
 
                 eleboxRelationMapper.insertSelective(eleboxRelation);
 

@@ -232,7 +232,7 @@
         #{equipmentNumber,jdbcType=VARCHAR},
       </if>
       <if test="colorMode !=null">
-        #{colorMode,jdbcType=VARCHAR}
+        #{colorMode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

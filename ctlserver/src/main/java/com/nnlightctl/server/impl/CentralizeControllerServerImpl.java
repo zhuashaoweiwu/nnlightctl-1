@@ -132,6 +132,8 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
 
         PageHelper.startPage(request.getPageNumber(),request.getPageSize());
 
+        centralizeControllerExample.setOrderByClause("id DESC");
+
         List<CentralizeControllerView> viewList=new ArrayList<>(7);
 
         List<CentralizeController> centralizeControllers = centralizeControllerMapper.selectByExample(centralizeControllerExample);
