@@ -198,6 +198,7 @@ public class EleboxServerImpl implements EleboxServer {
             //更改所有单灯loop为控部署状态置为0
             List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(deleteEleboxId);
             lampControllerMapper.updateByEleboxId(deleteEleboxId);
+            if(!PubMethod.isEmpty(modelIds))
             //删除所有回路
             eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
             //置空开关模块的控制柜ID

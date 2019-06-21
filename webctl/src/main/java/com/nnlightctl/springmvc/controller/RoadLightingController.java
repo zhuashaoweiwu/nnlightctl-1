@@ -937,7 +937,7 @@ public class RoadLightingController extends BaseController {
     public String getLoopLight(Long id) {
         logger.info("[POST] /api/roadlighting/getLoopLight");
 
-        List<LightingView> lightingList = lightServer.getLightByLoopId(id);
+        List<LampController> lightingList = lightServer.getLightByLoopId(id);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(lightingList);
@@ -1192,9 +1192,9 @@ public class RoadLightingController extends BaseController {
     public String getLighting(Long id) {
         logger.info("[POST] /api/roadlighting/getLighting");
 
-        LightingView lightingView = this.lightServer.getLightingView(id);
+        LampController lightingView = this.lightServer.getLightingView(id);
 
-        List<LightingView> data = new ArrayList<>(1);
+        List<LampController> data = new ArrayList<>(1);
         data.add(lightingView);
 
         JsonResult jsonResult = JsonResult.getSUCCESS();

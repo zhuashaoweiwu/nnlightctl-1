@@ -111,9 +111,8 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectModelIdByEleboxId"   parameterType="java.lang.Long">
-    select  id from nnlightctl_elebox_model where nnlightctl_elebox_id = #{eleboxId,jdbcType=BIGINT}
-
+    <select id="selectModelIdByEleboxId"   parameterType="java.lang.Long" resultType="java.lang.Long">
+      select  id from nnlightctl_elebox_model where nnlightctl_elebox_id = #{eleboxId,jdbcType=BIGINT}
     </select>
 
 

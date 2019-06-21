@@ -28,6 +28,8 @@ public interface LampControllerMapper {
 
     List<LampController> selectByParameter(@Param("params")LampControllerParameter parameter);
 
+    LampController selectByPrimaryKey(@Param("id")Long id);
+
     int updateByEleboxId(@Param("eleboxId") Long eleboxId);
 
     List<String> queryLightingByLoop(@Param("loopId") Long loopId);
@@ -44,6 +46,8 @@ public interface LampControllerMapper {
      * 通过id修改状态
      */
     int updateByDeployLightingState(@Param("id") Long id);
+
+    List<LampController> queryLightingInfoByLoop(@Param("loopId") Long loopId);
 
 
 

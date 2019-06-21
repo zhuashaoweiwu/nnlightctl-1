@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -158,8 +160,8 @@ public class DeployEleboxController extends BaseController {
     }
 
 
-    @RequestMapping("deployExleboxModify")
-    public String deployExleboxModify(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+    @RequestMapping(value =  "deployExleboxModify", method = RequestMethod.POST, consumes = "application/json")
+    public String deployExleboxModify(@RequestBody DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/deployExleboxModify");
 
         //参数检验

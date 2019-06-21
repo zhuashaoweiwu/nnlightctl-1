@@ -10,6 +10,8 @@ public class DeployLoopByView {
 
     private String mem;
 
+    private Long exleboxModelId;
+
     private List<DeployLoopLightctlByView> lightingList;
 
     public Long getId() {
@@ -42,5 +44,13 @@ public class DeployLoopByView {
 
     public void setLightingList(List<DeployLoopLightctlByView> lightingList) {
         this.lightingList = lightingList;
+    }
+
+    public Long getExleboxModelId() {
+        return exleboxModelId;
+    }
+
+    public void setExleboxModelId(Long exleboxModelId) {
+        this.exleboxModelId = exleboxModelId;
     }
 }

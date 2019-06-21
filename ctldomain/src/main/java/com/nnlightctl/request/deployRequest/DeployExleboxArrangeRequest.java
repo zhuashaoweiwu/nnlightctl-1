@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
 
-public class DeployExleboxArrangeRequest  extends BaseRequest {
+public class DeployExleboxArrangeRequest  {
 
     private Long exleboxId;
 
@@ -21,6 +21,7 @@ public class DeployExleboxArrangeRequest  extends BaseRequest {
     private List<DeployEleboxModelLoopRequest> modelLoopRequests;
 
     private List<DeployEleboxModelLoopRequest> controllerRequests;
+
 
 
     public List<DeployEleboxModelLoopRequest> getModelLoopRequests() {
