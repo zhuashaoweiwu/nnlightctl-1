@@ -528,22 +528,7 @@
       <if test="gmtUpdated != null" >
         gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="lightingCode != null" >
-        lighting_code = #{lightingCode,jdbcType=VARCHAR},
-      </if>
-      <if test="lightingImei != null" >
-        lighting_imei = #{lightingImei,jdbcType=VARCHAR},
-      </if>
-      <if test="realtimeUid != null" >
-        realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
-      </if>
-      <if test="manufacture != null" >
-        manufacture = #{manufacture,jdbcType=TIMESTAMP},
-      </if>
-      <if test="useDate != null" >
+      <if test="uidDate != null" >
         use_date = #{useDate,jdbcType=TIMESTAMP},
       </if>
       <if test="lamppost != null" >
@@ -567,7 +552,22 @@
       <if test="propertySerialNumber != null" >
         property_serial_number = #{propertySerialNumber,jdbcType=VARCHAR},
       </if>
-      <if test="decay != null" >
+      <if test="dec != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="lightingCode != null" >
+        lighting_code = #{lightingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lightingImei != null" >
+        lighting_imei = #{lightingImei,jdbcType=VARCHAR},
+      </if>
+      <if test="realtimeUid != null" >
+        realtime_uid = #{realtimeUid,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacture != null" >
+        manufacture = #{manufacture,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useay != null" >
         decay = #{decay,jdbcType=DECIMAL},
       </if>
       <if test="maxUseTime != null" >
