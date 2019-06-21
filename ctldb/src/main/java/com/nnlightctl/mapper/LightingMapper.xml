@@ -28,6 +28,7 @@
     <result column="loop_priority" property="loopPriority" jdbcType="TINYINT" />
     <result column="fault_tag" property="faultTag" jdbcType="TINYINT" />
     <!--新添加字段-->
+
     <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
     <result column="dimming_mode" property="dimmingMode" jdbcType="INTEGER" />
     <result column="rated_voltage" property="ratedVoltage" jdbcType="DECIMAL" />
@@ -247,6 +248,7 @@
         fault_tag,
       </if>
       /*新添加字段*/
+
       <if test="lampModel != null" >
         lamp_model,
       </if>
@@ -350,6 +352,7 @@
         #{faultTag,jdbcType=TINYINT},
       </if>
       /*新添加字段*/
+
       <if test="lampModel != null" >
         #{lampModel,jdbcType=VARCHAR},
       </if>
@@ -592,6 +595,7 @@
         fault_tag = #{faultTag,jdbcType=TINYINT},
       </if>
       /*新添加字段*/
+
       <if test="lampModel != null" >
         lamp_model=#{lampModel,jdbcType=VARCHAR},
       </if>
