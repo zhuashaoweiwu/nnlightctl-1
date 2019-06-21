@@ -62,6 +62,11 @@ public class LightModelServerImpl implements LightModelServer {
             lightingModelExample.createCriteria().andModelNameLike("%"+request.getModelName()+"%");
         }
 
+        if (!StringUtils.isEmpty(request.getModularModel())){
+
+            lightingModelExample.createCriteria().andModelNameLike("%"+request.getModularModel()+"%");
+        }
+
         int total = this.lightingModelMapper.countByExample(lightingModelExample);
 
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());

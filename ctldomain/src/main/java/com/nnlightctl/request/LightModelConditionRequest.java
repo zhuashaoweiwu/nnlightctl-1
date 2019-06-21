@@ -25,7 +25,15 @@ public class LightModelConditionRequest extends BaseRequest {
 
     private String equipmentNumber;
 
+    private String modularModel;
 
+    public String getModularModel() {
+        return modularModel;
+    }
+
+    public void setModularModel(String modularModel) {
+        this.modularModel = modularModel;
+    }
 
     public String getEquipmentNumber() {
         return equipmentNumber;
