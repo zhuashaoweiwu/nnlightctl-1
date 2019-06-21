@@ -17,6 +17,7 @@ import com.nnlightctl.request.deployRequest.DeployElectricityMeter;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
 import com.nnlightctl.request.deployRequest.DeployPhotoperiodRequest;
 import com.nnlightctl.server.ElectricityMeterServer;
+import com.nnlightctl.server.PhotoperiodServer;
 import com.nnlightctl.server.deploy.service.DeployEleboxServer;
 import com.nnlightctl.vo.DeployEleboxModifyForView;
 import org.apache.commons.beanutils.BeanUtils;
@@ -62,6 +63,9 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     @Autowired
     private ElectricityMeterServer meterServer;
 
+    @Autowired
+    private PhotoperiodServer photoperiodServer;
+
     @Override
     public int insertElebox(DeployEleboxRequest request) {
         Elebox elebox = new Elebox();
@@ -102,6 +106,8 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                 photoperiodRequest.setEleboxId(request.getExleboxId());
 
                 photoperiodRequest.setPhotoperiodIds(request.getPhotoperiodIds());
+
+                photoperiodServer.deployPhotoperiod(photoperiodRequest);
             }
             if (!PubMethod.isEmpty(request.getCentralizeControllerIds())) {
             }/**部署集中控制器*/
