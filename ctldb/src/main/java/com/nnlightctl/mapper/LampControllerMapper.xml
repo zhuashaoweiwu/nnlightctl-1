@@ -21,7 +21,6 @@
         <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightctlLamppostId" />
         <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLampModelId" />
         <result column="nnlightctl_project_id" jdbcType="INTEGER" property="nnlightctlProjectId"/>
-        <result column="nnlightctl_elebox_id" jdbcType="INTEGER" property="nnlightctlEleboxId" />
     </resultMap>
 
 
@@ -71,7 +70,7 @@
             <if test="equipmentNumber !=null">
                 equipment_number,
             </if>
-            <if test="deployState">
+            <if test="deployState != null">
                 deploy_state,
             </if>
             <if test="nnlightctlLamppostId != null">
@@ -121,9 +120,9 @@
             <if test="equipmentNumber !=null">
                 #{equipmentNumber,jdbcType=VARCHAR},
             </if>
-            <if test="deployState !=null">
-                #{deployState,jdbcType=INTEGER},
-            </if>
+            <!--<if test="deployState !=null">-->
+                <!--#{deployState,jdbcType=INTEGER},-->
+            <!--</if>-->
             <if test="nnlightctlLamppostId != null">
                 #{nnlightctlLamppostId,jdbcType=INTEGER},
             </if>
@@ -306,11 +305,11 @@
         left join nnlightctl_project p on p.id =  controller.nnlightctl_project_id
 
         where  controller.deploy_state=1
-        <if test="params.equipmentNumber !=null">
-          and  controller.equipment_number like concat('%',#{params.equipmentNumber},'%')
+        <if test="equipmentNumber !=null">
+            controller.equipment_number like concat('%',#{equipmentNumber},'%')
         </if>
-        <if test="params.lampModel !=null">
-          and  controller.lamp_model like concat('%',#{params.lampModel},'%')
+        <if test="lampModel !=null">
+            controller.lamp_model like concat('%',#{lampModel},'%')
         </if>
         order by controller.id DESC
     </select>
