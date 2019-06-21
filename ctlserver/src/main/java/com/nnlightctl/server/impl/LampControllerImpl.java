@@ -179,7 +179,7 @@ public class LampControllerImpl implements LampControllerServer {
         // int total = lampControllerMapper.selectByCount();
 
         Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-        List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(request.getEquipmentNumber());
+        List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(request.getEquipmentNumber(),request.getLampModel());
         listDeployLighting.setSecond((int) page.getTotal());
         listDeployLighting.setFirst(deployLightingViews);
         return listDeployLighting;

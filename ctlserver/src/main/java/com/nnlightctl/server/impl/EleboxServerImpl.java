@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
@@ -198,15 +199,15 @@ public class EleboxServerImpl implements EleboxServer {
             //更改所有单灯loop为控部署状态置为0
             List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(deleteEleboxId);
             lampControllerMapper.updateByEleboxId(deleteEleboxId);
-            if(!PubMethod.isEmpty(modelIds))
-            //删除所有回路
-            eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
+            if (!PubMethod.isEmpty(modelIds))
+                //删除所有回路
+                eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
             //置空开关模块的控制柜ID
             eleboxModelMapper.modifyEleboxId(deleteEleboxId);
             //删除关照计
-            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId,(byte) 4);
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId, (byte) 4);
             //删除电表
-            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId,(byte)3);
+            meterServer.deleteDeployEletricityMeterAndPhotoriod(deleteEleboxId, (byte) 3);
             //删除关联表
             eleboxRelationMapper.deleteByEleboxId(deleteEleboxId);
             //再删除控制柜本身
@@ -238,11 +239,9 @@ public class EleboxServerImpl implements EleboxServer {
         if (!StringUtils.isEmpty(request.getEleboxName())) {
             criteria.andEleboxName("%" + request.getEleboxName() + "%");
         }
-        int total = eleboxMapper.countByExample(eleboxExample);
-        tuple.setSecond(total);
-        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-
+//        int total = eleboxMapper.countByExample(eleboxExample);
         eleboxExample.setOrderByClause("id DESC");
+        Page<Object> objects = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
 //        List<EleboxView> eleboxViewList = new ArrayList<>(8);
 //        for (Elebox elebox : eleboxList) {
@@ -253,7 +252,7 @@ public class EleboxServerImpl implements EleboxServer {
 //            }
 //            eleboxViewList.add(eleboxView);
 //        }
-
+        tuple.setSecond((int) objects.getTotal());
         tuple.setFirst(eleboxList);
         return tuple;
     }
@@ -439,20 +438,20 @@ public class EleboxServerImpl implements EleboxServer {
     @Override
     public int addOrUpdateElebox(EleboxRequest request) {
 
-        Elebox elebox=new Elebox();
+        Elebox elebox = new Elebox();
 
-        ReflectCopyUtil.beanSameFieldCopy(request,elebox);
+        ReflectCopyUtil.beanSameFieldCopy(request, elebox);
 
-        int flag=-1;
+        int flag = -1;
 
-        if (request.getId()==null){
+        if (request.getId() == null) {
 
             //新增
             flag = eleboxMapper.insertSelective(elebox);
 
-        }else{
+        } else {
 
-            flag=eleboxMapper.updateByPrimaryKeySelective(elebox);
+            flag = eleboxMapper.updateByPrimaryKeySelective(elebox);
         }
         return flag;
     }
@@ -462,7 +461,7 @@ public class EleboxServerImpl implements EleboxServer {
 
         List<Long> eleboxIdList = request.getEleboxIdList();
 
-        int flag=-1;
+        int flag = -1;
 
         for (Long aLong : eleboxIdList) {
 
@@ -472,36 +471,36 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Elebox>,Integer> listEleboxMessage(EleboxConditionRequest request) {
+    public Tuple.TwoTuple<List<Elebox>, Integer> listEleboxMessage(EleboxConditionRequest request) {
 
-        Tuple.TwoTuple<List<Elebox>,Integer> twoTuple=new Tuple.TwoTuple<>();
+        Tuple.TwoTuple<List<Elebox>, Integer> twoTuple = new Tuple.TwoTuple<>();
 
-        List<Elebox> eleboxes=new ArrayList<>(8);
+        List<Elebox> eleboxes = new ArrayList<>(8);
 
-        EleboxExample eleboxExample=new EleboxExample();
+        EleboxExample eleboxExample = new EleboxExample();
 
         EleboxExample.Criteria criteria = eleboxExample.createCriteria();
 
-        if (!StringUtils.isEmpty(request.getEquipmentNumber())){
+        if (!StringUtils.isEmpty(request.getEquipmentNumber())) {
 
-            criteria.andEquipmentNumberLike("%"+request.getEquipmentNumber()+"%");
+            criteria.andEquipmentNumberLike("%" + request.getEquipmentNumber() + "%");
         }
 
-        if (!StringUtils.isEmpty(request.getEleboxMode())){
+        if (!StringUtils.isEmpty(request.getEleboxMode())) {
 
-            criteria.andEleboxModeLike("%"+request.getEleboxMode()+"%");
+            criteria.andEleboxModeLike("%" + request.getEleboxMode() + "%");
         }
 
-        if (!StringUtils.isEmpty(request.getEleboxName())){
+        if (!StringUtils.isEmpty(request.getEleboxName())) {
 
-            criteria.andEleboxNameLike("%"+request.getEleboxName()+"%");
+            criteria.andEleboxNameLike("%" + request.getEleboxName() + "%");
         }
 
         int total = eleboxMapper.countByExample(eleboxExample);
 
         twoTuple.setSecond(total);
 
-        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
         List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
 
@@ -518,7 +517,6 @@ public class EleboxServerImpl implements EleboxServer {
 
         return elebox;
     }
-
 
 
     public void uploadImageElebox(MultipartFile eleboxGisIcon, String imagePath) {
