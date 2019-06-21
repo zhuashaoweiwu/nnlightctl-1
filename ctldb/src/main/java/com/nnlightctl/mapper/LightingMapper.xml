@@ -27,7 +27,7 @@
     <result column="nnlightctl_elebox_id" property="nnlightctlEleboxId" jdbcType="BIGINT" />
     <result column="loop_priority" property="loopPriority" jdbcType="TINYINT" />
     <result column="fault_tag" property="faultTag" jdbcType="TINYINT" />
-    <!--新添加字段-->
+
 
     <result column="communication_mode" property="communicationMode" jdbcType="VARCHAR" />
     <result column="dimming_mode" property="dimmingMode" jdbcType="INTEGER" />
@@ -247,7 +247,7 @@
       <if test="faultTag != null" >
         fault_tag,
       </if>
-      /*新添加字段*/
+
 
       <if test="lampModel != null" >
         lamp_model,
@@ -351,7 +351,7 @@
       <if test="faultTag != null" >
         #{faultTag,jdbcType=TINYINT},
       </if>
-      /*新添加字段*/
+
 
       <if test="lampModel != null" >
         #{lampModel,jdbcType=VARCHAR},
@@ -594,7 +594,7 @@
       <if test="faultTag != null" >
         fault_tag = #{faultTag,jdbcType=TINYINT},
       </if>
-      /*新添加字段*/
+     
 
       <if test="lampModel != null" >
         lamp_model=#{lampModel,jdbcType=VARCHAR},
