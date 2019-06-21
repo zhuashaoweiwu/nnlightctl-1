@@ -176,10 +176,12 @@ public class LampControllerImpl implements LampControllerServer {
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 
         Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
-        // int total = lampControllerMapper.selectByCount();
 
+        LampController lampController=new LampController();
+
+        ReflectCopyUtil.beanSameFieldCopy(request,lampController);
         Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-        List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(request.getEquipmentNumber());
+        List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(lampController);
         listDeployLighting.setSecond((int) page.getTotal());
         listDeployLighting.setFirst(deployLightingViews);
         return listDeployLighting;

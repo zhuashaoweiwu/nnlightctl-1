@@ -36,7 +36,7 @@ public interface LampControllerMapper {
 
     List<Map<String,Object>> queryLightingUnLoop();
 
-    List<DeployLightingView> selectByExampleDeployLighting(@Param("equipmentNumber") String equipmentNumber);
+    List<DeployLightingView> selectByExampleDeployLighting(@Param("params") LampController lampController);
 
     List<LampController> selectByLampModel(@Param("lampModel") String lampModel);
 
