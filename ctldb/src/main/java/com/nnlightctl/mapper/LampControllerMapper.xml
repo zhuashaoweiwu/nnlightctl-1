@@ -120,9 +120,9 @@
             <if test="equipmentNumber !=null">
                 #{equipmentNumber,jdbcType=VARCHAR},
             </if>
-            <!--<if test="deployState !=null">-->
-                <!--#{deployState,jdbcType=INTEGER},-->
-            <!--</if>-->
+            <if test="deployState !=null">
+                #{deployState,jdbcType=INTEGER},
+            </if>
             <if test="nnlightctlLamppostId != null">
                 #{nnlightctlLamppostId,jdbcType=INTEGER},
             </if>
