@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.GisPointUtil;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightSignalRecordDao;
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LightConditionRequest;
@@ -49,7 +51,11 @@ public class LightServerImpl implements LightServer {
     private LightSignalRecordDao lightSignalRecordDao;
 
     @Autowired
+    private LampControllerMapper lampControllerMapper;
+
+    @Autowired
     private LightSignalLogMapper lightSignalLogMapper;
+
     @Override
     public int addOrUpdateLight(LightRequest request) {
         Lighting lighting = new Lighting();
@@ -176,15 +182,15 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
-    public LightingView getLightingView(Long id) {
-        Lighting lighting = lightingMapper.selectByPrimaryKey(id);
-        LightingView lightingView = new LightingView();
-        ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
-        if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
-            lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
-        }
+    public LampController getLightingView(Long id) {
+        LampController lampController = lampControllerMapper.selectByPrimaryKey(id);
+//        LightingView lightingView = new LightingView();
+//        ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+//        if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+//            lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+//        }
 
-        return lightingView;
+        return lampController;
     }
 
     @Override
@@ -201,25 +207,25 @@ public class LightServerImpl implements LightServer {
     }
 
     @Override
-    public List<LightingView> getLightByLoopId(Long id) {
-        LightingExample lightingExample = new LightingExample();
-        lightingExample.createCriteria().andNnlightctlEleboxModelLoopIdEqualTo(id);
-        lightingExample.setOrderByClause("id DESC");
+    public List<LampController> getLightByLoopId(Long id) {
+//        LightingExample lightingExample = new LightingExample();
+//        lightingExample.createCriteria().andNnlightctlEleboxModelLoopIdEqualTo(id);
+//        lightingExample.setOrderByClause("id DESC");
+//        List<LightingView> lightingViewList = new ArrayList<>(8);
+//        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
+//        for (Lighting lighting : lightingList) {
+//            LightingView lightingView = new LightingView();
+//            ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
+//            if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
+//                lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
+//            }
+//
+//            lightingViewList.add(lightingView);
+//        }
 
-        List<LightingView> lightingViewList = new ArrayList<>(8);
+        List<LampController> lampControllers = lampControllerMapper.queryLightingInfoByLoop(id);
 
-        List<Lighting> lightingList = lightingMapper.selectByExample(lightingExample);
-        for (Lighting lighting : lightingList) {
-            LightingView lightingView = new LightingView();
-            ReflectCopyUtil.beanSameFieldCopy(lighting, lightingView);
-            if (lighting.getNnlightctlRegionId() != null && lighting.getNnlightctlRegionId() > 0) {
-                lightingView.setRegionLevelDesc(areaServer.getLevelRegionDesc(lighting.getNnlightctlRegionId()));
-            }
-
-            lightingViewList.add(lightingView);
-        }
-
-        return lightingViewList;
+        return lampControllers;
     }
 
     @Override

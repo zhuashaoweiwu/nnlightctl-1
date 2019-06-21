@@ -1,6 +1,7 @@
 package com.nnlightctl.server;
 
 import com.nnlight.common.Tuple;
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.LightRequest;
@@ -20,10 +21,10 @@ public interface LightServer {
     int deleteLight(LightConditionRequest request);
     Tuple.TwoTuple<List<LightingView>, Integer> listLighting(LightConditionRequest request);
     int updateLightBeElebox(LightConditionRequest request);
-    LightingView getLightingView(Long id);
+    LampController getLightingView(Long id);
     Lighting getLighting(Long id);
     Lighting getLightingByUUID(String uuid);
-    List<LightingView> getLightByLoopId(Long id);
+    List<LampController> getLightByLoopId(Long id);
     int updateLightBeEleboxBeLoop(LightConditionRequest request);
     int updateLightBeEleboxBeLoop2(LightConditionRequest request);
     int importLighting(InputStream is, String fileName) throws IOException;

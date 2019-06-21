@@ -103,7 +103,7 @@
     nnlightctl_region_id, nnlightctl_project_id, nnlightctl_elebox_id, loop_priority, 
     fault_tag,lamp_model,lamp_name,
         communication_mode,dimming_mode,rated_Voltage,
-        rated_current,static_power,alarm_message,deploy_state,
+        rated_current,static_power,alarm_message,deploy_state
 
   </sql>
 

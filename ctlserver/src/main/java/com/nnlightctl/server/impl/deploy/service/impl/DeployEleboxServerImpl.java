@@ -86,7 +86,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
             if (!PubMethod.isEmpty(request.getExleboxModelIds())) /**部署开关*/
                 modelDeploy(request.getExleboxId(), request.getExleboxModelIds(), request.getModelLoopRequests());
             if (!PubMethod.isEmpty(request.getElectricityMeterIds())) { /**部署电表*/
-                DeployElectricityMeter deployElectricityMeter=new DeployElectricityMeter();
+                DeployElectricityMeter deployElectricityMeter = new DeployElectricityMeter();
 
                 deployElectricityMeter.setEleboxId(request.getExleboxId());
 
@@ -97,7 +97,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
             }/**部署光照计*/
             if (!PubMethod.isEmpty(request.getPhotoperiodIds())) {
 
-                DeployPhotoperiodRequest photoperiodRequest=new DeployPhotoperiodRequest();
+                DeployPhotoperiodRequest photoperiodRequest = new DeployPhotoperiodRequest();
 
                 photoperiodRequest.setEleboxId(request.getExleboxId());
 
@@ -118,17 +118,29 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
     @Override
     public Boolean deployExleboxDelete(Long exleBoxId) throws RuntimeException {
         try {
-            List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(exleBoxId);
-            //更改所有单灯loop为控部署状态置为0
-            lampControllerMapper.updateByEleboxId(exleBoxId);
-            //删除所有回路
-            eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
-            //置空开关模块的控制柜ID
-            eleboxModelMapper.modifyEleboxId(exleBoxId);
-            //删除关照计
-            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte) 4);
-            //删除电表
-            meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId,(byte)3);
+            List<EleboxRelation> eleboxRelations = eleboxRelationMapper.selectByEleboxId(exleBoxId);
+            if (PubMethod.isEmpty(eleboxRelations)) return Boolean.FALSE;
+            for (EleboxRelation eleboxRelation : eleboxRelations) {
+                switch (eleboxRelation.getEleboxModelType()) {
+                    case 1:
+                        //更改所有单灯loop为控部署状态置为0
+                        lampControllerMapper.updateByEleboxId(exleBoxId);
+                        List<Long> modelIds = eleboxModelMapper.selectModelIdByEleboxId(exleBoxId);
+                        if(!PubMethod.isEmpty(modelIds))
+                        //删除所有回路
+                        eleboxModelLoopMapper.deleteByEleboxModelIds(modelIds);
+                        //置空开关模块的控制柜ID
+                        eleboxModelMapper.modifyEleboxId(exleBoxId);
+                        break;
+                    case 3:
+                        //删除电表
+                        meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId, (byte) 3);
+                        break;
+                    case 4:
+                        //删除关照计
+                        meterServer.deleteDeployEletricityMeterAndPhotoriod(exleBoxId, (byte) 4);
+                }
+            }
             //删除关联表
             eleboxRelationMapper.deleteByEleboxId(exleBoxId);
         } catch (Exception e) {
@@ -142,8 +154,9 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
 
     @Override
     public void deployExleboxModify(DeployExleboxArrangeRequest request) throws RuntimeException {
-        this.deployExleboxDelete(request.getExleboxId());
-        this.deployExleboxArrange(request);
+
+        if (this.deployExleboxDelete(request.getExleboxId()))
+            this.deployExleboxArrange(request);
     }
 
     @Override
@@ -218,15 +231,18 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
         deployEleboxModifyForView.setEquType(SystemConfig.getInfo.getConstant.SwitchModle);
         deployEleboxModifyForView.setModelType(eleboxModel.getModelType());
         List<Map<String, Object>> reList = eleboxModelLoopMapper.selectModelLoopAndLigh(eleboxModelId);
-        Map<String, Object> resltMap = new HashMap<String, Object>() {{
-            put("loopInfo", reList);
-            put("loopCount", eleboxModel.getLoopCount());
-            put("communicationMethods", eleboxModel.getCommunicationMethods());
-            put("maxElectric", eleboxModel.getMaxElectric());
-            put("loadElectric", eleboxModel.getLoadElectric());
-            put("installationMethods", eleboxModel.getInstallationMethods());
-            put("mem", eleboxModel.getMem());
-        }};
+
+        Map<String, Object> resltMap = getMap(eleboxModel);
+        resltMap.put("modelLoopRequests", reList);
+//        Map<String, Object> resltMap = new HashMap<String, Object>() {{
+//            put("loopCount", eleboxModel.getLoopCount());
+//            put("communicationMethods", eleboxModel.getCommunicationMethods());
+//            put("maxElectric", eleboxModel.getMaxElectric());
+//            put("loadElectric", eleboxModel.getLoadElectric());
+//            put("installationMethods", eleboxModel.getInstallationMethods());
+//            put("mem", eleboxModel.getMem());
+//            put("modelInfo",eleboxModel);
+//        }};
         deployEleboxModifyForView.setExleboxModel(resltMap);
         return deployEleboxModifyForView;
     }

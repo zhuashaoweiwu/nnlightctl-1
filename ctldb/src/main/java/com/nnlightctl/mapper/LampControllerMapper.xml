@@ -17,11 +17,20 @@
         <result column="mem" property="mem" jdbcType="VARCHAR" />
         <result column="model_deploy_state" property="modelDeployState" jdbcType="TINYINT" />
         <result column="deploy_state" property="deployState" jdbcType="INTEGER" />
-
+        <result column="nnlightctl_elebox_loop_id" property="nnlightctlEleboxLoopId" jdbcType="BIGINT" />
         <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightctlLamppostId" />
         <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLampModelId" />
         <result column="nnlightctl_project_id" jdbcType="INTEGER" property="nnlightctlProjectId"/>
     </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id,lamp_model,lamp_name,longitude,latitude,
+        communication_mode,dimming_mode,rated_Voltage,
+        rated_current,static_power,alarm_message,mem
+        ,deploy_state,equipment_number,nnlightctl_elebox_loop_id
+    </sql>
+
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
         insert into nnlightctl_lamp_controller
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -218,12 +227,21 @@
     <select id="queryLightingByLoop" resultType="java.lang.String" parameterType="java.lang.Long">
         select equipment_number as equipmentNumber   from nnlightctl_lamp_controller where nnlightctl_elebox_loop_id  = #{loopId,jdbcType=BIGINT}
     </select>
-    <sql id="Base_Column_List">
-        id,lamp_model,lamp_name,longitude,latitude,
-        communication_mode,dimming_mode,rated_Voltage,
-        rated_current,static_power,alarm_message,mem
-        ,deploy_state,equipment_number
-    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from nnlightctl_lamp_controller where id  = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryLightingInfoByLoop" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+           <include refid="Base_Column_List"/>
+           from nnlightctl_lamp_controller where nnlightctl_elebox_loop_id  = #{loopId,jdbcType=BIGINT}
+            ORDER by id DESC
+    </select>
+
+
     <select id="selectAll" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">
         select
           <include refid="Base_Column_List" />
