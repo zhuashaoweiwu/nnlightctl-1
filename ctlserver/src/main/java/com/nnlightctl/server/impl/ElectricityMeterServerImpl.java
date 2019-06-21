@@ -201,9 +201,8 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
                 eleboxRelation.setGmtCreated(new Date());
 
                 eleboxRelationMapper.insertSelective(eleboxRelation);
-
-                return Boolean.TRUE;
             }
+            return Boolean.TRUE;
         } catch (Exception e) {
             e.printStackTrace();
         }

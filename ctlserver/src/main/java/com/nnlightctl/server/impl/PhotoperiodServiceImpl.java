@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
-    private Logger logger= LoggerFactory.getLogger(PhotoperiodServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(PhotoperiodServiceImpl.class);
 
     @Autowired
     private PhotoperiodMapper photoperiodMapper;
@@ -32,26 +33,26 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
     @Autowired
     private EleboxRelationMapper eleboxRelationMapper;
 
-    private int flag=-1;
+    private int flag = -1;
 
 
     @Override
     public int addOrUpdatePhotoperiod(PhotoperiodRequest request) {
 
-        PhotoPeriod photoPeriod=new PhotoPeriod();
+        PhotoPeriod photoPeriod = new PhotoPeriod();
 
-        ReflectCopyUtil.beanSameFieldCopy(request,photoPeriod);
+        ReflectCopyUtil.beanSameFieldCopy(request, photoPeriod);
 
 
-        if (request.getId()==null){
+        if (request.getId() == null) {
             //新增光照计
 
             photoPeriod.setState(0);
-            flag= photoperiodMapper.insert(photoPeriod);
-        }else {
+            flag = photoperiodMapper.insert(photoPeriod);
+        } else {
             //修改光照计
 
-            flag=photoperiodMapper.updateByPrimaryKey(photoPeriod);
+            flag = photoperiodMapper.updateByPrimaryKey(photoPeriod);
         }
 
         return flag;
@@ -60,7 +61,7 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
     @Override
     public int deletePhotoperiod(PhotoperiodConditionRequest request) {
         List<Long> ids = request.getPhotoperiodIds();
-        int ret=-1;
+        int ret = -1;
         for (Long id : ids) {
             ret = photoperiodMapper.deleteByPrimaryKey(id);
         }
@@ -81,19 +82,19 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
     @Override
     public Tuple.TwoTuple<List<PhotoperiodView>, Integer> listPhotoperiod(PhotoperiodConditionRequest request) {
-        Tuple.TwoTuple<List<PhotoperiodView>,Integer> listPhotoperiod=new Tuple.TwoTuple<>();
+        Tuple.TwoTuple<List<PhotoperiodView>, Integer> listPhotoperiod = new Tuple.TwoTuple<>();
 
         int total = photoperiodMapper.selectByCount();
 
         listPhotoperiod.setSecond(total);
 
-        PageHelper.startPage(request.getPageNumber(),request.getPageSize());
+        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
 
-        List<PhotoperiodView> photoperiodViews=new ArrayList<>();
+        List<PhotoperiodView> photoperiodViews = new ArrayList<>();
 
         String equipmentNumber = request.getEquipmentNumber();
 
-        PhotoPeriod photoPeriodNew=new PhotoPeriod();
+        PhotoPeriod photoPeriodNew = new PhotoPeriod();
 
         photoPeriodNew.setEquipmentNumber(equipmentNumber);
 
@@ -105,8 +106,8 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
         for (PhotoPeriod photoPeriod : photoPeriods) {
 
-            PhotoperiodView photoperiodView=new PhotoperiodView();
-            ReflectCopyUtil.beanSameFieldCopy(photoPeriod,photoperiodView);
+            PhotoperiodView photoperiodView = new PhotoperiodView();
+            ReflectCopyUtil.beanSameFieldCopy(photoPeriod, photoperiodView);
             photoperiodViews.add(photoperiodView);
         }
         listPhotoperiod.setFirst(photoperiodViews);
@@ -124,7 +125,7 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
                 /**
                  * 修改光照计
                  */
-                PhotoPeriod photoPeriod=new PhotoPeriod();
+                PhotoPeriod photoPeriod = new PhotoPeriod();
 
                 photoPeriod.setState(1);
 
@@ -134,7 +135,7 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
                 /**
                  * 修改关联表
                  */
-                EleboxRelation eleboxRelation=new EleboxRelation();
+                EleboxRelation eleboxRelation = new EleboxRelation();
 
                 eleboxRelation.setGmtUpdated(new Date());
 
@@ -146,8 +147,8 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
 
                 eleboxRelationMapper.insertSelective(eleboxRelation);
 
-                return Boolean.TRUE;
             }
+            return Boolean.TRUE;
 
         } catch (Exception e) {
             logger.info("部署失败");

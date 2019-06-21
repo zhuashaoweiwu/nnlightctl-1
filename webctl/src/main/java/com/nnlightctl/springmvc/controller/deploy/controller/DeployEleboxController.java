@@ -181,7 +181,7 @@ public class DeployEleboxController extends BaseController {
     }
 
 
-    @RequestMapping("modifyByView")
+    @RequestMapping(value = "modifyByView")
     public String modifyByView(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/modifyByView");
 
@@ -208,8 +208,8 @@ public class DeployEleboxController extends BaseController {
 
 
 
-    @RequestMapping("deployExleboxArrange")
-    public String deployExleboxArrange(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+    @RequestMapping(value = "deployExleboxArrange",method = RequestMethod.POST, consumes = "application/json")
+    public String deployExleboxArrange(@RequestBody DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/deployExleboxArrange");
 
         //参数检验
@@ -241,6 +241,9 @@ public class DeployEleboxController extends BaseController {
 //        p.add(deployEleboxModelLoopRequest);
 //        request.setModelLoopRequests(p);
 
+        if(PubMethod.isEmpty(request)) {
+            return toJson(JsonResult.getFAILURE());
+        }
         Boolean arrangeRequest = this.deployEleboxServer.deployExleboxArrange(request);
         JsonResult jsonResult = null;
         if (arrangeRequest) {
