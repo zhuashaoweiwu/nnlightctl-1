@@ -18,7 +18,7 @@ public class LamppostRequest extends BaseRequest{
 
     private Double high;
 
-    @NotBlank(message = "灯头数不能为空")
+
     private Integer lampheadNumber;
 
     private String longitude;

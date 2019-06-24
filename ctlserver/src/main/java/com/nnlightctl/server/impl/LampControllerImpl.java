@@ -31,7 +31,7 @@ import java.util.Map;
 @Service
 public class LampControllerImpl implements LampControllerServer {
 
-    private static final Logger logger= LoggerFactory.getLogger(LampControllerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(LampControllerImpl.class);
 
 
     @Autowired
@@ -45,7 +45,6 @@ public class LampControllerImpl implements LampControllerServer {
 
     @Autowired
     private LightingModelMapper lightingModelMapper;
-
 
 
     //判断标志位
@@ -64,9 +63,9 @@ public class LampControllerImpl implements LampControllerServer {
 
             for (String equipmentNumber : lampControllerMapper.getAllEquipmentNumber()) {
 
-                if (request.getEquipmentNumber().equals(equipmentNumber)){
+                if (request.getEquipmentNumber().equals(equipmentNumber)) {
 
-                    ret=-2;
+                    ret = -2;
 
                     return ret;
                 }
@@ -118,7 +117,7 @@ public class LampControllerImpl implements LampControllerServer {
 
         LampController lampController = new LampController();
 
-        ReflectCopyUtil.beanSameFieldCopy(request,lampController);
+        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
 
 
         List<LampController> lampControllers = lampControllerMapper.selectAll(lampController);
@@ -177,19 +176,18 @@ public class LampControllerImpl implements LampControllerServer {
 
 
     @Override
-    public List<Map<String,Object>> queryLightingUnLoop() {
+    public List<Map<String, Object>> queryLightingUnLoop() {
         return lampControllerMapper.queryLightingUnLoop();
     }
-
 
 
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 
         Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
 
-        LampController lampController=new LampController();
+        LampController lampController = new LampController();
 
-        ReflectCopyUtil.beanSameFieldCopy(request,lampController);
+        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
         Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         List<DeployLightingView> deployLightingViews = lampControllerMapper.selectByExampleDeployLighting(lampController);
         listDeployLighting.setSecond((int) page.getTotal());
@@ -204,7 +202,7 @@ public class LampControllerImpl implements LampControllerServer {
 
         ReflectCopyUtil.beanSameFieldCopy(request, lampController);
 
-        
+
         lampController.setDeployState(1);
 
         int flag = lampControllerMapper.updateByPrimaryKey(lampController);
@@ -227,7 +225,7 @@ public class LampControllerImpl implements LampControllerServer {
 
         Long id = request.getId();
 
-        List<DeployLightingView> lightingViews=new ArrayList<>(7);
+        List<DeployLightingView> lightingViews = new ArrayList<>(7);
 
         DeployLightingView deployLightingView = lampControllerMapper.selectByIdDeployLighting(id);
 
@@ -241,7 +239,7 @@ public class LampControllerImpl implements LampControllerServer {
 
         List<Long> lampControllerIds = request.getLampControllerIds();
 
-        int flag=-1;
+        int flag = -1;
 
         for (Long lampControllerId : lampControllerIds) {
 
@@ -255,7 +253,7 @@ public class LampControllerImpl implements LampControllerServer {
     public Boolean updateShowDeployLighting(DeployLightingRequest request) {
 
         try {
-            LampController lampController=new LampController();
+            LampController lampController = new LampController();
 
             lampController.setId(request.getLampControllerId());
 
@@ -272,7 +270,7 @@ public class LampControllerImpl implements LampControllerServer {
              */
             lampControllerMapper.updateByPrimaryKey(lampController);
 
-            Lamppost lamppost=new Lamppost();
+            Lamppost lamppost = new Lamppost();
 
             lamppost.setId(request.getNnlightctlLamppostId());
 
@@ -286,7 +284,7 @@ public class LampControllerImpl implements LampControllerServer {
 
             lamppostMapper.updateByPrimaryKeyLamppost(lamppost);
 
-            Project project=new Project();
+            Project project = new Project();
 
             project.setId(request.getNnlightctlProjectId());
 
@@ -301,7 +299,7 @@ public class LampControllerImpl implements LampControllerServer {
             /**
              * 灯具类型
              */
-            LightingModel lightingModel=new LightingModel();
+            LightingModel lightingModel = new LightingModel();
 
             lightingModel.setId(request.getNnlightctlLampModelId());
 
