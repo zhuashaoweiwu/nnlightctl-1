@@ -62,6 +62,16 @@ public class LampControllerImpl implements LampControllerServer {
 
         if (request.getId() == null) {
 
+            for (String equipmentNumber : lampControllerMapper.getAllEquipmentNumber()) {
+
+                if (request.getEquipmentNumber().equals(equipmentNumber)){
+
+                    ret=-2;
+
+                    return ret;
+                }
+            }
+
             //新增用户
             ret = lampControllerMapper.insert(lampController);
         } else {
@@ -194,6 +204,7 @@ public class LampControllerImpl implements LampControllerServer {
 
         ReflectCopyUtil.beanSameFieldCopy(request, lampController);
 
+        
         lampController.setDeployState(1);
 
         int flag = lampControllerMapper.updateByPrimaryKey(lampController);

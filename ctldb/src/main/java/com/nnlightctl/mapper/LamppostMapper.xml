@@ -178,6 +178,9 @@
             </if>
         </where>
     </select>
+    <select id="getAllEquipmentNumber" resultType="java.lang.String">
+        select equipment_number from nnlightctl_lamppost
+    </select>
 
 
 </mapper>

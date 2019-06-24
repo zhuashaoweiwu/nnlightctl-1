@@ -239,6 +239,10 @@
       </where>
 
     </select>
+    <select id="getAllEquipmentNumber" resultType="java.lang.String">
+
+      select equipment_number from nnlightctl_electricity_meter
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
     update nnlightctl_electricity_meter
     <set>

@@ -18,4 +18,8 @@ public interface LamppostMapper {
     List<Lamppost> selectAllLamppost(@Param("lamppost") Lamppost lamppost);
 
     Lamppost selectLampById(@Param("id") Long id);
+
+    List<String> getAllEquipmentNumber();
+
+
 }

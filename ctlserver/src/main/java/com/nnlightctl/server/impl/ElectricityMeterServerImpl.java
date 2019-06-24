@@ -54,8 +54,22 @@ public class ElectricityMeterServerImpl implements ElectricityMeterServer {
 
             //未部署
             electricityMeter.setState(0);
+
+            List<String> allEquipmentNumber = electricityMeterMapper.getAllEquipmentNumber();
+
+            for (String equipmentNumber : allEquipmentNumber) {
+
+                if (request.getEquipmentNumber().equals(equipmentNumber)){
+
+                    flag=-2;
+
+                    return flag;
+                }
+            }
             //新增
             flag = electricityMeterMapper.insertSelective(electricityMeter);
+
+
 
         }else {
             //修改

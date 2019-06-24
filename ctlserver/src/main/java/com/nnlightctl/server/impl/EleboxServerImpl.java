@@ -447,6 +447,15 @@ public class EleboxServerImpl implements EleboxServer {
 
         if (request.getId()==null){
 
+
+            for (String equipmentNUmber : eleboxMapper.listEquipmentNumber()) {
+
+                if (equipmentNUmber.equals(request.getEquipmentNumber())){
+
+                    flag=-2;
+                    return flag;
+                }
+            }
             //新增
             flag = eleboxMapper.insertSelective(elebox);
 

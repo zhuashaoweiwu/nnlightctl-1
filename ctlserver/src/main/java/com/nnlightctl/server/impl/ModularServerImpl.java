@@ -40,6 +40,17 @@ public class ModularServerImpl implements ModularServer {
         ReflectCopyUtil.beanSameFieldCopy(request,modular);
 
         if (request.getId()==null){
+
+            for (String equipmentNumber : modularMapper.listEquipmentNumber()) {
+
+                if (request.getEquipmentNumber().equals(equipmentNumber)){
+
+                    flag=-2;
+
+                    return flag;
+
+                }
+            }
             //新增
             flag = modularMapper.insertSelective(modular);
 

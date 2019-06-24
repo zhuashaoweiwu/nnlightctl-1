@@ -27,4 +27,6 @@ public interface EleboxMapper {
     int updateByPrimaryKeySelective(Elebox record);
 
     int updateByPrimaryKey(Elebox record);
+
+    List<String> listEquipmentNumber();
 }

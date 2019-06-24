@@ -4,7 +4,6 @@ import com.nnlightctl.po.EleboxModel;
 import com.nnlightctl.po.EleboxModelExample;
 import java.util.List;
 
-import com.nnlightctl.request.deployRequest.DeployEleboxModelRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.vo.DeployEleboxView;
 import org.apache.ibatis.annotations.Param;

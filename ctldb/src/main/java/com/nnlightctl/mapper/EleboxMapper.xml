@@ -318,6 +318,9 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <select id="listEquipmentNumber" resultType="java.lang.String">
+        select equipment_number from nnlightctl_elebox
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update nnlightctl_elebox
         <set>

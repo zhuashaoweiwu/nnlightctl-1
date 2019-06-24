@@ -33,6 +33,14 @@ public class LamppostServerImpl implements LamppostServer {
         if (request.getId()==null){
 
             request.setState(0);
+
+            for (String equipmentNumber : lamppostMapper.getAllEquipmentNumber()) {
+
+                if (equipmentNumber.equals(request.getEquipmentNumber())){
+                    sign=-2;
+                    return sign;
+                }
+            }
             //新增灯杆
             sign=lamppostMapper.insertLamppost(lamppost);
         }else {

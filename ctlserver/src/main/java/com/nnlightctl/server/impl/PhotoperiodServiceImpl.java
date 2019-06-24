@@ -48,6 +48,16 @@ public class PhotoperiodServiceImpl implements PhotoperiodServer {
             //新增光照计
 
             photoPeriod.setState(0);
+
+            for (String equipmentNumber : photoperiodMapper.listEquipmentNumber()) {
+
+                if (equipmentNumber.equals(request.getEquipmentNumber())){
+
+                    flag=-2;
+                    return flag;
+                }
+
+            }
             flag = photoperiodMapper.insert(photoPeriod);
         } else {
             //修改光照计

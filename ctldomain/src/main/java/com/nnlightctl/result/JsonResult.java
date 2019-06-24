@@ -17,6 +17,9 @@ public class JsonResult {
     public static JsonResult FALLURE_PARAMSERROR=new JsonResult("4102","您查询的条件有误");
 
 
+    public static JsonResult FALLURE_CODEREPEAD=new JsonResult("4103","输入的编号重复");
+
+
 
 
 

@@ -2,10 +2,7 @@ package com.nnlightctl.dao;
 
 import com.nnlightctl.parameter.LampControllerParameter;
 import com.nnlightctl.po.LampController;
-import com.nnlightctl.po.Lighting;
-import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.vo.DeployLightingView;
-import com.nnlightctl.vo.LampControllerView;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -48,6 +45,8 @@ public interface LampControllerMapper {
     int updateByDeployLightingState(@Param("id") Long id);
 
     List<LampController> queryLightingInfoByLoop(@Param("loopId") Long loopId);
+
+    List<String> getAllEquipmentNumber();
 
 
 

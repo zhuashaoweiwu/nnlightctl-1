@@ -146,6 +146,10 @@
       where id = #{id,jdbcType=BIGINT}
 
     </select>
+    <select id="listEquipmentNumber" resultType="java.lang.String">
+
+        select equipment_number from nnlightctl_photoperiod
+    </select>
 
 
 </mapper>

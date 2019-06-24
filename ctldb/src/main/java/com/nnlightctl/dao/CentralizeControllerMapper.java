@@ -27,4 +27,6 @@ public interface CentralizeControllerMapper {
     int updateByPrimaryKeySelective(CentralizeController record);
 
     int updateByPrimaryKey(CentralizeController record);
+
+    List<String> listEquipmentNumber();
 }

@@ -91,7 +91,12 @@ public class RoadLightingController extends BaseController {
 
         } else {
 
-            jsonResult = JsonResult.getFAILURE();
+            if (flag==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
 
         }
 
@@ -143,7 +148,12 @@ public class RoadLightingController extends BaseController {
 
         } else {
 
-            jsonResult = JsonResult.getFAILURE();
+            if (flag==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
 
         }
 
@@ -229,7 +239,13 @@ public class RoadLightingController extends BaseController {
             jsonResult = JsonResult.getSUCCESS();
             jsonResult.setTotal(-1);
         } else {
-            jsonResult = JsonResult.getFAILURE();
+
+            if (flag==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
         }
 
         return toJson(jsonResult);
@@ -323,9 +339,22 @@ public class RoadLightingController extends BaseController {
      * @return
      */
     @RequestMapping("addorupdatemodular")
-    public String addOrUpdateModular(ModularRequest request) {
+    public String addOrUpdateModular(@Valid ModularRequest request,BindingResult bindingResult) {
 
         logger.info("[POST] api/roadlighting/addorupdatemodular");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         JsonResult jsonResult = null;
 
@@ -335,7 +364,12 @@ public class RoadLightingController extends BaseController {
             jsonResult = JsonResult.getSUCCESS();
             jsonResult.setTotal(-1);
         } else {
-            jsonResult = JsonResult.getFAILURE();
+            if (flag==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
         }
 
 
@@ -424,9 +458,22 @@ public class RoadLightingController extends BaseController {
      * @return
      */
     @RequestMapping("addorupdatelampcontroller")
-    public String addOrUpdateLampController(LampControllerRequest request) {
+    public String addOrUpdateLampController(@Valid LampControllerRequest request,BindingResult bindingResult) {
 
         logger.info("[POST]  api/roadlighting/addorupdatelampcontroller");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = lampControllerServer.addOrUpdateLampController(request);
 
@@ -436,7 +483,12 @@ public class RoadLightingController extends BaseController {
             jsonResult = JsonResult.getSUCCESS();
 
         } else {
-            jsonResult = JsonResult.getFAILURE();
+            if (ret==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
         }
 
         return toJson(jsonResult);
@@ -538,9 +590,22 @@ public class RoadLightingController extends BaseController {
      * @return
      */
     @RequestMapping("addorupdatelamppost")
-    public String addOrUpdateLamppost(LamppostRequest Request) {
+    public String addOrUpdateLamppost(@Valid LamppostRequest Request,BindingResult bindingResult) {
 
         logger.info("[POST] api/roadlighting/addorupdatelamppost");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = lamppostServer.addOrUpdateLamppost(Request);
 
@@ -549,7 +614,12 @@ public class RoadLightingController extends BaseController {
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
-            jsonResult = JsonResult.getFAILURE();
+            if (ret==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
         }
 
         return toJson(jsonResult);
@@ -631,9 +701,22 @@ public class RoadLightingController extends BaseController {
     /*****************************灯杆*****************************/
 
     @RequestMapping("addorupdatephotoperiod")
-    public String addOrUpdatePhotoperiod(PhotoperiodRequest request) {
+    public String addOrUpdatePhotoperiod(@Valid PhotoperiodRequest request,BindingResult bindingResult) {
 
         logger.info("[ POST] /api/roadlighting/addorupdatephotoperiod");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int ret = photoperiodServer.addOrUpdatePhotoperiod(request);
 
@@ -642,7 +725,12 @@ public class RoadLightingController extends BaseController {
         if (ret > 0) {
             jsonResult = JsonResult.getSUCCESS();
         } else {
-            jsonResult = JsonResult.getFAILURE();
+            if (ret==-2){
+
+                jsonResult = JsonResult.FALLURE_CODEREPEAD;
+            }else {
+                jsonResult = JsonResult.getFAILURE();
+            }
 
         }
 

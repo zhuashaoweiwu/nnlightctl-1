@@ -34,4 +34,6 @@ public interface ElectricityMeterMapper {
     Boolean updateDeployElectricity(@Param("eleboxId") Long eleboxId,@Param("eleboxModelType") byte eleboxModelType);
 
     Boolean updateDeployPhotoriod(@Param("eleboxId") Long eleboxId,@Param("eleboxModelType") byte eleboxModelType);
+
+    List<String> getAllEquipmentNumber();
 }

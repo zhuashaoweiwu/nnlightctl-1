@@ -35,5 +35,7 @@ public interface ModularMapper {
 
     List<Modular> selectModularAll();
 
+    List<String> listEquipmentNumber();
+
 
 }

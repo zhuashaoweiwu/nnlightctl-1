@@ -46,27 +46,23 @@ public class CentralizeControllerServerImpl implements CentralizeControllerServe
 
             //增加
             centralizeController.setState(0);
+
+            List<String> listEquipmentNumber = centralizeControllerMapper.listEquipmentNumber();
+
+            for (String equipmentNumber : listEquipmentNumber) {
+
+                if (request.getEquipmentNumber().equals(equipmentNumber)){
+
+                    flag=-2;
+                    return flag;
+                }
+
+            }
+
             flag=centralizeControllerMapper.insertSelective(centralizeController);
 
         }else {
-            if (request.getDeployFlag()==1){
 
-                centralizeController.setState(1);
-
-                flag=centralizeControllerMapper.updateByPrimaryKeySelective(centralizeController);
-
-                EleboxRelation eleboxRelation=new EleboxRelation();
-
-                eleboxRelation.setGmtUpdated(new Date());
-
-                eleboxRelation.setEleboxId(request.getEleboxId());
-
-                eleboxRelation.setEleboxModelId(request.getId());
-
-                eleboxRelation.setEleboxModelType(SystemConfig.getInfo.getConstant.FocusControl);
-
-                eleboxRelationMapper.insertSelective(eleboxRelation);
-            }
 
             flag=centralizeControllerMapper.updateByPrimaryKeySelective(centralizeController);
 
