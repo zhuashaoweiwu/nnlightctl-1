@@ -1,6 +1,8 @@
 package com.nnlightctl.request;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 灯杆信息
  */
@@ -8,12 +10,15 @@ public class LamppostRequest extends BaseRequest{
 
     private Long id;
 
+    @NotBlank(message = "灯杆的型号不能为空")
     private String lamppostModel;
 
+    @NotBlank(message = "灯杆的名字不能为空")
     private String lampostName;
 
     private Double high;
 
+    @NotBlank(message = "灯头数不能为空")
     private Integer lampheadNumber;
 
     private String longitude;
@@ -28,6 +33,7 @@ public class LamppostRequest extends BaseRequest{
 
     private String mem;
 
+    @NotBlank(message = "灯杆的设备编码不能为空")
     private String equipmentNumber;
 
     private int state;

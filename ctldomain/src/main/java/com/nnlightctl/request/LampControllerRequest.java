@@ -1,19 +1,27 @@
 package com.nnlightctl.request;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class LampControllerRequest {
 
     private Long id;
 
+    @NotBlank(message = "单灯控制器的名字不能为空")
     private String lampName;
 
+    @NotBlank(message = "单灯控制的型号不能为空")
     private String lampModel;
 
+    @NotBlank(message = "经度不能空")
     private String longitude;
 
+    @NotBlank(message = "纬度不能为空")
     private String latitude;
 
+    @NotBlank(message = "通讯方式不能为空")
     private String communicationMode;
+
 
     private Integer dimmingMode;
 
@@ -27,6 +35,7 @@ public class LampControllerRequest {
 
     private String mem;
 
+    @NotBlank(message = "设备编码不能为空")
     private String equipmentNumber;
 
     /**

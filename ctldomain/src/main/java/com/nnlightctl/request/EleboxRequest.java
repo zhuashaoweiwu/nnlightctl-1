@@ -155,7 +155,7 @@ public class EleboxRequest extends BaseRequest{
     private Long projectId;
     private Long id;
     private String uid;
-   // @NotBlank(message = "控制柜唯一编码不能为空！")
+   @NotBlank(message = "控制柜唯一编码不能为空！")
     private String codeNumber;
     private Date manufacture;
     private String longitude;

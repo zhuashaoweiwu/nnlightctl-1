@@ -1,11 +1,15 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class ElectricityMeterRequest {
 
     private Long id;
 
+    @NotBlank(message = "电表的型号不能为空")
     private String electricityModel;
 
+    @NotBlank(message = "电表的名字不能为空")
     private String electricityName;
 
     private String electricStandards;
@@ -13,9 +17,9 @@ public class ElectricityMeterRequest {
     private String voltageTest;
 
     private Integer activeEnergy;
-
+    @NotBlank(message = "安装方式不能为空")
     private String installationMode;
-
+    @NotBlank(message = "通讯方式不能为空")
     private String communityMode;
 
     private String measureMode;
@@ -26,6 +30,7 @@ public class ElectricityMeterRequest {
 
     private String mem;
 
+    @NotBlank(message = "设备编码不能为空")
     private String equipmentNumber;
 
     private int deployFlag;
