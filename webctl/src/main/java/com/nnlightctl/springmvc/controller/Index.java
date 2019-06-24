@@ -22,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -64,6 +66,9 @@ public class Index extends BaseController {
 
     @RequestMapping("/")
     public String startPage() {
+
+//        return  new ModelAndView(new RedirectView("http://www.baidu.com"));
+
         return "redirect:/html/singlelamp/nnlightctl/Index.html";
     }
 

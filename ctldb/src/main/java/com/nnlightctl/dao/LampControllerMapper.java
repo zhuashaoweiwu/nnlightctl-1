@@ -49,6 +49,7 @@ public interface LampControllerMapper {
 
     List<LampController> queryLightingInfoByLoop(@Param("loopId") Long loopId);
 
+    int selectCountByImei(@Param("imei") String imei);
 
 
 }

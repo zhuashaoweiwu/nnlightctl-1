@@ -2,6 +2,7 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.GisPointUtil;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LampControllerMapper;
@@ -9,6 +10,7 @@ import com.nnlightctl.dao.LightSignalLogMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightSignalRecordDao;
+import com.nnlightctl.jdbcdao.impl.LightDaoImpl;
 import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
@@ -23,6 +25,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -39,6 +43,9 @@ import java.util.List;
 
 @Service
 public class LightServerImpl implements LightServer {
+
+    private static final Logger log = LoggerFactory.getLogger(LightServerImpl.class);
+
     @Autowired
     private LightingMapper lightingMapper;
 
@@ -70,32 +77,36 @@ public class LightServerImpl implements LightServer {
             ret = lightingMapper.updateByPrimaryKeySelective(lighting);
         } else {
             lighting.setGmtCreated(new Date());
-            lighting.setFaultTag((byte)2);
+            lighting.setFaultTag((byte) 2);
             ret = lightingMapper.insertSelective(lighting);
         }
         return ret;
     }
+
     @Override
-    public int getCountLightingByUId(String uid){
+    public int getCountLightingByUId(String uid) {
         LightingExample lightingExample = new LightingExample();
         lightingExample.createCriteria().andUidEqualTo(uid);
         int total = lightingMapper.countByExample(lightingExample);
         return total;
     }
+
     @Override
-    public int getCountLightingByLamppost(String lamppost){
+    public int getCountLightingByLamppost(String lamppost) {
         LightingExample lightingExample = new LightingExample();
         lightingExample.createCriteria().andLamppostEqualTo(lamppost);
         int total = lightingMapper.countByExample(lightingExample);
         return total;
     }
+
     @Override
-    public int getCountLightingByLampHead(String lamphead){
+    public int getCountLightingByLampHead(String lamphead) {
         LightingExample lightingExample = new LightingExample();
         lightingExample.createCriteria().andLampheadEqualTo(lamphead);
         int total = lightingMapper.countByExample(lightingExample);
         return total;
     }
+
     @Override
     public int batchAddLight(LightRequest.BatchLightRequest request) {
         List<LightRequest> lightRequestList = request.getAddLightings();
@@ -106,7 +117,7 @@ public class LightServerImpl implements LightServer {
             lighting.setGmtCreated(new Date());
 
             lighting.setGmtUpdated(new Date());
-            lighting.setFaultTag((byte)2);
+            lighting.setFaultTag((byte) 2);
             lightingMapper.insertSelective(lighting);
         }
 
@@ -265,9 +276,9 @@ public class LightServerImpl implements LightServer {
         }
 
         Workbook hssfWorkbook = null;
-        if (fileName.endsWith("xlsx")){
+        if (fileName.endsWith("xlsx")) {
             hssfWorkbook = new XSSFWorkbook(is);//Excel 2007
-        }else if (fileName.endsWith("xls")){
+        } else if (fileName.endsWith("xls")) {
             hssfWorkbook = new HSSFWorkbook(is);//Excel 2003
 
         }
@@ -338,12 +349,12 @@ public class LightServerImpl implements LightServer {
             //创建单元格并设置单元格内容
             row.createCell(0).setCellValue(lighting.getUid());
             if (lighting.getManufacture() != null) {
-                row.createCell(1).setCellValue(lighting.getManufacture()+"");
+                row.createCell(1).setCellValue(lighting.getManufacture() + "");
             } else {
                 row.createCell(1).setCellValue("");
             }
             if (lighting.getUseDate() != null) {
-                row.createCell(2).setCellValue(lighting.getUseDate()+"");
+                row.createCell(2).setCellValue(lighting.getUseDate() + "");
             } else {
                 row.createCell(2).setCellValue("");
             }
@@ -461,8 +472,25 @@ public class LightServerImpl implements LightServer {
         }
         return 1;
     }
+
     @Override
-    public String getLightSignalByUUID(String uuid){
+    public String getLightSignalByUUID(String uuid) {
         return lightSignalRecordDao.getLightSignalByUUID(uuid);
+    }
+
+    @Override
+    public void synchronizationLighting(Lighting lighting) {
+        if (!PubMethod.isEmpty(lighting) && !PubMethod.isEmpty(lighting.getLightingImei())) {
+            LightingExample lightingExample = new LightingExample();
+            lightingExample.createCriteria().andLightingImeiEqualTo(lighting.getLightingImei());
+            List<Lighting> lightings = lightingMapper.selectByExample(lightingExample);
+            lighting.setUid(lighting.getLightingImei());
+            if (PubMethod.isEmpty(lightings))
+                this.lightingMapper.insertSelective(lighting);
+            else
+                this.lightingMapper.updateByExampleSelective(lighting, lightingExample);
+        } else {
+            log.error("同步单灯参数为空 imei :" + lighting.getLightingImei());
+        }
     }
 }

@@ -41,7 +41,8 @@
 
     <delete id="deleteByTaskId">
         delete from nnlightctl_switch_task_info
-        where switch_task_id = #{taskId,jdbcType=BIGINT} and id not in
+        where switch_task_id =
+        #{taskId,jdbcType=BIGINT} and id not in
         <foreach item="item" index="index" open="(" separator="," close=")" collection="taskInfoIds">
             #{item}
         </foreach>
@@ -56,6 +57,9 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.nnlightctl.po.SwitchTaskInfo">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into nnlightctl_switch_task_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

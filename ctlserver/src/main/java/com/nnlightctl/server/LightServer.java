@@ -36,5 +36,6 @@ public interface LightServer {
     int updateLightPriority(LightConditionRequest request);
     int updatePairLighting(Lighting lighting);
     String getLightSignalByUUID(String uuid);
+    void synchronizationLighting(Lighting lighting);
 
 }
