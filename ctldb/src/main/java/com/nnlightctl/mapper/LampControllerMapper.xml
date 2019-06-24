@@ -260,15 +260,16 @@
         from nnlightctl_lamp_controller
         <where>
             <if test="params.equipmentNumber !=null">
-                equipment_number like concat('%',#{params.equipmentNumber},'%')
-            </if>
-            <if test="params.lampModel !=null">
-                AND lamp_model like concat('%',#{params.lampModel},'%')
-            </if>
-            <if test="params.lampName !=null">
-                AND lamp_name like concat('%',#{params.lampName},'%')
-            </if>
-        </where>
+               AND  equipment_number like concat('%',#{params.equipmentNumber},'%')
+             </if>
+             <if test="params.lampModel !=null">
+               AND  lamp_model like concat('%',#{params.lampModel},'%')
+             </if>
+             <if test="params.lampName !=null">
+               AND lamp_name like concat('%',#{params.lampName},'%')
+             </if>
+         </where>
+        ORDER by id DESC
     </select>
 
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">

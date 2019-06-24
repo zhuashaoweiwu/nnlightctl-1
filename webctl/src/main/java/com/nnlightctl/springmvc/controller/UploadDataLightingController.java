@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 上传GPS和EMEI编号
@@ -61,15 +63,18 @@ public class UploadDataLightingController extends BaseController{
         int t0 = t1.length;
         int count = 0;
         for (int i = 0; i < t0; i++) {
-            if (Character.toString(t1[i]).matches("[\\u4E00-\\u9FA5]+")) {
+            if (Character.toString(t1[i]).matches("^[\\u4e00-\\u9fa5]{1}$")) {
                 count ++;
 
             }
         }
+        Map numberMap=new HashMap();
 
-        List<Integer> countnumber=new ArrayList<>();
+        numberMap.put("number",count);
 
-        countnumber.add(count);
+        List<Map> countnumber=new ArrayList<>();
+
+        countnumber.add(numberMap);
 
         JsonResult jsonResult=JsonResult.getSUCCESS();
 

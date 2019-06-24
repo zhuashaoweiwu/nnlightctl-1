@@ -1,15 +1,21 @@
 package com.nnlightctl.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class CentralizeControllerRquester {
 
     private Long id;
 
+    @NotBlank(message = "集中控制器的型号不能为空")
     private String centralizeModel;
 
+    @NotBlank(message = "集中控制器的名字不能为空")
     private String centralizeName;
 
+    @NotBlank(message = "经度不能为空")
     private String longitude;
 
+    @NotBlank(message = "纬度不能为空")
     private String latitude;
 
     private Long doChannel;
