@@ -101,9 +101,13 @@
         <if test="distinct">
             distinct
         </if>
-        'true' as QUERYID,
-        <include refid="Base_Column_List"/>
-        from nnlightctl_elebox
+        'true' as QUERYID,p.project_name as projectName,
+        ne.id, ne.gmt_created, ne.gmt_updated, ne.uid, network_addr, realtime_uid, ne.code_number, ne.manufacture,
+        ne.longitude, ne.latitude, use_date, rated_voltage, rated_electricty, power_rating, max_use_time,
+        spd, modbus_EM, main_switch, nnlightctl_project_id,
+        elebox_model,elebox_name,material_quality,elebox_size,ne.mem,elebox_colors
+
+        from nnlightctl_elebox  ne LEFT  JOIN  nnlightctl_project p on ne.nnlightctl_project_id = p.id
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>

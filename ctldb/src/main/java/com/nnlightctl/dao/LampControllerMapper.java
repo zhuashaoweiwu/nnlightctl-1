@@ -48,6 +48,7 @@ public interface LampControllerMapper {
 
     List<String> getAllEquipmentNumber();
 
+    int selectCountByImei(@Param("imei") String imei);
 
 
 }

@@ -49,6 +49,8 @@ public class Elebox implements Serializable {
 
     private String eleboxModel; //控制柜型号
 
+    private String projectName; //项目名称
+
     private String eleboxName; //控制柜名称
 
     private String materialQuality;//材质
@@ -277,6 +279,14 @@ public class Elebox implements Serializable {
 
     public void setMem(String mem) {
         this.mem = mem;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.nnlightctl.jdbcdao.impl;
 
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.jdbcdao.LightDao;
 import com.nnlightctl.jdbcdao.LightMapNetDao;
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +26,31 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
     @Autowired
     private LightDao lightDao;
 
+    @Autowired
+    private LampControllerMapper lampControllerMapper;
+
     @Override
     public synchronized int mapLightingNet(Lighting lighting) {
         List<Object> params = new ArrayList<>(1);
 
+
+        try {
+            int i = lampControllerMapper.selectCountByImei(lighting.getUid());
+            if (i <= 0) {
+                LampController lc = new LampController();
+                lc.setLampName(lighting.getLightingImei());
+                lc.setEquipmentNumber(lighting.getLightingImei());
+                this.lampControllerMapper.insert(lc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+
         log.info("------------------------UUID[" + lighting.getUid() + "]判断开始--------------------------");
         //判断是否存在UUID对应的灯具信息
         List<Lighting> lightingList = lightDao.getLightingByUUID(lighting.getUid());
+
 
         if (lightingList.size() > 0) {    //存在，则更新realtimeUid
             log.info("-------------------------------从缓存或者数据库是查询1条以上该UUID的灯具记录--------------------------------");
@@ -61,8 +81,9 @@ public class LightMapNetDaoImpl implements LightMapNetDao {
             params.add(lighting.getLongitude());
             params.add(lighting.getLatitude());
             params.add(lighting.getFaultTag());
-
             return this.jdbcTemplate.update(createSql.toString(), params.toArray());
         }
+
+
     }
 }

@@ -62,15 +62,19 @@ public class SwitchTaskServerImpl implements SwitchTaskServer {
 
     private void optionHolidaysInfo(SwitchTaskRequest request) {
         if (request.getPeriod().equals(SystemConfig.getInfo.getConstant.HOLIDAYVACATIONS) && !PubMethod.isEmpty(request.getSwitchTaskInfoArray())) {
-            List<Long> parList =   Lists.newArrayList();
+            List<Long> parList = Lists.newArrayList();
             request.getSwitchTaskInfoArray().forEach(switchInfo -> {
-                parList.add(switchInfo.getSwitchTaskInfoId());
-                if (PubMethod.isEmpty(switchInfo.getSwitchTaskInfoId()))
-                    this.switchTaskInfoMapper.insertSelective(new SwitchTaskInfo(switchInfo.getBeginTime(), request.getId(), switchInfo.getLightPercent()));
-                else
+                if (PubMethod.isEmpty(switchInfo.getSwitchTaskInfoId())) {
+                    SwitchTaskInfo switchTaskInfo = new SwitchTaskInfo(switchInfo.getBeginTime(), request.getId(), switchInfo.getLightPercent());
+                    this.switchTaskInfoMapper.insertSelective(switchTaskInfo);
+                    parList.add(switchTaskInfo.getId());
+                } else {
                     this.switchTaskInfoMapper.updateByPrimaryKeySelective(new SwitchTaskInfo(switchInfo.getSwitchTaskInfoId(), switchInfo.getBeginTime(), request.getId(), switchInfo.getLightPercent()));
+                    parList.add(switchInfo.getSwitchTaskInfoId());
+                }
+
             });
-                    this.switchTaskInfoMapper.deleteByTaskId(parList,request.getId());
+            this.switchTaskInfoMapper.deleteByTaskId(parList, request.getId());
         }
     }
 

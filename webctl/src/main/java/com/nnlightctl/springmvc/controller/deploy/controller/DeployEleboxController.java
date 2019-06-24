@@ -135,6 +135,8 @@ public class DeployEleboxController extends BaseController {
     @RequestMapping("deployExleboxDelete")
     public String deployExleboxDelete(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/deployExleboxDelete");
+        if(PubMethod.isEmpty(request.getExleboxId()))
+            return  toJson(JsonResult.FALLURE_IDS_NULL);
 
         //参数检验
         if (bindingResult.hasErrors()) {
@@ -181,7 +183,7 @@ public class DeployEleboxController extends BaseController {
     }
 
 
-    @RequestMapping(value = "modifyByView")
+    @RequestMapping(value = "modifyByView",method = RequestMethod.POST, consumes = "application/json")
     public String modifyByView(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/modifyByView");
 

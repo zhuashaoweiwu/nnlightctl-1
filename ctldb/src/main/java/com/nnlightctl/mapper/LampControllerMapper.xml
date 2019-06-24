@@ -21,6 +21,7 @@
         <result column="nnlightctl_lamppost_id" jdbcType="INTEGER" property="nnlightctlLamppostId" />
         <result column="nnlightctl_lamp_model_id" jdbcType="INTEGER" property="nnlightctlLampModelId" />
         <result column="nnlightctl_project_id" jdbcType="INTEGER" property="nnlightctlProjectId"/>
+        <result column="nnlightctl_elebox_id" jdbcType="BIGINT" property="nnlightctlEleboxId"/>
     </resultMap>
 
 
@@ -28,7 +29,7 @@
         id,lamp_model,lamp_name,longitude,latitude,
         communication_mode,dimming_mode,rated_Voltage,
         rated_current,static_power,alarm_message,mem
-        ,deploy_state,equipment_number,nnlightctl_elebox_loop_id
+        ,deploy_state,equipment_number,nnlightctl_elebox_loop_id,nnlightctl_elebox_id,nnlightctl_project_id
     </sql>
 
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
@@ -220,7 +221,9 @@
     </delete>
     <select id="selectByCount" resultType="java.lang.Integer">
         select count(*) from nnlightctl_lamp_controller
-
+    </select>
+    <select id="selectCountByImei" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from nnlightctl_lamp_controller where equipment_number = #{imei,jdbcType=BIGINT}
     </select>
     <select id="queryLightingByLoop" resultType="java.lang.String" parameterType="java.lang.Long">
         select equipment_number as equipmentNumber   from nnlightctl_lamp_controller where nnlightctl_elebox_loop_id  = #{loopId,jdbcType=BIGINT}
@@ -291,7 +294,7 @@
             </if>
         </where>
     </select>
-    <select id="selectByExampleDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView" parameterType="java.lang.String">
+    <select id="selectByExampleDeployLighting" resultType="com.nnlightctl.vo.DeployLightingView"  parameterType="com.nnlightctl.po.LampController">
         select
         controller.id as id,controller.equipment_number as  equipmentNumber,controller.lamp_model as lampModel ,
         controller.static_power as staticPower,controller.mem as mem,
@@ -306,10 +309,10 @@
 
         where  controller.deploy_state=1
         <if test="params.equipmentNumber !=null">
-            controller.equipment_number like concat('%',#{params.equipmentNumber},'%')
+            and controller.equipment_number like concat('%',#{params.equipmentNumber},'%')
         </if>
-        <if test="lampModel !=null">
-            controller.lamp_model like concat('%',#{params.lampModel},'%')
+        <if test="params.lampModel !=null">
+            and controller.lamp_model like concat('%',#{params.lampModel},'%')
         </if>
         order by controller.id DESC
     </select>
