@@ -1,12 +1,16 @@
 package com.nnlightctl.springmvc.controller;
 
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Elebox;
 import com.nnlightctl.request.EleboxConditionRequest;
 import com.nnlightctl.request.EleboxRequest;
 import com.nnlightctl.request.LightConditionRequest;
+import com.nnlightctl.request.LightGroupConditionRequest;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EleboxServer;
+import com.nnlightctl.server.LampControllerServer;
+import com.nnlightctl.server.LightGroupServer;
 import com.nnlightctl.server.LightServer;
 import com.nnlightctl.vo.EleboxView;
 import com.nnlightctl.vo.LightingView;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/gis")
@@ -30,6 +35,12 @@ public class GisController extends BaseController {
 
     @Autowired
     private LightServer lightServer;
+
+    @Autowired
+    private LampControllerServer lampControllerServer;
+
+    @Autowired
+    private LightGroupServer lightGroupServer;
 
     @RequestMapping("listElebox")
     public String listElebox(EleboxConditionRequest request) {
@@ -47,15 +58,33 @@ public class GisController extends BaseController {
     @RequestMapping("listLighting")
     public String listLighting(LightConditionRequest request) {
         logger.info("[POST] /api/gis/listLighting");
+        if (PubMethod.isEmpty(request) || PubMethod.isEmpty(request.getProjectId()) || PubMethod.isEmpty(request.getPageSize()) || PubMethod.isEmpty(request.getPageNumber())) {
+            return toJson(JsonResult.FALLURE_IDS_NULL);
+        }
 
-        Tuple.TwoTuple<List<LightingView>, Integer> tuple = this.lightServer.listLightingView(request);
-
+        Tuple.TwoTuple<List<Map<String, Object>>, Integer> tuple = this.lampControllerServer.queryLightingByProject(request);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(tuple.getFirst());
         jsonResult.setTotal(tuple.getSecond());
 
         return toJson(jsonResult);
     }
+
+    @RequestMapping("listAlreadyLighting")
+    public String listAlreadyLighting(LightGroupConditionRequest request) {
+        logger.info("[POST] /api/lightGroup/listAlreadyLighting");
+
+        if (PubMethod.isEmpty(request) || PubMethod.isEmpty(request.getGroupId()) || PubMethod.isEmpty(request.getPageSize()) || PubMethod.isEmpty(request.getPageNumber())) {
+            return toJson(JsonResult.FALLURE_IDS_NULL);
+        }
+        Tuple.TwoTuple<List<Map<String, Object>>, Integer> tuple = this.lightGroupServer.listLightInGroup(request);
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+        jsonResult.setData(tuple.getFirst());
+        jsonResult.setTotal(tuple.getSecond());
+
+        return toJson(jsonResult);
+    }
+
 
     @RequestMapping("listSelectLighting")
     public String listSelectLighting(LightConditionRequest request) {
@@ -81,11 +110,12 @@ public class GisController extends BaseController {
 
         return toJson(jsonResult);
     }
+
     @RequestMapping("getLightSignalByUUID")
-    public String getLightSignalByUUID(String uuid){
+    public String getLightSignalByUUID(String uuid) {
         logger.info("[POST] /api/gis/getLightSignalByUUID");
         String signalIntensity = lightServer.getLightSignalByUUID(uuid);
-        List<String> list= new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add(signalIntensity);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(list);

@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.nnlight.common.ArrayUtil;
 import com.nnlight.common.CRCUtil;
 import com.nnlight.common.Constants;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
@@ -355,6 +356,7 @@ public class CommandServerImpl implements CommandServer {
         for (Long scendId : sceneIds) {
             //获取场景下全部灯具列表
             List<Lighting> lightingList = sceneServer.listLightingsOfScene(scendId);
+            if(PubMethod.isEmpty(lightingList))continue;
             //获取场景下全部任务策略列表
             List<SwitchTask> switchTaskList = sceneServer.listSwitchTaskOfScene(scendId);
 

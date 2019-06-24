@@ -15,6 +15,7 @@ import com.nnlightctl.po.LightingModel;
 import com.nnlightctl.po.Project;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
+import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.server.LampControllerServer;
 import com.nnlightctl.vo.DeployLightingView;
@@ -180,6 +181,16 @@ public class LampControllerImpl implements LampControllerServer {
         return lampControllerMapper.queryLightingUnLoop();
     }
 
+    @Override
+    public Tuple.TwoTuple<List<Map<String, Object>>, Integer> queryLightingByProject(LightConditionRequest request) {
+        Tuple.TwoTuple<List<Map<String, Object>>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
+        Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+        List<Map<String, Object>> maps = lampControllerMapper.queryLightingByProject(request.getProjectId(),request.getGroupId());
+
+        listDeployLighting.setSecond((int) page.getTotal());
+        listDeployLighting.setFirst(maps);
+        return listDeployLighting;
+    }
 
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 

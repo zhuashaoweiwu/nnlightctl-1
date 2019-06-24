@@ -3,6 +3,8 @@ package com.nnlightctl.dao;
 import com.nnlightctl.po.LightingGroup;
 import com.nnlightctl.po.LightingGroupExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface LightingGroupMapper {
@@ -27,4 +29,6 @@ public interface LightingGroupMapper {
     int updateByPrimaryKeySelective(LightingGroup record);
 
     int updateByPrimaryKey(LightingGroup record);
+
+    List<Map<String,Object>>listLightInGroup(@Param("groupId") Long groupId);
 }

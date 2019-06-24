@@ -8,6 +8,7 @@ import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
 import com.nnlightctl.request.LamppostConditionRequest;
+import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.vo.DeployLightingView;
 import com.nnlightctl.vo.LampControllerView;
@@ -46,6 +47,8 @@ public interface LampControllerServer {
     Boolean updateShowDeployLighting(DeployLightingRequest request);
 
     List<Map<String,Object>> queryLightingUnLoop();
+
+    Tuple.TwoTuple<List<Map<String,Object>>, Integer>  queryLightingByProject(LightConditionRequest request);
 
 
 }

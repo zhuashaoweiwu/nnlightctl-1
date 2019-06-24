@@ -1,6 +1,7 @@
 package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.command.Command;
@@ -288,7 +289,9 @@ public class SceneServerImpl implements SceneServer {
         List<Lighting> lightingList = new ArrayList<>(8);
 
         for (Long id : lightIds) {
-            lightingList.add(lightServer.getLighting(id));
+            Lighting lighting = lightServer.getLighting(id);
+            if(PubMethod.isEmpty(lighting)) continue;
+            lightingList.add(lighting);
         }
 
         return lightingList;

@@ -50,5 +50,7 @@ public interface LampControllerMapper {
 
     int selectCountByImei(@Param("imei") String imei);
 
+    List<Map<String,Object>> queryLightingByProject (@Param("projectId") Long projectId,@Param("groupId") Long groupId);
+
 
 }
