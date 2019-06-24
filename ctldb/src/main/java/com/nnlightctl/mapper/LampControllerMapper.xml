@@ -258,6 +258,7 @@
                AND lamp_name like concat('%',#{params.lampName},'%')
              </if>
          </where>
+        ORDER by id DESC
     </select>
 
     <select id="selectById" resultMap="BaseResultMap" resultType="com.nnlightctl.po.LampController">

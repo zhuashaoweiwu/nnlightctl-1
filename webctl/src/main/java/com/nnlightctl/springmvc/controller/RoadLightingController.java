@@ -75,9 +75,22 @@ public class RoadLightingController extends BaseController {
 
 
     @RequestMapping("addorupdateelebox")
-    public String addOrUpdateElebox(EleboxRequest request) {
+    public String addOrUpdateElebox(@Valid EleboxRequest request,BindingResult bindingResult) {
 
         logger.info("[POST] api/roadlighting/addorupdateelebox");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int flag = eleboxServer.addOrUpdateElebox(request);
 
@@ -132,9 +145,22 @@ public class RoadLightingController extends BaseController {
 
     /*************************************集中控制器***************************/
     @RequestMapping("addorupdatecentralizecontroller")
-    public String addOrUpdateCentralizeController(CentralizeControllerRquester request) {
+    public String addOrUpdateCentralizeController(@Valid CentralizeControllerRquester request,BindingResult bindingResult) {
 
         logger.info("[POST] api/roadlighting/addorupdatecentralizecontroller");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         int flag = centralizeControllerServer.addOrUpdateCentralizeController(request);
 
@@ -227,9 +253,22 @@ public class RoadLightingController extends BaseController {
 
     /******************************************电表**********************************/
     @RequestMapping("addorupdateelectricitymeter")
-    public String addOrUpdateElectricityMeter(ElectricityMeterRequest request) {
+    public String addOrUpdateElectricityMeter(@Valid ElectricityMeterRequest request,BindingResult bindingResult) {
 
         logger.info("[POST] api/roadlighting/addorupdateelectricitymeter");
+
+        //参数检验
+        if (bindingResult.hasErrors()) {
+            JsonResult jsonResult = JsonResult.getFAILURE();
+            StringBuilder stringBuilder = new StringBuilder();
+            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
+            for (ObjectError objectError : objectErrorList) {
+                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
+            }
+
+            jsonResult.setMsg(stringBuilder.toString());
+            return toJson(jsonResult);
+        }
 
         JsonResult jsonResult = null;
 
@@ -658,18 +697,7 @@ public class RoadLightingController extends BaseController {
         return toJson(jsonResult);
     }
 
-    /**
-     * 任意参数查询信息
-     *
-     * @param request
-     * @return
-     */
-    @RequestMapping("selectbylamppostparameter")
-    public String selectByParameter(LamppostConditionRequest request) {
 
-        return null;
-
-    }
 
     @RequestMapping("selectlamppostbyid")
     public String selectLamppostById(LamppostConditionRequest request) {

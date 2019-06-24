@@ -100,6 +100,8 @@ public class ModularServerImpl implements ModularServer {
             criteria.andModularNameLike("%"+request.getModularName()+"%");
         }
 
+        example.setOrderByClause("id DESC");
+
         Long example1 = modularMapper.countByExample(example);
 
         int total=example1.intValue();
