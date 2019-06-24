@@ -6,7 +6,7 @@ public class JsonResult {
     public static JsonResult SUCCESS = new JsonResult("1000", "成功");
     public static JsonResult FAILURE = new JsonResult("1001", "失败");
     //通过id查询或者删除
-    public static  JsonResult FALLURE_IDS_NULL=new JsonResult("4001","传入id为空");
+    public static  JsonResult FALLURE_IDS_NULL=new JsonResult("4001","传入参数为空");
 
     public static JsonResult FALLURE_IDS_CODEERROR=new JsonResult("4002","传入的id有误");
 

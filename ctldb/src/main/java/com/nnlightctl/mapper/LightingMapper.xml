@@ -136,6 +136,12 @@
     from nnlightctl_lighting
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectByIdFroController" resultMap="BaseResultMap"  parameterType="java.lang.Long">
+    SELECT  nl.* from   nnlightctl_lighting nl   LEFT JOIN nnlightctl_lamp_controller nlc  on
+    nl.uid  = nlc.equipment_number  where nlc.id = #{id,jdbcType=BIGINT};
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from nnlightctl_lighting
     where id = #{id,jdbcType=BIGINT}

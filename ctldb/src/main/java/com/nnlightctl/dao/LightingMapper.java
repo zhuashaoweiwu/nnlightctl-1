@@ -20,6 +20,8 @@ public interface LightingMapper {
 
     Lighting selectByPrimaryKey(Long id);
 
+    Lighting  selectByIdFroController(Long id);
+
     int updateByExampleSelective(@Param("record") Lighting record, @Param("example") LightingExample example);
 
     int updateByExample(@Param("record") Lighting record, @Param("example") LightingExample example);

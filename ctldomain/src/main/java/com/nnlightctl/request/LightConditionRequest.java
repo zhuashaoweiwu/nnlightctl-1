@@ -131,6 +131,14 @@ public class LightConditionRequest extends BaseRequest {
         this.lightingCode = lightingCode;
     }
 
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
     private String uuid;
     private String lightingCode;
 
@@ -153,6 +161,8 @@ public class LightConditionRequest extends BaseRequest {
     private List<Long> deleteLightIdList;
 
     private Long projectId;
+
+    private Long groupId;
 
 
 

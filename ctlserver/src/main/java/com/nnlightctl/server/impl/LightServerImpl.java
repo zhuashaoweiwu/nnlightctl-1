@@ -206,7 +206,8 @@ public class LightServerImpl implements LightServer {
 
     @Override
     public Lighting getLighting(Long id) {
-        return lightingMapper.selectByPrimaryKey(id);
+//        return lightingMapper.selectByPrimaryKey(id);
+        return lightingMapper.selectByIdFroController(id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.nnlightctl.server.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
@@ -23,6 +24,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LightGroupServerImpl implements LightGroupServer {
@@ -146,6 +148,16 @@ public class LightGroupServerImpl implements LightGroupServer {
 
         tuple.setFirst(lightGroupViews);
 
+        return tuple;
+    }
+
+    @Override
+    public Tuple.TwoTuple<List<Map<String, Object>>, Integer> listLightInGroup(LightGroupConditionRequest request) {
+        Tuple.TwoTuple<List<Map<String, Object>>, Integer> tuple = new Tuple.TwoTuple<>();
+        Page<Object> objects = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
+        List<Map<String, Object>> maps = lightingGroupMapper.listLightInGroup(request.getGroupId());
+        tuple.setSecond((int) objects.getTotal());
+        tuple.setFirst(maps);
         return tuple;
     }
 

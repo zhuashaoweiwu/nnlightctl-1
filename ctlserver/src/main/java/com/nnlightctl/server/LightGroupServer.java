@@ -7,6 +7,7 @@ import com.nnlightctl.request.LightGroupRequest;
 import com.nnlightctl.vo.LightGroupView;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LightGroupServer {
     int createLightGroupByLightIds(LightGroupRequest request);
@@ -14,6 +15,11 @@ public interface LightGroupServer {
     int createLightGroupByLightGroup(LightGroupRequest request);
 
     Tuple.TwoTuple<List<LightGroupView>, Integer> listLightGroup(LightGroupConditionRequest request);
+
+
+    Tuple.TwoTuple<List<Map<String,Object>>, Integer> listLightInGroup(LightGroupConditionRequest request);
+
+
     int batchDeleteLightGroup(List<Long> lightGroupIds);
     int updateLightGroupFromLightId(LightGroupRequest request);
     int updateLightGroupFromLightGroup(LightGroupRequest request);
