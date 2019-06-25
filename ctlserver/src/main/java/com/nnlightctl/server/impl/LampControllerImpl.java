@@ -192,7 +192,6 @@ public class LampControllerImpl implements LampControllerServer {
         return listDeployLighting;
     }
 
-
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 
         Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();

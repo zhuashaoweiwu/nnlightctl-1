@@ -145,13 +145,13 @@ public class LightRequest {
 
     private Long id;
     private String uid;
-    //@NotEmpty(message = "灯具唯一编码不能为空！")
+    @NotEmpty(message = "灯具唯一编码不能为空！")
     private String lightingCode;
     private Date manufacture;
     private Date useDate;
-    //@NotEmpty(message = "灯杆不能为空！")
+    @NotEmpty(message = "灯杆不能为空！")
     private String lamppost;
-    //@NotEmpty(message = "灯头号不能为空！")
+    @NotEmpty(message = "灯头号不能为空！")
     private String lamphead;
     private Long nnlightctlLightingModelId;
     private Long nnlightctlLightingGisId;
@@ -159,7 +159,7 @@ public class LightRequest {
     private String decay;
     private Long maxUseTime;
     private String mem;
-    //@NotNull(message = "灯具必须选择所属项目")
+    @NotNull(message = "灯具必须选择所属项目")
     private Long nnlightctlProjectId;
     private String longitude;
     private String latitude;

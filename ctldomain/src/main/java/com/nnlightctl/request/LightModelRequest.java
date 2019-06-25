@@ -91,6 +91,7 @@ public class LightModelRequest {
 
     private int flux;
 
+    @NotBlank(message = "灯具的型号不能为空")
     private String equipmentNumber;
 
     private String colorMode;

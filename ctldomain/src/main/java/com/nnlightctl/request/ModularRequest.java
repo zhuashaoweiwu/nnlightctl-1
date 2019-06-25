@@ -2,6 +2,8 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
 public class ModularRequest {
     private Long id;
 
@@ -11,7 +13,7 @@ public class ModularRequest {
     @NotBlank(message = "开关模块的名字不能为空")
     private String modularName;
 
-    @NotBlank(message = "请选择回路数")
+    @NotNull(message = "请选择回路数")
     private Integer loopNumber;
 
     @NotBlank(message = "开关模块不能为空")
