@@ -41,7 +41,7 @@ public class MenuController extends BaseController{
     @RequestMapping("listMenuLevelSub")
     public String  listMenuLevelSub(Integer parentId){
         logger.info("[POST] /api/menu/listMenuLevelSub");
-        List<MenuView> righterList = menuServer.listMenuLevelSub(parentId);
+        List<Righter> righterList = menuServer.listMenuLevelSub(parentId);
         JsonResult jsonResult = JsonResult.getSUCCESS();
         jsonResult.setData(righterList);
 
