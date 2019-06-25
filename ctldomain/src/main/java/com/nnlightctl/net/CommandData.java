@@ -678,14 +678,14 @@ public class CommandData implements Serializable {
             data[k++] = switchTask.getLightPercent();
 
             //任务结束
-            data[k++] = switchTask.getPeriod();
-            String[] endDateStrArray = dateFormat.format(switchTask.getEndTime()).split("-");
-            data[k++] = Byte.parseByte(endDateStrArray[0]);
-            data[k++] = Byte.parseByte(endDateStrArray[1]);
-            data[k++] = Byte.parseByte(endDateStrArray[2]);
-            data[k++] = Byte.parseByte(endDateStrArray[3]);
-            data[k++] = Byte.parseByte(endDateStrArray[4]);
-            data[k++] = (byte) 0;
+//            data[k++] = switchTask.getPeriod();
+//            String[] endDateStrArray = dateFormat.format(switchTask.getEndTime()).split("-");
+//            data[k++] = Byte.parseByte(endDateStrArray[0]);
+//            data[k++] = Byte.parseByte(endDateStrArray[1]);
+//            data[k++] = Byte.parseByte(endDateStrArray[2]);
+//            data[k++] = Byte.parseByte(endDateStrArray[3]);
+//            data[k++] = Byte.parseByte(endDateStrArray[4]);
+//            data[k++] = (byte) 0;
         }
         commandData.setData(data);
         commandData.setCheck(commandData.createCheck());

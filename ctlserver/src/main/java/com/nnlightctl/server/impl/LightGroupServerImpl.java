@@ -2,6 +2,7 @@ package com.nnlightctl.server.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LightingGroupMapper;
@@ -183,6 +184,7 @@ public class LightGroupServerImpl implements LightGroupServer {
         //删除旧的灯具与分组映射
         lightingGroupMapDao.batchDeleteLightingGroupMap(request.getId());
 
+        if(PubMethod.isEmpty(request.getLightIds())) return 1;
         //建立新的灯具与分组的映射
         lightingGroupMapDao.batchAddLightingGroupMap(request.getId(), request.getLightIds());
 

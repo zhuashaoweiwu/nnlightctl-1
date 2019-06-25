@@ -527,12 +527,12 @@ public class CommandServerImpl implements CommandServer {
     private Map<Long, Object> Verification(List<SceneView.SwitchTask> switchTaskList) {
         int dataLength = 4;
         Map<Long, Object> resultMap = Maps.newHashMap();
-        List<Long> parList = Lists.newArrayList();
+//        List<Long> parList = Lists.newArrayList();
         for (SceneView.SwitchTask task : switchTaskList) {
             if (!task.getPeriod().equals((byte)4))
-                dataLength += 14;
+                dataLength += 7;
             else {
-                parList.add(task.getId());
+//                parList.add(task.getId());
                 List<SwitchTaskInfoView> switchTaskInfos = switchTaskInfoMapper.selectByTaskId(task.getId());
                 dataLength += switchTaskInfos.size() * 7;
                 resultMap.put(task.getId(), switchTaskInfos);
