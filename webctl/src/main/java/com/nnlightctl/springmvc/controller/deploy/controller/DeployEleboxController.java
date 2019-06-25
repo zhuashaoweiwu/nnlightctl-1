@@ -183,8 +183,8 @@ public class DeployEleboxController extends BaseController {
     }
 
 
-    @RequestMapping(value = "modifyByView",method = RequestMethod.POST, consumes = "application/json")
-    public String modifyByView(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+    @RequestMapping(value = "modifyByView")
+    public String modifyByView(DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/modifyByView");
 
         //参数检验
