@@ -3,6 +3,8 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 灯杆信息
  */
@@ -17,8 +19,7 @@ public class LamppostRequest extends BaseRequest{
     private String lampostName;
 
     private Double high;
-
-
+    @NotNull(message = "请选择灯头数")
     private Integer lampheadNumber;
 
     private String longitude;

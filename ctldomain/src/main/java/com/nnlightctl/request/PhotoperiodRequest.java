@@ -2,6 +2,8 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * 光照计信息
@@ -10,6 +12,7 @@ public class PhotoperiodRequest extends BaseRequest{
 
     private Long id;
 
+    @NotBlank(message = "设备编码不能为空")
     private String equipmentNumber;
 
     @NotBlank(message = "光照计的型号不能为空！")
@@ -20,7 +23,7 @@ public class PhotoperiodRequest extends BaseRequest{
 
     @NotBlank(message = "关照计的通讯方式不能为空！")
     private String communicationMode;
-
+    @NotNull(message = "调光方式不能为空")
     private Integer dimmingMode;
 
     private Double accuracy;

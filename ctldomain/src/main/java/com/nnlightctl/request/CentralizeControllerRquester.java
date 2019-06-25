@@ -36,6 +36,7 @@ public class CentralizeControllerRquester {
 
     private String mem;
 
+    @NotBlank(message = "设备编码不能为空")
     private String equipmentNumber;
 
     private int deployFlag;
