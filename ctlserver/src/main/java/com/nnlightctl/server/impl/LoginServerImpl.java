@@ -102,7 +102,7 @@ public class LoginServerImpl implements LoginServer {
                 menuViews.add(getMenuView(righter, righters));
             }
         }
-
+        System.err.println(menuViews);
         return menuViews;
     }
 

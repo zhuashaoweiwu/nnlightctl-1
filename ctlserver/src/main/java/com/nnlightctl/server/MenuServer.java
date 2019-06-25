@@ -10,7 +10,7 @@ import java.util.List;
 public interface MenuServer {
 
     List<Righter> listMenuLevel1();
-    List<MenuView> listMenuLevelSub(Integer parentId);
+    List<Righter> listMenuLevelSub(Integer parentId);
     int insertSaveUserMapRighters(SaveUserMapRightersRequest request);
     List<GetUserWithRighterView> getUserWithRighter(Integer userId);
 }

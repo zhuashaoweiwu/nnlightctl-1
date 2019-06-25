@@ -13,8 +13,8 @@
     <result column="voltage_channel" jdbcType="BIGINT" property="voltageChannel" />
     <result column="electric_channel" jdbcType="BIGINT" property="electricChannel" />
     <result column="test_channel" jdbcType="BIGINT" property="testChannel" />
-    <result column="up_channel" jdbcType="VARCHAR" property="upChannel" />
-    <result column="down_channel" jdbcType="VARCHAR" property="downChannel" />
+    <result column="up_channel" jdbcType="INTEGER" property="upChannel" />
+    <result column="down_channel" jdbcType="INTEGER" property="downChannel" />
     <result column="mem" jdbcType="VARCHAR" property="mem" />
     <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
     <result column="state" jdbcType="INTEGER" property="state" />
@@ -213,10 +213,10 @@
         #{testChannel,jdbcType=BIGINT},
       </if>
       <if test="upChannel != null">
-        #{upChannel,jdbcType=VARCHAR},
+        #{upChannel,jdbcType=INTEGER},
       </if>
       <if test="downChannel != null">
-        #{downChannel,jdbcType=VARCHAR},
+        #{downChannel,jdbcType=INTEGER},
       </if>
       <if test="mem != null">
         #{mem,jdbcType=VARCHAR},
@@ -276,10 +276,10 @@
         test_channel = #{record.testChannel,jdbcType=BIGINT},
       </if>
       <if test="record.upChannel != null">
-        up_channel = #{record.upChannel,jdbcType=VARCHAR},
+        up_channel = #{record.upChannel,jdbcType=INTEGER},
       </if>
       <if test="record.downChannel != null">
-        down_channel = #{record.downChannel,jdbcType=VARCHAR},
+        down_channel = #{record.downChannel,jdbcType=INTEGER},
       </if>
       <if test="record.mem != null">
         mem = #{record.mem,jdbcType=VARCHAR},
@@ -343,10 +343,10 @@
         test_channel = #{testChannel,jdbcType=BIGINT},
       </if>
       <if test="upChannel != null">
-        up_channel = #{upChannel,jdbcType=VARCHAR},
+        up_channel = #{upChannel,jdbcType=INTEGER},
       </if>
       <if test="downChannel != null">
-        down_channel = #{downChannel,jdbcType=VARCHAR},
+        down_channel = #{downChannel,jdbcType=INTEGER},
       </if>
       <if test="mem != null">
         mem = #{mem,jdbcType=VARCHAR},

@@ -30,9 +30,9 @@ public class CentralizeControllerRquester {
 
     private Long testChannel;
 
-    private String upChannel;
+    private int upChannel;
 
-    private String downChannel;
+    private int downChannel;
 
     private String mem;
 
@@ -147,19 +147,19 @@ public class CentralizeControllerRquester {
         this.testChannel = testChannel;
     }
 
-    public String getUpChannel() {
+    public int getUpChannel() {
         return upChannel;
     }
 
-    public void setUpChannel(String upChannel) {
+    public void setUpChannel(int upChannel) {
         this.upChannel = upChannel;
     }
 
-    public String getDownChannel() {
+    public int getDownChannel() {
         return downChannel;
     }
 
-    public void setDownChannel(String downChannel) {
+    public void setDownChannel(int downChannel) {
         this.downChannel = downChannel;
     }
 
