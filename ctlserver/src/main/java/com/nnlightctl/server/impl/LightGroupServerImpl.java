@@ -9,6 +9,7 @@ import com.nnlightctl.dao.LightingGroupMapper;
 import com.nnlightctl.dao.LightingMapper;
 import com.nnlightctl.jdbcdao.LightingGroupMapDao;
 import com.nnlightctl.jdbcdao.LightingGroupMapGroupDao;
+import com.nnlightctl.jdbcdao.SceneMapLightingGroupDao;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.po.LightingGroup;
@@ -41,6 +42,9 @@ public class LightGroupServerImpl implements LightGroupServer {
 
     @Autowired
     private LightingGroupMapGroupDao lightingGroupMapGroupDao;
+
+    @Autowired
+    private SceneMapLightingGroupDao sceneMapLightingGroupDao;
 
     @Override
     public int createLightGroupByLightIds(LightGroupRequest request) {
@@ -168,6 +172,7 @@ public class LightGroupServerImpl implements LightGroupServer {
             lightingGroupMapDao.batchDeleteLightingGroupMap(lightGroupId);
             lightingGroupMapGroupDao.batchDeleteLightingGroup(lightGroupId);
             lightingGroupMapper.deleteByPrimaryKey(lightGroupId);
+            sceneMapLightingGroupDao.deleteSceneMapByGroupId(lightGroupId);
         }
 
         return 1;
@@ -184,7 +189,7 @@ public class LightGroupServerImpl implements LightGroupServer {
         //删除旧的灯具与分组映射
         lightingGroupMapDao.batchDeleteLightingGroupMap(request.getId());
 
-        if(PubMethod.isEmpty(request.getLightIds())) return 1;
+        if (PubMethod.isEmpty(request.getLightIds())) return 1;
         //建立新的灯具与分组的映射
         lightingGroupMapDao.batchAddLightingGroupMap(request.getId(), request.getLightIds());
 

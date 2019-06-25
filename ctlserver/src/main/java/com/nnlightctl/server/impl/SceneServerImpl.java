@@ -141,13 +141,16 @@ public class SceneServerImpl implements SceneServer {
         //获取场景对应的灯具分组集合
         List<SceneView.LightingGroup> sceneViewLightingGroupList = new ArrayList<>(8);
         List<Long> lightingGroupIds = this.sceneMapLightingGroupDao.getLightingGroupIds(id);
-        for (Long lightingGroupId : lightingGroupIds) {
-            LightingGroup lightingGroup = lightingGroupMapper.selectByPrimaryKey(lightingGroupId);
-            SceneView.LightingGroup viewLightingGroup = new SceneView.LightingGroup();
-            ReflectCopyUtil.beanSameFieldCopy(lightingGroup, viewLightingGroup);
-            sceneViewLightingGroupList.add(viewLightingGroup);
+        if(!PubMethod.isEmpty(lightingGroupIds)) {
+            for (Long lightingGroupId : lightingGroupIds) {
+                LightingGroup lightingGroup = lightingGroupMapper.selectByPrimaryKey(lightingGroupId);
+                SceneView.LightingGroup viewLightingGroup = new SceneView.LightingGroup();
+                ReflectCopyUtil.beanSameFieldCopy(lightingGroup, viewLightingGroup);
+                sceneViewLightingGroupList.add(viewLightingGroup);
+            }
         }
         sceneView.setLightingGroups(sceneViewLightingGroupList);
+
 
         //获取场景对应的任务开关集合
         List<SceneView.SwitchTask> sceneViewSwitchTaskList = new ArrayList<>(8);

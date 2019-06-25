@@ -22,6 +22,13 @@ public class SceneMapLightingGroupDaoImpl implements SceneMapLightingGroupDao {
     }
 
     @Override
+    public int deleteSceneMapByGroupId(Long groupId) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("delete from nnlightctl_scene_lightgroup_map where nnlightctl_lighting_group_id = ?");
+        return jdbcTemplate.update(sql.toString(), new Object[] {groupId});
+    }
+
+    @Override
     public int addSceneLightingGroupMap(Long scendId, Long lightingGroupId) {
         StringBuilder sql = new StringBuilder();
         sql.append("insert into nnlightctl_scene_lightgroup_map(gmt_created, gmt_updated, nnlightctl_scene_id, nnlightctl_lighting_group_id) " +
