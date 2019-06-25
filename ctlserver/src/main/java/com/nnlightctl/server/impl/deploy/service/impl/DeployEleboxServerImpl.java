@@ -272,6 +272,7 @@ public class DeployEleboxServerImpl implements DeployEleboxServer {
                         LampController lampController = new LampController();
                         lampController.setId(lightId);
                         lampController.setModelDeployState(SystemConfig.getInfo.getConstant.YesDeploy);
+                        lampController.setDeployState(SystemConfig.getInfo.getConstant.YesDeploy);
                         lampController.setNnlightctlEleboxId(exleboxId);
                         lampController.setNnlightctlEleboxLoopId(eleboxModelLoop.getId());
                         lampControllerMapper.updateByPrimaryKey(lampController);

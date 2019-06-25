@@ -3,6 +3,7 @@ package com.nnlightctl.springmvc.controller.deploy.controller;
 import com.nnlight.common.PubMethod;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.request.deployRequest.DeployEleboxModelRequest;
+import com.nnlightctl.request.deployRequest.DeployEleboxRemoveRequest;
 import com.nnlightctl.request.deployRequest.DeployEleboxRequest;
 import com.nnlightctl.request.deployRequest.DeployExleboxArrangeRequest;
 import com.nnlightctl.result.JsonResult;
@@ -133,36 +134,20 @@ public class DeployEleboxController extends BaseController {
 
 
     @RequestMapping("deployExleboxDelete")
-    public String deployExleboxDelete(@Valid DeployExleboxArrangeRequest request, BindingResult bindingResult) {
+    public String deployExleboxDelete(DeployEleboxRemoveRequest deployEleboxRemoveRequest) {
         logger.info("[POST] deployElebox/deployExleboxDelete");
-        if(PubMethod.isEmpty(request.getExleboxId()))
-            return  toJson(JsonResult.FALLURE_IDS_NULL);
+        if (PubMethod.isEmpty(deployEleboxRemoveRequest.getExleboxId()))
+            return toJson(JsonResult.FALLURE_IDS_NULL);
 
         //参数检验
-        if (bindingResult.hasErrors()) {
-            JsonResult jsonResult = JsonResult.getFAILURE();
-            StringBuilder stringBuilder = new StringBuilder();
-            List<ObjectError> objectErrorList = bindingResult.getAllErrors();
-            for (ObjectError objectError : objectErrorList) {
-                stringBuilder.append(objectError.getDefaultMessage() + "\r\n");
-            }
-
-            jsonResult.setMsg(stringBuilder.toString());
-            return toJson(jsonResult);
+        for (int i = 0, j = deployEleboxRemoveRequest.getExleboxId().length; i < j; i++) {
+            this.deployEleboxServer.deployExleboxDelete(deployEleboxRemoveRequest.getExleboxId()[i]);
         }
-        Boolean arrangeRequest = this.deployEleboxServer.deployExleboxDelete(request.getExleboxId());
-        JsonResult jsonResult = null;
-        if (arrangeRequest) {
-            jsonResult = JsonResult.getSUCCESS();
-        } else {
-            jsonResult = JsonResult.getFAILURE();
-        }
-
-        return toJson(jsonResult);
+        return toJson(JsonResult.getSUCCESS());
     }
 
 
-    @RequestMapping(value =  "deployExleboxModify", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "deployExleboxModify", method = RequestMethod.POST, consumes = "application/json")
     public String deployExleboxModify(@RequestBody DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/deployExleboxModify");
 
@@ -207,10 +192,7 @@ public class DeployEleboxController extends BaseController {
     }
 
 
-
-
-
-    @RequestMapping(value = "deployExleboxArrange",method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "deployExleboxArrange", method = RequestMethod.POST, consumes = "application/json")
     public String deployExleboxArrange(@RequestBody DeployExleboxArrangeRequest request, BindingResult bindingResult) {
         logger.info("[POST] deployElebox/deployExleboxArrange");
 
@@ -243,7 +225,7 @@ public class DeployEleboxController extends BaseController {
 //        p.add(deployEleboxModelLoopRequest);
 //        request.setModelLoopRequests(p);
 
-        if(PubMethod.isEmpty(request)) {
+        if (PubMethod.isEmpty(request)) {
             return toJson(JsonResult.getFAILURE());
         }
         Boolean arrangeRequest = this.deployEleboxServer.deployExleboxArrange(request);
@@ -256,8 +238,6 @@ public class DeployEleboxController extends BaseController {
 
         return toJson(jsonResult);
     }
-
-
 
 
 }
