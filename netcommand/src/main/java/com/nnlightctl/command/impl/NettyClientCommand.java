@@ -34,7 +34,7 @@ public class NettyClientCommand implements Command {
         this.context = new Context(this);
         properties = PropertiesUtil.load("config/client.properties");
 
-       /* ExecutorService executorService = Executors.newCachedThreadPool();
+       ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.execute(() -> {
             try {
                 connect();
@@ -52,7 +52,7 @@ public class NettyClientCommand implements Command {
             this.context.await();
         } catch (InterruptedException e) {
             throw new RuntimeException(e.getMessage());
-        }*/
+        }
 
     }
 

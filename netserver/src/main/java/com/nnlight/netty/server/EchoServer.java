@@ -109,7 +109,7 @@ public class EchoServer {
             String shortChanelId = entry.getValue().getChannel().id().asShortText();
             if (channelId.equalsIgnoreCase(shortChanelId)) {
                 CommandData c =new CommandData((byte)percent, entry.getValue().getImei().getBytes());
-                serializeToString(c);
+//                serializeToString(c);
                 entry.getValue().getContext().writeAndFlush(c);
                 break;
             }
@@ -362,8 +362,8 @@ public class EchoServer {
                                     socketChannel.pipeline().addLast(new CommandDataDecoder());
                                     socketChannel.pipeline().addLast(new CommandDataEncoder());
                                     socketChannel.pipeline().addLast(serverHandler);
-                                    socketChannel.pipeline().addLast(new IdleStateHandler(10,
-                                            10, 10, TimeUnit.MINUTES));
+                                    socketChannel.pipeline().addLast(new IdleStateHandler(25,
+                                            15, 25, TimeUnit.MINUTES));
                                     socketChannel.pipeline().addLast(heartbeatServerHandler);
                                 }
                             });
