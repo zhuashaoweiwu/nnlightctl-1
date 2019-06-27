@@ -1,7 +1,11 @@
 package com.nnlightctl.server.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.nnlight.common.Constants;
+import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.dao.LampControllerMapper;
@@ -18,14 +22,19 @@ import com.nnlightctl.request.LampControllerRequest;
 import com.nnlightctl.request.LightConditionRequest;
 import com.nnlightctl.request.deployRequest.DeployLightingRequest;
 import com.nnlightctl.server.LampControllerServer;
+import com.nnlightctl.util.ApplicationType;
+import com.nnlightctl.util.HttpClientUtil;
 import com.nnlightctl.vo.DeployLightingView;
 import com.nnlightctl.vo.LampControllerView;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,11 +62,28 @@ public class LampControllerImpl implements LampControllerServer {
 
     @Override
     public int addOrUpdateLampController(LampControllerRequest request) {
-
         LampController lampController = new LampController();
 
-        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
+        /**modify by lxw*/
+        if (PubMethod.isEmpty(request.getId())) {
+            try {
+                String imei = HttpClientUtil.getInstance().postData(Constants.HttpKey.Register,
+                        new ArrayList<NameValuePair>() {{
+                            add(new BasicNameValuePair("imei", request.getEquipmentNumber()));
+                        }});
+                if (PubMethod.isEmpty(imei)) return 0;
+                JSONObject jsonObject = JSON.parseObject(imei);
+                if (!jsonObject.getInteger("code").equals(200) || PubMethod.isEmpty(jsonObject.getString("data")))
+                    return 0;
+                lampController.setDeviceId(jsonObject.getString("data"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error(e.getMessage());
+                return 0;
+            }
+        }
 
+        ReflectCopyUtil.beanSameFieldCopy(request, lampController);
         int ret = -1;
 
         if (request.getId() == null) {
@@ -72,12 +98,9 @@ public class LampControllerImpl implements LampControllerServer {
                 }
             }
 
-            //新增用户
             ret = lampControllerMapper.insert(lampController);
         } else {
 
-
-            //修改用户
             ret = lampControllerMapper.updateByPrimaryKey(lampController);
 
         }
@@ -93,6 +116,24 @@ public class LampControllerImpl implements LampControllerServer {
         if (lampControllerIds == null) {
             flag = -1;
         } else {
+            /**modify by lxw*/
+            try {
+                List<String> deviceIds = lampControllerMapper.getDeviceById(lampControllerIds);
+                if (!PubMethod.isEmpty(deviceIds)) {
+
+                    String device = HttpClientUtil.getInstance().postBodyDataWithJSON(Constants.HttpKey.RemoveDirect,
+                            new JSONObject()
+                                    .fluentPut("deviceIds", deviceIds)
+                                    .toJSONString()
+                    );
+                    if (PubMethod.isEmpty(device)) return -2;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error(e.getMessage());
+                return -2;
+            }
+
             for (Long lampControllerId : lampControllerIds) {
                 flag = lampControllerMapper.deleteByPrimaryKey(lampControllerId);
                 if (flag < 0) {
@@ -185,7 +226,7 @@ public class LampControllerImpl implements LampControllerServer {
     public Tuple.TwoTuple<List<Map<String, Object>>, Integer> queryLightingByProject(LightConditionRequest request) {
         Tuple.TwoTuple<List<Map<String, Object>>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
         Page<Object> page = PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-        List<Map<String, Object>> maps = lampControllerMapper.queryLightingByProject(request.getProjectId(),request.getGroupId());
+        List<Map<String, Object>> maps = lampControllerMapper.queryLightingByProject(request.getProjectId(), request.getGroupId());
 
         listDeployLighting.setSecond((int) page.getTotal());
         listDeployLighting.setFirst(maps);

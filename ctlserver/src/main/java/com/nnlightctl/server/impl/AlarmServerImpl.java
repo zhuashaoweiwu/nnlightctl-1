@@ -35,6 +35,7 @@ public class AlarmServerImpl implements ALarmServer{
     @Autowired
     private AlarmConfigMapper alarmConfigMapper;
 
+
     @Override
     public Tuple.TwoTuple<List<Alarm>, Integer> listAlarm(AlarmRequest request) {
         Tuple.TwoTuple<List<Alarm>, Integer> tuple = new Tuple.TwoTuple<>();

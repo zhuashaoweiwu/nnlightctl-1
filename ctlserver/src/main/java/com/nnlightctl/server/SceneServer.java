@@ -31,4 +31,6 @@ public interface SceneServer {
     List<Lighting> listLightingsOfScene(Long sceneId);
 
     List<SwitchTask> listSwitchTaskOfScene(Long scendId);
+
+    public List<String> listLampControllersOfScene(Long sceneId);
 }

@@ -8,6 +8,7 @@ import com.nnlightctl.command.Command;
 import com.nnlightctl.command.CommandFactory;
 import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.dao.LightingGroupMapper;
 import com.nnlightctl.dao.SceneMapper;
 import com.nnlightctl.dao.SceneShotcutMapper;
@@ -65,6 +66,8 @@ public class SceneServerImpl implements SceneServer {
     @Autowired
     private CommandServer commandServer;
 
+    @Autowired
+    private LampControllerMapper lampControllerMapper;
 
     @Override
     public int addOrUpdateScene(SceneRequest request) {
@@ -96,26 +99,29 @@ public class SceneServerImpl implements SceneServer {
 
         return 1;
     }
+
     @Override
-    public int getCountSceneShotcutByShotcutName(String shotcutName){
+    public int getCountSceneShotcutByShotcutName(String shotcutName) {
         SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
         sceneShotcutExample.createCriteria().andShotcutNameEqualTo(shotcutName);
-        int total =sceneShotcutMapper.countByExample(sceneShotcutExample);
+        int total = sceneShotcutMapper.countByExample(sceneShotcutExample);
         return total;
     }
+
     @Override
-    public int getCountSceneShotcutBySceneId(Long sceneId){
+    public int getCountSceneShotcutBySceneId(Long sceneId) {
         SceneShotcutExample sceneShotcutExample = new SceneShotcutExample();
         sceneShotcutExample.createCriteria().andNnlightctlSceneIdEqualTo(sceneId.longValue());
-        int total =sceneShotcutMapper.countByExample(sceneShotcutExample);
+        int total = sceneShotcutMapper.countByExample(sceneShotcutExample);
         return total;
     }
+
     @Override
     public Tuple.TwoTuple<List<Scene>, Integer> listScene(SceneRequest request) {
         Tuple.TwoTuple<List<Scene>, Integer> tuple = new Tuple.TwoTuple<>();
 
         SceneExample sceneExample = new SceneExample();
-        if(request.getSceneName() != null){
+        if (request.getSceneName() != null) {
             sceneExample.createCriteria().andSceneNameEqualTo(request.getSceneName());
         }
         sceneExample.setOrderByClause("id DESC");
@@ -141,7 +147,7 @@ public class SceneServerImpl implements SceneServer {
         //获取场景对应的灯具分组集合
         List<SceneView.LightingGroup> sceneViewLightingGroupList = new ArrayList<>(8);
         List<Long> lightingGroupIds = this.sceneMapLightingGroupDao.getLightingGroupIds(id);
-        if(!PubMethod.isEmpty(lightingGroupIds)) {
+        if (!PubMethod.isEmpty(lightingGroupIds)) {
             for (Long lightingGroupId : lightingGroupIds) {
                 LightingGroup lightingGroup = lightingGroupMapper.selectByPrimaryKey(lightingGroupId);
                 SceneView.LightingGroup viewLightingGroup = new SceneView.LightingGroup();
@@ -189,7 +195,7 @@ public class SceneServerImpl implements SceneServer {
         if (request.getId() == null) {
             //新增
             sceneShotcut.setGmtCreated(new Date());
-            sceneShotcut.setShotcutSceneState((byte)0);
+            sceneShotcut.setShotcutSceneState((byte) 0);
 
             ret = sceneShotcutMapper.insertSelective(sceneShotcut);
         } else {
@@ -232,12 +238,12 @@ public class SceneServerImpl implements SceneServer {
             }
 
             byte state = sceneShotcut.getShotcutSceneState();
-            if (state == (byte)0) {     //关灯状态，要开灯
+            if (state == (byte) 0) {     //关灯状态，要开灯
                 //发送调光指令
                 commandServer.sendLightAdjustCommandBatchUUID(lightingUUIDList, 100);
             }
 
-            if (state == (byte)1) {     //开灯状态，要关灯
+            if (state == (byte) 1) {     //开灯状态，要关灯
                 //先关灯
                 commandServer.sendLightAdjustCommandBatchUUID(lightingUUIDList, 0);
                 //切换手动模式
@@ -247,7 +253,7 @@ public class SceneServerImpl implements SceneServer {
             //开灯成功置为开灯状态,关灯成功置为关灯状态
             SceneShotcut sceneShotcut1 = new SceneShotcut();
             sceneShotcut1.setId(sceneShotcut.getId());
-            sceneShotcut1.setShotcutSceneState(state == (byte)0 ? (byte)1 : (byte)0);
+            sceneShotcut1.setShotcutSceneState(state == (byte) 0 ? (byte) 1 : (byte) 0);
             sceneShotcutMapper.updateByPrimaryKeySelective(sceneShotcut1);
         }
 
@@ -260,23 +266,7 @@ public class SceneServerImpl implements SceneServer {
     }
 
     private List<Long> getLightingIdsByLightGroupId(Long lightGroupId) {
-        List<Long> lightingIds = new ArrayList<>(8);
-
-        //组映射
-        List<Long> lightIdList = lightingGroupMapDao.getLightingIdsByGroupId(lightGroupId);
-        if (lightIdList != null) {
-            lightingIds.addAll(lightIdList);
-        }
-
-        //组组映射
-        List<Long> lightingGroupIdList = lightingGroupMapGroupDao.getLightGroupIdsByGroupId(lightGroupId);
-        if (lightingGroupIdList != null && lightingGroupIdList.size() > 0) {
-            for (Long subLightingGroupId : lightingGroupIdList) {
-                lightingIds.addAll(getLightingIdsByLightGroupId(subLightingGroupId));
-            }
-        }
-
-        return lightingIds;
+        return lightingGroupMapDao.getLightingIdsByGroupId(lightGroupId);
     }
 
     @Override
@@ -293,12 +283,28 @@ public class SceneServerImpl implements SceneServer {
 
         for (Long id : lightIds) {
             Lighting lighting = lightServer.getLighting(id);
-            if(PubMethod.isEmpty(lighting)) continue;
+            if (PubMethod.isEmpty(lighting)) continue;
             lightingList.add(lighting);
         }
 
         return lightingList;
     }
+
+
+    @Override
+    public List<String> listLampControllersOfScene(Long sceneId) {
+        SceneView sceneView = getScene(sceneId);
+        List<SceneView.LightingGroup> lightingGroupList = sceneView.getLightingGroups();
+        List<Long> lightIds = new ArrayList<>(8);
+
+        for (SceneView.LightingGroup lightingGroup : lightingGroupList) {
+            lightIds.addAll(getLightingIdsByLightGroupId(lightingGroup.getId()));
+        }
+        List<String> deviceByIds = lampControllerMapper.getDeviceById(lightIds);
+
+        return deviceByIds;
+    }
+
 
     @Override
     public List<SwitchTask> listSwitchTaskOfScene(Long scendId) {

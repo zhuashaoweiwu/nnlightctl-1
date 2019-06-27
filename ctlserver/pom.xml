@@ -34,7 +34,6 @@
             <groupId>com.nnlight</groupId>
             <artifactId>ctldomain</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.nnlight</groupId>
             <artifactId>netcommand</artifactId>

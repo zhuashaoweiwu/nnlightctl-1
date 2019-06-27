@@ -52,5 +52,5 @@ public interface LampControllerMapper {
 
     List<Map<String,Object>> queryLightingByProject (@Param("projectId") Long projectId,@Param("groupId") Long groupId);
 
-
+    List<String> getDeviceById(List<Long> list);
 }

@@ -83,6 +83,9 @@
             <if test="nnlightctlProjectId !=null">
                 nnlightctl_project_id,
             </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="lampModel != null">
@@ -131,7 +134,10 @@
                 #{nnlightctlLampModelId,jdbcType=INTEGER},
             </if>
             <if test="nnlightctlProjectId !=null">
-                #{nnlightctlProjectId,jdbcType=INTEGER}
+                #{nnlightctlProjectId,jdbcType=INTEGER},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId}
             </if>
         </trim>
     </insert>
@@ -194,6 +200,9 @@
             </if>
             <if test="nnlightctlEleboxLoopId !=null ">
                 nnlightctl_elebox_loop_id=#{nnlightctlEleboxLoopId,jdbcType=BIGINT},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId}
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -370,6 +379,13 @@
     <select id="getAllEquipmentNumber" resultType="java.lang.String">
 
       select equipment_number from nnlightctl_lamp_controller
+    </select>
+
+    <select id="getDeviceById" resultType="java.lang.String" parameterType="java.util.List">
+      select device_id as deviceId from nnlightctl_lamp_controller where device_id != '' and  id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
 

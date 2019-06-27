@@ -8,4 +8,16 @@ public class Constants {
     public static final String USERHOME_FIREWARE = "fireware";
     public static final String USERHOME_FIREWARE_FIREWAREBACKUP = "backup";
     public static final int BATCH_SIZE = 128;
+
+    public interface HttpKey {
+        static final String BaseURI = "http://192.168.10.197:8565/";
+
+        public static final String Register = BaseURI + "api/RegisterDirectConnectedDevice";
+
+        public static final String RemoveDirect = BaseURI + "api/RemoveDirectConnectedDevice";
+
+        public static final String Dimming = BaseURI + "api/Dimming";
+
+        public static final String CreateTask = BaseURI + "api/CreateBatchTask";
+    }
 }

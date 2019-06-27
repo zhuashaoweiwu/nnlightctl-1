@@ -267,9 +267,10 @@ public class EleboxServerImpl implements EleboxServer {
         if (!PubMethod.isEmpty(request.getEleboxId())) {
             criteria.andNnlightctlEleboxIdEqualTo(request.getEleboxId());
             criteria.andNnlightctlDeployStatusEqualTo((byte) 1);
-        } else {
-            criteria.andNnlightctlDeployStatusEqualTo((byte) 0);
         }
+//        else {
+//            criteria.andNnlightctlDeployStatusEqualTo((byte) 0);
+//        }
 
         if (!PubMethod.isEmpty(request.getModelName()))
             criteria.andModelNameLike("%" + request.getModelName() + "%");

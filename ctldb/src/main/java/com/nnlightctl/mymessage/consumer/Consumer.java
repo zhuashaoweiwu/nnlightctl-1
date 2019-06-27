@@ -64,36 +64,36 @@ public class Consumer {
                         CommandData lightE0Command = msgQuene.take();
 
                         //e0
-                        if (lightE0Command.getControl() == (byte) 0xe0) {
-                            LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
-                            lightingVolEleRecord.setGmtCreated(new Date());
-                            lightingVolEleRecord.setGmtUpdated(new Date());
-
-                            //与数据库灯具配对
-                            Lighting lighting = new Lighting();
-                            lighting.setUid(lightingVolEleRecord.getUid());
-                            lighting.setRealtimeUid(lightE0Command.getRealtimeUUID());
-                            lighting.setLightingImei(lightingVolEleRecord.getLightimei());
-                            lighting.setLongitude(lightingVolEleRecord.getLongitude());
-                            lighting.setLatitude(lightingVolEleRecord.getLatitude());
-                            lighting.setFaultTag((byte)0);
-
-                            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                                @Override
-                                protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                                    //映射终端与数据库灯具
-                                    lightMapNetDao.mapLightingNet(lighting);
-                                    //写入灯具终端电流电压信息
-                                    lightingVolEleRecordDao.addLightingVolEleRecord(lightingVolEleRecord);
-//                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
-                                    //写入灯具信号日志
-                                    LightSignalLog lightSignalLog = DataTransferUtil.transToLightSignalLog(lightingVolEleRecord);
-                                    lightSignalLog.setOnlineState((byte)1);
-//                                    lightSignalLogMapper.insertSelective(lightSignalLog);
-                                    lightSignalRecordDao.addLightSignalRecord(lightSignalLog);
-                                }
-                            });
-                        }
+//                        if (lightE0Command.getControl() == (byte) 0xe0) {
+//                            LightingVolEleRecord lightingVolEleRecord = DataTransferUtil.transToLightingVolEleRecord(lightE0Command);
+//                            lightingVolEleRecord.setGmtCreated(new Date());
+//                            lightingVolEleRecord.setGmtUpdated(new Date());
+//
+//                            //与数据库灯具配对
+//                            Lighting lighting = new Lighting();
+//                            lighting.setUid(lightingVolEleRecord.getUid());
+//                            lighting.setRealtimeUid(lightE0Command.getRealtimeUUID());
+//                            lighting.setLightingImei(lightingVolEleRecord.getLightimei());
+//                            lighting.setLongitude(lightingVolEleRecord.getLongitude());
+//                            lighting.setLatitude(lightingVolEleRecord.getLatitude());
+//                            lighting.setFaultTag((byte)0);
+//
+//                            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+//                                @Override
+//                                protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+//                                    //映射终端与数据库灯具
+//                                    lightMapNetDao.mapLightingNet(lighting);
+//                                    //写入灯具终端电流电压信息
+//                                    lightingVolEleRecordDao.addLightingVolEleRecord(lightingVolEleRecord);
+////                                    lightingVolEleRecordMapper.insertSelective(lightingVolEleRecord);
+//                                    //写入灯具信号日志
+//                                    LightSignalLog lightSignalLog = DataTransferUtil.transToLightSignalLog(lightingVolEleRecord);
+//                                    lightSignalLog.setOnlineState((byte)1);
+////                                    lightSignalLogMapper.insertSelective(lightSignalLog);
+//                                    lightSignalRecordDao.addLightSignalRecord(lightSignalLog);
+//                                }
+//                            });
+//                        }
 
                         //e1
                         if (lightE0Command.getControl() == (byte) 0xe1) {

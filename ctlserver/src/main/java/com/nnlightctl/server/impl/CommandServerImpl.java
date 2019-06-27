@@ -1,6 +1,8 @@
 package com.nnlightctl.server.impl;
 
 import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.nnlight.common.ArrayUtil;
@@ -14,6 +16,7 @@ import com.nnlightctl.command.client.analyze.CommandAnalyzeFactory;
 import com.nnlightctl.command.event.MessageEvent;
 import com.nnlightctl.dao.EleboxModelLoopMapper;
 import com.nnlightctl.dao.FirewareUploadRecordMapper;
+import com.nnlightctl.dao.LampControllerMapper;
 import com.nnlightctl.dao.SwitchTaskInfoMapper;
 import com.nnlightctl.mymessage.producer.Produce;
 import com.nnlightctl.net.CommandData;
@@ -28,8 +31,11 @@ import com.nnlightctl.request.CommandRequest;
 import com.nnlightctl.request.UpdateFirewareCommandRequest;
 import com.nnlightctl.server.*;
 import com.nnlightctl.util.BytesHexStrTranslate;
+import com.nnlightctl.util.HttpClientUtil;
 import com.nnlightctl.vo.SceneView;
 import com.nnlightctl.vo.SwitchTaskInfoView;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +44,11 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +77,9 @@ public class CommandServerImpl implements CommandServer {
 
     @Autowired
     private FirewareUploadRecordServer firewareUploadRecordServer;
+
+    @Autowired
+    private LampControllerMapper lampControllerMapper;
 
     private final Command command;
 
@@ -99,13 +111,28 @@ public class CommandServerImpl implements CommandServer {
             throw new RuntimeException("批量操作的灯具数量为0");
         }
 
-        List<String> realtime_ids = new ArrayList<>(1);
-        for (Long lightId : lightIds) {
-            Lighting lighting = lightServer.getLighting(lightId);
-            realtime_ids.add(lighting.getRealtimeUid());
-        }
+//        List<String> realtime_ids = new ArrayList<>(1);
+//        for (Long lightId : lightIds) {
+//            Lighting lighting = lightServer.getLighting(lightId);
+//            realtime_ids.add(lighting.getRealtimeUid());
+//        }
+//        command.batchSendLightAdjustCommand(realtime_ids, percent);
 
-        command.batchSendLightAdjustCommand(realtime_ids, percent);
+        List<String> deviceByIds = lampControllerMapper.getDeviceById(lightIds);
+        if (PubMethod.isEmpty(deviceByIds)) {
+            logger.error("sendLightAdjustCommandBatch is  deviceByIds is null. lightIds :" + JSON.toJSONString(lightIds));
+        }
+        try {
+            String result = HttpClientUtil.getInstance().postData(Constants.HttpKey.Dimming,
+                    new ArrayList<NameValuePair>() {{
+                        add(new BasicNameValuePair("deviceId", deviceByIds.get(0)));
+                        add(new BasicNameValuePair("percent", percent + ""));
+                    }});
+            logger.info(" sendLightAdjustCommandBatch  result : " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
     }
 
     @Override
@@ -173,15 +200,29 @@ public class CommandServerImpl implements CommandServer {
             ReflectCopyUtil.beanSameFieldCopy(switchTask, switchTaskView);
             switchViewList.add(switchTaskView);
         }
+        List<String> dimmings = getTask(Verification(switchViewList), switchViewList);
 
-        Map<Long, Object> verification = Verification(switchViewList);
-
-        for (String terminalUUID : terminalUUIDs) {
-            String terminalRealtimeUUID = lightServer.getLightingByUUID(terminalUUID).getRealtimeUid();
-            command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
-            command.configTerminalSwitchPolicy(switchViewList, terminalRealtimeUUID, verification);
-            command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
+        try {
+            String device = HttpClientUtil.getInstance().postBodyDataWithJSON(Constants.HttpKey.CreateTask,
+                    new JSONObject()
+                            .fluentPut("deviceIds", terminalUUIDs)
+                            .fluentPut("dimmings", dimmings)
+                            .toJSONString()
+            );
+            logger.info("configTerminalSwitchPolicyBatch result: " +device);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }
+
+
+//        Map<Long, Object> verification = Verification(switchViewList);
+//        for (String terminalUUID : terminalUUIDs) {
+//            String terminalRealtimeUUID = lightServer.getLightingByUUID(terminalUUID).getRealtimeUid();
+//            command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
+//            command.configTerminalSwitchPolicy(switchViewList, terminalRealtimeUUID, verification);
+//            command.batchConfigTerminalAutoMode(0, terminalRealtimeUUID);
+//        }
     }
 
 
@@ -355,19 +396,12 @@ public class CommandServerImpl implements CommandServer {
         //分别处理每个场景的下发
         for (Long scendId : sceneIds) {
             //获取场景下全部灯具列表
-            List<Lighting> lightingList = sceneServer.listLightingsOfScene(scendId);
-            if(PubMethod.isEmpty(lightingList))continue;
+            List<String> lightingList = sceneServer.listLampControllersOfScene(scendId);
+            if (PubMethod.isEmpty(lightingList)) continue;
             //获取场景下全部任务策略列表
             List<SwitchTask> switchTaskList = sceneServer.listSwitchTaskOfScene(scendId);
-
-            //获取灯具uuid
-            List<String> lightingUUIDList = new ArrayList<>(8);
-            for (Lighting lighting : lightingList) {
-                lightingUUIDList.add(lighting.getUid());
-            }
-
             //下发策略
-            configTerminalSwitchPolicyBatch(switchTaskList, lightingUUIDList);
+            configTerminalSwitchPolicyBatch(switchTaskList, lightingList);
         }
     }
 
@@ -523,24 +557,67 @@ public class CommandServerImpl implements CommandServer {
         return command.invokeModbusEM(realtimeUUID, directiveBytes);
     }
 
+    private List<String> getTask(Map<Long, Object> verification, List<SceneView.SwitchTask> switchTaskList) {
+        List<String> resultList = new ArrayList<String>() {{
+            add("0001901010101000");
+        }};
+        Integer k = 0;
+        DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd-HH-mm");
+        for (SceneView.SwitchTask switchTask : switchTaskList) {
+            k += 1;
+            if (switchTask.getPeriod().equals((byte) 4)) {
+                Iterator<SwitchTaskInfoView> iterator = ((List<SwitchTaskInfoView>) verification.get(switchTask.getId())).iterator();
+                while (iterator.hasNext()) {
+                    StringBuilder sb = new StringBuilder();
+                    SwitchTaskInfoView taskInfo = iterator.next();
+                    sb.append(k >= 10 ? k : "0" + k);
+                    sb.append(iterator.hasNext() ? switchTask.getPeriod() : (byte) 5);
+                    String[] date = dateFormat.format(iterator.hasNext() ? switchTask.getStartTime() : switchTask.getEndTime()).split("-");
+                    String[] time = dateFormat.format(taskInfo.getBeginTime()).split("-");
+                    sb.append(date[0]);
+                    sb.append(date[1]);
+                    sb.append(date[2]);
+                    sb.append(time[3]);
+                    sb.append(time[4]);
+                    sb.append(String.format("%03d", taskInfo.getLightPercent()));
+                    resultList.add(sb.toString());
+                }
+                continue;
+            }
+            String[] date = dateFormat.format(switchTask.getStartTime()).split("-");
+            StringBuilder sb = new StringBuilder();
+            sb.append(k >= 10 ? k : "0" + k);
+            sb.append(switchTask.getPeriod());
+            sb.append(date[0]);
+            sb.append(date[1]);
+            sb.append(date[2]);
+            sb.append(date[3]);
+            sb.append(date[4]);
+            sb.append(String.format("%03d", switchTask.getLightPercent()));
+            resultList.add(sb.toString());
+        }
+
+        return resultList;
+    }
+
 
     private Map<Long, Object> Verification(List<SceneView.SwitchTask> switchTaskList) {
-        int dataLength = 4;
+//        int dataLength = 4;
         Map<Long, Object> resultMap = Maps.newHashMap();
-//        List<Long> parList = Lists.newArrayList();
         for (SceneView.SwitchTask task : switchTaskList) {
-            if (!task.getPeriod().equals((byte)4))
-                dataLength += 7;
-            else {
-//                parList.add(task.getId());
+//            if (!task.getPeriod().equals((byte)4))
+//                dataLength += 7;
+//            else {
+            if (task.getPeriod().equals((byte) 4)) {
                 List<SwitchTaskInfoView> switchTaskInfos = switchTaskInfoMapper.selectByTaskId(task.getId());
-                dataLength += switchTaskInfos.size() * 7;
                 resultMap.put(task.getId(), switchTaskInfos);
             }
-            if (dataLength > 255)
-                throw new RuntimeException("设置开关任务策略大于15条错误");
+//                dataLength += switchTaskInfos.size() * 7;
         }
-        resultMap.put(0L, dataLength);
+//            if (dataLength > 255)
+//                throw new RuntimeException("设置开关任务策略大于15条错误");
+//        }
+//        resultMap.put(0L, dataLength);
         return resultMap;
     }
 }
