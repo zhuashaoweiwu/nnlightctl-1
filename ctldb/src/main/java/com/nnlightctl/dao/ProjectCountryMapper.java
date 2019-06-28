@@ -18,6 +18,8 @@ public interface ProjectCountryMapper {
 
     List<ProjectCountry> selectByExample(ProjectCountryExample example);
 
+    ProjectCountry selectByCodeName(@Param("param") String codeNumber);
+
     ProjectCountry selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") ProjectCountry record, @Param("example") ProjectCountryExample example);

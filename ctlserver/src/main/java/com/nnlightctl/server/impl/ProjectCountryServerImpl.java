@@ -65,11 +65,11 @@ public class ProjectCountryServerImpl implements ProjectCountryServer {
 
     @Override
     public ProjectCountry getCountry(ProjectCountryConditionRequest request) {
-        ProjectCountryExample example = new ProjectCountryExample();
-        example.createCriteria().andCodeNumberEqualTo(request.getCodeNumber());
-        List<ProjectCountry> projectCountryList = this.projectCountryMapper.selectByExample(example);
-        if (projectCountryList != null && projectCountryList.size() > 0) {
-            return projectCountryList.get(0);
+        //ProjectCountryExample example = new ProjectCountryExample();
+        //example.createCriteria().andCodeNumberEqualTo(request.getCodeNumber());
+        ProjectCountry projectCountry = this.projectCountryMapper.selectByCodeName(request.getCodeNumber());
+        if (projectCountry!= null) {
+            return projectCountry;
         } else {
             throw new RuntimeException("查无结果");
         }

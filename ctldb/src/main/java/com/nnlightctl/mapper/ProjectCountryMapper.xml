@@ -76,11 +76,8 @@
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from nnlightctl_project_country
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
+    id as codeNumber ,name as countryName,ShortName as mem FROM citys
+    WHERE LevelType='0'
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
@@ -156,6 +153,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByCodeName" resultType="com.nnlightctl.po.ProjectCountry">
+
+    select Name as countryName where id=#{param}
+  </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update nnlightctl_project_country
     <set >

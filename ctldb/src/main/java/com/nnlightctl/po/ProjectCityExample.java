@@ -296,7 +296,12 @@ public class ProjectCityExample {
         }
 
         public Criteria andCodeNumberEqualTo(String value) {
-            addCriterion("code_number =", value, "codeNumber");
+            addCriterion("ParentId =", value, "codeNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityIdTo(String value) {
+            addCriterion("id =", value, "codeNumber");
             return (Criteria) this;
         }
 
@@ -646,7 +651,7 @@ public class ProjectCityExample {
         }
 
         public Criteria andNnlightctlProjectProvinceIdEqualTo(Long value) {
-            addCriterion("nnlightctl_project_province_id =", value, "nnlightctlProjectProvinceId");
+            addCriterion("ParentId =", value, "nnlightctlProjectProvinceId");
             return (Criteria) this;
         }
 

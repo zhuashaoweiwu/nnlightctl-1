@@ -27,7 +27,7 @@ public class ProjectCityServerImpl implements ProjectCityServer {
     public List<ProjectCity> listCity(CityConditionRequest request) {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         ProjectCityExample example = new ProjectCityExample();
-        example.setOrderByClause("id DESC");
+        //example.setOrderByClause("id DESC");
 
         if (request.getNnlightctlProjectProvinceId() != null) {
             example.createCriteria().andNnlightctlProjectProvinceIdEqualTo(request.getNnlightctlProjectProvinceId());

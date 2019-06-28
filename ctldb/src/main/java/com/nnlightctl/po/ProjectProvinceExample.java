@@ -296,9 +296,16 @@ public class ProjectProvinceExample {
         }
 
         public Criteria andCodeNumberEqualTo(String value) {
-            addCriterion("code_number =", value, "codeNumber");
+            addCriterion("ParentId =", value, "codeNumber");
             return (Criteria) this;
         }
+
+        public Criteria andProvinceIdEqualTo(String value) {
+            addCriterion("id =", value, "codeNumber");
+            return (Criteria) this;
+        }
+
+
 
         public Criteria andCodeNumberNotEqualTo(String value) {
             addCriterion("code_number <>", value, "codeNumber");
@@ -436,7 +443,7 @@ public class ProjectProvinceExample {
         }
 
         public Criteria andNnlightctlProjectCountryIdEqualTo(Long value) {
-            addCriterion("nnlightctl_project_country_id =", value, "nnlightctlProjectCountryId");
+            addCriterion(" ParentId=", value, "nnlightctlProjectCountryId");
             return (Criteria) this;
         }
 

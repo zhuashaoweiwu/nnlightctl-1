@@ -3,6 +3,8 @@ package com.nnlightctl.dao;
 import com.nnlightctl.po.Project;
 import com.nnlightctl.po.ProjectExample;
 import java.util.List;
+
+import com.nnlightctl.vo.ProjectView;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProjectMapper {
@@ -27,4 +29,10 @@ public interface ProjectMapper {
     int updateByPrimaryKeySelective(Project record);
 
     int updateByPrimaryKey(Project record);
+
+    String selectByCountryId(@Param("nnlightctlProjectCountryId") Long countryId);
+
+    String selectByProvinceId(@Param("nnlightctlProjectProvinceId") Long provinceId);
+
+    String selectByCityId(@Param("nnlightctlProjectCityId") Long cityId);
 }

@@ -2,7 +2,7 @@ package com.nnlightctl.request;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class ProjectRequest extends BaseRequest{
+public class ProjectRequest extends BaseRequest {
 
     public int getType() {
         return type;

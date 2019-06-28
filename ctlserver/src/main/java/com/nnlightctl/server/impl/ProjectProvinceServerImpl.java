@@ -26,7 +26,7 @@ public class ProjectProvinceServerImpl implements ProjectProvinceServer {
     public List<ProjectProvince> listProvince(ProvinceConditionRequest request) {
         PageHelper.startPage(request.getPageNumber(), request.getPageSize());
         ProjectProvinceExample example = new ProjectProvinceExample();
-        example.setOrderByClause("id DESC");
+        //example.setOrderByClause("id DESC");
         if (request.getNnlightctlProjectCountryId() != null) {
             example.createCriteria().andNnlightctlProjectCountryIdEqualTo(request.getNnlightctlProjectCountryId());
         }
@@ -36,7 +36,7 @@ public class ProjectProvinceServerImpl implements ProjectProvinceServer {
     @Override
     public ProjectProvince getProvince(ProjectProvinceConditionRequest request) {
         ProjectProvinceExample example = new ProjectProvinceExample();
-        example.createCriteria().andCodeNumberEqualTo(request.getCodeNumber());
+        example.createCriteria().andProvinceIdEqualTo(request.getCodeNumber());
         List<ProjectProvince> projectProvinceList = this.projectProvinceMapper.selectByExample(example);
         if (projectProvinceList != null && projectProvinceList.size() > 0) {
             return projectProvinceList.get(0);

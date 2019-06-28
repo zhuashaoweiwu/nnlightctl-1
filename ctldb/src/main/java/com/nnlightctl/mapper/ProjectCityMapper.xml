@@ -80,9 +80,7 @@
     <if test="distinct" >
       distinct
     </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from nnlightctl_project_city
+     id as codeNumber,name as cityName,ShortName as mem FROM citys
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
