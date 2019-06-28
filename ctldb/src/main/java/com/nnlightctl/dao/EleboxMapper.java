@@ -29,4 +29,18 @@ public interface EleboxMapper {
     int updateByPrimaryKey(Elebox record);
 
     List<String> listEquipmentNumber();
+
+    int selectElectricityMeter();
+
+    int selectLightModel();
+
+    int selectPhotoperiod();
+
+    int selectLamppost();
+
+    int selectModular();
+
+    int selectLampController();
+
+    int selectCentralizeController();
 }

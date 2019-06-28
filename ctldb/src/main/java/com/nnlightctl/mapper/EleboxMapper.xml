@@ -325,6 +325,28 @@
     <select id="listEquipmentNumber" resultType="java.lang.String">
         select equipment_number from nnlightctl_elebox
     </select>
+    <select id="selectElectricityMeter" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_electricity_meter
+
+    </select>
+    <select id="selectLightModel" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_lighting_model
+    </select>
+    <select id="selectPhotoperiod" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_photoperiod
+    </select>
+    <select id="selectLamppost" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_lamppost
+    </select>
+    <select id="selectModular" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_elebox_model
+    </select>
+    <select id="selectLampController" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_lamp_controller;
+    </select>
+    <select id="selectCentralizeController" resultType="java.lang.Integer">
+        select count(*) from nnlightctl_centralize_controller
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update nnlightctl_elebox
         <set>
