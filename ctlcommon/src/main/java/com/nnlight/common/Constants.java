@@ -10,7 +10,7 @@ public class Constants {
     public static final int BATCH_SIZE = 128;
 
     public interface HttpKey {
-        static final String BaseURI = "http://192.168.10.197:8565/";
+        static final String BaseURI = "http://192.168.120.155:8565/";
 
         public static final String Register = BaseURI + "api/RegisterDirectConnectedDevice";
 
