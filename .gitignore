@@ -33,7 +33,6 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-
-.idea
-.idea/**
+logs/
+.idea/
 *.iml
