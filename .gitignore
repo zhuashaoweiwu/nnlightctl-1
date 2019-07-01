@@ -5,6 +5,7 @@ Desktop.ini
 
 # Compiled class file
 *.class
+*.project
 
 # Log file
 *.log
