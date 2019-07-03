@@ -35,4 +35,14 @@ public interface ProjectMapper {
     String selectByProvinceId(@Param("nnlightctlProjectProvinceId") Long provinceId);
 
     String selectByCityId(@Param("nnlightctlProjectCityId") Long cityId);
+
+    int selectByLampController(@Param("param") Long projectId);
+
+    int selectByElebox(@Param("param") Long eleboxId);
+
+    List<Project> selectByEquipment(@Param("param") String projectName);
+
+
+
+
 }

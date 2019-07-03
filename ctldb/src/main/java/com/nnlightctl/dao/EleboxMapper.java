@@ -43,4 +43,7 @@ public interface EleboxMapper {
     int selectLampController();
 
     int selectCentralizeController();
+
+    List<Elebox> selectEleboxEquipment(@Param("param") String equipmentNumber);
+
 }

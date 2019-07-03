@@ -39,7 +39,7 @@ public interface EleboxServer {
 
     int deleteEleboxPrimaryKey(EleboxConditionRequest request);
 
-    Tuple.TwoTuple<List<Elebox>,Integer> listEleboxMessage(EleboxConditionRequest request);
+   List<Elebox> seacherEquipment(SeacherEquipmentRequest request);
 
     Elebox selectEleboxById(EleboxConditionRequest request);
 

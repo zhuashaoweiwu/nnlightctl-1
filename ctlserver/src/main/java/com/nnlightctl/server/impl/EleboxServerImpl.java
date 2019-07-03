@@ -5,11 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.nnlight.common.PubMethod;
 import com.nnlight.common.ReflectCopyUtil;
 import com.nnlight.common.Tuple;
-import com.nnlightctl.dao.EleboxMapper;
-import com.nnlightctl.dao.EleboxModelLoopMapper;
-import com.nnlightctl.dao.EleboxModelMapper;
-import com.nnlightctl.dao.EleboxRelationMapper;
-import com.nnlightctl.dao.LampControllerMapper;
+import com.nnlightctl.dao.*;
 import com.nnlightctl.jdbcdao.EleboxDao;
 import com.nnlightctl.po.*;
 import com.nnlightctl.request.*;
@@ -66,6 +62,9 @@ public class EleboxServerImpl implements EleboxServer {
 
     @Autowired
     private ElectricityMeterServer meterServer;
+
+    @Autowired
+    private ProjectMapper projectMapper;
 
     @Override
     public int insertElebox(EleboxAddModelRequest request) {
@@ -481,43 +480,14 @@ public class EleboxServerImpl implements EleboxServer {
     }
 
     @Override
-    public Tuple.TwoTuple<List<Elebox>, Integer> listEleboxMessage(EleboxConditionRequest request) {
+    public List<Elebox> seacherEquipment(SeacherEquipmentRequest request) {
 
-        Tuple.TwoTuple<List<Elebox>, Integer> twoTuple = new Tuple.TwoTuple<>();
+        List<Elebox> eleboxEquipment = eleboxMapper.selectEleboxEquipment(request.getSeacherEquipment());
 
-        List<Elebox> eleboxes = new ArrayList<>(8);
+        return eleboxEquipment;
 
-        EleboxExample eleboxExample = new EleboxExample();
-
-        EleboxExample.Criteria criteria = eleboxExample.createCriteria();
-
-        if (!StringUtils.isEmpty(request.getEquipmentNumber())) {
-
-            criteria.andEquipmentNumberLike("%" + request.getEquipmentNumber() + "%");
-        }
-
-        if (!StringUtils.isEmpty(request.getEleboxMode())) {
-
-            criteria.andEleboxModeLike("%" + request.getEleboxMode() + "%");
-        }
-
-        if (!StringUtils.isEmpty(request.getEleboxName())) {
-
-            criteria.andEleboxNameLike("%" + request.getEleboxName() + "%");
-        }
-
-        int total = eleboxMapper.countByExample(eleboxExample);
-
-        twoTuple.setSecond(total);
-
-        PageHelper.startPage(request.getPageNumber(), request.getPageSize());
-
-        List<Elebox> eleboxList = eleboxMapper.selectByExample(eleboxExample);
-
-        twoTuple.setFirst(eleboxList);
-
-        return twoTuple;
     }
+
 
     @Override
     public Elebox selectEleboxById(EleboxConditionRequest request) {

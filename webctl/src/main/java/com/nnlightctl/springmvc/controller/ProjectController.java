@@ -372,9 +372,13 @@ public class ProjectController extends BaseController {
 
         int ret = projectServer.deleteProject(idList);
 
-        if (ret > 0) {
-            return toJson(JsonResult.getSUCCESS());
-        } else {
+        if (ret == -10) {
+            return toJson(JsonResult.FALLURE_LAMPCONTROLLER);
+        } else if (ret==-20){
+            return toJson(JsonResult.FALLURE_ELEBOX);
+        }else if (ret==-1){
+            return toJson(JsonResult.getFAILURE()) ;
+        }else {
             return toJson(JsonResult.getFAILURE());
         }
     }

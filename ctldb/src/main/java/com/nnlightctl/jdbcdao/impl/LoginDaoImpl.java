@@ -20,7 +20,7 @@ public class LoginDaoImpl implements LoginDao {
     public List<Righter> getRightersByLoginName(String loginName) {
         StringBuilder sql = new StringBuilder();
 
-        sql.append("select r.id, r.righter_name, r.url, r.righter_level, r.parent_righter_id from nnlightctl_user u, nnlightctl_user_righter_map m, nnlightctl_righter r ");
+        sql.append("select DISTINCT r.id, r.righter_name, r.url, r.righter_level, r.parent_righter_id from nnlightctl_user u, nnlightctl_user_righter_map m, nnlightctl_righter r ");
         sql.append("where u.login_name = ? and u.id = m.nnlightctl_user_id and m.nnlightctl_righter_id = r.id");
 
         List<Object> params = new ArrayList<>(1);

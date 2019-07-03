@@ -229,6 +229,22 @@
   <select id="selectByCityId" resultType="java.lang.String">
     select Name as cityName from citys where id=#{nnlightctlProjectCityId}
   </select>
+    <select id="selectByLampController" resultType="java.lang.Integer">
+    select count(*) from nnlightctl_lamp_controller where nnlightctl_project_id=#{param}
+    </select>
+  <select id="selectByElebox" resultType="java.lang.Integer">
+    select count(*) from nnlightctl_elebox where nnlightctl_project_id=#{param}
+  </select>
+  <select id="selectByEquipment" resultMap="BaseResultMap">
+SELECT id,latitude,longitude,project_name FROM nnlightctl_project
+<where>
+  <if test="param !=null">
+    project_name like
+  </if>
+</where>
+
+  </select>
+
 
   <update id="updateByExampleSelective" parameterType="map" >
     update nnlightctl_project

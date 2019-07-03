@@ -182,5 +182,12 @@
         select equipment_number from nnlightctl_lamppost
     </select>
 
+    <select id="selectAllLamppostType" resultType="java.lang.String">
+        select distinct lamppost_model from nnlightctl_lamppost
+    </select>
+    <select id="selectByLamppostType" resultType="com.nnlightctl.vo.LamppostEquipment">
+        select id,equipment_number as equipmentNumber,lamphead_number as lampheadNumber from nnlightctl_lamppost where lamppost_model=#{param}
+    </select>
+
 
 </mapper>

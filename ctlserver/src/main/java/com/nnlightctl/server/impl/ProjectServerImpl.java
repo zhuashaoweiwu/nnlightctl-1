@@ -157,8 +157,21 @@ public class ProjectServerImpl implements ProjectServer {
     @Override
     public int deleteProject(List<Long> idList) {
         int ret = -1;
+
         for (Long id : idList) {
-            ret = projectMapper.deleteByPrimaryKey(id);
+
+            int total= projectMapper.selectByLampController(id);
+
+            System.err.println(total);
+
+            if (projectMapper.selectByLampController(id)>0){
+                ret=-10;
+            }else if (projectMapper.selectByElebox(id)>0){
+                ret=-20;
+            }else {
+                ret=projectMapper.deleteByPrimaryKey(id);
+            }
+
         }
         return ret;
     }

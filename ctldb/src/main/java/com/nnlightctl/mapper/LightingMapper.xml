@@ -410,8 +410,11 @@
       order by ${orderByClause}
     </if>
   </select>
+    <select id="selectLampControllerType" resultType="com.nnlightctl.vo.LampControllerView">
+      select distinct id,lamp_model as lampModel from nnlightctl_lamp_controller  GROUP BY lamp_model
+    </select>
 
-  <update id="updateByExampleSelective" parameterType="map" >
+    <update id="updateByExampleSelective" parameterType="map" >
     update nnlightctl_lighting
     <set >
       <if test="record.id != null" >

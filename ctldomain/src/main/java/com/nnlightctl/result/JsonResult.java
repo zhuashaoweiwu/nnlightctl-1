@@ -20,6 +20,11 @@ public class JsonResult {
     public static JsonResult FALLURE_CODEREPEAD=new JsonResult("4103","输入的编号重复");
 
 
+    public static JsonResult FALLURE_LAMPCONTROLLER=new JsonResult("4104","请先删除单灯控制器");
+
+    public static JsonResult FALLURE_ELEBOX=new JsonResult("4104","请先删除控制柜");
+
+
 
 
 

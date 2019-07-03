@@ -3,10 +3,7 @@ package com.nnlightctl.springmvc.controller;
 import com.nnlight.common.PubMethod;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.Elebox;
-import com.nnlightctl.request.EleboxConditionRequest;
-import com.nnlightctl.request.EleboxRequest;
-import com.nnlightctl.request.LightConditionRequest;
-import com.nnlightctl.request.LightGroupConditionRequest;
+import com.nnlightctl.request.*;
 import com.nnlightctl.result.JsonResult;
 import com.nnlightctl.server.EleboxServer;
 import com.nnlightctl.server.LampControllerServer;
@@ -41,6 +38,21 @@ public class GisController extends BaseController {
 
     @Autowired
     private LightGroupServer lightGroupServer;
+
+
+    @RequestMapping("searchequipment")
+    public String seacherEquipment(SeacherEquipmentRequest request){
+
+        logger.info("[POST] /api/gis/searchequipment");
+
+        List<Elebox> seacherEquipment = eleboxServer.seacherEquipment(request);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setData(seacherEquipment);
+
+        return toJson(jsonResult);
+    }
 
     @RequestMapping("listElebox")
     public String listElebox(EleboxConditionRequest request) {

@@ -1,8 +1,11 @@
 package com.nnlightctl.dao;
 
+import com.nnlightctl.po.LampController;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import java.util.List;
+
+import com.nnlightctl.vo.LampControllerView;
 import org.apache.ibatis.annotations.Param;
 
 public interface LightingMapper {
@@ -31,6 +34,9 @@ public interface LightingMapper {
     int updateByPrimaryKey(Lighting record);
 
     List<Lighting> selectByExampleDeploy(LightingExample example);
+
+    List<LampControllerView> selectLampControllerType();
+
 
 
 

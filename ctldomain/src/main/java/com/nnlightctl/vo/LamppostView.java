@@ -1,5 +1,7 @@
 package com.nnlightctl.vo;
 
+import java.util.List;
+
 public class LamppostView {
 
     private Long id;
@@ -25,6 +27,16 @@ public class LamppostView {
     private String mem;
 
     private String equipmentNumber;
+
+    private List<LamppostEquipment> lamppostEquipmentList;
+
+    public List<LamppostEquipment> getLamppostEquipmentList() {
+        return lamppostEquipmentList;
+    }
+
+    public void setLamppostEquipmentList(List<LamppostEquipment> lamppostEquipmentList) {
+        this.lamppostEquipmentList = lamppostEquipmentList;
+    }
 
     public Long getId() {
         return id;
