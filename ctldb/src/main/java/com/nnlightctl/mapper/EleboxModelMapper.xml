@@ -139,13 +139,16 @@
         ne.uid as codeNumber,ne.longitude,ne.latitude,ne.mem,
         np.project_name projectName,ne.id
         FROM `nnlightctl_elebox_relation` ner left join nnlightctl_elebox ne on ner.elebox_id = ne.id
-        left join nnlightctl_project np on ne.nnlightctl_project_id = np.id where 1=1
-        <if test="id != null">
+        left join nnlightctl_project np on ne.nnlightctl_project_id = np.id
+        <where>
+            1=1
+          <if test="id != null">
             and ne.id = #{id}
-        </if>
-        <if test="codeNumber != null">
-            and ne.code_number = #{codeNumber}
-        </if>
+          </if>
+          <if test="codeNumber != null">
+            and ne.code_number like concat('%',codeNumber,'%')
+          </if>
+        </where>
         GROUP BY elebox_id ORDER BY ner.gmt_created DESC
 
     </select>

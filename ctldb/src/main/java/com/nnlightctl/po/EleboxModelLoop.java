@@ -25,6 +25,16 @@ public class EleboxModelLoop implements Serializable {
 
     private String mem;
 
+    private String EleboxModelName;
+
+    public String getEleboxModelName() {
+        return EleboxModelName;
+    }
+
+    public void setEleboxModelName(String eleboxModelName) {
+        EleboxModelName = eleboxModelName;
+    }
+
     public String getMem() {
         return mem;
     }

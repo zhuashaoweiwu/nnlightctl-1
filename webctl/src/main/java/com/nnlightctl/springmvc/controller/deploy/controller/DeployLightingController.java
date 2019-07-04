@@ -2,6 +2,7 @@ package com.nnlightctl.springmvc.controller.deploy.controller;
 
 import com.nnlight.common.Tuple;
 import com.nnlightctl.po.LampController;
+import com.nnlightctl.po.Lamppost;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.request.LampControllerConditionRequest;
 import com.nnlightctl.request.LampControllerRequest;
@@ -292,6 +293,32 @@ public class DeployLightingController extends BaseController {
 
         }
         return toJson(jsonResult);
+    }
+
+
+    /**
+     * 通过灯具的id查询灯杆的信息
+     */
+    @RequestMapping("lamppostbylampcontrollerid")
+    public String lamppostByLampControllerId(LampControllerRequest request){
+
+        logger.info("[POST] api/deploy/lamppostbylampcontrollerid");
+
+
+        Lamppost lamppost = lampControllerServer.lamppostByLampcontrollerId(request);
+
+        List<Lamppost> lamppostList=new ArrayList<>(4);
+
+        lamppostList.add(lamppost);
+
+        JsonResult jsonResult = JsonResult.getSUCCESS();
+
+        jsonResult.setData(lamppostList);
+
+        jsonResult.setTotal(1);
+
+        return toJson(jsonResult);
+
     }
 
 

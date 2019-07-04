@@ -293,6 +293,11 @@ public class EleboxServerImpl implements EleboxServer {
 
         eleboxModelLoopExample.setOrderByClause("id DESC");
         List<EleboxModelLoop> eleboxModelLoops = eleboxModelLoopMapper.selectByExample(eleboxModelLoopExample);
+        for (EleboxModelLoop eleboxModelLoop : eleboxModelLoops) {
+            Long nnlightctlEleboxModelId = eleboxModelLoop.getNnlightctlEleboxModelId();
+            EleboxModel eleboxModel = eleboxModelMapper.selectByPrimaryKey(nnlightctlEleboxModelId);
+            eleboxModelLoop.setEleboxModelName(eleboxModel.getModelName());
+        }
         twoTuple.setFirst(eleboxModelLoops);
         return twoTuple;
     }

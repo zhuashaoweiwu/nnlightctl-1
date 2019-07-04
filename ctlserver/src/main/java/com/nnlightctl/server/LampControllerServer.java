@@ -3,6 +3,7 @@ package com.nnlightctl.server;
 import com.nnlight.common.Tuple;
 import com.nnlightctl.parameter.LampControllerParameter;
 import com.nnlightctl.po.LampController;
+import com.nnlightctl.po.Lamppost;
 import com.nnlightctl.po.Lighting;
 import com.nnlightctl.po.LightingExample;
 import com.nnlightctl.request.LampControllerConditionRequest;
@@ -49,6 +50,10 @@ public interface LampControllerServer {
     List<Map<String,Object>> queryLightingUnLoop();
 
     Tuple.TwoTuple<List<Map<String,Object>>, Integer>  queryLightingByProject(LightConditionRequest request);
+
+    Lamppost lamppostByLampcontrollerId(LampControllerRequest request);
+
+
 
 
 }

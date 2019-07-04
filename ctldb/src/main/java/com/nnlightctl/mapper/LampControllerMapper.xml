@@ -29,7 +29,8 @@
         id,lamp_model,lamp_name,longitude,latitude,
         communication_mode,dimming_mode,rated_Voltage,
         rated_current,static_power,alarm_message,mem
-        ,deploy_state,equipment_number,nnlightctl_elebox_loop_id,nnlightctl_elebox_id,nnlightctl_project_id
+        ,deploy_state,equipment_number,nnlightctl_elebox_loop_id,nnlightctl_elebox_id,nnlightctl_project_id,nnlightctl_lamppost_id,
+        nnlightctl_lamp_model_id
     </sql>
 
     <insert id="insert" parameterType="com.nnlightctl.po.LampController">
@@ -387,6 +388,8 @@
             #{item}
         </foreach>
     </select>
+
+
 
 
 </mapper>

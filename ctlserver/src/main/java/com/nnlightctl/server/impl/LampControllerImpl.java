@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -233,6 +234,19 @@ public class LampControllerImpl implements LampControllerServer {
         return listDeployLighting;
     }
 
+    @Override
+    public Lamppost lamppostByLampcontrollerId(LampControllerRequest request) {
+
+         LampController lampController = lampControllerMapper.selectById(request.getId());
+
+         Long nnlightctlLamppostId = lampController.getNnlightctlLamppostId();
+
+         Lamppost lamppost = lamppostMapper.selectLampById(nnlightctlLamppostId);
+
+
+        return lamppost;
+    }
+
     public Tuple.TwoTuple<List<DeployLightingView>, Integer> selectByExampleDeployLighting(LampControllerConditionRequest request) {
 
         Tuple.TwoTuple<List<DeployLightingView>, Integer> listDeployLighting = new Tuple.TwoTuple<>();
@@ -253,6 +267,17 @@ public class LampControllerImpl implements LampControllerServer {
         LampController lampController = new LampController();
 
         ReflectCopyUtil.beanSameFieldCopy(request, lampController);
+
+        if (!StringUtils.isEmpty(request.getNnlightctlLamppostId())){
+
+            Lamppost lamppost=new Lamppost();
+
+            lamppost.setId(request.getNnlightctlLamppostId());
+
+            lamppost.setState(1);
+
+            lamppostMapper.updateByPrimaryKeyLamppost(lamppost);
+        }
 
 
         lampController.setDeployState(1);
